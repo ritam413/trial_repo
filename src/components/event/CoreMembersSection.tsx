@@ -605,22 +605,29 @@ export default function CoreMembersSection() {
     <section
       id="core-members"
       ref={containerRef}
-      className="relative py-20 sm:py-28 px-4 sm:px-8 max-w-7xl mx-auto overflow-hidden border-b border-[#8B1E24]/40 z-10"
+      className="relative py-20 sm:py-28 overflow-hidden z-10 bg-[#120E15] border-b border-[#8B1E24]/40"
     >
+      {/* 3D Ambient Studio Grid Background (Same as Gallery Section) */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 pointer-events-none opacity-[0.06]"
+        style={{
+          backgroundImage: `radial-gradient(#FFAA24 1px, transparent 1px)`,
+          backgroundSize: "28px 28px",
+        }}
+      />
+
       {/* Background Ambient Glow Plinth */}
       <div
         aria-hidden="true"
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[450px] bg-gradient-to-r from-[#8B1E24]/15 via-[#FFAA24]/10 to-transparent blur-[120px] pointer-events-none"
       />
 
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 relative z-10">
+
       {/* Section Header with Swiss Architectural Typography */}
       <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12 sm:mb-16">
-        <div className="border-l-2 border-[#FFAA24] pl-4 sm:pl-6 max-w-2xl">
-          <div className="core-anim-header inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#8B1E24] bg-[#120E15]/80 backdrop-blur-md text-[#FFAA24] font-tech text-xs font-bold tracking-[0.22em] uppercase mb-3">
-            <Icon.Sparkles className="w-3.5 h-3.5 text-[#FFAA24]" />
-            <span>03 // THE COURT ARCHITECTS</span>
-          </div>
-
+        <div className="max-w-2xl">
           <h2 className="core-anim-header font-display text-4xl sm:text-6xl lg:text-7xl text-[#FFF4E0] leading-none uppercase tracking-tight">
             NEW CORE <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFAA24] via-[#E65C19] to-[#FFF4E0]">MEMBERS</span>
           </h2>
@@ -629,58 +636,14 @@ export default function CoreMembersSection() {
             Six student stewards holding the face cards of this year&rsquo;s edition. Dealt in from the sides with GSAP physics—tap any card to flip and inspect their vision.
           </p>
         </div>
-
-        {/* Action HUD: Filter Tabs & Re-Deal Button */}
-        <div className="core-anim-header flex flex-wrap items-center gap-2.5 self-start lg:self-end">
-          {/* Filter Pills */}
-          <div className="inline-flex p-1 rounded-xl bg-[#18121D] border border-[#8B1E24]">
-            {categories.map((cat) => (
-              <button
-                key={cat.id}
-                type="button"
-                onClick={() => setActiveFilter(cat.id)}
-                className={`px-3 py-1.5 rounded-lg font-tech text-xs font-bold tracking-wider uppercase transition-all cursor-pointer ${
-                  activeFilter === cat.id
-                    ? "bg-[#FFAA24] text-[#120E15] shadow-[0_0_15px_rgba(255,170,36,0.4)]"
-                    : "text-[#FFF4E0]/75 hover:text-[#FFF4E0]"
-                }`}
-              >
-                {cat.label}
-              </button>
-            ))}
-          </div>
-
-          {/* Interactive GSAP Re-Deal Trigger Button */}
-          <button
-            type="button"
-            onClick={handleReDeal}
-            className="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-[#18121D] hover:bg-[#8B1E24] text-[#FFF4E0] border border-[#FFAA24]/60 font-tech text-xs font-bold tracking-wider uppercase transition-all active:scale-95 cursor-pointer shadow-[0_4px_20px_rgba(0,0,0,0.5)]"
-          >
-            <Icon.Shuffle className="w-3.5 h-3.5 text-[#FFAA24]" />
-            <span>RE-DEAL (#{String(dealCount).padStart(2, "0")})</span>
-          </button>
-        </div>
       </div>
 
       {/* Grid of Playing Cards with GSAP Side Entrance */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-        {filteredMembers.map((member, idx) => (
+        {CORE_MEMBERS.map((member, idx) => (
           <CoreMemberCard key={member.id} member={member} index={idx} />
         ))}
       </div>
-
-      {/* Bottom Technical Telemetry Bar */}
-      <div className="mt-12 pt-6 border-t border-[#FFF4E0]/10 flex flex-wrap items-center justify-between gap-4 font-mono text-xs text-[#FFF4E0]/60">
-        <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-[#FFAA24] animate-pulse" />
-          <span className="text-[#FFAA24] font-semibold">GSAP 3 // SCROLLTRIGGER DEAL</span>
-          <span className="text-[#FFF4E0]/30">•</span>
-          <span>TRANSFORM-STYLE: PRESERVE-3D</span>
-        </div>
-        <div className="flex items-center gap-4 text-[#FFF4E0]/70">
-          <span>COURT SEATS: 06 / 06 OCCUPIED</span>
-          <span>ROYAL SUITS: ♦ ♠ ♥ ♣</span>
-        </div>
       </div>
     </section>
   );

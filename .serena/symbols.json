@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
-  "lastUpdated": "2026-11-14T12:16:02.893Z",
-  "totalSymbols": 24,
+  "lastUpdated": "2026-11-14T21:05:30.150Z",
+  "totalSymbols": 32,
   "byName": {
     "DesignTokens": {
       "name": "DesignTokens",
@@ -39,7 +39,7 @@
       "type": "component",
       "category": "components",
       "file": "src/app/page.tsx",
-      "line": 10,
+      "line": 14,
       "description": "React component: Home in src/app/page.tsx",
       "keywords": [
         "Home",
@@ -69,6 +69,27 @@
         "framer-motion",
         "animation",
         "tilt"
+      ]
+    },
+    "AboutFestivalSection": {
+      "name": "AboutFestivalSection",
+      "type": "component",
+      "category": "components",
+      "file": "src/components/event/AboutFestivalSection.tsx",
+      "line": 258,
+      "description": "React component: AboutFestivalSection in src/components/event/AboutFestivalSection.tsx",
+      "keywords": [
+        "AboutFestivalSection",
+        "component",
+        "ui",
+        "AboutFestivalSection",
+        "motion",
+        "framer-motion",
+        "animation",
+        "tilt",
+        "spotlight",
+        "glow",
+        "hover"
       ]
     },
     "DesignVariant": {
@@ -134,6 +155,37 @@
         "clock"
       ]
     },
+    "DignitaryProfile": {
+      "name": "DignitaryProfile",
+      "type": "type",
+      "category": "types",
+      "file": "src/components/event/DignitariesSection.tsx",
+      "line": 13,
+      "description": "Exported TypeScript definition: DignitaryProfile",
+      "keywords": [
+        "DignitaryProfile",
+        "typescript",
+        "type",
+        "interface"
+      ]
+    },
+    "DignitariesSection": {
+      "name": "DignitariesSection",
+      "type": "component",
+      "category": "components",
+      "file": "src/components/event/DignitariesSection.tsx",
+      "line": 44,
+      "description": "React component: DignitariesSection in src/components/event/DignitariesSection.tsx",
+      "keywords": [
+        "DignitariesSection",
+        "component",
+        "ui",
+        "DignitariesSection",
+        "spotlight",
+        "glow",
+        "hover"
+      ]
+    },
     "Footer": {
       "name": "Footer",
       "type": "component",
@@ -146,6 +198,72 @@
         "component",
         "ui",
         "Footer"
+      ]
+    },
+    "FounderProfile": {
+      "name": "FounderProfile",
+      "type": "type",
+      "category": "types",
+      "file": "src/components/event/FoundersSection.tsx",
+      "line": 13,
+      "description": "Exported TypeScript definition: FounderProfile",
+      "keywords": [
+        "FounderProfile",
+        "typescript",
+        "type",
+        "interface"
+      ]
+    },
+    "FoundersSection": {
+      "name": "FoundersSection",
+      "type": "component",
+      "category": "components",
+      "file": "src/components/event/FoundersSection.tsx",
+      "line": 44,
+      "description": "React component: FoundersSection in src/components/event/FoundersSection.tsx",
+      "keywords": [
+        "FoundersSection",
+        "component",
+        "ui",
+        "FoundersSection",
+        "spotlight",
+        "glow",
+        "hover"
+      ]
+    },
+    "GalleryItem": {
+      "name": "GalleryItem",
+      "type": "type",
+      "category": "types",
+      "file": "src/components/event/GallerySection.tsx",
+      "line": 91,
+      "description": "Exported TypeScript definition: GalleryItem",
+      "keywords": [
+        "GalleryItem",
+        "typescript",
+        "type",
+        "interface"
+      ]
+    },
+    "GallerySection": {
+      "name": "GallerySection",
+      "type": "component",
+      "category": "components",
+      "file": "src/components/event/GallerySection.tsx",
+      "line": 374,
+      "description": "React component: GallerySection in src/components/event/GallerySection.tsx",
+      "keywords": [
+        "GallerySection",
+        "component",
+        "ui",
+        "GallerySection",
+        "motion",
+        "framer-motion",
+        "animation",
+        "tilt",
+        "spotlight",
+        "glow",
+        "hover"
       ]
     },
     "Hero": {
@@ -167,12 +285,26 @@
         "shaders"
       ]
     },
+    "CardistryFormation": {
+      "name": "CardistryFormation",
+      "type": "type",
+      "category": "types",
+      "file": "src/components/event/HeroSection.tsx",
+      "line": 82,
+      "description": "Exported TypeScript definition: CardistryFormation",
+      "keywords": [
+        "CardistryFormation",
+        "typescript",
+        "type",
+        "interface"
+      ]
+    },
     "HeroSection": {
       "name": "HeroSection",
       "type": "component",
       "category": "components",
       "file": "src/components/event/HeroSection.tsx",
-      "line": 388,
+      "line": 417,
       "description": "React component: HeroSection in src/components/event/HeroSection.tsx",
       "keywords": [
         "HeroSection",
@@ -193,12 +325,25 @@
         "hover"
       ]
     },
+    "gsapScrollTo": {
+      "name": "gsapScrollTo",
+      "type": "function",
+      "category": "utilities",
+      "file": "src/components/event/Navbar.tsx",
+      "line": 24,
+      "description": "Exported utility function: gsapScrollTo()",
+      "keywords": [
+        "gsapScrollTo",
+        "utility",
+        "function"
+      ]
+    },
     "Navbar": {
       "name": "Navbar",
       "type": "component",
       "category": "components",
       "file": "src/components/event/Navbar.tsx",
-      "line": 7,
+      "line": 61,
       "description": "React component: Navbar in src/components/event/Navbar.tsx",
       "keywords": [
         "Navbar",
@@ -219,26 +364,6 @@
         "component",
         "ui",
         "ParallaxBackground"
-      ]
-    },
-    "WaitlistSection": {
-      "name": "WaitlistSection",
-      "type": "component",
-      "category": "components",
-      "file": "src/components/event/WaitlistSection.tsx",
-      "line": 9,
-      "description": "React component: WaitlistSection in src/components/event/WaitlistSection.tsx",
-      "keywords": [
-        "WaitlistSection",
-        "component",
-        "ui",
-        "WaitlistSection",
-        "confetti",
-        "celebration",
-        "rsvp",
-        "spotlight",
-        "glow",
-        "hover"
       ]
     },
     "ButtonProps": {
@@ -388,14 +513,17 @@
     "components": [
       "RootLayout",
       "Home",
+      "AboutFestivalSection",
       "CoreMembersSection",
       "Countdown",
+      "DignitariesSection",
       "Footer",
+      "FoundersSection",
+      "GallerySection",
       "Hero",
       "HeroSection",
       "Navbar",
       "ParallaxBackground",
-      "WaitlistSection",
       "Button",
       "CardSpotlight",
       "Card",
@@ -409,6 +537,7 @@
       "EventScene"
     ],
     "utilities": [
+      "gsapScrollTo",
       "cn"
     ],
     "tokens": [
@@ -417,6 +546,10 @@
     "types": [
       "DesignVariant",
       "CoreMember",
+      "DignitaryProfile",
+      "FounderProfile",
+      "GalleryItem",
+      "CardistryFormation",
       "ButtonProps"
     ]
   },
@@ -438,9 +571,12 @@
     ],
     "glow": [
       "DesignTokens",
+      "AboutFestivalSection",
       "CoreMembersSection",
+      "DignitariesSection",
+      "FoundersSection",
+      "GallerySection",
       "HeroSection",
-      "WaitlistSection",
       "CardSpotlight"
     ],
     "background": [
@@ -479,14 +615,17 @@
       "RootLayout",
       "Home",
       "EventScene",
+      "AboutFestivalSection",
       "CoreMembersSection",
       "Countdown",
+      "DignitariesSection",
       "Footer",
+      "FoundersSection",
+      "GallerySection",
       "Hero",
       "HeroSection",
       "Navbar",
       "ParallaxBackground",
-      "WaitlistSection",
       "Button",
       "CardSpotlight",
       "Card",
@@ -506,14 +645,17 @@
       "RootLayout",
       "Home",
       "EventScene",
+      "AboutFestivalSection",
       "CoreMembersSection",
       "Countdown",
+      "DignitariesSection",
       "Footer",
+      "FoundersSection",
+      "GallerySection",
       "Hero",
       "HeroSection",
       "Navbar",
       "ParallaxBackground",
-      "WaitlistSection",
       "Button",
       "CardSpotlight",
       "Card",
@@ -526,14 +668,17 @@
     "ui": [
       "RootLayout",
       "Home",
+      "AboutFestivalSection",
       "CoreMembersSection",
       "Countdown",
+      "DignitariesSection",
       "Footer",
+      "FoundersSection",
+      "GallerySection",
       "Hero",
       "HeroSection",
       "Navbar",
       "ParallaxBackground",
-      "WaitlistSection",
       "Button",
       "CardSpotlight",
       "Card",
@@ -550,28 +695,34 @@
       "RootLayout",
       "Home",
       "EventScene",
+      "AboutFestivalSection",
       "CoreMembersSection",
       "Countdown",
+      "DignitariesSection",
       "Footer",
+      "FoundersSection",
+      "GallerySection",
       "Hero",
       "HeroSection",
       "Navbar",
       "ParallaxBackground",
-      "WaitlistSection",
       "CardSpotlight"
     ],
     "src": [
       "RootLayout",
       "Home",
       "EventScene",
+      "AboutFestivalSection",
       "CoreMembersSection",
       "Countdown",
+      "DignitariesSection",
       "Footer",
+      "FoundersSection",
+      "GallerySection",
       "Hero",
       "HeroSection",
       "Navbar",
       "ParallaxBackground",
-      "WaitlistSection",
       "CardSpotlight"
     ],
     "app": [
@@ -582,14 +733,17 @@
       "RootLayout",
       "Home",
       "EventScene",
+      "AboutFestivalSection",
       "CoreMembersSection",
       "Countdown",
+      "DignitariesSection",
       "Footer",
+      "FoundersSection",
+      "GallerySection",
       "Hero",
       "HeroSection",
       "Navbar",
       "ParallaxBackground",
-      "WaitlistSection",
       "CardSpotlight"
     ],
     "home": [
@@ -628,19 +782,61 @@
     ],
     "motion": [
       "EventScene",
+      "AboutFestivalSection",
+      "GallerySection",
       "HeroSection"
     ],
     "framer-motion": [
       "EventScene",
+      "AboutFestivalSection",
+      "GallerySection",
       "HeroSection"
     ],
     "animation": [
       "EventScene",
+      "AboutFestivalSection",
+      "GallerySection",
       "HeroSection"
     ],
     "tilt": [
       "EventScene",
+      "AboutFestivalSection",
+      "GallerySection",
       "HeroSection"
+    ],
+    "aboutfestivalsection": [
+      "AboutFestivalSection"
+    ],
+    "spotlight": [
+      "AboutFestivalSection",
+      "CoreMembersSection",
+      "DignitariesSection",
+      "FoundersSection",
+      "GallerySection",
+      "HeroSection",
+      "CardSpotlight"
+    ],
+    "hover": [
+      "AboutFestivalSection",
+      "CoreMembersSection",
+      "DignitariesSection",
+      "FoundersSection",
+      "GallerySection",
+      "HeroSection",
+      "CardSpotlight"
+    ],
+    "event": [
+      "AboutFestivalSection",
+      "CoreMembersSection",
+      "Countdown",
+      "DignitariesSection",
+      "Footer",
+      "FoundersSection",
+      "GallerySection",
+      "Hero",
+      "HeroSection",
+      "Navbar",
+      "ParallaxBackground"
     ],
     "designvariant": [
       "DesignVariant"
@@ -648,32 +844,57 @@
     "types": [
       "DesignVariant",
       "CoreMember",
+      "DignitaryProfile",
+      "FounderProfile",
+      "GalleryItem",
+      "CardistryFormation",
       "ButtonProps"
     ],
     "typescript": [
       "DesignVariant",
       "CoreMember",
+      "DignitaryProfile",
+      "FounderProfile",
+      "GalleryItem",
+      "CardistryFormation",
       "ButtonProps"
     ],
     "type": [
       "DesignVariant",
       "CoreMember",
+      "DignitaryProfile",
+      "FounderProfile",
+      "GalleryItem",
+      "CardistryFormation",
       "ButtonProps"
     ],
     "interface": [
       "DesignVariant",
       "CoreMember",
+      "DignitaryProfile",
+      "FounderProfile",
+      "GalleryItem",
+      "CardistryFormation",
       "ButtonProps"
     ],
     "exported": [
       "DesignVariant",
       "CoreMember",
+      "DignitaryProfile",
+      "FounderProfile",
+      "GalleryItem",
+      "CardistryFormation",
+      "gsapScrollTo",
       "ButtonProps",
       "cn"
     ],
     "definition": [
       "DesignVariant",
       "CoreMember",
+      "DignitaryProfile",
+      "FounderProfile",
+      "GalleryItem",
+      "CardistryFormation",
       "ButtonProps"
     ],
     "coremember": [
@@ -681,28 +902,6 @@
     ],
     "corememberssection": [
       "CoreMembersSection"
-    ],
-    "spotlight": [
-      "CoreMembersSection",
-      "HeroSection",
-      "WaitlistSection",
-      "CardSpotlight"
-    ],
-    "hover": [
-      "CoreMembersSection",
-      "HeroSection",
-      "WaitlistSection",
-      "CardSpotlight"
-    ],
-    "event": [
-      "CoreMembersSection",
-      "Countdown",
-      "Footer",
-      "Hero",
-      "HeroSection",
-      "Navbar",
-      "ParallaxBackground",
-      "WaitlistSection"
     ],
     "countdown": [
       "Countdown"
@@ -716,32 +915,56 @@
     "clock": [
       "Countdown"
     ],
+    "dignitaryprofile": [
+      "DignitaryProfile"
+    ],
+    "dignitariessection": [
+      "DignitariesSection"
+    ],
     "footer": [
       "Footer"
+    ],
+    "founderprofile": [
+      "FounderProfile"
+    ],
+    "founderssection": [
+      "FoundersSection"
+    ],
+    "galleryitem": [
+      "GalleryItem"
+    ],
+    "gallerysection": [
+      "GallerySection"
     ],
     "hero": [
       "Hero"
     ],
+    "cardistryformation": [
+      "CardistryFormation"
+    ],
     "herosection": [
       "HeroSection"
+    ],
+    "gsapscrollto": [
+      "gsapScrollTo"
+    ],
+    "utilities": [
+      "gsapScrollTo",
+      "cn"
+    ],
+    "utility": [
+      "gsapScrollTo",
+      "cn"
+    ],
+    "function": [
+      "gsapScrollTo",
+      "cn"
     ],
     "navbar": [
       "Navbar"
     ],
     "parallaxbackground": [
       "ParallaxBackground"
-    ],
-    "waitlistsection": [
-      "WaitlistSection"
-    ],
-    "confetti": [
-      "WaitlistSection"
-    ],
-    "celebration": [
-      "WaitlistSection"
-    ],
-    "rsvp": [
-      "WaitlistSection"
     ],
     "buttonprops": [
       "ButtonProps"
@@ -793,15 +1016,6 @@
       "CardFooter"
     ],
     "cn": [
-      "cn"
-    ],
-    "utilities": [
-      "cn"
-    ],
-    "utility": [
-      "cn"
-    ],
-    "function": [
       "cn"
     ]
   }

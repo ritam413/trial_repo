@@ -175,10 +175,10 @@ export default function EventScene({ className }: EventSceneProps) {
 
     // 7. Render Loop with Smooth Damping
     let animationFrameId: number;
-    let clock = new THREE.Clock();
+    const startTime = performance.now();
 
     const render = () => {
-      const elapsedTime = clock.getElapsedTime();
+      const elapsedTime = (performance.now() - startTime) / 1000;
 
       // Smooth mouse interpolation
       targetX += (mouseX - targetX) * 0.05;

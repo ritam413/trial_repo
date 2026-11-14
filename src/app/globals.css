@@ -50,7 +50,8 @@ input[type='range']::-webkit-slider-thumb {
 }
 
 html {
-  scroll-behavior: smooth;
+  /* Let GSAP handle smooth scroll without browser native interpolation collision */
+  scroll-behavior: auto;
   background-color: #120E15;
   color: #FFF4E0;
 }

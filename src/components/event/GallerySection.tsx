@@ -2,12 +2,11 @@
 
 import React, { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { AnimatePresence, motion } from "framer-motion";
 
 if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger, useGSAP);
+  gsap.registerPlugin(useGSAP);
 }
 
 /* ==========================================================================
@@ -377,79 +376,95 @@ export default function GallerySection() {
   const row0Ref = useRef<HTMLDivElement>(null);
   const row1Ref = useRef<HTMLDivElement>(null);
   const row2Ref = useRef<HTMLDivElement>(null);
+  const tweensRef = useRef<gsap.core.Tween[]>([]);
 
-  const [mediaFilter, setMediaFilter] = useState<string>("all");
-  const [frameMode, setFrameMode] = useState<"3:4" | "full" | "16:9">("3:4");
-  const [scrubberSeconds, setScrubberSeconds] = useState<number>(3.4);
-  const [isAutoPlaying, setIsAutoPlaying] = useState<boolean>(true);
-  const [showKeyframeDetails, setShowKeyframeDetails] = useState<boolean>(false);
   const [selectedMedia, setSelectedMedia] = useState<GalleryItem | null>(null);
   const [lightboxMuted, setLightboxMuted] = useState<boolean>(false);
 
-  // Auto-play timeline simulation (smoothly increments scrubber from 0.0s to 8.0s)
-  useEffect(() => {
-    if (!isAutoPlaying) return;
-    const interval = window.setInterval(() => {
-      setScrubberSeconds((prev) => {
-        const next = prev + 0.05;
-        return next > 8.0 ? 0.0 : Number(next.toFixed(2));
-      });
-    }, 50);
-    return () => window.clearInterval(interval);
-  }, [isAutoPlaying]);
-
-  // Filter items
-  const filteredItems = useMemo(() => {
-    if (mediaFilter === "all") return GALLERY_ITEMS;
-    return GALLERY_ITEMS.filter((item) => item.type === mediaFilter);
-  }, [mediaFilter]);
-
+  // Group items into 3 rows
   const rows = useMemo(() => {
     return [
-      filteredItems.filter((i) => i.row === 0),
-      filteredItems.filter((i) => i.row === 1),
-      filteredItems.filter((i) => i.row === 2),
+      GALLERY_ITEMS.filter((i) => i.row === 0),
+      GALLERY_ITEMS.filter((i) => i.row === 1),
+      GALLERY_ITEMS.filter((i) => i.row === 2),
     ];
-  }, [filteredItems]);
+  }, []);
 
-  // GSAP SCROLLTRIGGER CONTINUOUS SIDE FLOW:
-  // Row 0 & 2 slide Left, Row 1 slides Right with scrub: 1
+  // Duplicate items 4x per row so -50% translation provides a completely seamless, infinite loop
+  const repeatedRow0 = useMemo(() => [...rows[0], ...rows[0], ...rows[0], ...rows[0]], [rows]);
+  const repeatedRow1 = useMemo(() => [...rows[1], ...rows[1], ...rows[1], ...rows[1]], [rows]);
+  const repeatedRow2 = useMemo(() => [...rows[2], ...rows[2], ...rows[2], ...rows[2]], [rows]);
+
+  // CONTINUOUS AUTONOMOUS GSAP MARQUEE:
+  // Completely independent of page scroll position!
+  // Row 0 & 2 glide Left, Row 1 glides Right with independent speeds
   useGSAP(
     () => {
-      if (!containerRef.current) return;
+      // Clean up previous tweens before recreating
+      tweensRef.current.forEach((t) => t.kill());
+      tweensRef.current = [];
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 1.2,
-        },
+      if (!row0Ref.current || !row1Ref.current || !row2Ref.current) return;
+
+      // Set initial starting positions
+      gsap.set(row0Ref.current, { xPercent: 0 });
+      gsap.set(row1Ref.current, { xPercent: -50 });
+      gsap.set(row2Ref.current, { xPercent: 0 });
+
+      // Row 0: Continuous flow Left
+      const t0 = gsap.to(row0Ref.current, {
+        xPercent: -50,
+        duration: 38,
+        ease: "none",
+        repeat: -1,
       });
 
-      if (row0Ref.current) {
-        tl.to(row0Ref.current, { x: -380, ease: "none" }, 0);
-      }
-      if (row1Ref.current) {
-        tl.to(row1Ref.current, { x: 380, ease: "none" }, 0);
-      }
-      if (row2Ref.current) {
-        tl.to(row2Ref.current, { x: -380, ease: "none" }, 0);
-      }
+      // Row 1: Continuous flow Right (contra-flow)
+      const t1 = gsap.fromTo(
+        row1Ref.current,
+        { xPercent: -50 },
+        { xPercent: 0, duration: 44, ease: "none", repeat: -1 }
+      );
+
+      // Row 2: Continuous flow Left
+      const t2 = gsap.to(row2Ref.current, {
+        xPercent: -50,
+        duration: 32,
+        ease: "none",
+        repeat: -1,
+      });
+
+      tweensRef.current = [t0, t1, t2];
+
+      return () => {
+        t0.kill();
+        t1.kill();
+        t2.kill();
+      };
     },
-    { scope: containerRef, dependencies: [filteredItems, frameMode] }
+    { scope: containerRef }
   );
 
-  // Combine timeline scrubber offset with scroll
-  const timelineShift = ((scrubberSeconds - 4.0) / 4.0) * 120; // -120px to +120px
+  // Soft hover velocity dampening so users can comfortably click cards
+  const handleMouseEnter = useCallback(() => {
+    tweensRef.current.forEach((t) => {
+      gsap.to(t, { timeScale: 0.25, duration: 0.4 });
+    });
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    tweensRef.current.forEach((t) => {
+      gsap.to(t, { timeScale: 1.0, duration: 0.4 });
+    });
+  }, []);
 
   return (
     <section
       id="gallery"
       ref={containerRef}
-      className="relative py-20 sm:py-28 overflow-hidden border-b border-[#8B1E24]/40 z-10 bg-[#120E15]"
+      className="relative py-20 sm:py-28 overflow-hidden z-10 bg-[#120E15] border-b border-[#8B1E24]/40"
     >
-      {/* 3D Ambient Studio Grid Background (Inspired by animos.app screenshot) */}
+      {/* 3D Ambient Studio Grid Background */}
       <div
         aria-hidden="true"
         className="absolute inset-0 pointer-events-none opacity-[0.06]"
@@ -461,98 +476,51 @@ export default function GallerySection() {
 
       {/* Header Container */}
       <div className="max-w-7xl mx-auto px-4 sm:px-8 mb-10 sm:mb-14 relative z-10">
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
-          <div className="border-l-2 border-[#FFAA24] pl-4 sm:pl-6 max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#8B1E24] bg-[#120E15]/80 backdrop-blur-md text-[#FFAA24] font-tech text-xs font-bold tracking-[0.22em] uppercase mb-3">
-              <Icon.Sparkles className="w-3.5 h-3.5 text-[#FFAA24]" />
-              <span>02 // ARCHIVE &amp; MOTION REELS</span>
-            </div>
+        <div className="max-w-2xl">
+         
 
-            <h2 className="font-display text-4xl sm:text-6xl lg:text-7xl text-[#FFF4E0] leading-none uppercase tracking-tight">
-              SIDE-FLOWING{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFAA24] via-[#E65C19] to-[#FFF4E0]">
-                GALLERY
-              </span>
-            </h2>
+          <h2 className="font-display text-4xl sm:text-6xl lg:text-7xl text-[#FFF4E0] leading-none uppercase tracking-tight">
+            GALLERY{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFAA24] via-[#E65C19] to-[#FFF4E0]">
+              SECTION
+            </span>
+          </h2>
 
-            <p className="mt-3 font-tech text-xs sm:text-sm text-[#FFF4E0]/75 leading-relaxed">
-              Experience the visual realm through 3 continuous spread rows. Rows flow in counter-directions with GSAP ScrollTrigger physics and live keyframe scrubbing.
-            </p>
-          </div>
-
-          {/* Action HUD: Frame Aspect Selector & Media Filters */}
-          <div className="flex flex-wrap items-center gap-3 self-start lg:self-end">
-            {/* Frame Aspect Presets (from Animos screenshot) */}
-            <div className="hidden sm:inline-flex items-center p-1 rounded-xl bg-[#18121D] border border-[#8B1E24]">
-              <span className="px-2 text-[10px] font-mono font-bold text-[#FFAA24] uppercase">FRAME:</span>
-              {(["3:4", "full", "16:9"] as const).map((mode) => (
-                <button
-                  key={mode}
-                  type="button"
-                  onClick={() => setFrameMode(mode)}
-                  className={`px-2.5 py-1 rounded-lg font-mono text-xs font-bold tracking-wider uppercase transition-all cursor-pointer ${
-                    frameMode === mode
-                      ? "bg-[#FFAA24] text-[#120E15] shadow-[0_0_12px_rgba(255,170,36,0.4)]"
-                      : "text-[#FFF4E0]/70 hover:text-[#FFF4E0]"
-                  }`}
-                >
-                  {mode}
-                </button>
-              ))}
-            </div>
-
-            {/* Filter Tabs */}
-            <div className="inline-flex p-1 rounded-xl bg-[#18121D] border border-[#8B1E24]">
-              {[
-                { id: "all", label: "ALL (12)" },
-                { id: "image", label: "PHOTOS (8)" },
-                { id: "video", label: "REELS (4)" },
-              ].map((tab) => (
-                <button
-                  key={tab.id}
-                  type="button"
-                  onClick={() => setMediaFilter(tab.id)}
-                  className={`px-3 py-1.5 rounded-lg font-tech text-xs font-bold tracking-wider uppercase transition-all cursor-pointer ${
-                    mediaFilter === tab.id
-                      ? "bg-[#FFAA24] text-[#120E15] shadow-[0_0_12px_rgba(255,170,36,0.4)]"
-                      : "text-[#FFF4E0]/70 hover:text-[#FFF4E0]"
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </div>
-          </div>
+          <p className="mt-3 font-tech text-xs sm:text-sm text-[#FFF4E0]/75 leading-relaxed">
+            Experience the visual realm through 3 continuous spread rows flowing autonomously at independent speeds, completely free of scroll position.
+          </p>
         </div>
       </div>
 
       {/* ====================================================================
-          3D PERSPECTIVE SHOWCASE FRAME (EMBEDDED 3:4 OR EXPANSIVE VIEW)
+          FULL-WIDTH EDGE-TO-EDGE SPREAD ROWS (100% SCREEN VIEWPORT)
           ==================================================================== */}
       <div
-        className={`mx-auto transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-          frameMode === "3:4"
-            ? "max-w-5xl rounded-[36px] bg-[#15101A]/90 p-4 sm:p-7 border-2 border-[#8B1E24] shadow-[0_25px_80px_rgba(0,0,0,0.85)] [perspective:1400px]"
-            : frameMode === "16:9"
-            ? "max-w-6xl rounded-3xl bg-[#15101A]/70 p-4 border border-[#8B1E24]"
-            : "w-full px-0"
-        }`}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        className="relative w-full overflow-hidden"
       >
-        <div className="space-y-4 sm:space-y-5 overflow-hidden py-3">
-          {/* ROW 0: Flows Left */}
+        {/* Subtle Edge Vignettes to elegantly blend cards into screen edges */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-y-0 left-0 w-16 sm:w-28 bg-gradient-to-r from-[#120E15] to-transparent z-20"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-y-0 right-0 w-16 sm:w-28 bg-gradient-to-l from-[#120E15] to-transparent z-20"
+        />
+
+        <div className="space-y-4 sm:space-y-6 overflow-hidden py-3">
+          {/* ROW 0: Continuous Flow Left */}
           {rows[0].length > 0 && (
             <div className="w-full overflow-hidden">
               <div
                 ref={row0Ref}
-                style={{
-                  transform: `translate3d(${-timelineShift}px, 0, 0)`,
-                  transition: "transform 0.12s linear",
-                }}
                 className="flex items-center gap-3.5 sm:gap-5 px-4 w-max will-change-transform"
               >
-                {[...rows[0], ...rows[0]].map((item, idx) => (
+                {repeatedRow0.map((item, idx) => (
                   <SpreadRowMediaTile
-                    key={`${item.id}-${idx}`}
+                    key={`r0-${item.id}-${idx}`}
                     item={item}
                     onOpen={setSelectedMedia}
                   />
@@ -561,20 +529,16 @@ export default function GallerySection() {
             </div>
           )}
 
-          {/* ROW 1: Flows Right (Opposite Contra-Flow Direction) */}
+          {/* ROW 1: Continuous Flow Right (Contra-Flow) */}
           {rows[1].length > 0 && (
             <div className="w-full overflow-hidden">
               <div
                 ref={row1Ref}
-                style={{
-                  transform: `translate3d(${timelineShift}px, 0, 0)`,
-                  transition: "transform 0.12s linear",
-                }}
                 className="flex items-center gap-3.5 sm:gap-5 px-4 w-max will-change-transform"
               >
-                {[...rows[1], ...rows[1]].map((item, idx) => (
+                {repeatedRow1.map((item, idx) => (
                   <SpreadRowMediaTile
-                    key={`${item.id}-${idx}`}
+                    key={`r1-${item.id}-${idx}`}
                     item={item}
                     onOpen={setSelectedMedia}
                   />
@@ -583,102 +547,22 @@ export default function GallerySection() {
             </div>
           )}
 
-          {/* ROW 2: Flows Left */}
+          {/* ROW 2: Continuous Flow Left */}
           {rows[2].length > 0 && (
             <div className="w-full overflow-hidden">
               <div
                 ref={row2Ref}
-                style={{
-                  transform: `translate3d(${-timelineShift * 0.9}px, 0, 0)`,
-                  transition: "transform 0.12s linear",
-                }}
                 className="flex items-center gap-3.5 sm:gap-5 px-4 w-max will-change-transform"
               >
-                {[...rows[2], ...rows[2]].map((item, idx) => (
+                {repeatedRow2.map((item, idx) => (
                   <SpreadRowMediaTile
-                    key={`${item.id}-${idx}`}
+                    key={`r2-${item.id}-${idx}`}
                     item={item}
                     onOpen={setSelectedMedia}
                   />
                 ))}
               </div>
             </div>
-          )}
-        </div>
-      </div>
-
-      {/* ====================================================================
-          ANIMOS-INSPIRED KEYFRAME TIMELINE SCRUBBER
-          ==================================================================== */}
-      <div className="max-w-3xl mx-auto px-4 sm:px-8 mt-10">
-        <div className="rounded-2xl bg-[#18121D]/95 backdrop-blur-md border border-[#FFF4E0]/15 p-3.5 sm:p-4 shadow-[0_12px_36px_rgba(0,0,0,0.6)]">
-          <div className="flex items-center justify-between gap-2 mb-2.5 text-xs font-mono text-[#FFF4E0]/80">
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={() => setShowKeyframeDetails((d) => !d)}
-                className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#120E15] border border-[#FFAA24]/40 text-[#FFAA24] font-bold tracking-wider uppercase text-[10px] hover:border-[#FFAA24] cursor-pointer"
-              >
-                <Icon.Sliders className="w-3 h-3" />
-                <span>KEYFRAMES {showKeyframeDetails ? "▾" : "▴"}</span>
-              </button>
-              <span className="text-[#FFF4E0]/30 hidden sm:inline">|</span>
-              <span className="text-[#FFAA24] font-semibold hidden sm:inline">
-                GSAP // 3D SPREAD MOTION
-              </span>
-            </div>
-
-            <div className="flex items-center gap-2 font-mono text-xs">
-              <span className="text-[#FFAA24]">{scrubberSeconds.toFixed(1)}s</span>
-              <span className="text-[#FFF4E0]/40">/</span>
-              <span>8.0s</span>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3">
-            {/* Play / Pause Toggle Button */}
-            <button
-              type="button"
-              onClick={() => setIsAutoPlaying((p) => !p)}
-              aria-label={isAutoPlaying ? "Pause timeline" : "Play timeline"}
-              className="w-9 h-9 rounded-xl bg-[#8B1E24] hover:bg-[#E65C19] text-[#FFF4E0] flex items-center justify-center shrink-0 transition-colors cursor-pointer shadow-md"
-            >
-              {isAutoPlaying ? (
-                <Icon.Pause className="w-4 h-4" />
-              ) : (
-                <Icon.Play className="w-4 h-4" />
-              )}
-            </button>
-
-            {/* Range Scrubber Bar */}
-            <input
-              type="range"
-              min={0}
-              max={8}
-              step={0.05}
-              value={scrubberSeconds}
-              onChange={(e) => {
-                setIsAutoPlaying(false);
-                setScrubberSeconds(parseFloat(e.target.value));
-              }}
-              aria-label="Gallery spread rows timeline scrubber"
-              className="w-full h-2 bg-[#120E15] rounded-lg cursor-pointer accent-[#FFAA24]"
-            />
-          </div>
-
-          {/* Collapsible Keyframe Info Panel */}
-          {showKeyframeDetails && (
-            <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              className="mt-3 pt-3 border-t border-[#FFF4E0]/10 grid grid-cols-2 sm:grid-cols-4 gap-2 text-[10px] font-mono text-[#FFF4E0]/70"
-            >
-              <div>KF 01: 0.0s [CONCLAVE]</div>
-              <div>KF 02: 2.4s [SAHOTSAVA]</div>
-              <div>KF 03: 5.2s [CYPHER]</div>
-              <div>KF 04: 8.0s [CORONATION]</div>
-            </motion.div>
           )}
         </div>
       </div>

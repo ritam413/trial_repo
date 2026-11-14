@@ -5,6 +5,7 @@ import * as THREE from "three";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion, AnimatePresence } from "framer-motion";
+import { gsapScrollTo, SMOOTH_SCROLL_CONFIG } from "./Navbar";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -62,7 +63,36 @@ const Icon = {
       <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
     </svg>
   ),
+  Play: ({ className = "w-4 h-4" }: { className?: string }) => (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+      <polygon points="5 3 19 12 5 21 5 3" />
+    </svg>
+  ),
+  Pause: ({ className = "w-4 h-4" }: { className?: string }) => (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+      <rect x="6" y="4" width="4" height="16" />
+      <rect x="14" y="4" width="4" height="16" />
+    </svg>
+  ),
 };
+
+/* ==========================================================================
+   2. CARDISTRY CHOREOGRAPHY FORMATIONS (5 DISTINCT ANTI-SLOP FORMATIONS)
+   ========================================================================== */
+export interface CardistryFormation {
+  id: string;
+  name: string;
+  shortName: string;
+  tag: string;
+}
+
+export const CARDISTRY_FORMATIONS: CardistryFormation[] = [
+  { id: "riffle", name: "01 // RIFFLE HELIX SHUFFLE", shortName: "3D Shuffle", tag: "Interlocking Cascade" },
+  { id: "corridor", name: "02 // MONOLITH CORRIDOR", shortName: "Corridor", tag: "Infinite Runway" },
+  { id: "orbital", name: "03 // CELESTIAL WHEEL", shortName: "Celestial Wheel", tag: "360° Gyroscopic Halo" },
+  { id: "fan", name: "04 // MASTER DEALER FAN", shortName: "Dealer Fan", tag: "Croupier Panoramic Arc" },
+  { id: "vortex", name: "05 // VORTEX HELIX SPIRE", shortName: "Vortex Spire", tag: "Double Helix Cyclone" },
+];
 
 /* ==========================================================================
    2. DESTINY FORTUNES DATA
@@ -263,119 +293,111 @@ function createCardBackTexture(): THREE.CanvasTexture {
 }
 
 /* ==========================================================================
-   4. SPATIAL HUD COMPONENT
+   4. FORMATION MATH
    ========================================================================== */
-interface HUDProps {
-  mode: "shuffle" | "corridor";
-  shuffleCount: number;
-  cardCount: number;
-  webglActive: boolean;
-  surgeActive: boolean;
-  onModeChange: (mode: "shuffle" | "corridor") => void;
-  onShuffleBurst: () => void;
-  onDrawFortune: () => void;
-  onTriggerSurge: () => void;
+interface CardTransform {
+  x: number;
+  y: number;
+  z: number;
+  rotX: number;
+  rotY: number;
+  rotZ: number;
+  scale: number;
 }
 
-function ThreeUISpatialHUD({
-  mode,
-  shuffleCount,
-  cardCount,
-  webglActive,
-  surgeActive,
-  onModeChange,
-  onShuffleBurst,
-  onDrawFortune,
-  onTriggerSurge,
-}: HUDProps) {
-  return (
-    <div className="w-full max-w-2xl">
-      <div className="flex flex-wrap items-center justify-between gap-2 mb-2.5 px-3 py-1.5 rounded-lg bg-[#120E15]/85 backdrop-blur-md border border-[#FFF4E0]/15 text-[10px] sm:text-xs font-mono tracking-wider text-[#FFF4E0]/80">
-        <div className="flex items-center gap-2">
-          <span
-            className={`inline-block w-2 h-2 rounded-full ${
-              surgeActive
-                ? "bg-cyan-400 animate-ping"
-                : webglActive
-                ? "bg-[#FFAA24] animate-pulse"
-                : "bg-[#E65C19]"
-            }`}
-          />
-          <span className="text-[#FFAA24] font-semibold">THREEUI // HUD</span>
-          <span className="text-[#FFF4E0]/40">|</span>
-          <span className={surgeActive ? "text-cyan-300 font-bold animate-pulse" : ""}>
-            {surgeActive
-              ? "⚡ WARP SURGE ACTIVE"
-              : mode === "shuffle"
-              ? "3D RIFFLE HELIX"
-              : "MONOLITH CORRIDOR"}
-          </span>
-        </div>
-        <div className="flex items-center gap-3 text-[#FFF4E0]/70">
-          <span>DECK: {cardCount}</span>
-          <span>SHUFFLES: #{String(shuffleCount).padStart(2, "0")}</span>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-        <div className="sm:col-span-2 grid grid-cols-2 p-1 rounded-xl bg-[#120E15]/90 backdrop-blur-md border border-[#8B1E24] shadow-[0_10px_30px_rgba(0,0,0,0.65)]">
-          <button
-            type="button"
-            onClick={() => onModeChange("shuffle")}
-            className={`flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-lg text-xs font-bold tracking-wider uppercase transition-all cursor-pointer ${
-              mode === "shuffle"
-                ? "bg-[#FFAA24] text-[#120E15] shadow-[0_0_20px_rgba(255,170,36,0.45)]"
-                : "text-[#FFF4E0]/80 hover:text-[#FFF4E0]"
-            }`}
-          >
-            <Icon.Layers className="w-3.5 h-3.5 shrink-0" />
-            <span>3D Shuffle</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => {
-              if (mode === "corridor") {
-                onTriggerSurge();
-              } else {
-                onModeChange("corridor");
-              }
-            }}
-            className={`flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-lg text-xs font-bold tracking-wider uppercase transition-all cursor-pointer ${
-              mode === "corridor"
-                ? surgeActive
-                  ? "bg-gradient-to-r from-[#FFAA24] to-cyan-400 text-[#120E15] shadow-[0_0_30px_rgba(6,182,212,0.6)]"
-                  : "bg-[#E65C19] text-[#FFF4E0] shadow-[0_0_20px_rgba(230,92,25,0.5)]"
-                : "text-[#FFF4E0]/80 hover:text-[#FFF4E0]"
-            }`}
-          >
-            <Icon.Compass className="w-3.5 h-3.5 shrink-0" />
-            <span>{mode === "corridor" ? (surgeActive ? "Surging..." : "Surge Corridor") : "Monolith Corridor"}</span>
-          </button>
-        </div>
-
-        <div className="grid grid-cols-2 gap-2">
-          <button
-            type="button"
-            onClick={onShuffleBurst}
-            className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-[#120E15]/90 hover:bg-[#8B1E24] text-[#FFF4E0] border border-[#FFAA24]/60 text-xs font-bold tracking-wider uppercase transition-all active:scale-95 cursor-pointer"
-          >
-            <Icon.Shuffle className="w-3.5 h-3.5 text-[#FFAA24] shrink-0" />
-            <span>Shuffle</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={onDrawFortune}
-            className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-gradient-to-r from-[#8B1E24] to-[#E65C19] hover:brightness-110 text-[#FFF4E0] border border-[#FFAA24] text-xs font-bold tracking-wider uppercase shadow-[0_0_24px_rgba(230,92,25,0.45)] transition-all active:scale-95 cursor-pointer"
-          >
-            <Icon.Sparkles className="w-3.5 h-3.5 text-[#FFAA24] shrink-0" />
-            <span>Draw Card</span>
-          </button>
-        </div>
-      </div>
-    </div>
-  );
+function getFormationTransform(
+  formIdx: number,
+  i: number,
+  elapsed: number,
+  card: { corridorPos: THREE.Vector3; corridorRotY: number; corridorScale: number; phase: number },
+  norm: number,
+  mobileNow: boolean,
+  burst: number,
+  surge: number
+): CardTransform {
+  const cardCount = 18;
+  switch (formIdx) {
+    case 0: {
+      // 0: RIFFLE HELIX SHUFFLE (Interlocking dual-helix waves)
+      const fanAngle = norm * (0.95 + burst * 0.45) + Math.sin(elapsed * 0.8) * 0.15;
+      const radius = (mobileNow ? 2.1 : 2.75) + Math.abs(norm) * 0.65 + burst * 1.1;
+      const riffleWave = Math.sin(elapsed * 2.2 + card.phase);
+      const burstSpread = burst * Math.sin(card.phase * 2.0) * 2.4;
+      return {
+        x: Math.sin(fanAngle) * radius + Math.cos(elapsed * 1.6 + card.phase) * 0.32 + burstSpread * 0.5,
+        y: Math.cos(fanAngle) * 1.15 - 0.35 + riffleWave * 0.35 + Math.sin(elapsed * 3.2 + i * 0.55) * (0.18 + burst * 0.5),
+        z: -Math.abs(norm) * 1.85 + Math.sin(elapsed * 2.4 + card.phase) * 0.65 - burst * 0.8,
+        rotX: Math.sin(elapsed * 1.4 + card.phase) * 0.22 + burst * 0.5,
+        rotY: -fanAngle * 0.72 + Math.sin(elapsed * 1.9 + card.phase) * 0.38 + burst * Math.PI * 2,
+        rotZ: -fanAngle * 0.42 + riffleWave * 0.08,
+        scale: mobileNow ? 0.86 : 1.0,
+      };
+    }
+    case 1: {
+      // 1: MONOLITH CORRIDOR (Two inward-facing avenue sentinels with click-to-surge warp plunge)
+      const corridorSpreadSurge = 1 + surge * 0.22;
+      const surgeWave = Math.sin(elapsed * 5.0 + i * 0.5) * surge * 0.75;
+      const idleWaveY = Math.sin(elapsed * 1.5 + card.phase) * 0.08;
+      const idleWaveRot = Math.sin(elapsed * 1.1 + card.phase) * 0.04;
+      return {
+        x: card.corridorPos.x * corridorSpreadSurge,
+        y: card.corridorPos.y + idleWaveY + surgeWave,
+        z: card.corridorPos.z,
+        rotX: 0,
+        rotY: card.corridorRotY + idleWaveRot,
+        rotZ: 0,
+        scale: card.corridorScale * (1 + surge * 0.18),
+      };
+    }
+    case 2: {
+      // 2: CELESTIAL SOLSTICE WHEEL (360° rotating gyroscopic halo ring)
+      const angle = (i / cardCount) * Math.PI * 2 + elapsed * 0.4 + burst * 1.8;
+      const wheelRadius = mobileNow ? 2.5 : 3.4;
+      const tilt = 0.45;
+      const floatY = Math.sin(elapsed * 1.4 + card.phase) * 0.12;
+      return {
+        x: Math.cos(angle) * wheelRadius,
+        y: Math.sin(angle) * wheelRadius * Math.sin(tilt) + floatY - 0.1,
+        z: Math.sin(angle) * wheelRadius * Math.cos(tilt) - 1.2,
+        rotX: -tilt + Math.sin(elapsed * 1.2 + card.phase) * 0.08,
+        rotY: -angle - Math.PI / 2 + Math.sin(elapsed * 1.6 + card.phase) * 0.06,
+        rotZ: Math.sin(angle) * 0.2,
+        scale: (mobileNow ? 0.82 : 0.96) * (1 + Math.sin(angle) * 0.1),
+      };
+    }
+    case 3: {
+      // 3: MASTER DEALER ARCANE FAN (Panoramic croupier spread across the viewing plane)
+      const fanSpread = mobileNow ? 1.5 : 1.9;
+      const spreadAngle = norm * fanSpread;
+      const archRadius = mobileNow ? 3.8 : 4.9;
+      const breathing = Math.sin(elapsed * 1.5 + card.phase) * 0.06;
+      return {
+        x: Math.sin(spreadAngle) * archRadius * 0.88 + Math.cos(elapsed * 1.2 + card.phase) * 0.06,
+        y: (Math.cos(spreadAngle) - 1) * archRadius * 0.42 + 0.38 + breathing,
+        z: (1 - Math.abs(norm)) * 0.85 - 0.6 - burst * 0.5,
+        rotX: 0.26 + Math.abs(norm) * 0.12,
+        rotY: -spreadAngle * 0.72 + Math.sin(elapsed * 1.1 + card.phase) * 0.04,
+        rotZ: -spreadAngle * 0.88,
+        scale: (mobileNow ? 0.9 : 1.06) * (1 - Math.abs(norm) * 0.08),
+      };
+    }
+    case 4:
+    default: {
+      // 4: VORTEX CYCLONE SPIRE (Ascending double-helix cosmic spire)
+      const helixAngle = (i / cardCount) * Math.PI * 4 + elapsed * 0.72 + burst * 1.2;
+      const heightFrac = (i - (cardCount - 1) / 2) / (cardCount / 2);
+      const helixRadius = (mobileNow ? 1.7 : 2.3) * (1.1 - Math.abs(heightFrac) * 0.25);
+      return {
+        x: Math.cos(helixAngle) * helixRadius,
+        y: heightFrac * 2.6 + Math.sin(elapsed * 2.2 + i * 0.4) * 0.14,
+        z: Math.sin(helixAngle) * helixRadius - 1.4,
+        rotX: 0.18,
+        rotY: -helixAngle + Math.PI / 2,
+        rotZ: Math.sin(helixAngle) * 0.25,
+        scale: (mobileNow ? 0.78 : 0.94) * (1 + (1 - Math.abs(heightFrac)) * 0.15),
+      };
+    }
+  }
 }
 
 /* ==========================================================================
@@ -385,11 +407,20 @@ interface HeroSectionProps {
   onExploreGallery?: () => void;
 }
 
+/**
+ * Helper to generate a random duration in seconds between min and max
+ */
+const getRandomDuration = (min = 1.0, max = 2.0): number => {
+  return parseFloat((min + Math.random() * (max - min)).toFixed(2));
+};
+
 export default function HeroSection({ onExploreGallery }: HeroSectionProps) {
   const heroContainerRef = useRef<HTMLDivElement>(null);
   const mountRef = useRef<HTMLDivElement>(null);
 
-  const [heroMode, setHeroMode] = useState<"shuffle" | "corridor">("shuffle");
+  const [currentFormationIndex, setCurrentFormationIndex] = useState(0);
+  const [isAutoCycling, setIsAutoCycling] = useState(true);
+  const [currentDuration, setCurrentDuration] = useState<number>(1.5);
   const [shuffleCount, setShuffleCount] = useState(1);
   const [webglActive, setWebglActive] = useState(true);
   const [drawnFortune, setDrawnFortune] = useState<Fortune | null>(null);
@@ -398,7 +429,9 @@ export default function HeroSection({ onExploreGallery }: HeroSectionProps) {
   // GSAP animation & dynamic parallax state
   const animStateRef = useRef({
     introDeal: 0, // Starts at 0, cards fly in from side
-    modeBlend: 0, // 0 = 3D Shuffle, 1 = Monolith Corridor
+    fromFormation: 0,
+    toFormation: 0,
+    formationProgress: 1, // 0 to 1 transition between fromFormation and toFormation
     corridorSurge: 0, // 0 to 1 on clicking monolith corridor
     scrollProgress: 0, // Continuous scroll progress
     heroInfluence: 1, // 1 when at top in hero, 0 when scrolled away
@@ -411,16 +444,99 @@ export default function HeroSection({ onExploreGallery }: HeroSectionProps) {
     pointerY: 0,
   });
 
-  // Switch mode smoothly using GSAP
-  const handleModeChange = useCallback((newMode: "shuffle" | "corridor") => {
-    setHeroMode(newMode);
-    const targetBlend = newMode === "corridor" ? 1 : 0;
+  const isAutoCyclingRef = useRef(true);
+  const scheduledCallRef = useRef<gsap.core.Tween | null>(null);
+  const activeTweenRef = useRef<gsap.core.Tween | null>(null);
+  const scheduleNextStepRef = useRef<(() => void) | null>(null);
 
-    gsap.to(animStateRef.current, {
-      modeBlend: targetBlend,
-      duration: 1.4,
+  // Transition between formations smoothly with random or specified duration
+  const transitionToFormation = useCallback((targetIndex: number, duration?: number, resumeAutoCycle = true) => {
+    const fromIdx = animStateRef.current.toFormation;
+    if (fromIdx === targetIndex && animStateRef.current.formationProgress >= 1) {
+      if (resumeAutoCycle && isAutoCyclingRef.current && !scheduledCallRef.current?.isActive() && !activeTweenRef.current?.isActive()) {
+        scheduleNextStepRef.current?.();
+      }
+      return;
+    }
+
+    const chosenDuration = duration ?? getRandomDuration(1.0, 2.0);
+    setCurrentDuration(chosenDuration);
+
+    scheduledCallRef.current?.kill();
+    activeTweenRef.current?.kill();
+    gsap.killTweensOf(animStateRef.current, "formationProgress");
+
+    animStateRef.current.fromFormation = fromIdx;
+    animStateRef.current.toFormation = targetIndex;
+    animStateRef.current.formationProgress = 0;
+    setCurrentFormationIndex(targetIndex);
+
+    activeTweenRef.current = gsap.to(animStateRef.current, {
+      formationProgress: 1.0,
+      duration: chosenDuration,
       ease: "power2.inOut",
-      overwrite: "auto",
+      onComplete: () => {
+        // Automatically continue the auto-cycle loop if enabled!
+        if (resumeAutoCycle && isAutoCyclingRef.current) {
+          scheduleNextStepRef.current?.();
+        }
+      },
+    });
+  }, []);
+
+  // Function to smoothly restart or resume the landing hero animation loop
+  const restartHeroLandingLoop = useCallback((redeal = false) => {
+    setIsAutoCycling(true);
+    isAutoCyclingRef.current = true;
+    scheduledCallRef.current?.kill();
+    activeTweenRef.current?.kill();
+    gsap.killTweensOf(animStateRef.current, "formationProgress");
+    gsap.killTweensOf(animStateRef.current, "introDeal");
+
+    if (redeal) {
+      // Replay the opening deal fly-in into Formation 0 (3D Shuffle)
+      animStateRef.current.introDeal = 0;
+      animStateRef.current.fromFormation = 0;
+      animStateRef.current.toFormation = 0;
+      animStateRef.current.formationProgress = 1;
+      setCurrentFormationIndex(0);
+
+      gsap.to(animStateRef.current, {
+        introDeal: 1.0,
+        duration: 1.2,
+        ease: "power3.out",
+        onComplete: () => {
+          scheduleNextStepRef.current?.();
+        },
+      });
+    } else {
+      // Smoothly transition into the opening 3D Shuffle formation and continue the loop
+      transitionToFormation(0, 1.2, true);
+    }
+  }, [transitionToFormation]);
+
+  const handleSelectFormation = useCallback(
+    (index: number) => {
+      setIsAutoCycling(false);
+      isAutoCyclingRef.current = false;
+      scheduledCallRef.current?.kill();
+      activeTweenRef.current?.kill();
+      transitionToFormation(index, getRandomDuration(1.0, 2.0), false);
+    },
+    [transitionToFormation]
+  );
+
+  const handleToggleAutoCycle = useCallback(() => {
+    setIsAutoCycling((prev) => {
+      const next = !prev;
+      isAutoCyclingRef.current = next;
+      if (next) {
+        scheduleNextStepRef.current?.();
+      } else {
+        scheduledCallRef.current?.kill();
+        activeTweenRef.current?.pause();
+      }
+      return next;
     });
   }, []);
 
@@ -466,78 +582,107 @@ export default function HeroSection({ onExploreGallery }: HeroSectionProps) {
     const target = e.target as HTMLElement;
     if (target.closest("button") || target.closest("input")) return;
 
-    if (animStateRef.current.modeBlend > 0.4) {
+    if (animStateRef.current.toFormation === 1 || animStateRef.current.fromFormation === 1) {
       handleTriggerCorridorSurge();
     }
   };
 
-  // INITIAL LOAD ANIMATION SEQUENCE:
-  // 1. Cards fly in from the side into 3D shuffle
-  // 2. Stay in 3D shuffle position for 1 second
-  // 3. Converts to monolith corridor
+  // CONTINUOUS 5-STAGE CARDISTRY CHOREOGRAPHY WITH RANDOM 1.0 - 2.0s DURATION PER SHUFFLE:
+  // Each hold and each morph transition is dynamically randomized between 1.0 and 2.0 seconds.
   useEffect(() => {
-    const introTl = gsap.timeline({ delay: 0.2 });
+    let isCancelled = false;
 
-    introTl
-      .to(animStateRef.current, {
-        introDeal: 1.0,
-        duration: 1.2,
-        ease: "power3.out",
-      })
-      .to({}, { duration: 1.0 }) // Stay in 3D shuffle for 1.0s
-      .to(animStateRef.current, {
-        modeBlend: 1.0,
-        duration: 1.6,
-        ease: "power2.inOut",
-        onStart: () => setHeroMode("corridor"),
+    // Initial Side Fly-in deal into 01: 3D Shuffle (1.2s intro deal)
+    gsap.to(animStateRef.current, {
+      introDeal: 1.0,
+      duration: 1.2,
+      ease: "power3.out",
+      onComplete: () => {
+        if (isCancelled) return;
+        scheduleNextStep();
+      },
+    });
+
+    const scheduleNextStep = () => {
+      if (isCancelled || !isAutoCyclingRef.current) return;
+
+      // 1. Random hold duration between 1.0 and 2.0 seconds for the current formation
+      const randomHold = getRandomDuration(1.0, 2.0);
+      setCurrentDuration(randomHold);
+
+      scheduledCallRef.current?.kill();
+      scheduledCallRef.current = gsap.delayedCall(randomHold, () => {
+        if (isCancelled || !isAutoCyclingRef.current) return;
+
+        // 2. Advance to next formation in loop
+        const currentIdx = animStateRef.current.toFormation;
+        const nextIdx = (currentIdx + 1) % CARDISTRY_FORMATIONS.length;
+
+        // 3. Random morph transition flight duration between 1.0 and 2.0 seconds
+        const randomMorph = getRandomDuration(1.0, 2.0);
+        setCurrentDuration(randomMorph);
+
+        animStateRef.current.fromFormation = currentIdx;
+        animStateRef.current.toFormation = nextIdx;
+        animStateRef.current.formationProgress = 0;
+        setCurrentFormationIndex(nextIdx);
+        setShuffleCount((c) => c + 1);
+
+        activeTweenRef.current?.kill();
+        activeTweenRef.current = gsap.to(animStateRef.current, {
+          formationProgress: 1.0,
+          duration: randomMorph,
+          ease: "power2.inOut",
+          onComplete: () => {
+            if (isCancelled) return;
+            scheduleNextStep();
+          },
+        });
       });
+    };
+
+    scheduleNextStepRef.current = scheduleNextStep;
 
     return () => {
-      introTl.kill();
+      isCancelled = true;
+      scheduledCallRef.current?.kill();
+      activeTweenRef.current?.kill();
     };
   }, []);
 
-  // Continuous Window Scroll Listener & Section Spotlight Coordinator
+  // Continuous Window Scroll Listener & Hero Top Detection
   useEffect(() => {
-    const calcSectionInfluence = (elementId: string, windowH: number) => {
-      const el = document.getElementById(elementId);
-      if (!el) return 0;
-      const rect = el.getBoundingClientRect();
-      // Target viewing center: when the section header is in the active reading area
-      const headerCenter = rect.top + Math.min(rect.height, windowH) * 0.35;
-      const viewCenter = windowH * 0.45;
-      const dist = Math.abs(headerCenter - viewCenter) / (windowH * 0.65);
-      const raw = THREE.MathUtils.clamp(1 - dist, 0, 1);
-      return raw * raw * (3 - 2 * raw); // smoothstep
-    };
+    let wasAtTop = true;
 
     const onScroll = () => {
       const scrollY = window.scrollY || document.documentElement.scrollTop;
       const windowH = window.innerHeight || 800;
-
-      // 1. Hero influence: 1 at top, fades to 0 as user scrolls past hero
-      const heroInf = THREE.MathUtils.clamp(1 - scrollY / (windowH * 0.72), 0, 1);
-      animStateRef.current.heroInfluence = heroInf * heroInf * (3 - 2 * heroInf);
-
-      // 2. Section "cards" (What is Sanskaran / Archetypes) -> Summons ONLY the Spade card!
-      animStateRef.current.spadeInfluence = calcSectionInfluence("cards", windowH);
-
-      // 3. Section "gallery" (Side-Flowing Gallery / Reels) -> Summons Club card
-      animStateRef.current.clubInfluence = calcSectionInfluence("gallery", windowH) || calcSectionInfluence("about", windowH);
-
-      // 4. Section "pre-register" (Genesis Pass Deck) -> Summons Heart card
-      animStateRef.current.heartInfluence = calcSectionInfluence("pre-register", windowH);
-
-      // 5. Section "core-members" (New Core Members / Diamond Court) -> Summons Diamond card
-      animStateRef.current.diamondInfluence = calcSectionInfluence("core-members", windowH);
-
       animStateRef.current.scrollProgress = scrollY / windowH;
+
+      const isAtTopNow = scrollY <= 30;
+      // If user scrolled back up to hero, immediately resume/restart the landing animation loop!
+      if (isAtTopNow && !wasAtTop) {
+        restartHeroLandingLoop(false);
+      }
+      wasAtTop = isAtTopNow;
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [restartHeroLandingLoop]);
+
+  // Listen for Navbar logo click or "Back to Top" navigation events
+  useEffect(() => {
+    const handleRestartEvent = (e: Event) => {
+      const customEvent = e as CustomEvent<{ resetIntro?: boolean }>;
+      const resetIntro = customEvent.detail?.resetIntro ?? false;
+      restartHeroLandingLoop(resetIntro);
+    };
+
+    window.addEventListener("hero:restart-loop", handleRestartEvent);
+    return () => window.removeEventListener("hero:restart-loop", handleRestartEvent);
+  }, [restartHeroLandingLoop]);
 
   // Global Pointer/Mouse Tracking across the entire window
   useEffect(() => {
@@ -552,7 +697,7 @@ export default function HeroSection({ onExploreGallery }: HeroSectionProps) {
     return () => window.removeEventListener("mousemove", handleGlobalPointerMove);
   }, []);
 
-  // ScrollTrigger to guarantee corridor mode is engaged when user scrolls down
+  // ScrollTrigger to seamlessly coordinate Hero formation transitions & auto-cycle on re-entry
   useEffect(() => {
     if (!heroContainerRef.current) return;
 
@@ -562,16 +707,19 @@ export default function HeroSection({ onExploreGallery }: HeroSectionProps) {
         start: "top top",
         end: "+=80%",
         onLeave: () => {
-          if (animStateRef.current.modeBlend < 1) {
-            gsap.to(animStateRef.current, { modeBlend: 1.0, duration: 0.8, ease: "power2.out" });
-            setHeroMode("corridor");
+          if (animStateRef.current.toFormation !== 1) {
+            transitionToFormation(1, 1.0, false);
           }
+        },
+        onEnterBack: () => {
+          // When scrolling back up into hero section, restart the landing animation loop!
+          restartHeroLandingLoop(false);
         },
       });
     }, heroContainerRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [transitionToFormation, restartHeroLandingLoop]);
 
   // Three.js Scene Setup & Loop
   useEffect(() => {
@@ -751,7 +899,8 @@ export default function HeroSection({ onExploreGallery }: HeroSectionProps) {
 
       window.addEventListener("resize", handleResize);
 
-      const clock = new THREE.Clock();
+      let lastTime = performance.now();
+      const startTime = performance.now();
       const targetPos = new THREE.Vector3();
       const targetScaleVec = new THREE.Vector3();
 
@@ -759,37 +908,50 @@ export default function HeroSection({ onExploreGallery }: HeroSectionProps) {
         animationFrameId = requestAnimationFrame(animateLoop);
         if (!renderer) return;
 
-        const dt = Math.min(clock.getDelta(), 0.05);
-        const elapsed = clock.getElapsedTime();
+        const now = performance.now();
+        const dt = Math.min((now - lastTime) / 1000, 0.05);
+        lastTime = now;
+        const elapsed = (now - startTime) / 1000;
 
         const deal = animStateRef.current.introDeal; // 0 to 1
-        const modeBlend = animStateRef.current.modeBlend; // 0 to 1
+        const fromForm = animStateRef.current.fromFormation;
+        const toForm = animStateRef.current.toFormation;
+        const formProgress = animStateRef.current.formationProgress;
         const burst = animStateRef.current.shuffleImpulse;
         const surge = animStateRef.current.corridorSurge; // 0 to 1
         const scroll = animStateRef.current.scrollProgress; // 0 to 1+
 
+        // Corridor blend for camera & fog interpolation
+        const fromCorridorWeight = fromForm === 1 ? 1 : 0;
+        const toCorridorWeight = toForm === 1 ? 1 : 0;
+        const corridorBlend = THREE.MathUtils.lerp(fromCorridorWeight, toCorridorWeight, formProgress);
+
         // Fog
         const shuffleFog = new THREE.Color("#140E17");
         const corridorFog = new THREE.Color(surge > 0.3 ? "#A84C0F" : "#8A420E");
-        fog.color.lerpColors(shuffleFog, corridorFog, modeBlend);
-        fog.density = THREE.MathUtils.lerp(0.032, 0.072 + surge * 0.02, modeBlend);
+        fog.color.lerpColors(shuffleFog, corridorFog, corridorBlend);
+        fog.density = THREE.MathUtils.lerp(0.032, 0.072 + surge * 0.02, corridorBlend);
 
-        floorMesh.position.y = THREE.MathUtils.lerp(-4.5, -3.2 - scroll * 5.0, modeBlend);
+        floorMesh.position.y = THREE.MathUtils.lerp(-4.5, -3.2 - scroll * 5.0, corridorBlend);
 
         // Camera Dynamics:
         const mobileNow = (window.innerWidth) < 640;
-        const baseZ = THREE.MathUtils.lerp(mobileNow ? 10.6 : 8.1, mobileNow ? 7.8 : 6.4, modeBlend);
+        const baseZ = THREE.MathUtils.lerp(mobileNow ? 10.6 : 8.1, mobileNow ? 7.8 : 6.4, corridorBlend);
         const surgeZPlunge = surge * 7.5;
 
         // Camera smoothly follows mouse pointer with depth lerp & vertical scroll tracking
         const scrollCamY = -scroll * 0.8;
         const targetCamX = animStateRef.current.pointerX * (mobileNow ? 0.55 : 0.95);
-        const targetCamY = THREE.MathUtils.lerp(0.35, -0.22, modeBlend) + scrollCamY + animStateRef.current.pointerY * 0.45;
+        const targetCamY = THREE.MathUtils.lerp(0.35, -0.22, corridorBlend) + scrollCamY + animStateRef.current.pointerY * 0.45;
 
         camera.position.x += (targetCamX - camera.position.x) * 0.06;
         camera.position.y += (targetCamY - camera.position.y) * 0.06;
         camera.position.z += (baseZ - surgeZPlunge - camera.position.z) * (surge > 0.1 ? 0.12 : 0.06);
-        camera.lookAt(0, THREE.MathUtils.lerp(0.1, -0.3, modeBlend) + scrollCamY, THREE.MathUtils.lerp(0, -10, modeBlend));
+        camera.lookAt(
+          0,
+          THREE.MathUtils.lerp(0.1, -0.3, corridorBlend) + scrollCamY,
+          THREE.MathUtils.lerp(0, -10, corridorBlend)
+        );
 
         // Light Surges
         horizonBacklight.intensity = 7.5 + surge * 18.0;
@@ -808,11 +970,6 @@ export default function HeroSection({ onExploreGallery }: HeroSectionProps) {
           const card = cards[i];
           const norm = (i - (CARD_COUNT - 1) / 2) / (CARD_COUNT / 2);
 
-          const riffleWave = Math.sin(elapsed * 2.2 + card.phase);
-          const burstSpread = burst * Math.sin(card.phase * 2.0) * 2.4;
-          const fanAngle = norm * (0.95 + burst * 0.45) + Math.sin(elapsed * 0.8) * 0.15;
-          const radius = (mobileNow ? 2.1 : 2.75) + Math.abs(norm) * 0.65 + burst * 1.1;
-
           // Staggered per-card side deal so EVERY card flies in from the side sequentially:
           const cardDealStagger = (i / CARD_COUNT) * 0.45;
           const cardDealRaw = THREE.MathUtils.clamp((deal - cardDealStagger) / (1 - 0.45), 0, 1);
@@ -821,41 +978,26 @@ export default function HeroSection({ onExploreGallery }: HeroSectionProps) {
           const sideFlyRotZ = (i % 2 === 0 ? -2.2 : 2.2) * (1 - cardDealEased);
           const sideFlyRotY = (i % 2 === 0 ? 2.8 : -2.8) * (1 - cardDealEased);
 
-          // 3D Shuffle Position
-          const shuffleX = Math.sin(fanAngle) * radius + Math.cos(elapsed * 1.6 + card.phase) * 0.32 + burstSpread * 0.5 + sideFlyX;
-          const shuffleY =
-            Math.cos(fanAngle) * 1.15 -
-            0.35 +
-            riffleWave * 0.35 +
-            Math.sin(elapsed * 3.2 + i * 0.55) * (0.18 + burst * 0.5);
-          const shuffleZ = -Math.abs(norm) * 1.85 + Math.sin(elapsed * 2.4 + card.phase) * 0.65 - burst * 0.8;
+          // Cardistry Formation transforms:
+          const tFrom = getFormationTransform(fromForm, i, elapsed, card, norm, mobileNow, burst, surge);
+          const tTo = getFormationTransform(toForm, i, elapsed, card, norm, mobileNow, burst, surge);
 
-          const shuffleRotX = Math.sin(elapsed * 1.4 + card.phase) * 0.22 + burst * 0.5;
-          const shuffleRotY = -fanAngle * 0.72 + Math.sin(elapsed * 1.9 + card.phase) * 0.38 + burst * Math.PI * 2 + sideFlyRotY;
-          const shuffleRotZ = -fanAngle * 0.42 + riffleWave * 0.08 + sideFlyRotZ;
+          // Staggered ripple morphing delay per card:
+          const morphStagger = (i / CARD_COUNT) * 0.22;
+          const cardMorphRaw = THREE.MathUtils.clamp((formProgress - morphStagger) / (1 - 0.22), 0, 1);
+          const cardMorphEased = cardMorphRaw * cardMorphRaw * (3 - 2 * cardMorphRaw);
 
-          // Base Monolith Corridor Position with Surge Plunge & Idle Wave
-          const corridorSpreadSurge = 1 + surge * 0.22;
-          const surgeWave = Math.sin(elapsed * 5.0 + i * 0.5) * surge * 0.75;
-          const idleWaveY = Math.sin(elapsed * 1.5 + card.phase) * 0.08;
-          const idleWaveRot = Math.sin(elapsed * 1.1 + card.phase) * 0.04;
+          // Physical card lift arc & flight banking roll:
+          const arcLift = Math.sin(cardMorphEased * Math.PI) * 0.55;
+          const flightBank = Math.sin(cardMorphEased * Math.PI) * (i % 2 === 0 ? 0.35 : -0.35);
 
-          const heroCorridorX = card.corridorPos.x * corridorSpreadSurge;
-          const heroCorridorY = card.corridorPos.y + idleWaveY + surgeWave;
-          const heroCorridorZ = card.corridorPos.z;
-
-          // In-Hero Position (interpolates between 3D Shuffle and Monolith Corridor)
-          const inHeroX = THREE.MathUtils.lerp(shuffleX, heroCorridorX, modeBlend);
-          const inHeroY = THREE.MathUtils.lerp(shuffleY, heroCorridorY, modeBlend);
-          const inHeroZ = THREE.MathUtils.lerp(shuffleZ, heroCorridorZ, modeBlend);
-          const inHeroRotX = THREE.MathUtils.lerp(shuffleRotX, 0, modeBlend);
-          const inHeroRotY = THREE.MathUtils.lerp(shuffleRotY, card.corridorRotY + idleWaveRot, modeBlend);
-          const inHeroRotZ = THREE.MathUtils.lerp(shuffleRotZ, 0, modeBlend);
-          const inHeroScale = THREE.MathUtils.lerp(
-            mobileNow ? 0.86 : 1.0,
-            card.corridorScale * (1 + surge * 0.18),
-            modeBlend
-          );
+          const inHeroX = THREE.MathUtils.lerp(tFrom.x, tTo.x, cardMorphEased) + sideFlyX;
+          const inHeroY = THREE.MathUtils.lerp(tFrom.y, tTo.y, cardMorphEased) + arcLift;
+          const inHeroZ = THREE.MathUtils.lerp(tFrom.z, tTo.z, cardMorphEased);
+          const inHeroRotX = THREE.MathUtils.lerp(tFrom.rotX, tTo.rotX, cardMorphEased);
+          const inHeroRotY = THREE.MathUtils.lerp(tFrom.rotY, tTo.rotY, cardMorphEased) + flightBank + sideFlyRotY;
+          const inHeroRotZ = THREE.MathUtils.lerp(tFrom.rotZ, tTo.rotZ, cardMorphEased) + sideFlyRotZ;
+          const inHeroScale = THREE.MathUtils.lerp(tFrom.scale, tTo.scale, cardMorphEased);
 
           // CURSOR PARALLAX SPRING FACTOR
           const depthFactor = (1 - (card.corridorPos.z / -12)) * 0.75 + 0.35;
@@ -865,60 +1007,14 @@ export default function HeroSection({ onExploreGallery }: HeroSectionProps) {
           const cursorTiltX = animStateRef.current.pointerY * (0.12 * depthFactor);
           const cursorTiltY = animStateRef.current.pointerX * (0.24 * depthFactor);
 
-          // DEFAULT TARGET: in-hero position with cursor follow
-          let destX = inHeroX + cursorFollowX * heroInf;
-          let destY = inHeroY + cursorFollowY * heroInf;
-          let destZ = inHeroZ;
-          let destRotX = inHeroRotX + cursorTiltX * heroInf;
-          let destRotY = inHeroRotY + cursorTiltY * heroInf;
-          let destRotZ = inHeroRotZ + cursorTiltZ * heroInf;
-          let destScale = inHeroScale;
-
-          // CONTINUOUS MOVIE VERTICAL PARALLAX (HENRIETTA-INSPIRED):
-          // Cards NEVER minimize to infinity! Full physical scale is maintained.
-          // Cards glide continuously vertically past the camera with differential layer speeds,
-          // flanking the left & right gutters as you scroll down the page like a continuous film.
-
-          const isLeft = (i % 2 === 0);
-          const colTier = i % 3; // 0, 1, 2
-
-          // Horizontal placement: Flanks the left and right gutters to keep the central reading column clear
-          const flankMarginX = isLeft
-            ? (-3.1 - colTier * 0.7)
-            : (3.1 + colTier * 0.7);
-          const targetFlankX = mobileNow
-            ? (isLeft ? -1.75 : 1.75)
-            : flankMarginX;
-
-          // Continuous vertical parallax velocity:
-          // Staggered vertical base spacing so cards are distributed along the vertical travel axis
-          const verticalBaseY = ((i % 6) - 2.5) * 2.4;
-          // Differential parallax speed per card layer (2.2 to 4.5)
-          const parallaxSpeed = 2.4 + ((i * 3) % 7) * 0.35;
-          // Smooth continuous vertical drift upwards as user scrolls down:
-          const verticalParallaxY = verticalBaseY + (scroll * parallaxSpeed * 2.2);
-
-          // Natural 3D depth layering:
-          // Cards remain clearly visible between Z = +1.8 and Z = -6.5, NEVER disappearing into fog or infinity
-          const naturalLayerZ = -0.5 - colTier * 2.2 + (isLeft ? 0.8 : -0.8);
-
-          // Full physical scale: preserved at full scale (with subtle perspective scaling based on layer)
-          const fullMovieScale = (mobileNow ? 0.88 : 1.05) * (1 - colTier * 0.08);
-
-          // Continuous Rotational Cinematic Sway:
-          const movieSwayRotX = Math.sin(elapsed * 1.1 + card.phase) * 0.12 + cursorTiltX * 0.8;
-          const movieSwayRotY = (isLeft ? 0.22 : -0.22) + Math.cos(elapsed * 0.85 + card.phase) * 0.08 + cursorTiltY * 0.8;
-          const movieSwayRotZ = (isLeft ? -0.06 : 0.06) + Math.sin(elapsed * 1.4 + card.phase) * 0.05 + cursorTiltZ * 0.8;
-
-          // When heroInf = 1 (Hero section), cards sit in their 3D Shuffle / Monolith Corridor.
-          // As user scrolls down (heroInf -> 0), cards seamlessly transition into the continuous vertical movie!
-          destX = THREE.MathUtils.lerp(targetFlankX + cursorFollowX, inHeroX + cursorFollowX * heroInf, heroInf);
-          destY = THREE.MathUtils.lerp(verticalParallaxY + idleWaveY + cursorFollowY, inHeroY + cursorFollowY * heroInf, heroInf);
-          destZ = THREE.MathUtils.lerp(naturalLayerZ, inHeroZ, heroInf);
-          destScale = THREE.MathUtils.lerp(fullMovieScale, inHeroScale, heroInf);
-          destRotX = THREE.MathUtils.lerp(movieSwayRotX, inHeroRotX + cursorTiltX * heroInf, heroInf);
-          destRotY = THREE.MathUtils.lerp(movieSwayRotY, inHeroRotY + cursorTiltY * heroInf, heroInf);
-          destRotZ = THREE.MathUtils.lerp(movieSwayRotZ, inHeroRotZ + cursorTiltZ * heroInf, heroInf);
+          // TARGET: in-hero position with interactive cursor follow
+          const destX = inHeroX + cursorFollowX;
+          const destY = inHeroY + cursorFollowY;
+          const destZ = inHeroZ;
+          const destScale = inHeroScale;
+          const destRotX = inHeroRotX + cursorTiltX;
+          const destRotY = inHeroRotY + cursorTiltY;
+          const destRotZ = inHeroRotZ + cursorTiltZ;
 
           targetPos.set(destX, destY, destZ);
           card.mesh.position.lerp(targetPos, 0.12);
@@ -985,14 +1081,14 @@ export default function HeroSection({ onExploreGallery }: HeroSectionProps) {
       ref={heroContainerRef}
       onClick={handleHeroClick}
       onPointerMove={handlePointerMove}
-      className={`relative min-h-[100svh] w-full overflow-hidden flex flex-col justify-between pt-20 pb-8 sm:pt-24 sm:pb-12 ${
-        heroMode === "corridor" ? "cursor-pointer" : ""
+      className={`relative min-h-[100svh] w-full overflow-hidden flex flex-col justify-between pt-20 pb-8 sm:pt-24 sm:pb-12 border-b border-[#8B1E24]/50 ${
+        currentFormationIndex === 1 ? "cursor-pointer" : ""
       }`}
     >
-      {/* 3D WebGL Canvas Layer - Fixed so cards remain visible throughout page scroll */}
+      {/* 3D WebGL Canvas Layer - Strictly contained within the Hero Section */}
       <div
         ref={mountRef}
-        className="fixed inset-0 pointer-events-none z-[1] overflow-hidden"
+        className="absolute inset-0 pointer-events-none z-0 overflow-hidden"
         aria-hidden="true"
       />
 
@@ -1024,24 +1120,11 @@ export default function HeroSection({ onExploreGallery }: HeroSectionProps) {
         }}
       />
 
-      {/* Top Banner Tag */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-8">
-        <motion.div
-          initial={{ opacity: 0, x: -24 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.7, ease: EASE_SWISS }}
-          className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-[#120E15]/80 backdrop-blur-md border border-[#8B1E24] text-[#FFF4E0]"
-        >
-          <Icon.Flame className="w-3.5 h-3.5 text-[#FFAA24]" />
-          <span className="font-tech text-[11px] sm:text-xs font-semibold tracking-[0.2em] uppercase">
-            SANSKARAN &amp; SAHOTSAVA // ANNUAL EDITION
-          </span>
-        </motion.div>
-      </div>
+   
 
-      {/* Main Hero Typography & HUD */}
+      {/* Main Hero Typography */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-8 mt-auto pt-36 sm:pt-44">
-        <div className="border-l-2 border-[#FFAA24] pl-4 sm:pl-6 max-w-3xl">
+        <div className="max-w-3xl">
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -1071,43 +1154,26 @@ export default function HeroSection({ onExploreGallery }: HeroSectionProps) {
           >
             Every card represents a different destiny, talent, culture and identity. Together, they create an unpredictable world of experiences.
           </motion.p>
-
-          {/* Interactive Monolith Corridor Surge Prompt */}
-          {heroMode === "corridor" && (
-            <motion.div
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="mt-3 inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#FFAA24]/10 border border-[#FFAA24]/40 text-[#FFAA24] text-[11px] font-mono uppercase tracking-wider"
-            >
-              <Icon.Zap className="w-3.5 h-3.5 animate-pulse text-cyan-400" />
-              <span>Click anywhere on corridor to trigger Warp Surge</span>
-            </motion.div>
-          )}
         </div>
 
-        {/* HUD Control Strip & Explore CTA */}
+        {/* Explore Festival CTA */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.75, delay: 0.38, ease: EASE_SWISS }}
-          className="mt-6 sm:mt-8 flex flex-col lg:flex-row lg:items-end justify-between gap-4"
+          className="mt-8 sm:mt-10 flex flex-wrap items-center justify-between gap-4 pb-2"
         >
-          <ThreeUISpatialHUD
-            mode={heroMode}
-            shuffleCount={shuffleCount}
-            cardCount={18}
-            webglActive={webglActive}
-            surgeActive={surgeActive}
-            onModeChange={handleModeChange}
-            onShuffleBurst={handleShuffleBurst}
-            onDrawFortune={handleDrawFortune}
-            onTriggerSurge={handleTriggerCorridorSurge}
-          />
 
           <button
             type="button"
-            onClick={onExploreGallery}
-            className="self-start lg:self-end inline-flex items-center gap-2 px-4 py-3 rounded-xl bg-[#FFF4E0] hover:bg-[#FFAA24] text-[#120E15] font-tech text-xs font-bold tracking-widest uppercase transition-colors cursor-pointer"
+            onClick={() => {
+              if (onExploreGallery) {
+                onExploreGallery();
+              } else {
+                gsapScrollTo("#about", SMOOTH_SCROLL_CONFIG.duration, SMOOTH_SCROLL_CONFIG.offset);
+              }
+            }}
+            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-[#FFF4E0] hover:bg-[#FFAA24] text-[#120E15] font-tech text-xs font-bold tracking-widest uppercase transition-colors cursor-pointer shadow-[0_4px_24px_rgba(255,244,224,0.18)] active:scale-95"
           >
             <span>Explore Festival</span>
             <Icon.ChevronRight className="w-4 h-4" />
