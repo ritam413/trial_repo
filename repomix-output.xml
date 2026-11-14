@@ -1,0 +1,3636 @@
+This file is a merged representation of a subset of the codebase, containing specifically included files and files not matching ignore patterns, combined into a single document by Repomix.
+The content has been processed where line numbers have been added.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of a subset of the repository's contents that is considered the most important context.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Only files matching these patterns are included: src/**/*.{ts,tsx,css}, context.md, features_implemented.md, tracker.md, package.json, components.json, next.config.ts
+- Files matching these patterns are excluded: node_modules/**, .next/**, .git/**, repomix-output.*, package-lock.json, **/*.log
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Line numbers have been added to the beginning of each line
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+src/
+  app/
+    globals.css
+    layout.tsx
+    page.tsx
+  components/
+    3d/
+      EventScene.tsx
+    event/
+      CoreMembersSection.tsx
+      Countdown.tsx
+      Footer.tsx
+      Hero.tsx
+      HeroSection.tsx
+      herosetction.tsx
+      Navbar.tsx
+      ParallaxBackground.tsx
+      WaitlistSection.tsx
+    ui/
+      button.tsx
+      card-spotlight.tsx
+      card.tsx
+  lib/
+    utils.ts
+components.json
+context.md
+features_implemented.md
+next.config.ts
+package.json
+tracker.md
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="src/components/3d/EventScene.tsx">
+  1: "use client";
+  2: 
+  3: import React, { useEffect, useRef } from "react";
+  4: import * as THREE from "three";
+  5: 
+  6: interface EventSceneProps {
+  7:   className?: string;
+  8: }
+  9: 
+ 10: export default function EventScene({ className }: EventSceneProps) {
+ 11:   const containerRef = useRef<HTMLDivElement>(null);
+ 12: 
+ 13:   useEffect(() => {
+ 14:     const container = containerRef.current;
+ 15:     if (!container) return;
+ 16: 
+ 17:     // 1. Scene, Camera & Renderer
+ 18:     const scene = new THREE.Scene();
+ 19: 
+ 20:     const camera = new THREE.PerspectiveCamera(
+ 21:       45,
+ 22:       container.clientWidth / container.clientHeight,
+ 23:       0.1,
+ 24:       100
+ 25:     );
+ 26:     camera.position.set(0, 0, 8);
+ 27: 
+ 28:     const renderer = new THREE.WebGLRenderer({
+ 29:       antialias: true,
+ 30:       alpha: true,
+ 31:       powerPreference: "high-performance",
+ 32:     });
+ 33:     renderer.setSize(container.clientWidth, container.clientHeight);
+ 34:     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+ 35:     renderer.toneMapping = THREE.ACESFilmicToneMapping;
+ 36:     renderer.toneMappingExposure = 1.2;
+ 37:     renderer.shadowMap.enabled = true;
+ 38:     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+ 39: 
+ 40:     container.appendChild(renderer.domElement);
+ 41: 
+ 42:     // 2. Lighting Setup
+ 43:     const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
+ 44:     scene.add(ambientLight);
+ 45: 
+ 46:     const blueLight = new THREE.PointLight(0x3b82f6, 40, 20);
+ 47:     blueLight.position.set(-4, 3, 4);
+ 48:     scene.add(blueLight);
+ 49: 
+ 50:     const cyanLight = new THREE.PointLight(0x06b6d4, 35, 20);
+ 51:     cyanLight.position.set(4, -3, 3);
+ 52:     scene.add(cyanLight);
+ 53: 
+ 54:     const purpleLight = new THREE.DirectionalLight(0xa855f7, 2);
+ 55:     purpleLight.position.set(0, 6, 2);
+ 56:     scene.add(purpleLight);
+ 57: 
+ 58:     // 3. 3D Deck of Cards Group
+ 59:     const cardGroup = new THREE.Group();
+ 60:     scene.add(cardGroup);
+ 61: 
+ 62:     // Card dimensions
+ 63:     const cardWidth = 1.8;
+ 64:     const cardHeight = 2.6;
+ 65:     const cardDepth = 0.04;
+ 66:     const cardGeometry = new THREE.BoxGeometry(cardWidth, cardHeight, cardDepth);
+ 67: 
+ 68:     // Materials
+ 69:     const cardColors = [0x1e293b, 0x0f172a, 0x1e1b4b, 0x312e81, 0x0284c7];
+ 70:     const cardCount = 7;
+ 71:     const cards: THREE.Mesh[] = [];
+ 72: 
+ 73:     for (let i = 0; i < cardCount; i++) {
+ 74:       const material = new THREE.MeshPhysicalMaterial({
+ 75:         color: cardColors[i % cardColors.length],
+ 76:         metalness: 0.7,
+ 77:         roughness: 0.2,
+ 78:         clearcoat: 0.8,
+ 79:         clearcoatRoughness: 0.1,
+ 80:         reflectivity: 0.9,
+ 81:       });
+ 82: 
+ 83:       const mesh = new THREE.Mesh(cardGeometry, material);
+ 84:       
+ 85:       // Fan arrangement (Deck of cards)
+ 86:       const angle = (i - (cardCount - 1) / 2) * 0.14;
+ 87:       mesh.position.x = Math.sin(angle) * 2.2;
+ 88:       mesh.position.y = -Math.abs(angle) * 0.8;
+ 89:       mesh.position.z = -i * 0.12;
+ 90:       mesh.rotation.z = -angle * 0.8;
+ 91:       mesh.rotation.y = angle * 0.5;
+ 92: 
+ 93:       // Add a glowing holographic border edge
+ 94:       const edges = new THREE.EdgesGeometry(cardGeometry);
+ 95:       const edgeMaterial = new THREE.LineBasicMaterial({
+ 96:         color: i % 2 === 0 ? 0x00f0ff : 0xa855f7,
+ 97:         linewidth: 2,
+ 98:       });
+ 99:       const edgeLines = new THREE.LineSegments(edges, edgeMaterial);
+100:       mesh.add(edgeLines);
+101: 
+102:       cardGroup.add(mesh);
+103:       cards.push(mesh);
+104:     }
+105: 
+106:     // 4. Stardust / Floating Particle Nebula
+107:     const particleCount = 600;
+108:     const particleGeometry = new THREE.BufferGeometry();
+109:     const positions = new Float32Array(particleCount * 3);
+110:     const colors = new Float32Array(particleCount * 3);
+111: 
+112:     for (let i = 0; i < particleCount * 3; i += 3) {
+113:       positions[i] = (Math.random() - 0.5) * 16;
+114:       positions[i + 1] = (Math.random() - 0.5) * 16;
+115:       positions[i + 2] = (Math.random() - 0.5) * 12;
+116: 
+117:       // Cosmic blue & cyan & violet hues
+118:       const choice = Math.random();
+119:       if (choice < 0.4) {
+120:         colors[i] = 0.23; colors[i + 1] = 0.51; colors[i + 2] = 0.96; // Blue
+121:       } else if (choice < 0.7) {
+122:         colors[i] = 0.02; colors[i + 1] = 0.71; colors[i + 2] = 0.83; // Cyan
+123:       } else {
+124:         colors[i] = 0.66; colors[i + 1] = 0.33; colors[i + 2] = 0.97; // Violet
+125:       }
+126:     }
+127: 
+128:     particleGeometry.setAttribute(
+129:       "position",
+130:       new THREE.BufferAttribute(positions, 3)
+131:     );
+132:     particleGeometry.setAttribute(
+133:       "color",
+134:       new THREE.BufferAttribute(colors, 3)
+135:     );
+136: 
+137:     const particleMaterial = new THREE.PointsMaterial({
+138:       size: 0.045,
+139:       vertexColors: true,
+140:       transparent: true,
+141:       opacity: 0.75,
+142:       blending: THREE.AdditiveBlending,
+143:     });
+144: 
+145:     const particles = new THREE.Points(particleGeometry, particleMaterial);
+146:     scene.add(particles);
+147: 
+148:     // 5. Interactive Mouse Parallax
+149:     let mouseX = 0;
+150:     let mouseY = 0;
+151:     let targetX = 0;
+152:     let targetY = 0;
+153: 
+154:     const handleMouseMove = (event: MouseEvent) => {
+155:       mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+156:       mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+157:     };
+158: 
+159:     window.addEventListener("mousemove", handleMouseMove, { passive: true });
+160: 
+161:     // 6. Responsive Resize Handler
+162:     const handleResize = () => {
+163:       if (!container) return;
+164:       const width = container.clientWidth;
+165:       const height = container.clientHeight;
+166: 
+167:       camera.aspect = width / height;
+168:       camera.updateProjectionMatrix();
+169: 
+170:       renderer.setSize(width, height);
+171:       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+172:     };
+173: 
+174:     window.addEventListener("resize", handleResize);
+175: 
+176:     // 7. Render Loop with Smooth Damping
+177:     let animationFrameId: number;
+178:     let clock = new THREE.Clock();
+179: 
+180:     const render = () => {
+181:       const elapsedTime = clock.getElapsedTime();
+182: 
+183:       // Smooth mouse interpolation
+184:       targetX += (mouseX - targetX) * 0.05;
+185:       targetY += (mouseY - targetY) * 0.05;
+186: 
+187:       // Card group floating motion + mouse response
+188:       cardGroup.rotation.y = Math.sin(elapsedTime * 0.6) * 0.15 + targetX * 0.35;
+189:       cardGroup.rotation.x = Math.cos(elapsedTime * 0.5) * 0.1 - targetY * 0.25;
+190:       cardGroup.position.y = Math.sin(elapsedTime * 1.2) * 0.15;
+191: 
+192:       // Subtle breathing animation on individual cards
+193:       cards.forEach((card, idx) => {
+194:         card.position.y += Math.sin(elapsedTime * 1.5 + idx) * 0.0015;
+195:       });
+196: 
+197:       // Slowly rotate particle field
+198:       particles.rotation.y = elapsedTime * 0.03;
+199:       particles.rotation.x = elapsedTime * 0.015;
+200: 
+201:       renderer.render(scene, camera);
+202:       animationFrameId = requestAnimationFrame(render);
+203:     };
+204: 
+205:     render();
+206: 
+207:     // 8. Strict GPU Resource Disposal
+208:     return () => {
+209:       cancelAnimationFrame(animationFrameId);
+210:       window.removeEventListener("mousemove", handleMouseMove);
+211:       window.removeEventListener("resize", handleResize);
+212: 
+213:       // Clean scene graph
+214:       cardGeometry.dispose();
+215:       particleGeometry.dispose();
+216:       particleMaterial.dispose();
+217: 
+218:       cards.forEach((card) => {
+219:         if (Array.isArray(card.material)) {
+220:           card.material.forEach((m) => m.dispose());
+221:         } else {
+222:           card.material.dispose();
+223:         }
+224:       });
+225: 
+226:       renderer.dispose();
+227:       if (container.contains(renderer.domElement)) {
+228:         container.removeChild(renderer.domElement);
+229:       }
+230:     };
+231:   }, []);
+232: 
+233:   return (
+234:     <div
+235:       ref={containerRef}
+236:       className={className || "webgl-canvas-container"}
+237:       style={{ overflow: "hidden" }}
+238:     />
+239:   );
+240: }
+</file>
+
+<file path="src/components/event/CoreMembersSection.tsx">
+  1: "use client";
+  2: 
+  3: import React, { useState, useRef, useCallback } from "react";
+  4: import gsap from "gsap";
+  5: import { ScrollTrigger } from "gsap/ScrollTrigger";
+  6: import { useGSAP } from "@gsap/react";
+  7: 
+  8: if (typeof window !== "undefined") {
+  9:   gsap.registerPlugin(ScrollTrigger, useGSAP);
+ 10: }
+ 11: 
+ 12: /* ==========================================================================
+ 13:    1. VECTOR ICONS (SELF-CONTAINED & CRISP)
+ 14:    ========================================================================== */
+ 15: const Icon = {
+ 16:   RotateCw: ({ className = "w-3.5 h-3.5" }: { className?: string }) => (
+ 17:     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+ 18:       <polyline points="23 4 23 10 17 10" />
+ 19:       <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
+ 20:     </svg>
+ 21:   ),
+ 22:   Shuffle: ({ className = "w-4 h-4" }: { className?: string }) => (
+ 23:     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+ 24:       <polyline points="16 3 21 3 21 8" />
+ 25:       <line x1="4" y1="20" x2="21" y2="3" />
+ 26:       <polyline points="21 16 21 21 16 21" />
+ 27:       <line x1="15" y1="15" x2="21" y2="21" />
+ 28:       <line x1="4" y1="4" x2="9" y2="9" />
+ 29:     </svg>
+ 30:   ),
+ 31:   Crown: ({ className = "w-4 h-4" }: { className?: string }) => (
+ 32:     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+ 33:       <path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14" />
+ 34:     </svg>
+ 35:   ),
+ 36:   Sparkles: ({ className = "w-4 h-4" }: { className?: string }) => (
+ 37:     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+ 38:       <path d="M12 3l1.9 5.8a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-1.9a2 2 0 0 0 1.3-1.3L12 3z" />
+ 39:     </svg>
+ 40:   ),
+ 41:   Layers: ({ className = "w-4 h-4" }: { className?: string }) => (
+ 42:     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+ 43:       <polygon points="12 2 2 7 12 12 22 7 12 2" />
+ 44:       <polyline points="2 17 12 22 22 17" />
+ 45:       <polyline points="2 12 12 17 22 12" />
+ 46:     </svg>
+ 47:   ),
+ 48: };
+ 49: 
+ 50: /* ==========================================================================
+ 51:    2. CORE MEMBERS DATA ARCHITECTURE
+ 52:    ========================================================================== */
+ 53: export type DesignVariant = "crimson-vanguard" | "checkered-sovereign" | "cyber-horizon";
+ 54: 
+ 55: export interface CoreMember {
+ 56:   id: string;
+ 57:   name: string;
+ 58:   role: string;
+ 59:   vertical: string;
+ 60:   designVariant: DesignVariant;
+ 61:   rank: string;
+ 62:   suit: string;
+ 63:   archetype: string;
+ 64:   quote: string;
+ 65:   year: string;
+ 66: }
+ 67: 
+ 68: export const CORE_MEMBERS: CoreMember[] = [
+ 69:   {
+ 70:     id: "cm-01",
+ 71:     name: "KABIR VERMA",
+ 72:     role: "FESTIVAL SECRETARY",
+ 73:     vertical: "EXECUTIVE COUNCIL",
+ 74:     designVariant: "crimson-vanguard",
+ 75:     rank: "10",
+ 76:     suit: "♦",
+ 77:     archetype: "THE CRIMSON VANGUARD",
+ 78:     quote: "Every card in our deck represents an unfiltered student voice ready to ignite the campus.",
+ 79:     year: "FINAL YEAR // B.TECH",
+ 80:   },
+ 81:   {
+ 82:     id: "cm-02",
+ 83:     name: "MEERA SHARMA",
+ 84:     role: "HEAD OF CURATION",
+ 85:     vertical: "SANSKARAN CONCLAVE",
+ 86:     designVariant: "checkered-sovereign",
+ 87:     rank: "Q",
+ 88:     suit: "♦",
+ 89:     archetype: "SOVEREIGN OF CULTURE",
+ 90:     quote: "Heritage is not static—it is a living checkered court of ideas, art, and dialogue.",
+ 91:     year: "THIRD YEAR // DESIGN",
+ 92:   },
+ 93:   {
+ 94:     id: "cm-03",
+ 95:     name: "ROHAN KAPOOR",
+ 96:     role: "TECHNICAL & 3D LEAD",
+ 97:     vertical: "DIGITAL ARCHITECTURE",
+ 98:     designVariant: "cyber-horizon",
+ 99:     rank: "A",
+100:     suit: "♠",
+101:     archetype: "ARCHITECT OF THE HORIZON",
+102:     quote: "Where Swiss typographic discipline collides with obsidian-and-amber spectacle.",
+103:     year: "FINAL YEAR // CSE",
+104:   },
+105:   {
+106:     id: "cm-04",
+107:     name: "TARA MENON",
+108:     role: "CREATIVE DIRECTOR",
+109:     vertical: "SCENOGRAPHY & PRINT",
+110:     designVariant: "crimson-vanguard",
+111:     rank: "10",
+112:     suit: "♦",
+113:     archetype: "KEEPER OF THE EMBERS",
+114:     quote: "We transform open-air plazas into a surreal corridor of monumental cards and light.",
+115:     year: "THIRD YEAR // ARCH",
+116:   },
+117:   {
+118:     id: "cm-05",
+119:     name: "DEVANSH NAIR",
+120:     role: "EVENTS & PRODUCTION",
+121:     vertical: "SAHOTSAVA ARENA",
+122:     designVariant: "checkered-sovereign",
+123:     rank: "Q",
+124:     suit: "♦",
+125:     archetype: "MASTER OF CEREMONIES",
+126:     quote: "Forty-five events, seventy-two hours, one shared heartbeat across the entire university.",
+127:     year: "FINAL YEAR // MECH",
+128:   },
+129:   {
+130:     id: "cm-06",
+131:     name: "ZOYA SIDDIQUI",
+132:     role: "ALLIANCES & OUTREACH",
+133:     vertical: "EXTERNAL RELATIONS",
+134:     designVariant: "cyber-horizon",
+135:     rank: "A",
+136:     suit: "♠",
+137:     archetype: "CATALYST OF SYNERGY",
+138:     quote: "Connecting student visionaries with artists, thinkers, and patrons across the country.",
+139:     year: "THIRD YEAR // MGMT",
+140:   },
+141: ];
+142: 
+143: /* ==========================================================================
+144:    3. REFERENCE PLAYING CARD ARTWORKS (CRISP SCALABLE SVG)
+145:    ========================================================================== */
+146: function ReferenceCardArtwork({ variant }: { variant: DesignVariant }) {
+147:   if (variant === "crimson-vanguard") {
+148:     return (
+149:       <svg viewBox="0 0 240 300" className="w-full h-full" aria-hidden="true">
+150:         <rect width="240" height="300" fill="#FFF4E0" />
+151:         {/* Geometric Corner Diamonds */}
+152:         <polygon points="120,38 134,56 120,74 106,56" fill="#E65C19" />
+153:         <polygon points="168,78 184,98 168,118 152,98" fill="#8B1E24" />
+154:         <polygon points="62,118 76,136 62,154 48,136" fill="#E65C19" />
+155:         <polygon points="178,150 190,166 178,182 166,166" fill="#FFAA24" />
+156:         
+157:         {/* Central Geometric Figure & Spearhead Motif */}
+158:         <g transform="translate(22, 24)">
+159:           <polygon
+160:             points="44,195 72,135 124,122 156,82 176,94 162,132 146,168 172,216 154,224 130,182 94,186 68,228 50,220"
+161:             fill="#8B1E24"
+162:           />
+163:           <polygon points="72,135 124,122 108,158 64,162" fill="#B8252E" />
+164:           <polygon points="124,122 156,82 162,132 132,146" fill="#E65C19" />
+165:           <polygon points="92,126 102,74 118,78 112,126" fill="#120E15" />
+166:           <circle cx="109" cy="62" r="9" fill="#8B1E24" />
+167:           <line x1="84" y1="52" x2="152" y2="232" stroke="#E65C19" strokeWidth="4" strokeLinecap="round" />
+168:           <path d="M 66 226 Q 98 244 128 224 T 164 232" fill="none" stroke="#8B1E24" strokeWidth="3" />
+169:         </g>
+170:       </svg>
+171:     );
+172:   }
+173: 
+174:   if (variant === "checkered-sovereign") {
+175:     return (
+176:       <svg viewBox="0 0 240 300" className="w-full h-full" aria-hidden="true">
+177:         <rect width="240" height="300" fill="#FFF4E0" />
+178:         {/* Isometric Checkered Court Grid */}
+179:         <g transform="translate(120, 150)">
+180:           {[-3, -2, -1, 0, 1, 2].map((gx) =>
+181:             [-3, -2, -1, 0, 1, 2].map((gy) => {
+182:               const isCrimson = (gx + gy) % 2 === 0;
+183:               const isoX = (gx - gy) * 28;
+184:               const isoY = (gx + gy) * 16;
+185:               return (
+186:                 <polygon
+187:                   key={`${gx}-${gy}`}
+188:                   points={`${isoX},${isoY - 16} ${isoX + 28},${isoY} ${isoX},${isoY + 16} ${isoX - 28},${isoY}`}
+189:                   fill={isCrimson ? "#8B1E24" : "#FFF4E0"}
+190:                   stroke="#8B1E24"
+191:                   strokeWidth="0.8"
+192:                 />
+193:               );
+194:             })
+195:           )}
+196:         </g>
+197:         {/* Sovereign Chess Queen / Royal Crown Silhouette */}
+198:         <g transform="translate(52, 74)">
+199:           <ellipse cx="18" cy="36" rx="11" ry="18" fill="#120E15" />
+200:           <circle cx="18" cy="15" r="9" fill="#120E15" />
+201:           <polygon points="10,10 13,1 17,9" fill="#120E15" />
+202:           <polygon points="19,9 23,1 26,10" fill="#120E15" />
+203:         </g>
+204:         <g transform="translate(120, 148)">
+205:           <ellipse cx="0" cy="46" rx="28" ry="10" fill="#120E15" />
+206:           <path d="M -20,42 L -11,-28 L 11,-28 L 20,42 Z" fill="#120E15" stroke="#FFAA24" strokeWidth="2" />
+207:           <rect x="-15" y="-34" width="30" height="7" rx="3" fill="#8B1E24" />
+208:           <circle cx="0" cy="-46" r="11" fill="#120E15" stroke="#FFAA24" strokeWidth="2" />
+209:           <polygon points="-6,-56 0,-68 6,-56" fill="#FFAA24" />
+210:         </g>
+211:         <polygon points="68,195 82,195 75,165" fill="#E65C19" />
+212:         <polygon points="158,185 172,185 165,155" fill="#E65C19" />
+213:       </svg>
+214:     );
+215:   }
+216: 
+217:   // cyber-horizon
+218:   return (
+219:     <svg viewBox="0 0 240 300" className="w-full h-full" aria-hidden="true">
+220:       <rect x="0" y="0" width="240" height="150" fill="#FFF4E0" />
+221:       <rect x="0" y="150" width="240" height="150" fill="#120E15" />
+222:       <line x1="22" y1="24" x2="218" y2="24" stroke="#120E15" strokeWidth="1" opacity="0.35" />
+223:       <line x1="22" y1="276" x2="218" y2="276" stroke="#FFAA24" strokeWidth="1" opacity="0.45" />
+224:       <line x1="0" y1="150" x2="240" y2="150" stroke="#E65C19" strokeWidth="2" />
+225:       <defs>
+226:         <radialGradient id="cyberHorizonGlow" cx="50%" cy="50%" r="50%">
+227:           <stop offset="0%" stopColor="#FFAA24" stopOpacity="0.95" />
+228:           <stop offset="55%" stopColor="#E65C19" stopOpacity="0.55" />
+229:           <stop offset="100%" stopColor="#8B1E24" stopOpacity="0" />
+230:         </radialGradient>
+231:       </defs>
+232:       <circle cx="120" cy="150" r="68" fill="url(#cyberHorizonGlow)" />
+233:       <ellipse cx="120" cy="150" rx="74" ry="22" fill="none" stroke="#FFAA24" strokeWidth="3.5" />
+234:       <ellipse cx="120" cy="150" rx="58" ry="15" fill="none" stroke="#FFF4E0" strokeWidth="1.5" />
+235:       <circle cx="120" cy="150" r="28" fill="#120E15" stroke="#FFAA24" strokeWidth="2.5" />
+236:       <g fill="#FFAA24" opacity="0.7">
+237:         <rect x="172" y="182" width="4" height="4" />
+238:         <rect x="180" y="182" width="4" height="4" />
+239:         <rect x="188" y="182" width="4" height="4" />
+240:         <rect x="172" y="190" width="4" height="4" />
+241:         <rect x="188" y="190" width="4" height="4" />
+242:         <rect x="180" y="198" width="4" height="4" />
+243:       </g>
+244:     </svg>
+245:   );
+246: }
+247: 
+248: /* ==========================================================================
+249:    4. SYNTHESIZED TACTILE CARD AUDIO HELPER (ZERO EXTERNAL ASSETS)
+250:    ========================================================================== */
+251: function playCardTactileSound(type: "deal" | "flip" = "deal") {
+252:   if (typeof window === "undefined") return;
+253:   try {
+254:     const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+255:     if (!AudioCtx) return;
+256:     const ctx = new AudioCtx();
+257:     const osc = ctx.createOscillator();
+258:     const gain = ctx.createGain();
+259: 
+260:     if (type === "deal") {
+261:       osc.type = "sine";
+262:       osc.frequency.setValueAtTime(320, ctx.currentTime);
+263:       osc.frequency.exponentialRampToValueAtTime(120, ctx.currentTime + 0.08);
+264:       gain.gain.setValueAtTime(0.08, ctx.currentTime);
+265:       gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
+266:       osc.connect(gain);
+267:       gain.connect(ctx.destination);
+268:       osc.start();
+269:       osc.stop(ctx.currentTime + 0.08);
+270:     } else {
+271:       osc.type = "triangle";
+272:       osc.frequency.setValueAtTime(440, ctx.currentTime);
+273:       osc.frequency.exponentialRampToValueAtTime(220, ctx.currentTime + 0.12);
+274:       gain.gain.setValueAtTime(0.1, ctx.currentTime);
+275:       gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.12);
+276:       osc.connect(gain);
+277:       gain.connect(ctx.destination);
+278:       osc.start();
+279:       osc.stop(ctx.currentTime + 0.12);
+280:     }
+281:   } catch {
+282:     // AudioContext blocked or not allowed by browser policy; silent fallback
+283:   }
+284: }
+285: 
+286: /* ==========================================================================
+287:    5. INDIVIDUAL INTERACTIVE 3D PLAYING CARD COMPONENT
+288:    ========================================================================== */
+289: interface CardProps {
+290:   member: CoreMember;
+291:   index: number;
+292: }
+293: 
+294: function CoreMemberCard({ member, index }: CardProps) {
+295:   const [flipped, setFlipped] = useState(false);
+296:   const [tilt, setTilt] = useState({ rx: 0, ry: 0, px: 50, py: 50 });
+297:   const isCyber = member.designVariant === "cyber-horizon";
+298:   const isOddFromLeft = index % 2 === 0;
+299: 
+300:   const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+301:     const rect = e.currentTarget.getBoundingClientRect();
+302:     const x = e.clientX - rect.left;
+303:     const y = e.clientY - rect.top;
+304:     const nx = (x / rect.width) * 2 - 1; // -1 to 1
+305:     const ny = (y / rect.height) * 2 - 1; // -1 to 1
+306: 
+307:     setTilt({
+308:       rx: -ny * 10, // Rotate X (deg)
+309:       ry: nx * 10,  // Rotate Y (deg)
+310:       px: Math.round((x / rect.width) * 100),
+311:       py: Math.round((y / rect.height) * 100),
+312:     });
+313:   };
+314: 
+315:   const handlePointerLeave = () => {
+316:     setTilt({ rx: 0, ry: 0, px: 50, py: 50 });
+317:   };
+318: 
+319:   const toggleFlip = () => {
+320:     playCardTactileSound("flip");
+321:     setFlipped((f) => !f);
+322:   };
+323: 
+324:   return (
+325:     <div
+326:       data-card-index={index}
+327:       data-side={isOddFromLeft ? "left" : "right"}
+328:       className="core-card-wrapper [perspective:1200px] w-full"
+329:     >
+330:       <div
+331:         onPointerMove={handlePointerMove}
+332:         onPointerLeave={handlePointerLeave}
+333:         onClick={toggleFlip}
+334:         role="button"
+335:         tabIndex={0}
+336:         onKeyDown={(e) => {
+337:           if (e.key === "Enter" || e.key === " ") {
+338:             e.preventDefault();
+339:             toggleFlip();
+340:           }
+341:         }}
+342:         aria-label={`${member.name} — ${member.role}. Rank ${member.rank}${member.suit}. Tap or press Enter to flip card.`}
+343:         style={{
+344:           transform: `rotateX(${tilt.rx}deg) rotateY(${tilt.ry + (flipped ? 180 : 0)}deg)`,
+345:           transition: "transform 0.65s cubic-bezier(0.22, 1, 0.36, 1)",
+346:         }}
+347:         className="relative w-full aspect-[3/4.35] rounded-[24px] [transform-style:preserve-3d] cursor-pointer shadow-[0_22px_50px_rgba(0,0,0,0.72)] group select-none focus:outline-none focus:ring-2 focus:ring-[#FFAA24]"
+348:       >
+349:         {/* Dynamic Specular Sheen Glare following Mouse */}
+350:         <div
+351:           aria-hidden="true"
+352:           style={{
+353:             background: `radial-gradient(circle at ${tilt.px}% ${tilt.py}%, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0) 65%)`,
+354:           }}
+355:           className="absolute inset-0 z-30 pointer-events-none rounded-[24px] transition-opacity duration-300 opacity-0 group-hover:opacity-100"
+356:         />
+357: 
+358:         {/* ==============================================================
+359:             FRONT FACE (IVORY FINE-CARDSTOCK WITH REFERENCE ARTWORK)
+360:             ============================================================== */}
+361:         <div className="absolute inset-0 [backface-visibility:hidden] rounded-[24px] overflow-hidden border-[3px] border-[#FFF4E0] group-hover:border-[#FFAA24] transition-colors bg-[#FFF4E0]">
+362:           {/* Reference Card Artwork SVG */}
+363:           <div className="absolute inset-0">
+364:             <ReferenceCardArtwork variant={member.designVariant} />
+365:           </div>
+366: 
+367:           {/* Internal Thin Playing Card Inset Border */}
+368:           <div className="absolute inset-2.5 rounded-[16px] border border-[#8B1E24]/45 pointer-events-none" />
+369: 
+370:           {/* Top-Left Rank & Suit Index Pip */}
+371:           <div className="absolute top-4 left-4 z-10 flex flex-col items-center leading-none">
+372:             <span
+373:               className={`font-display text-3xl sm:text-4xl font-bold ${
+374:                 member.suit === "♦" ? "text-[#8B1E24]" : "text-[#120E15]"
+375:               }`}
+376:             >
+377:               {member.rank}
+378:             </span>
+379:             <span
+380:               className={`text-xl sm:text-2xl ${
+381:                 member.suit === "♦" ? "text-[#8B1E24]" : "text-[#120E15]"
+382:               }`}
+383:             >
+384:               {member.suit}
+385:             </span>
+386:           </div>
+387: 
+388:           {/* Top-Right Flip Button Indicator */}
+389:           <div className="absolute top-4 right-4 z-10 inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#120E15]/85 text-[#FFAA24] font-tech text-[10px] font-bold tracking-wider uppercase border border-[#FFAA24]/30 shadow-md">
+390:             <Icon.RotateCw className="w-3 h-3 text-[#FFAA24] group-hover:rotate-180 transition-transform duration-500" />
+391:             <span>FLIP</span>
+392:           </div>
+393: 
+394:           {/* Bottom-Right Inverted Rank & Suit Index Pip */}
+395:           <div className="absolute bottom-24 right-4 z-10 flex flex-col items-center leading-none rotate-180 pointer-events-none">
+396:             <span
+397:               className={`font-display text-3xl font-bold ${
+398:                 isCyber
+399:                   ? "text-[#FFAA24]"
+400:                   : member.suit === "♦"
+401:                   ? "text-[#8B1E24]"
+402:                   : "text-[#120E15]"
+403:               }`}
+404:             >
+405:               {member.rank}
+406:             </span>
+407:             <span
+408:               className={`text-xl ${
+409:                 isCyber
+410:                   ? "text-[#FFAA24]"
+411:                   : member.suit === "♦"
+412:                   ? "text-[#8B1E24]"
+413:                   : "text-[#120E15]"
+414:               }`}
+415:             >
+416:               {member.suit}
+417:             </span>
+418:           </div>
+419: 
+420:           {/* Bottom Information Plinth with Ink Black Gradient */}
+421:           <div className="absolute inset-x-0 bottom-0 z-10 p-4 bg-gradient-to-t from-[#120E15] via-[#120E15]/95 to-transparent text-[#FFF4E0]">
+422:             <p className="font-tech text-[10px] font-bold tracking-[0.18em] text-[#FFAA24] uppercase">
+423:               {member.role}
+424:             </p>
+425:             <h3 className="font-display text-2xl sm:text-3xl tracking-wide text-[#FFF4E0] leading-tight">
+426:               {member.name}
+427:             </h3>
+428:           </div>
+429:         </div>
+430: 
+431:         {/* ==============================================================
+432:             BACK FACE (DEEP OBSIDIAN & CRIMSON WITH ARCHETYPE & QUOTE)
+433:             ============================================================== */}
+434:         <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-[24px] overflow-hidden border-[3px] border-[#FFAA24] bg-gradient-to-br from-[#1C1622] via-[#151019] to-[#120E15] text-[#FFF4E0] p-6 flex flex-col justify-between shadow-[inset_0_0_40px_rgba(255,170,36,0.15)]">
+435:           {/* Subtle Watermark Suit */}
+436:           <span
+437:             aria-hidden="true"
+438:             className="absolute -right-4 -bottom-6 font-serif text-[10.5rem] leading-none text-[#FFAA24]/[0.08] select-none pointer-events-none"
+439:           >
+440:             {member.suit}
+441:           </span>
+442: 
+443:           <div className="relative z-10">
+444:             {/* Header: Vertical badge and Card identifier */}
+445:             <div className="flex items-center justify-between border-b border-[#8B1E24] pb-3">
+446:               <span className="font-tech text-[10px] font-bold tracking-widest text-[#FFAA24] uppercase">
+447:                 {member.vertical}
+448:               </span>
+449:               <span className="font-display text-2xl text-[#FFAA24]">
+450:                 {member.rank}
+451:                 {member.suit}
+452:               </span>
+453:             </div>
+454: 
+455:             {/* Archetype & Full Identity Details */}
+456:             <p className="mt-4 font-tech text-xs font-bold tracking-widest text-[#E65C19] uppercase">
+457:               {member.archetype}
+458:             </p>
+459:             <h3 className="mt-1 font-display text-3xl sm:text-4xl text-[#FFF4E0] leading-none">
+460:               {member.name}
+461:             </h3>
+462:             <p className="mt-1 font-tech text-xs text-[#FFF4E0]/65">
+463:               {member.role} • {member.year}
+464:             </p>
+465: 
+466:             {/* Student Vision Statement / Quote */}
+467:             <blockquote className="mt-5 font-serif italic text-lg sm:text-xl leading-relaxed text-[#FFF4E0]/90 border-l-2 border-[#FFAA24] pl-3.5">
+468:               &ldquo;{member.quote}&rdquo;
+469:             </blockquote>
+470:           </div>
+471: 
+472:           {/* Footer Callout */}
+473:           <div className="relative z-10 pt-3 border-t border-[#FFF4E0]/10 flex items-center justify-between text-[11px] font-tech text-[#FFAA24]">
+474:             <span className="tracking-wider">SANSKARAN &amp; SAHOTSAVA</span>
+475:             <span className="inline-flex items-center gap-1 uppercase font-bold text-[#FFF4E0] hover:text-[#FFAA24] transition-colors">
+476:               <Icon.RotateCw className="w-3 h-3 text-[#FFAA24]" /> Tap to return
+477:             </span>
+478:           </div>
+479:         </div>
+480:       </div>
+481:     </div>
+482:   );
+483: }
+484: 
+485: /* ==========================================================================
+486:    6. MAIN CORE MEMBERS SECTION WITH GSAP SIDE ENTRANCE CHOREOGRAPHY
+487:    ========================================================================== */
+488: export default function CoreMembersSection() {
+489:   const containerRef = useRef<HTMLDivElement>(null);
+490:   const [activeFilter, setActiveFilter] = useState<string>("all");
+491:   const [dealCount, setDealCount] = useState<number>(1);
+492: 
+493:   // Filter Categories
+494:   const categories = [
+495:     { id: "all", label: "ALL ARCHITECTS (6)" },
+496:     { id: "crimson-vanguard", label: "CRIMSON VANGUARD" },
+497:     { id: "checkered-sovereign", label: "CHECKERED SOVEREIGN" },
+498:     { id: "cyber-horizon", label: "CYBER HORIZON" },
+499:   ];
+500: 
+501:   const filteredMembers = activeFilter === "all"
+502:     ? CORE_MEMBERS
+503:     : CORE_MEMBERS.filter((m) => m.designVariant === activeFilter);
+504: 
+505:   // GSAP SCROLLTRIGGER ANIMATION:
+506:   // EACH CARD triggers its OWN side-entrance animation as it scrolls into view!
+507:   // Even cards fly in from the left (-280px), odd cards fly in from the right (+280px)
+508:   useGSAP(
+509:     () => {
+510:       const cards = gsap.utils.toArray<HTMLElement>(".core-card-wrapper");
+511:       if (!cards.length) return;
+512: 
+513:       // 1. Header elements entrance
+514:       gsap.from(".core-anim-header", {
+515:         scrollTrigger: {
+516:           trigger: containerRef.current,
+517:           start: "top 85%",
+518:           toggleActions: "play none none reverse",
+519:         },
+520:         y: 28,
+521:         autoAlpha: 0,
+522:         stagger: 0.1,
+523:         duration: 0.7,
+524:         ease: "power3.out",
+525:       });
+526: 
+527:       // 2. Individual Card Side Entrance on Viewport Entry:
+528:       // Every single card has its own ScrollTrigger so as you scroll down,
+529:       // all cards (cards 0, 1, 2, 3, 4, 5) dramatically sweep in from the sides!
+530:       cards.forEach((card, i) => {
+531:         const isFromLeft = i % 2 === 0;
+532:         gsap.fromTo(
+533:           card,
+534:           {
+535:             x: isFromLeft ? -300 : 300,
+536:             y: 45,
+537:             rotationZ: isFromLeft ? -16 : 16,
+538:             rotationY: isFromLeft ? 28 : -28,
+539:             scale: 0.8,
+540:             autoAlpha: 0,
+541:           },
+542:           {
+543:             x: 0,
+544:             y: 0,
+545:             rotationZ: 0,
+546:             rotationY: 0,
+547:             scale: 1,
+548:             autoAlpha: 1,
+549:             duration: 0.9,
+550:             ease: "power3.out",
+551:             clearProps: "transform",
+552:             scrollTrigger: {
+553:               trigger: card,
+554:               start: "top 88%",
+555:               end: "bottom 15%",
+556:               toggleActions: "play none none reverse",
+557:             },
+558:           }
+559:         );
+560:       });
+561:     },
+562:     { scope: containerRef, dependencies: [activeFilter] }
+563:   );
+564: 
+565:   // INTERACTIVE RE-DEAL FUNCTIONALITY:
+566:   // Allows user to re-trigger the side card dealing animation on demand
+567:   const handleReDeal = useCallback(() => {
+568:     playCardTactileSound("deal");
+569:     setDealCount((c) => c + 1);
+570: 
+571:     const cards = gsap.utils.toArray<HTMLElement>(".core-card-wrapper");
+572:     if (!cards.length) return;
+573: 
+574:     gsap.killTweensOf(cards);
+575: 
+576:     gsap.fromTo(
+577:       cards,
+578:       {
+579:         x: (i) => (i % 2 === 0 ? -260 : 260),
+580:         y: (i) => 50 + (i % 3) * 20,
+581:         rotationZ: (i) => (i % 2 === 0 ? -18 : 18),
+582:         rotationY: (i) => (i % 2 === 0 ? 30 : -30),
+583:         scale: 0.78,
+584:         autoAlpha: 0,
+585:       },
+586:       {
+587:         x: 0,
+588:         y: 0,
+589:         rotationZ: 0,
+590:         rotationY: 0,
+591:         scale: 1,
+592:         autoAlpha: 1,
+593:         duration: 0.9,
+594:         stagger: {
+595:           amount: 0.45,
+596:           from: "start",
+597:         },
+598:         ease: "power3.out",
+599:         clearProps: "transform",
+600:       }
+601:     );
+602:   }, []);
+603: 
+604:   return (
+605:     <section
+606:       id="core-members"
+607:       ref={containerRef}
+608:       className="relative py-20 sm:py-28 px-4 sm:px-8 max-w-7xl mx-auto overflow-hidden border-b border-[#8B1E24]/40 z-10"
+609:     >
+610:       {/* Background Ambient Glow Plinth */}
+611:       <div
+612:         aria-hidden="true"
+613:         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[450px] bg-gradient-to-r from-[#8B1E24]/15 via-[#FFAA24]/10 to-transparent blur-[120px] pointer-events-none"
+614:       />
+615: 
+616:       {/* Section Header with Swiss Architectural Typography */}
+617:       <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12 sm:mb-16">
+618:         <div className="border-l-2 border-[#FFAA24] pl-4 sm:pl-6 max-w-2xl">
+619:           <div className="core-anim-header inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#8B1E24] bg-[#120E15]/80 backdrop-blur-md text-[#FFAA24] font-tech text-xs font-bold tracking-[0.22em] uppercase mb-3">
+620:             <Icon.Sparkles className="w-3.5 h-3.5 text-[#FFAA24]" />
+621:             <span>03 // THE COURT ARCHITECTS</span>
+622:           </div>
+623: 
+624:           <h2 className="core-anim-header font-display text-4xl sm:text-6xl lg:text-7xl text-[#FFF4E0] leading-none uppercase tracking-tight">
+625:             NEW CORE <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFAA24] via-[#E65C19] to-[#FFF4E0]">MEMBERS</span>
+626:           </h2>
+627: 
+628:           <p className="core-anim-header mt-3 font-tech text-xs sm:text-sm text-[#FFF4E0]/75 leading-relaxed">
+629:             Six student stewards holding the face cards of this year&rsquo;s edition. Dealt in from the sides with GSAP physics—tap any card to flip and inspect their vision.
+630:           </p>
+631:         </div>
+632: 
+633:         {/* Action HUD: Filter Tabs & Re-Deal Button */}
+634:         <div className="core-anim-header flex flex-wrap items-center gap-2.5 self-start lg:self-end">
+635:           {/* Filter Pills */}
+636:           <div className="inline-flex p-1 rounded-xl bg-[#18121D] border border-[#8B1E24]">
+637:             {categories.map((cat) => (
+638:               <button
+639:                 key={cat.id}
+640:                 type="button"
+641:                 onClick={() => setActiveFilter(cat.id)}
+642:                 className={`px-3 py-1.5 rounded-lg font-tech text-xs font-bold tracking-wider uppercase transition-all cursor-pointer ${
+643:                   activeFilter === cat.id
+644:                     ? "bg-[#FFAA24] text-[#120E15] shadow-[0_0_15px_rgba(255,170,36,0.4)]"
+645:                     : "text-[#FFF4E0]/75 hover:text-[#FFF4E0]"
+646:                 }`}
+647:               >
+648:                 {cat.label}
+649:               </button>
+650:             ))}
+651:           </div>
+652: 
+653:           {/* Interactive GSAP Re-Deal Trigger Button */}
+654:           <button
+655:             type="button"
+656:             onClick={handleReDeal}
+657:             className="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-[#18121D] hover:bg-[#8B1E24] text-[#FFF4E0] border border-[#FFAA24]/60 font-tech text-xs font-bold tracking-wider uppercase transition-all active:scale-95 cursor-pointer shadow-[0_4px_20px_rgba(0,0,0,0.5)]"
+658:           >
+659:             <Icon.Shuffle className="w-3.5 h-3.5 text-[#FFAA24]" />
+660:             <span>RE-DEAL (#{String(dealCount).padStart(2, "0")})</span>
+661:           </button>
+662:         </div>
+663:       </div>
+664: 
+665:       {/* Grid of Playing Cards with GSAP Side Entrance */}
+666:       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+667:         {filteredMembers.map((member, idx) => (
+668:           <CoreMemberCard key={member.id} member={member} index={idx} />
+669:         ))}
+670:       </div>
+671: 
+672:       {/* Bottom Technical Telemetry Bar */}
+673:       <div className="mt-12 pt-6 border-t border-[#FFF4E0]/10 flex flex-wrap items-center justify-between gap-4 font-mono text-xs text-[#FFF4E0]/60">
+674:         <div className="flex items-center gap-2">
+675:           <span className="w-2 h-2 rounded-full bg-[#FFAA24] animate-pulse" />
+676:           <span className="text-[#FFAA24] font-semibold">GSAP 3 // SCROLLTRIGGER DEAL</span>
+677:           <span className="text-[#FFF4E0]/30">•</span>
+678:           <span>TRANSFORM-STYLE: PRESERVE-3D</span>
+679:         </div>
+680:         <div className="flex items-center gap-4 text-[#FFF4E0]/70">
+681:           <span>COURT SEATS: 06 / 06 OCCUPIED</span>
+682:           <span>ROYAL SUITS: ♦ ♠ ♥ ♣</span>
+683:         </div>
+684:       </div>
+685:     </section>
+686:   );
+687: }
+</file>
+
+<file path="src/components/event/Countdown.tsx">
+ 1: "use client";
+ 2: 
+ 3: import React, { useState, useEffect } from "react";
+ 4: 
+ 5: interface TimeLeft {
+ 6:   days: number;
+ 7:   hours: number;
+ 8:   minutes: number;
+ 9:   seconds: number;
+10: }
+11: 
+12: export default function Countdown() {
+13:   const [timeLeft, setTimeLeft] = useState<TimeLeft>({
+14:     days: 120,
+15:     hours: 14,
+16:     minutes: 36,
+17:     seconds: 42,
+18:   });
+19: 
+20:   useEffect(() => {
+21:     // Target event date: Deck of Cards 2026 Showcase
+22:     const targetDate = new Date("2026-10-24T00:00:00Z").getTime();
+23: 
+24:     const interval = setInterval(() => {
+25:       const now = new Date().getTime();
+26:       const difference = targetDate - now;
+27: 
+28:       if (difference <= 0) {
+29:         clearInterval(interval);
+30:         return;
+31:       }
+32: 
+33:       setTimeLeft({
+34:         days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+35:         hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+36:         minutes: Math.floor((difference / 1000 / 60) % 60),
+37:         seconds: Math.floor((difference / 1000) % 60),
+38:       });
+39:     }, 1000);
+40: 
+41:     return () => clearInterval(interval);
+42:   }, []);
+43: 
+44:   const timeBlocks = [
+45:     { label: "DAYS", value: timeLeft.days },
+46:     { label: "HOURS", value: timeLeft.hours },
+47:     { label: "MINUTES", value: timeLeft.minutes },
+48:     { label: "SECONDS", value: timeLeft.seconds },
+49:   ];
+50: 
+51:   return (
+52:     <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-5 my-8">
+53:       {timeBlocks.map((block) => (
+54:         <div
+55:           key={block.label}
+56:           className="flex flex-col items-center justify-center w-20 h-22 sm:w-26 sm:h-28 rounded-xl bg-slate-900/80 border border-slate-800/90 shadow-[0_8px_30px_rgb(0,0,0,0.5)] backdrop-blur-md"
+57:         >
+58:           <span className="text-2xl sm:text-4xl font-extrabold tracking-tight bg-gradient-to-b from-white to-slate-400 bg-clip-text text-transparent font-mono">
+59:             {String(block.value).padStart(2, "0")}
+60:           </span>
+61:           <span className="text-[10px] sm:text-xs font-semibold tracking-widest text-cyan-400/90 mt-1 uppercase">
+62:             {block.label}
+63:           </span>
+64:         </div>
+65:       ))}
+66:     </div>
+67:   );
+68: }
+</file>
+
+<file path="src/components/event/Footer.tsx">
+ 1: "use client";
+ 2: 
+ 3: import React from "react";
+ 4: import { ArrowUp } from "lucide-react";
+ 5: 
+ 6: export default function Footer() {
+ 7:   const scrollToTop = () => {
+ 8:     window.scrollTo({ top: 0, behavior: "smooth" });
+ 9:   };
+10: 
+11:   return (
+12:     <footer className="border-t border-[#8B1E24]/50 bg-[#120E15]/90 backdrop-blur-md py-12 px-4 sm:px-8 text-center z-10 relative">
+13:       <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+14:         <div className="text-left">
+15:           <p className="font-display text-2xl sm:text-3xl text-[#FFF4E0] tracking-wide uppercase">
+16:             DECK OF DESTINIES // SANSKARAN &amp; SAHOTSAVA
+17:           </p>
+18:           <p className="font-serif italic text-base text-[#FFAA24] mt-0.5">Every Card Holds a Story.</p>
+19:         </div>
+20: 
+21:         <button
+22:           type="button"
+23:           onClick={scrollToTop}
+24:           className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#18121D] hover:bg-[#8B1E24] border border-[#FFAA24]/60 text-[#FFF4E0] font-tech text-xs font-bold tracking-wider uppercase transition-colors cursor-pointer"
+25:         >
+26:           <ArrowUp className="w-4 h-4 text-[#FFAA24]" />
+27:           <span>Back to Top</span>
+28:         </button>
+29:       </div>
+30:     </footer>
+31:   );
+32: }
+</file>
+
+<file path="src/components/event/Hero.tsx">
+ 1: "use client";
+ 2: 
+ 3: import React from "react";
+ 4: import dynamic from "next/dynamic";
+ 5: import { Button } from "@/components/ui/button";
+ 6: import Countdown from "./Countdown";
+ 7: import { Sparkles, ArrowRight, Play, Disc } from "lucide-react";
+ 8: 
+ 9: // Dynamically import the Three.js WebGL Scene with SSR disabled
+10: const EventScene = dynamic(() => import("@/components/3d/EventScene"), {
+11:   ssr: false,
+12:   loading: () => (
+13:     <div className="absolute inset-0 flex items-center justify-center bg-slate-950/60">
+14:       <div className="w-8 h-8 border-2 border-cyan-400 border-t-transparent rounded-full animate-spin" />
+15:     </div>
+16:   ),
+17: });
+18: 
+19: export default function Hero() {
+20:   const scrollToWaitlist = () => {
+21:     const el = document.getElementById("pre-register");
+22:     if (el) {
+23:       el.scrollIntoView({ behavior: "smooth" });
+24:     }
+25:   };
+26: 
+27:   return (
+28:     <section className="relative min-h-screen flex flex-col items-center justify-center pt-28 pb-16 px-6 overflow-hidden">
+29:       {/* 3D WebGL Canvas Background */}
+30:       <EventScene className="absolute inset-0 w-full h-full z-0 opacity-80 pointer-events-none sm:pointer-events-auto" />
+31: 
+32:       {/* Atmospheric Radial Gradients */}
+33:       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-600/10 blur-[140px] pointer-events-none rounded-full" />
+34:       <div className="absolute top-1/2 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] bg-cyan-500/10 blur-[120px] pointer-events-none rounded-full" />
+35: 
+36:       {/* Hero Content */}
+37:       <div className="relative z-10 max-w-4xl mx-auto text-center flex flex-col items-center">
+38:         {/* Top Badges */}
+39:         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-cyan-500/30 bg-slate-950/80 backdrop-blur-md text-cyan-300 text-xs font-mono uppercase tracking-wider mb-6 shadow-[0_0_20px_rgba(6,182,212,0.2)]">
+40:           <Disc className="w-3.5 h-3.5 text-cyan-400 animate-spin" />
+41:           The World’s Premier 3D Card Showcase
+42:         </div>
+43: 
+44:         {/* Headline */}
+45:         <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-white leading-[1.08]">
+46:           DECK OF CARDS <br />
+47:           <span className="bg-gradient-to-r from-blue-400 via-cyan-300 to-indigo-400 bg-clip-text text-transparent">
+48:             GLOBAL EVENT 2026
+49:           </span>
+50:         </h1>
+51: 
+52:         {/* Subtitle */}
+53:         <p className="mt-6 text-slate-300 text-base sm:text-xl max-w-2xl font-normal leading-relaxed">
+54:           Step into Saskaran’s interactive WebGL realm. 52 cards, real-time tactical arenas, and spatial physics unveiled for the next era of web gaming.
+55:         </p>
+56: 
+57:         {/* Countdown */}
+58:         <Countdown />
+59: 
+60:         {/* Action CTAs */}
+61:         <div className="flex flex-col sm:flex-row items-center gap-4 mt-2">
+62:           <Button onClick={scrollToWaitlist} variant="glow" size="lg" className="w-full sm:w-auto">
+63:             Reserve Early Pass
+64:             <ArrowRight className="w-4 h-4 ml-1" />
+65:           </Button>
+66: 
+67:           <Button
+68:             variant="outline"
+69:             size="lg"
+70:             className="w-full sm:w-auto"
+71:             onClick={() => {
+72:               const el = document.getElementById("about");
+73:               if (el) el.scrollIntoView({ behavior: "smooth" });
+74:             }}
+75:           >
+76:             <Play className="w-4 h-4 mr-1 text-cyan-400" />
+77:             Explore Experience
+78:           </Button>
+79:         </div>
+80: 
+81:         {/* Micro stats banner */}
+82:         <div className="grid grid-cols-3 gap-6 sm:gap-12 mt-16 pt-8 border-t border-slate-800/80 text-center">
+83:           <div>
+84:             <div className="text-xl sm:text-3xl font-extrabold text-white font-mono">52</div>
+85:             <div className="text-xs text-slate-400 mt-1 uppercase tracking-wider">Unique 3D Cards</div>
+86:           </div>
+87:           <div>
+88:             <div className="text-xl sm:text-3xl font-extrabold text-cyan-400 font-mono">10,000+</div>
+89:             <div className="text-xs text-slate-400 mt-1 uppercase tracking-wider">VIP Pre-Registered</div>
+90:           </div>
+91:           <div>
+92:             <div className="text-xl sm:text-3xl font-extrabold text-indigo-400 font-mono">OCT 2026</div>
+93:             <div className="text-xs text-slate-400 mt-1 uppercase tracking-wider">Global Reveal</div>
+94:           </div>
+95:         </div>
+96:       </div>
+97:     </section>
+98:   );
+99: }
+</file>
+
+<file path="src/components/event/HeroSection.tsx">
+   1: "use client";
+   2: 
+   3: import React, { useState, useEffect, useRef, useCallback } from "react";
+   4: import * as THREE from "three";
+   5: import gsap from "gsap";
+   6: import { ScrollTrigger } from "gsap/ScrollTrigger";
+   7: import { motion, AnimatePresence } from "framer-motion";
+   8: 
+   9: if (typeof window !== "undefined") {
+  10:   gsap.registerPlugin(ScrollTrigger);
+  11: }
+  12: 
+  13: /* ==========================================================================
+  14:    1. VECTOR ICONS
+  15:    ========================================================================== */
+  16: const Icon = {
+  17:   Sparkles: ({ className = "w-4 h-4" }: { className?: string }) => (
+  18:     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+  19:       <path d="M12 3l1.9 5.8a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-1.9a2 2 0 0 0 1.3-1.3L12 3z" />
+  20:     </svg>
+  21:   ),
+  22:   Shuffle: ({ className = "w-4 h-4" }: { className?: string }) => (
+  23:     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+  24:       <polyline points="16 3 21 3 21 8" />
+  25:       <line x1="4" y1="20" x2="21" y2="3" />
+  26:       <polyline points="21 16 21 21 16 21" />
+  27:       <line x1="15" y1="15" x2="21" y2="21" />
+  28:       <line x1="4" y1="4" x2="9" y2="9" />
+  29:     </svg>
+  30:   ),
+  31:   Layers: ({ className = "w-4 h-4" }: { className?: string }) => (
+  32:     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+  33:       <polygon points="12 2 2 7 12 12 22 7 12 2" />
+  34:       <polyline points="2 17 12 22 22 17" />
+  35:       <polyline points="2 12 12 17 22 12" />
+  36:     </svg>
+  37:   ),
+  38:   Compass: ({ className = "w-4 h-4" }: { className?: string }) => (
+  39:     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+  40:       <circle cx="12" cy="12" r="10" />
+  41:       <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" />
+  42:     </svg>
+  43:   ),
+  44:   Flame: ({ className = "w-4 h-4" }: { className?: string }) => (
+  45:     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+  46:       <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z" />
+  47:     </svg>
+  48:   ),
+  49:   X: ({ className = "w-4 h-4" }: { className?: string }) => (
+  50:     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+  51:       <line x1="18" y1="6" x2="6" y2="18" />
+  52:       <line x1="6" y1="6" x2="18" y2="18" />
+  53:     </svg>
+  54:   ),
+  55:   ChevronRight: ({ className = "w-4 h-4" }: { className?: string }) => (
+  56:     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+  57:       <polyline points="9 18 15 12 9 6" />
+  58:     </svg>
+  59:   ),
+  60:   Zap: ({ className = "w-4 h-4" }: { className?: string }) => (
+  61:     <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+  62:       <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+  63:     </svg>
+  64:   ),
+  65: };
+  66: 
+  67: /* ==========================================================================
+  68:    2. DESTINY FORTUNES DATA
+  69:    ========================================================================== */
+  70: interface Fortune {
+  71:   rank: string;
+  72:   suit: string;
+  73:   title: string;
+  74:   house: string;
+  75:   prophecy: string;
+  76: }
+  77: 
+  78: const DESTINY_FORTUNES: Fortune[] = [
+  79:   {
+  80:     rank: "A",
+  81:     suit: "♠",
+  82:     title: "THE ARCHITECT OF ECHOES",
+  83:     house: "HOUSE OF SANSKARAN",
+  84:     prophecy: "Your creative voice commands the amphitheater. Step forward—an unexpected artistic alliance awaits before twilight.",
+  85:   },
+  86:   {
+  87:     rank: "K",
+  88:     suit: "♥",
+  89:     title: "SOVEREIGN OF RHYTHM",
+  90:     house: "HOUSE OF SAHOTSAVA",
+  91:     prophecy: "Momentum surges in your favor. Tonight the arena moves to your cadence; take the boldest cue without hesitation.",
+  92:   },
+  93:   {
+  94:     rank: "Q",
+  95:     suit: "♦",
+  96:     title: "ORACLE OF THE CHECKERED COURT",
+  97:     house: "HOUSE OF FINE ARTS & DESIGN",
+  98:     prophecy: "Every detail you craft carries hidden symmetry. Look closely at the margins—your signature masterpiece is ready.",
+  99:   },
+ 100:   {
+ 101:     rank: "10",
+ 102:     suit: "♦",
+ 103:     title: "VANGUARD OF IGNITED AMBER",
+ 104:     house: "HOUSE OF STAGE & SPECTACLE",
+ 105:     prophecy: "Ten sparks converge into one blaze. Lead your ensemble into uncharted territory and claim the spotlight.",
+ 106:   },
+ 107:   {
+ 108:     rank: "A",
+ 109:     suit: "♣",
+ 110:     title: "CATALYST OF THE UNPREDICTABLE",
+ 111:     house: "DECK OF DESTINIES // WILD CARD",
+ 112:     prophecy: "Boundaries dissolve where you walk. Expect spontaneous street cyphers, secret sessions, and timeless memories.",
+ 113:   },
+ 114: ];
+ 115: 
+ 116: const EASE_SWISS = [0.22, 1, 0.36, 1] as const;
+ 117: 
+ 118: /* ==========================================================================
+ 119:    3. PROCEDURAL CANVAS TEXTURES
+ 120:    ========================================================================== */
+ 121: function createCardFaceTexture(rank: string, suit: string, stock: "ivory" | "obsidian"): THREE.CanvasTexture {
+ 122:   const canvas = document.createElement("canvas");
+ 123:   canvas.width = 512;
+ 124:   canvas.height = 768;
+ 125:   const ctx = canvas.getContext("2d");
+ 126:   if (!ctx) return new THREE.CanvasTexture(canvas);
+ 127: 
+ 128:   ctx.fillStyle = stock === "ivory" ? "#FFF4E0" : "#120E15";
+ 129:   ctx.fillRect(0, 0, canvas.width, canvas.height);
+ 130: 
+ 131:   for (let i = 0; i < 1800; i++) {
+ 132:     ctx.fillStyle = stock === "ivory" ? "rgba(18, 14, 21, 0.04)" : "rgba(255, 244, 224, 0.05)";
+ 133:     ctx.fillRect(Math.random() * canvas.width, Math.random() * canvas.height, 2, 2);
+ 134:   }
+ 135: 
+ 136:   const primaryInk = stock === "ivory" ? (suit === "♦" || suit === "♥" ? "#8B1E24" : "#120E15") : "#FFAA24";
+ 137:   const secondaryInk = stock === "ivory" ? "#E65C19" : "#FFF4E0";
+ 138: 
+ 139:   ctx.strokeStyle = primaryInk;
+ 140:   ctx.lineWidth = 7;
+ 141:   ctx.strokeRect(24, 24, canvas.width - 48, canvas.height - 48);
+ 142: 
+ 143:   ctx.strokeStyle = secondaryInk;
+ 144:   ctx.lineWidth = 2;
+ 145:   ctx.strokeRect(38, 38, canvas.width - 76, canvas.height - 76);
+ 146: 
+ 147:   ctx.fillStyle = primaryInk;
+ 148:   ctx.font = 'bold 68px "Bebas Neue", Impact, sans-serif';
+ 149:   ctx.textAlign = "center";
+ 150:   ctx.fillText(rank, 80, 110);
+ 151:   ctx.font = "48px serif";
+ 152:   ctx.fillText(suit, 80, 160);
+ 153: 
+ 154:   ctx.save();
+ 155:   ctx.translate(canvas.width - 80, canvas.height - 110);
+ 156:   ctx.rotate(Math.PI);
+ 157:   ctx.font = 'bold 68px "Bebas Neue", Impact, sans-serif';
+ 158:   ctx.fillText(rank, 0, 0);
+ 159:   ctx.font = "48px serif";
+ 160:   ctx.fillText(suit, 0, 50);
+ 161:   ctx.restore();
+ 162: 
+ 163:   ctx.save();
+ 164:   ctx.translate(canvas.width / 2, canvas.height / 2);
+ 165: 
+ 166:   const radial = ctx.createRadialGradient(0, 0, 12, 0, 0, 175);
+ 167:   radial.addColorStop(0, "rgba(255, 170, 36, 0.42)");
+ 168:   radial.addColorStop(0.55, "rgba(230, 92, 25, 0.16)");
+ 169:   radial.addColorStop(1, "rgba(18, 14, 21, 0)");
+ 170:   ctx.fillStyle = radial;
+ 171:   ctx.beginPath();
+ 172:   ctx.arc(0, 0, 175, 0, Math.PI * 2);
+ 173:   ctx.fill();
+ 174: 
+ 175:   ctx.strokeStyle = primaryInk;
+ 176:   ctx.lineWidth = 3;
+ 177:   ctx.beginPath();
+ 178:   ctx.arc(0, 0, 134, 0, Math.PI * 2);
+ 179:   ctx.stroke();
+ 180: 
+ 181:   ctx.save();
+ 182:   ctx.rotate(Math.PI / 4);
+ 183:   ctx.strokeStyle = secondaryInk;
+ 184:   ctx.lineWidth = 2.5;
+ 185:   ctx.strokeRect(-92, -92, 184, 184);
+ 186:   ctx.restore();
+ 187: 
+ 188:   ctx.fillStyle = primaryInk;
+ 189:   ctx.font = "156px serif";
+ 190:   ctx.textAlign = "center";
+ 191:   ctx.textBaseline = "middle";
+ 192:   ctx.fillText(suit, 0, 6);
+ 193: 
+ 194:   ctx.fillStyle = secondaryInk;
+ 195:   ctx.font = "bold 15px monospace";
+ 196:   ctx.fillText("DECK OF DESTINIES", 0, -184);
+ 197:   ctx.fillText("SANSKARAN • SAHOTSAVA", 0, 188);
+ 198:   ctx.restore();
+ 199: 
+ 200:   const tex = new THREE.CanvasTexture(canvas);
+ 201:   tex.needsUpdate = true;
+ 202:   return tex;
+ 203: }
+ 204: 
+ 205: function createCardBackTexture(): THREE.CanvasTexture {
+ 206:   const canvas = document.createElement("canvas");
+ 207:   canvas.width = 512;
+ 208:   canvas.height = 768;
+ 209:   const ctx = canvas.getContext("2d");
+ 210:   if (!ctx) return new THREE.CanvasTexture(canvas);
+ 211: 
+ 212:   ctx.fillStyle = "#120E15";
+ 213:   ctx.fillRect(0, 0, canvas.width, canvas.height);
+ 214: 
+ 215:   ctx.fillStyle = "#8B1E24";
+ 216:   ctx.fillRect(26, 26, canvas.width - 52, canvas.height - 52);
+ 217: 
+ 218:   ctx.strokeStyle = "rgba(255, 170, 36, 0.34)";
+ 219:   ctx.lineWidth = 1.5;
+ 220:   for (let i = -400; i < 900; i += 28) {
+ 221:     ctx.beginPath();
+ 222:     ctx.moveTo(i, 26);
+ 223:     ctx.lineTo(i + 400, canvas.height - 26);
+ 224:     ctx.stroke();
+ 225: 
+ 226:     ctx.beginPath();
+ 227:     ctx.moveTo(i + 400, 26);
+ 228:     ctx.lineTo(i, canvas.height - 26);
+ 229:     ctx.stroke();
+ 230:   }
+ 231: 
+ 232:   ctx.strokeStyle = "#FFF4E0";
+ 233:   ctx.lineWidth = 8;
+ 234:   ctx.strokeRect(18, 18, canvas.width - 36, canvas.height - 36);
+ 235: 
+ 236:   ctx.strokeStyle = "#FFAA24";
+ 237:   ctx.lineWidth = 3;
+ 238:   ctx.strokeRect(36, 36, canvas.width - 72, canvas.height - 72);
+ 239: 
+ 240:   ctx.save();
+ 241:   ctx.translate(canvas.width / 2, canvas.height / 2);
+ 242:   ctx.fillStyle = "#120E15";
+ 243:   ctx.beginPath();
+ 244:   ctx.arc(0, 0, 114, 0, Math.PI * 2);
+ 245:   ctx.fill();
+ 246: 
+ 247:   ctx.strokeStyle = "#FFAA24";
+ 248:   ctx.lineWidth = 4;
+ 249:   ctx.beginPath();
+ 250:   ctx.arc(0, 0, 114, 0, Math.PI * 2);
+ 251:   ctx.stroke();
+ 252: 
+ 253:   ctx.fillStyle = "#FFF4E0";
+ 254:   ctx.font = 'bold 34px "Bebas Neue", sans-serif';
+ 255:   ctx.textAlign = "center";
+ 256:   ctx.textBaseline = "middle";
+ 257:   ctx.fillText("S & S", 0, 2);
+ 258:   ctx.restore();
+ 259: 
+ 260:   const tex = new THREE.CanvasTexture(canvas);
+ 261:   tex.needsUpdate = true;
+ 262:   return tex;
+ 263: }
+ 264: 
+ 265: /* ==========================================================================
+ 266:    4. SPATIAL HUD COMPONENT
+ 267:    ========================================================================== */
+ 268: interface HUDProps {
+ 269:   mode: "shuffle" | "corridor";
+ 270:   shuffleCount: number;
+ 271:   cardCount: number;
+ 272:   webglActive: boolean;
+ 273:   surgeActive: boolean;
+ 274:   onModeChange: (mode: "shuffle" | "corridor") => void;
+ 275:   onShuffleBurst: () => void;
+ 276:   onDrawFortune: () => void;
+ 277:   onTriggerSurge: () => void;
+ 278: }
+ 279: 
+ 280: function ThreeUISpatialHUD({
+ 281:   mode,
+ 282:   shuffleCount,
+ 283:   cardCount,
+ 284:   webglActive,
+ 285:   surgeActive,
+ 286:   onModeChange,
+ 287:   onShuffleBurst,
+ 288:   onDrawFortune,
+ 289:   onTriggerSurge,
+ 290: }: HUDProps) {
+ 291:   return (
+ 292:     <div className="w-full max-w-2xl">
+ 293:       <div className="flex flex-wrap items-center justify-between gap-2 mb-2.5 px-3 py-1.5 rounded-lg bg-[#120E15]/85 backdrop-blur-md border border-[#FFF4E0]/15 text-[10px] sm:text-xs font-mono tracking-wider text-[#FFF4E0]/80">
+ 294:         <div className="flex items-center gap-2">
+ 295:           <span
+ 296:             className={`inline-block w-2 h-2 rounded-full ${
+ 297:               surgeActive
+ 298:                 ? "bg-cyan-400 animate-ping"
+ 299:                 : webglActive
+ 300:                 ? "bg-[#FFAA24] animate-pulse"
+ 301:                 : "bg-[#E65C19]"
+ 302:             }`}
+ 303:           />
+ 304:           <span className="text-[#FFAA24] font-semibold">THREEUI // HUD</span>
+ 305:           <span className="text-[#FFF4E0]/40">|</span>
+ 306:           <span className={surgeActive ? "text-cyan-300 font-bold animate-pulse" : ""}>
+ 307:             {surgeActive
+ 308:               ? "⚡ WARP SURGE ACTIVE"
+ 309:               : mode === "shuffle"
+ 310:               ? "3D RIFFLE HELIX"
+ 311:               : "MONOLITH CORRIDOR"}
+ 312:           </span>
+ 313:         </div>
+ 314:         <div className="flex items-center gap-3 text-[#FFF4E0]/70">
+ 315:           <span>DECK: {cardCount}</span>
+ 316:           <span>SHUFFLES: #{String(shuffleCount).padStart(2, "0")}</span>
+ 317:         </div>
+ 318:       </div>
+ 319: 
+ 320:       <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+ 321:         <div className="sm:col-span-2 grid grid-cols-2 p-1 rounded-xl bg-[#120E15]/90 backdrop-blur-md border border-[#8B1E24] shadow-[0_10px_30px_rgba(0,0,0,0.65)]">
+ 322:           <button
+ 323:             type="button"
+ 324:             onClick={() => onModeChange("shuffle")}
+ 325:             className={`flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-lg text-xs font-bold tracking-wider uppercase transition-all cursor-pointer ${
+ 326:               mode === "shuffle"
+ 327:                 ? "bg-[#FFAA24] text-[#120E15] shadow-[0_0_20px_rgba(255,170,36,0.45)]"
+ 328:                 : "text-[#FFF4E0]/80 hover:text-[#FFF4E0]"
+ 329:             }`}
+ 330:           >
+ 331:             <Icon.Layers className="w-3.5 h-3.5 shrink-0" />
+ 332:             <span>3D Shuffle</span>
+ 333:           </button>
+ 334: 
+ 335:           <button
+ 336:             type="button"
+ 337:             onClick={() => {
+ 338:               if (mode === "corridor") {
+ 339:                 onTriggerSurge();
+ 340:               } else {
+ 341:                 onModeChange("corridor");
+ 342:               }
+ 343:             }}
+ 344:             className={`flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-lg text-xs font-bold tracking-wider uppercase transition-all cursor-pointer ${
+ 345:               mode === "corridor"
+ 346:                 ? surgeActive
+ 347:                   ? "bg-gradient-to-r from-[#FFAA24] to-cyan-400 text-[#120E15] shadow-[0_0_30px_rgba(6,182,212,0.6)]"
+ 348:                   : "bg-[#E65C19] text-[#FFF4E0] shadow-[0_0_20px_rgba(230,92,25,0.5)]"
+ 349:                 : "text-[#FFF4E0]/80 hover:text-[#FFF4E0]"
+ 350:             }`}
+ 351:           >
+ 352:             <Icon.Compass className="w-3.5 h-3.5 shrink-0" />
+ 353:             <span>{mode === "corridor" ? (surgeActive ? "Surging..." : "Surge Corridor") : "Monolith Corridor"}</span>
+ 354:           </button>
+ 355:         </div>
+ 356: 
+ 357:         <div className="grid grid-cols-2 gap-2">
+ 358:           <button
+ 359:             type="button"
+ 360:             onClick={onShuffleBurst}
+ 361:             className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-[#120E15]/90 hover:bg-[#8B1E24] text-[#FFF4E0] border border-[#FFAA24]/60 text-xs font-bold tracking-wider uppercase transition-all active:scale-95 cursor-pointer"
+ 362:           >
+ 363:             <Icon.Shuffle className="w-3.5 h-3.5 text-[#FFAA24] shrink-0" />
+ 364:             <span>Shuffle</span>
+ 365:           </button>
+ 366: 
+ 367:           <button
+ 368:             type="button"
+ 369:             onClick={onDrawFortune}
+ 370:             className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-gradient-to-r from-[#8B1E24] to-[#E65C19] hover:brightness-110 text-[#FFF4E0] border border-[#FFAA24] text-xs font-bold tracking-wider uppercase shadow-[0_0_24px_rgba(230,92,25,0.45)] transition-all active:scale-95 cursor-pointer"
+ 371:           >
+ 372:             <Icon.Sparkles className="w-3.5 h-3.5 text-[#FFAA24] shrink-0" />
+ 373:             <span>Draw Card</span>
+ 374:           </button>
+ 375:         </div>
+ 376:       </div>
+ 377:     </div>
+ 378:   );
+ 379: }
+ 380: 
+ 381: /* ==========================================================================
+ 382:    5. MAIN HERO SECTION COMPONENT (With Scroll-Cascading Parallax & Cursor Following)
+ 383:    ========================================================================== */
+ 384: interface HeroSectionProps {
+ 385:   onExploreGallery?: () => void;
+ 386: }
+ 387: 
+ 388: export default function HeroSection({ onExploreGallery }: HeroSectionProps) {
+ 389:   const heroContainerRef = useRef<HTMLDivElement>(null);
+ 390:   const mountRef = useRef<HTMLDivElement>(null);
+ 391: 
+ 392:   const [heroMode, setHeroMode] = useState<"shuffle" | "corridor">("shuffle");
+ 393:   const [shuffleCount, setShuffleCount] = useState(1);
+ 394:   const [webglActive, setWebglActive] = useState(true);
+ 395:   const [drawnFortune, setDrawnFortune] = useState<Fortune | null>(null);
+ 396:   const [surgeActive, setSurgeActive] = useState(false);
+ 397: 
+ 398:   // GSAP animation & dynamic parallax state
+ 399:   const animStateRef = useRef({
+ 400:     introDeal: 0, // Starts at 0, cards fly in from side
+ 401:     modeBlend: 0, // 0 = 3D Shuffle, 1 = Monolith Corridor
+ 402:     corridorSurge: 0, // 0 to 1 on clicking monolith corridor
+ 403:     scrollProgress: 0, // Continuous scroll progress
+ 404:     heroInfluence: 1, // 1 when at top in hero, 0 when scrolled away
+ 405:     spadeInfluence: 0, // 1 when viewing "What is Sanskaran" / Archetypes section
+ 406:     clubInfluence: 0, // 1 when viewing "Gallery / Capabilities" section
+ 407:     heartInfluence: 0, // 1 when viewing "Genesis Pass / Pre-register" section
+ 408:     diamondInfluence: 0, // 1 when viewing "New Core Members" section
+ 409:     shuffleImpulse: 0,
+ 410:     pointerX: 0,
+ 411:     pointerY: 0,
+ 412:   });
+ 413: 
+ 414:   // Switch mode smoothly using GSAP
+ 415:   const handleModeChange = useCallback((newMode: "shuffle" | "corridor") => {
+ 416:     setHeroMode(newMode);
+ 417:     const targetBlend = newMode === "corridor" ? 1 : 0;
+ 418: 
+ 419:     gsap.to(animStateRef.current, {
+ 420:       modeBlend: targetBlend,
+ 421:       duration: 1.4,
+ 422:       ease: "power2.inOut",
+ 423:       overwrite: "auto",
+ 424:     });
+ 425:   }, []);
+ 426: 
+ 427:   // Corridor Warp & Surge Trigger
+ 428:   const handleTriggerCorridorSurge = useCallback(() => {
+ 429:     gsap.killTweensOf(animStateRef.current, "corridorSurge");
+ 430:     setSurgeActive(true);
+ 431: 
+ 432:     gsap
+ 433:       .timeline({
+ 434:         onComplete: () => setSurgeActive(false),
+ 435:       })
+ 436:       .to(animStateRef.current, {
+ 437:         corridorSurge: 1.0,
+ 438:         duration: 0.85,
+ 439:         ease: "power3.in",
+ 440:       })
+ 441:       .to(animStateRef.current, {
+ 442:         corridorSurge: 0.0,
+ 443:         duration: 1.4,
+ 444:         ease: "power3.out",
+ 445:       });
+ 446:   }, []);
+ 447: 
+ 448:   const handleShuffleBurst = useCallback(() => {
+ 449:     gsap.killTweensOf(animStateRef.current, "shuffleImpulse");
+ 450:     animStateRef.current.shuffleImpulse = 1.0;
+ 451:     gsap.to(animStateRef.current, {
+ 452:       shuffleImpulse: 0,
+ 453:       duration: 1.2,
+ 454:       ease: "power2.out",
+ 455:     });
+ 456:     setShuffleCount((c) => c + 1);
+ 457:   }, []);
+ 458: 
+ 459:   const handleDrawFortune = useCallback(() => {
+ 460:     handleShuffleBurst();
+ 461:     const pick = DESTINY_FORTUNES[Math.floor(Math.random() * DESTINY_FORTUNES.length)];
+ 462:     setDrawnFortune(pick);
+ 463:   }, [handleShuffleBurst]);
+ 464: 
+ 465:   const handleHeroClick = (e: React.MouseEvent<HTMLDivElement>) => {
+ 466:     const target = e.target as HTMLElement;
+ 467:     if (target.closest("button") || target.closest("input")) return;
+ 468: 
+ 469:     if (animStateRef.current.modeBlend > 0.4) {
+ 470:       handleTriggerCorridorSurge();
+ 471:     }
+ 472:   };
+ 473: 
+ 474:   // INITIAL LOAD ANIMATION SEQUENCE:
+ 475:   // 1. Cards fly in from the side into 3D shuffle
+ 476:   // 2. Stay in 3D shuffle position for 1 second
+ 477:   // 3. Converts to monolith corridor
+ 478:   useEffect(() => {
+ 479:     const introTl = gsap.timeline({ delay: 0.2 });
+ 480: 
+ 481:     introTl
+ 482:       .to(animStateRef.current, {
+ 483:         introDeal: 1.0,
+ 484:         duration: 1.2,
+ 485:         ease: "power3.out",
+ 486:       })
+ 487:       .to({}, { duration: 1.0 }) // Stay in 3D shuffle for 1.0s
+ 488:       .to(animStateRef.current, {
+ 489:         modeBlend: 1.0,
+ 490:         duration: 1.6,
+ 491:         ease: "power2.inOut",
+ 492:         onStart: () => setHeroMode("corridor"),
+ 493:       });
+ 494: 
+ 495:     return () => {
+ 496:       introTl.kill();
+ 497:     };
+ 498:   }, []);
+ 499: 
+ 500:   // Continuous Window Scroll Listener & Section Spotlight Coordinator
+ 501:   useEffect(() => {
+ 502:     const calcSectionInfluence = (elementId: string, windowH: number) => {
+ 503:       const el = document.getElementById(elementId);
+ 504:       if (!el) return 0;
+ 505:       const rect = el.getBoundingClientRect();
+ 506:       // Target viewing center: when the section header is in the active reading area
+ 507:       const headerCenter = rect.top + Math.min(rect.height, windowH) * 0.35;
+ 508:       const viewCenter = windowH * 0.45;
+ 509:       const dist = Math.abs(headerCenter - viewCenter) / (windowH * 0.65);
+ 510:       const raw = THREE.MathUtils.clamp(1 - dist, 0, 1);
+ 511:       return raw * raw * (3 - 2 * raw); // smoothstep
+ 512:     };
+ 513: 
+ 514:     const onScroll = () => {
+ 515:       const scrollY = window.scrollY || document.documentElement.scrollTop;
+ 516:       const windowH = window.innerHeight || 800;
+ 517: 
+ 518:       // 1. Hero influence: 1 at top, fades to 0 as user scrolls past hero
+ 519:       const heroInf = THREE.MathUtils.clamp(1 - scrollY / (windowH * 0.72), 0, 1);
+ 520:       animStateRef.current.heroInfluence = heroInf * heroInf * (3 - 2 * heroInf);
+ 521: 
+ 522:       // 2. Section "cards" (What is Sanskaran / Archetypes) -> Summons ONLY the Spade card!
+ 523:       animStateRef.current.spadeInfluence = calcSectionInfluence("cards", windowH);
+ 524: 
+ 525:       // 3. Section "about" (Gallery / Conclave Capabilities) -> Summons ONLY the Club card!
+ 526:       animStateRef.current.clubInfluence = calcSectionInfluence("about", windowH);
+ 527: 
+ 528:       // 4. Section "pre-register" (Genesis Pass Deck) -> Summons Heart card
+ 529:       animStateRef.current.heartInfluence = calcSectionInfluence("pre-register", windowH);
+ 530: 
+ 531:       // 5. Section "core-members" (New Core Members / Diamond Court) -> Summons Diamond card
+ 532:       animStateRef.current.diamondInfluence = calcSectionInfluence("core-members", windowH);
+ 533: 
+ 534:       animStateRef.current.scrollProgress = scrollY / windowH;
+ 535:     };
+ 536: 
+ 537:     window.addEventListener("scroll", onScroll, { passive: true });
+ 538:     onScroll();
+ 539:     return () => window.removeEventListener("scroll", onScroll);
+ 540:   }, []);
+ 541: 
+ 542:   // Global Pointer/Mouse Tracking across the entire window
+ 543:   useEffect(() => {
+ 544:     const handleGlobalPointerMove = (e: MouseEvent) => {
+ 545:       const nx = (e.clientX / window.innerWidth) * 2 - 1;
+ 546:       const ny = -((e.clientY / window.innerHeight) * 2 - 1);
+ 547:       animStateRef.current.pointerX = nx;
+ 548:       animStateRef.current.pointerY = ny;
+ 549:     };
+ 550: 
+ 551:     window.addEventListener("mousemove", handleGlobalPointerMove, { passive: true });
+ 552:     return () => window.removeEventListener("mousemove", handleGlobalPointerMove);
+ 553:   }, []);
+ 554: 
+ 555:   // ScrollTrigger to guarantee corridor mode is engaged when user scrolls down
+ 556:   useEffect(() => {
+ 557:     if (!heroContainerRef.current) return;
+ 558: 
+ 559:     const ctx = gsap.context(() => {
+ 560:       ScrollTrigger.create({
+ 561:         trigger: heroContainerRef.current,
+ 562:         start: "top top",
+ 563:         end: "+=80%",
+ 564:         onLeave: () => {
+ 565:           if (animStateRef.current.modeBlend < 1) {
+ 566:             gsap.to(animStateRef.current, { modeBlend: 1.0, duration: 0.8, ease: "power2.out" });
+ 567:             setHeroMode("corridor");
+ 568:           }
+ 569:         },
+ 570:       });
+ 571:     }, heroContainerRef);
+ 572: 
+ 573:     return () => ctx.revert();
+ 574:   }, []);
+ 575: 
+ 576:   // Three.js Scene Setup & Loop
+ 577:   useEffect(() => {
+ 578:     const container = mountRef.current;
+ 579:     if (!container) return;
+ 580: 
+ 581:     let animationFrameId = 0;
+ 582:     let renderer: THREE.WebGLRenderer | null = null;
+ 583:     let cardGeo: THREE.BoxGeometry | null = null;
+ 584:     let floorGeo: THREE.PlaneGeometry | null = null;
+ 585:     let particleGeo: THREE.BufferGeometry | null = null;
+ 586:     let backTexture: THREE.CanvasTexture | null = null;
+ 587:     let faceTextures: THREE.CanvasTexture[] = [];
+ 588: 
+ 589:     const width = window.innerWidth;
+ 590:     const height = window.innerHeight;
+ 591:     const isMobile = width < 640;
+ 592: 
+ 593:     const scene = new THREE.Scene();
+ 594:     // Transparent scene background so ParallaxBackground shows through seamlessly
+ 595:     const fog = new THREE.FogExp2("#140E17", 0.022);
+ 596:     scene.fog = fog;
+ 597: 
+ 598:     const camera = new THREE.PerspectiveCamera(isMobile ? 56 : 44, width / height, 0.1, 100);
+ 599:     camera.position.set(0, 0.3, isMobile ? 10.6 : 8.2);
+ 600: 
+ 601:     const handleResize = () => {
+ 602:       if (!renderer) return;
+ 603:       const w = window.innerWidth;
+ 604:       const h = window.innerHeight;
+ 605:       camera.aspect = w / h;
+ 606:       camera.fov = w < 640 ? 56 : 44;
+ 607:       camera.updateProjectionMatrix();
+ 608:       renderer.setSize(w, h);
+ 609:     };
+ 610: 
+ 611:     try {
+ 612:       renderer = new THREE.WebGLRenderer({
+ 613:         antialias: true,
+ 614:         alpha: true,
+ 615:         powerPreference: "high-performance",
+ 616:       });
+ 617:       renderer.setClearColor(0x000000, 0);
+ 618:       renderer.setSize(width, height);
+ 619:       renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+ 620:       renderer.toneMapping = THREE.ACESFilmicToneMapping;
+ 621:       renderer.toneMappingExposure = 1.25;
+ 622:       container.appendChild(renderer.domElement);
+ 623:       setWebglActive(true);
+ 624: 
+ 625:       // Lighting
+ 626:       const ambientLight = new THREE.AmbientLight("#FFF4E0", 0.65);
+ 627:       scene.add(ambientLight);
+ 628: 
+ 629:       const solarFlareLight = new THREE.PointLight("#FFAA24", 5.0, 38);
+ 630:       solarFlareLight.position.set(0, 3.6, 4.5);
+ 631:       scene.add(solarFlareLight);
+ 632: 
+ 633:       const horizonBacklight = new THREE.PointLight("#FFAA24", 7.5, 48);
+ 634:       horizonBacklight.position.set(0, 2.5, -16);
+ 635:       scene.add(horizonBacklight);
+ 636: 
+ 637:       const amberFill = new THREE.PointLight("#E65C19", 4.0, 28);
+ 638:       amberFill.position.set(-5, -1.5, 3);
+ 639:       scene.add(amberFill);
+ 640: 
+ 641:       const crimsonRim = new THREE.PointLight("#8B1E24", 4.5, 28);
+ 642:       crimsonRim.position.set(5, 2, -2);
+ 643:       scene.add(crimsonRim);
+ 644: 
+ 645:       // Floor
+ 646:       floorGeo = new THREE.PlaneGeometry(60, 80);
+ 647:       const floorMat = new THREE.MeshStandardMaterial({
+ 648:         color: "#0B0B0D",
+ 649:         roughness: 0.35,
+ 650:         metalness: 0.72,
+ 651:         transparent: true,
+ 652:         opacity: 0.28,
+ 653:       });
+ 654:       const floorMesh = new THREE.Mesh(floorGeo, floorMat);
+ 655:       floorMesh.rotation.x = -Math.PI / 2;
+ 656:       floorMesh.position.y = -3.8;
+ 657:       scene.add(floorMesh);
+ 658: 
+ 659:       // Procedural Textures
+ 660:       backTexture = createCardBackTexture();
+ 661:       const specs: Array<{ rank: string; suit: string; stock: "ivory" | "obsidian" }> = [
+ 662:         { rank: "A", suit: "♠", stock: "ivory" },
+ 663:         { rank: "A", suit: "♣", stock: "ivory" },
+ 664:         { rank: "K", suit: "♥", stock: "ivory" },
+ 665:         { rank: "Q", suit: "♦", stock: "ivory" },
+ 666:         { rank: "10", suit: "♦", stock: "ivory" },
+ 667:         { rank: "A", suit: "♠", stock: "obsidian" },
+ 668:       ];
+ 669:       faceTextures = specs.map((s) => createCardFaceTexture(s.rank, s.suit, s.stock));
+ 670: 
+ 671:       const CARD_COUNT = 18;
+ 672:       cardGeo = new THREE.BoxGeometry(1.65, 2.48, 0.028);
+ 673: 
+ 674:       const edgeMat = new THREE.MeshStandardMaterial({
+ 675:         color: "#FFAA24",
+ 676:         emissive: "#8B1E24",
+ 677:         emissiveIntensity: 0.35,
+ 678:         roughness: 0.3,
+ 679:         metalness: 0.8,
+ 680:       });
+ 681:       const backMat = new THREE.MeshStandardMaterial({
+ 682:         map: backTexture,
+ 683:         roughness: 0.35,
+ 684:         metalness: 0.22,
+ 685:       });
+ 686: 
+ 687:       const corridorSpots = [
+ 688:         { x: -2.15, z: 2.1, rotY: 0.28, scale: 1.76 },
+ 689:         { x: 2.15, z: 1.5, rotY: -0.32, scale: 1.82 },
+ 690:         { x: -1.15, z: -1.4, rotY: 0.16, scale: 1.68 },
+ 691:         { x: 2.75, z: -2.0, rotY: -0.25, scale: 1.72 },
+ 692:         { x: -2.85, z: -3.4, rotY: 0.38, scale: 1.65 },
+ 693:         { x: 0.85, z: -4.8, rotY: -0.14, scale: 1.6 },
+ 694:         { x: -1.65, z: -6.5, rotY: 0.22, scale: 1.58 },
+ 695:         { x: 1.95, z: -7.8, rotY: -0.2, scale: 1.62 },
+ 696:         { x: -0.35, z: -9.5, rotY: 0.08, scale: 1.55 },
+ 697:       ];
+ 698: 
+ 699:       const cards: Array<{
+ 700:         mesh: THREE.Mesh;
+ 701:         corridorPos: THREE.Vector3;
+ 702:         corridorRotY: number;
+ 703:         corridorScale: number;
+ 704:         phase: number;
+ 705:       }> = [];
+ 706: 
+ 707:       for (let i = 0; i < CARD_COUNT; i++) {
+ 708:         const frontMat = new THREE.MeshStandardMaterial({
+ 709:           map: faceTextures[i % faceTextures.length],
+ 710:           roughness: 0.32,
+ 711:           metalness: 0.18,
+ 712:         });
+ 713:         const mesh = new THREE.Mesh(cardGeo, [edgeMat, edgeMat, edgeMat, edgeMat, frontMat, backMat]);
+ 714:         scene.add(mesh);
+ 715: 
+ 716:         const spot = corridorSpots[i % corridorSpots.length];
+ 717:         const tier = Math.floor(i / corridorSpots.length);
+ 718:         cards.push({
+ 719:           mesh,
+ 720:           corridorPos: new THREE.Vector3(
+ 721:             spot.x * (tier === 0 ? 1 : 1.15),
+ 722:             -0.45 + (spot.scale - 1.6) * 1.1,
+ 723:             spot.z - tier * 10.5
+ 724:           ),
+ 725:           corridorRotY: spot.rotY,
+ 726:           corridorScale: spot.scale,
+ 727:           phase: (i / CARD_COUNT) * Math.PI * 2,
+ 728:         });
+ 729:       }
+ 730: 
+ 731:       // Embers
+ 732:       const particleCount = 180;
+ 733:       particleGeo = new THREE.BufferGeometry();
+ 734:       const positions = new Float32Array(particleCount * 3);
+ 735:       for (let i = 0; i < particleCount; i++) {
+ 736:         positions[i * 3] = (Math.random() - 0.5) * 18;
+ 737:         positions[i * 3 + 1] = (Math.random() - 0.5) * 12;
+ 738:         positions[i * 3 + 2] = (Math.random() - 0.5) * 24;
+ 739:       }
+ 740:       particleGeo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+ 741: 
+ 742:       const particleMat = new THREE.PointsMaterial({
+ 743:         color: "#FFAA24",
+ 744:         size: 0.08,
+ 745:         transparent: true,
+ 746:         opacity: 0.85,
+ 747:         blending: THREE.AdditiveBlending,
+ 748:       });
+ 749:       const embers = new THREE.Points(particleGeo, particleMat);
+ 750:       scene.add(embers);
+ 751: 
+ 752:       window.addEventListener("resize", handleResize);
+ 753: 
+ 754:       const clock = new THREE.Clock();
+ 755:       const targetPos = new THREE.Vector3();
+ 756:       const targetScaleVec = new THREE.Vector3();
+ 757: 
+ 758:       const animateLoop = () => {
+ 759:         animationFrameId = requestAnimationFrame(animateLoop);
+ 760:         if (!renderer) return;
+ 761: 
+ 762:         const dt = Math.min(clock.getDelta(), 0.05);
+ 763:         const elapsed = clock.getElapsedTime();
+ 764: 
+ 765:         const deal = animStateRef.current.introDeal; // 0 to 1
+ 766:         const modeBlend = animStateRef.current.modeBlend; // 0 to 1
+ 767:         const burst = animStateRef.current.shuffleImpulse;
+ 768:         const surge = animStateRef.current.corridorSurge; // 0 to 1
+ 769:         const scroll = animStateRef.current.scrollProgress; // 0 to 1+
+ 770: 
+ 771:         // Fog
+ 772:         const shuffleFog = new THREE.Color("#140E17");
+ 773:         const corridorFog = new THREE.Color(surge > 0.3 ? "#A84C0F" : "#8A420E");
+ 774:         fog.color.lerpColors(shuffleFog, corridorFog, modeBlend);
+ 775:         fog.density = THREE.MathUtils.lerp(0.032, 0.072 + surge * 0.02, modeBlend);
+ 776: 
+ 777:         floorMesh.position.y = THREE.MathUtils.lerp(-4.5, -3.2 - scroll * 5.0, modeBlend);
+ 778: 
+ 779:         // Camera Dynamics:
+ 780:         const mobileNow = (window.innerWidth) < 640;
+ 781:         const baseZ = THREE.MathUtils.lerp(mobileNow ? 10.6 : 8.1, mobileNow ? 7.8 : 6.4, modeBlend);
+ 782:         const surgeZPlunge = surge * 7.5;
+ 783: 
+ 784:         // Camera smoothly follows mouse pointer with depth lerp & vertical scroll tracking
+ 785:         const scrollCamY = -scroll * 0.8;
+ 786:         const targetCamX = animStateRef.current.pointerX * (mobileNow ? 0.55 : 0.95);
+ 787:         const targetCamY = THREE.MathUtils.lerp(0.35, -0.22, modeBlend) + scrollCamY + animStateRef.current.pointerY * 0.45;
+ 788: 
+ 789:         camera.position.x += (targetCamX - camera.position.x) * 0.06;
+ 790:         camera.position.y += (targetCamY - camera.position.y) * 0.06;
+ 791:         camera.position.z += (baseZ - surgeZPlunge - camera.position.z) * (surge > 0.1 ? 0.12 : 0.06);
+ 792:         camera.lookAt(0, THREE.MathUtils.lerp(0.1, -0.3, modeBlend) + scrollCamY, THREE.MathUtils.lerp(0, -10, modeBlend));
+ 793: 
+ 794:         // Light Surges
+ 795:         horizonBacklight.intensity = 7.5 + surge * 18.0;
+ 796:         solarFlareLight.intensity = 5.0 + surge * 5.0;
+ 797:         edgeMat.emissiveIntensity = 0.5 + surge * 2.5;
+ 798: 
+ 799:         // SECTION COORDINATION WEIGHTS:
+ 800:         const heroInf = animStateRef.current.heroInfluence;   // 1 in hero, 0 outside
+ 801:         const spadeInf = animStateRef.current.spadeInfluence; // 1 in Sanskaran Archetypes section
+ 802:         const clubInf = animStateRef.current.clubInfluence;   // 1 in Gallery / Capabilities section
+ 803:         const heartInf = animStateRef.current.heartInfluence; // 1 in Pre-register / Pass section
+ 804:         const diamondInf = animStateRef.current.diamondInfluence; // 1 in Core Members section
+ 805: 
+ 806:         // Animate each card
+ 807:         for (let i = 0; i < CARD_COUNT; i++) {
+ 808:           const card = cards[i];
+ 809:           const norm = (i - (CARD_COUNT - 1) / 2) / (CARD_COUNT / 2);
+ 810: 
+ 811:           const riffleWave = Math.sin(elapsed * 2.2 + card.phase);
+ 812:           const burstSpread = burst * Math.sin(card.phase * 2.0) * 2.4;
+ 813:           const fanAngle = norm * (0.95 + burst * 0.45) + Math.sin(elapsed * 0.8) * 0.15;
+ 814:           const radius = (mobileNow ? 2.1 : 2.75) + Math.abs(norm) * 0.65 + burst * 1.1;
+ 815: 
+ 816:           // Staggered per-card side deal so EVERY card flies in from the side sequentially:
+ 817:           const cardDealStagger = (i / CARD_COUNT) * 0.45;
+ 818:           const cardDealRaw = THREE.MathUtils.clamp((deal - cardDealStagger) / (1 - 0.45), 0, 1);
+ 819:           const cardDealEased = cardDealRaw * cardDealRaw * (3 - 2 * cardDealRaw);
+ 820:           const sideFlyX = (i % 2 === 0 ? -26 : 26) * (1 - cardDealEased) + (i - 9) * 0.4 * (1 - cardDealEased);
+ 821:           const sideFlyRotZ = (i % 2 === 0 ? -2.2 : 2.2) * (1 - cardDealEased);
+ 822:           const sideFlyRotY = (i % 2 === 0 ? 2.8 : -2.8) * (1 - cardDealEased);
+ 823: 
+ 824:           // 3D Shuffle Position
+ 825:           const shuffleX = Math.sin(fanAngle) * radius + Math.cos(elapsed * 1.6 + card.phase) * 0.32 + burstSpread * 0.5 + sideFlyX;
+ 826:           const shuffleY =
+ 827:             Math.cos(fanAngle) * 1.15 -
+ 828:             0.35 +
+ 829:             riffleWave * 0.35 +
+ 830:             Math.sin(elapsed * 3.2 + i * 0.55) * (0.18 + burst * 0.5);
+ 831:           const shuffleZ = -Math.abs(norm) * 1.85 + Math.sin(elapsed * 2.4 + card.phase) * 0.65 - burst * 0.8;
+ 832: 
+ 833:           const shuffleRotX = Math.sin(elapsed * 1.4 + card.phase) * 0.22 + burst * 0.5;
+ 834:           const shuffleRotY = -fanAngle * 0.72 + Math.sin(elapsed * 1.9 + card.phase) * 0.38 + burst * Math.PI * 2 + sideFlyRotY;
+ 835:           const shuffleRotZ = -fanAngle * 0.42 + riffleWave * 0.08 + sideFlyRotZ;
+ 836: 
+ 837:           // Base Monolith Corridor Position with Surge Plunge & Idle Wave
+ 838:           const corridorSpreadSurge = 1 + surge * 0.22;
+ 839:           const surgeWave = Math.sin(elapsed * 5.0 + i * 0.5) * surge * 0.75;
+ 840:           const idleWaveY = Math.sin(elapsed * 1.5 + card.phase) * 0.08;
+ 841:           const idleWaveRot = Math.sin(elapsed * 1.1 + card.phase) * 0.04;
+ 842: 
+ 843:           const heroCorridorX = card.corridorPos.x * corridorSpreadSurge;
+ 844:           const heroCorridorY = card.corridorPos.y + idleWaveY + surgeWave;
+ 845:           const heroCorridorZ = card.corridorPos.z;
+ 846: 
+ 847:           // In-Hero Position (interpolates between 3D Shuffle and Monolith Corridor)
+ 848:           const inHeroX = THREE.MathUtils.lerp(shuffleX, heroCorridorX, modeBlend);
+ 849:           const inHeroY = THREE.MathUtils.lerp(shuffleY, heroCorridorY, modeBlend);
+ 850:           const inHeroZ = THREE.MathUtils.lerp(shuffleZ, heroCorridorZ, modeBlend);
+ 851:           const inHeroRotX = THREE.MathUtils.lerp(shuffleRotX, 0, modeBlend);
+ 852:           const inHeroRotY = THREE.MathUtils.lerp(shuffleRotY, card.corridorRotY + idleWaveRot, modeBlend);
+ 853:           const inHeroRotZ = THREE.MathUtils.lerp(shuffleRotZ, 0, modeBlend);
+ 854:           const inHeroScale = THREE.MathUtils.lerp(
+ 855:             mobileNow ? 0.86 : 1.0,
+ 856:             card.corridorScale * (1 + surge * 0.18),
+ 857:             modeBlend
+ 858:           );
+ 859: 
+ 860:           // CURSOR PARALLAX SPRING FACTOR
+ 861:           const depthFactor = (1 - (card.corridorPos.z / -12)) * 0.75 + 0.35;
+ 862:           const cursorFollowX = animStateRef.current.pointerX * (1.1 * depthFactor);
+ 863:           const cursorFollowY = animStateRef.current.pointerY * (0.8 * depthFactor);
+ 864:           const cursorTiltZ = animStateRef.current.pointerX * (-0.14 * depthFactor);
+ 865:           const cursorTiltX = animStateRef.current.pointerY * (0.12 * depthFactor);
+ 866:           const cursorTiltY = animStateRef.current.pointerX * (0.24 * depthFactor);
+ 867: 
+ 868:           // DEFAULT TARGET: in-hero position with cursor follow
+ 869:           let destX = inHeroX + cursorFollowX * heroInf;
+ 870:           let destY = inHeroY + cursorFollowY * heroInf;
+ 871:           let destZ = inHeroZ;
+ 872:           let destRotX = inHeroRotX + cursorTiltX * heroInf;
+ 873:           let destRotY = inHeroRotY + cursorTiltY * heroInf;
+ 874:           let destRotZ = inHeroRotZ + cursorTiltZ * heroInf;
+ 875:           let destScale = inHeroScale;
+ 876: 
+ 877:           // CONTINUOUS MOVIE VERTICAL PARALLAX (HENRIETTA-INSPIRED):
+ 878:           // Cards NEVER minimize to infinity! Full physical scale is maintained.
+ 879:           // Cards glide continuously vertically past the camera with differential layer speeds,
+ 880:           // flanking the left & right gutters as you scroll down the page like a continuous film.
+ 881: 
+ 882:           const isLeft = (i % 2 === 0);
+ 883:           const colTier = i % 3; // 0, 1, 2
+ 884: 
+ 885:           // Horizontal placement: Flanks the left and right gutters to keep the central reading column clear
+ 886:           const flankMarginX = isLeft
+ 887:             ? (-3.1 - colTier * 0.7)
+ 888:             : (3.1 + colTier * 0.7);
+ 889:           const targetFlankX = mobileNow
+ 890:             ? (isLeft ? -1.75 : 1.75)
+ 891:             : flankMarginX;
+ 892: 
+ 893:           // Continuous vertical parallax velocity:
+ 894:           // Staggered vertical base spacing so cards are distributed along the vertical travel axis
+ 895:           const verticalBaseY = ((i % 6) - 2.5) * 2.4;
+ 896:           // Differential parallax speed per card layer (2.2 to 4.5)
+ 897:           const parallaxSpeed = 2.4 + ((i * 3) % 7) * 0.35;
+ 898:           // Smooth continuous vertical drift upwards as user scrolls down:
+ 899:           const verticalParallaxY = verticalBaseY + (scroll * parallaxSpeed * 2.2);
+ 900: 
+ 901:           // Natural 3D depth layering:
+ 902:           // Cards remain clearly visible between Z = +1.8 and Z = -6.5, NEVER disappearing into fog or infinity
+ 903:           const naturalLayerZ = -0.5 - colTier * 2.2 + (isLeft ? 0.8 : -0.8);
+ 904: 
+ 905:           // Full physical scale: preserved at full scale (with subtle perspective scaling based on layer)
+ 906:           const fullMovieScale = (mobileNow ? 0.88 : 1.05) * (1 - colTier * 0.08);
+ 907: 
+ 908:           // Continuous Rotational Cinematic Sway:
+ 909:           const movieSwayRotX = Math.sin(elapsed * 1.1 + card.phase) * 0.12 + cursorTiltX * 0.8;
+ 910:           const movieSwayRotY = (isLeft ? 0.22 : -0.22) + Math.cos(elapsed * 0.85 + card.phase) * 0.08 + cursorTiltY * 0.8;
+ 911:           const movieSwayRotZ = (isLeft ? -0.06 : 0.06) + Math.sin(elapsed * 1.4 + card.phase) * 0.05 + cursorTiltZ * 0.8;
+ 912: 
+ 913:           // When heroInf = 1 (Hero section), cards sit in their 3D Shuffle / Monolith Corridor.
+ 914:           // As user scrolls down (heroInf -> 0), cards seamlessly transition into the continuous vertical movie!
+ 915:           destX = THREE.MathUtils.lerp(targetFlankX + cursorFollowX, inHeroX + cursorFollowX * heroInf, heroInf);
+ 916:           destY = THREE.MathUtils.lerp(verticalParallaxY + idleWaveY + cursorFollowY, inHeroY + cursorFollowY * heroInf, heroInf);
+ 917:           destZ = THREE.MathUtils.lerp(naturalLayerZ, inHeroZ, heroInf);
+ 918:           destScale = THREE.MathUtils.lerp(fullMovieScale, inHeroScale, heroInf);
+ 919:           destRotX = THREE.MathUtils.lerp(movieSwayRotX, inHeroRotX + cursorTiltX * heroInf, heroInf);
+ 920:           destRotY = THREE.MathUtils.lerp(movieSwayRotY, inHeroRotY + cursorTiltY * heroInf, heroInf);
+ 921:           destRotZ = THREE.MathUtils.lerp(movieSwayRotZ, inHeroRotZ + cursorTiltZ * heroInf, heroInf);
+ 922: 
+ 923:           targetPos.set(destX, destY, destZ);
+ 924:           card.mesh.position.lerp(targetPos, 0.12);
+ 925: 
+ 926:           card.mesh.rotation.x += (destRotX - card.mesh.rotation.x) * 0.12;
+ 927:           card.mesh.rotation.y += (destRotY - card.mesh.rotation.y) * 0.12;
+ 928:           card.mesh.rotation.z += (destRotZ - card.mesh.rotation.z) * 0.12;
+ 929: 
+ 930:           targetScaleVec.set(destScale, destScale, destScale);
+ 931:           card.mesh.scale.lerp(targetScaleVec, 0.12);
+ 932:         }
+ 933: 
+ 934:         // Particle Warp Stream during Surge
+ 935:         embers.rotation.y = elapsed * 0.04;
+ 936:         if (particleGeo) {
+ 937:           const posAttr = particleGeo.getAttribute("position");
+ 938:           for (let i = 0; i < particleCount; i++) {
+ 939:             let py = posAttr.getY(i) + dt * (0.35 + (i % 5) * 0.08 + surge * 5.5);
+ 940:             let pz = posAttr.getZ(i) + dt * (surge * 18.0);
+ 941:             if (pz > 14) pz = -14;
+ 942:             posAttr.setZ(i, pz);
+ 943:             if (py > 6) py = -6;
+ 944:             posAttr.setY(i, py);
+ 945:           }
+ 946:           posAttr.needsUpdate = true;
+ 947:         }
+ 948: 
+ 949:         renderer.render(scene, camera);
+ 950:       };
+ 951: 
+ 952:       animateLoop();
+ 953:     } catch {
+ 954:       setWebglActive(false);
+ 955:     }
+ 956: 
+ 957:     return () => {
+ 958:       cancelAnimationFrame(animationFrameId);
+ 959:       window.removeEventListener("resize", handleResize);
+ 960:       if (renderer) {
+ 961:         if (renderer.domElement && container.contains(renderer.domElement)) {
+ 962:           container.removeChild(renderer.domElement);
+ 963:         }
+ 964:         renderer.dispose();
+ 965:       }
+ 966:       cardGeo?.dispose();
+ 967:       floorGeo?.dispose();
+ 968:       particleGeo?.dispose();
+ 969:       backTexture?.dispose();
+ 970:       faceTextures.forEach((t) => t.dispose());
+ 971:     };
+ 972:   }, []);
+ 973: 
+ 974:   const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+ 975:     const rect = e.currentTarget.getBoundingClientRect();
+ 976:     const nx = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+ 977:     const ny = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
+ 978:     animStateRef.current.pointerX = nx;
+ 979:     animStateRef.current.pointerY = ny;
+ 980:   };
+ 981: 
+ 982:   return (
+ 983:     <section
+ 984:       id="hero"
+ 985:       ref={heroContainerRef}
+ 986:       onClick={handleHeroClick}
+ 987:       onPointerMove={handlePointerMove}
+ 988:       className={`relative min-h-[100svh] w-full overflow-hidden flex flex-col justify-between pt-20 pb-8 sm:pt-24 sm:pb-12 ${
+ 989:         heroMode === "corridor" ? "cursor-pointer" : ""
+ 990:       }`}
+ 991:     >
+ 992:       {/* 3D WebGL Canvas Layer - Fixed so cards remain visible throughout page scroll */}
+ 993:       <div
+ 994:         ref={mountRef}
+ 995:         className="fixed inset-0 pointer-events-none z-[1] overflow-hidden"
+ 996:         aria-hidden="true"
+ 997:       />
+ 998: 
+ 999:       {/* Fallback 2D Stack if WebGL is disabled */}
+1000:       {!webglActive && (
+1001:         <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none overflow-hidden" aria-hidden="true">
+1002:           <div className="relative w-64 h-80 flex items-center justify-center">
+1003:             {[-24, -12, 0, 12, 24].map((deg, idx) => (
+1004:               <div
+1005:                 key={deg}
+1006:                 style={{ transform: `rotate(${deg}deg) translateY(${Math.abs(deg) * 0.4}px)` }}
+1007:                 className="absolute w-44 h-64 rounded-2xl bg-[#FFF4E0] border-2 border-[#8B1E24] shadow-[0_0_40px_rgba(255,170,36,0.3)] flex flex-col justify-between p-4 text-[#120E15]"
+1008:               >
+1009:                 <span className="font-display text-2xl font-bold">{["10♦", "Q♦", "A♠", "K♥", "A♣"][idx]}</span>
+1010:                 <span className="text-5xl self-center text-[#8B1E24]">{["♦", "♦", "♠", "♥", "♣"][idx]}</span>
+1011:                 <span className="font-display text-2xl font-bold self-end rotate-180">{["10♦", "Q♦", "A♠", "K♥", "A♣"][idx]}</span>
+1012:               </div>
+1013:             ))}
+1014:           </div>
+1015:         </div>
+1016:       )}
+1017: 
+1018:       {/* Subtle Atmosphere Light Vignette */}
+1019:       <div
+1020:         className="absolute inset-0 z-[2] pointer-events-none"
+1021:         style={{
+1022:           background:
+1023:             "radial-gradient(circle at 50% 35%, rgba(255,170,36,0.06) 0%, rgba(18,14,21,0.2) 65%, transparent 100%)",
+1024:         }}
+1025:       />
+1026: 
+1027:       {/* Top Banner Tag */}
+1028:       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-8">
+1029:         <motion.div
+1030:           initial={{ opacity: 0, x: -24 }}
+1031:           animate={{ opacity: 1, x: 0 }}
+1032:           transition={{ duration: 0.7, ease: EASE_SWISS }}
+1033:           className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-[#120E15]/80 backdrop-blur-md border border-[#8B1E24] text-[#FFF4E0]"
+1034:         >
+1035:           <Icon.Flame className="w-3.5 h-3.5 text-[#FFAA24]" />
+1036:           <span className="font-tech text-[11px] sm:text-xs font-semibold tracking-[0.2em] uppercase">
+1037:             SANSKARAN &amp; SAHOTSAVA // ANNUAL EDITION
+1038:           </span>
+1039:         </motion.div>
+1040:       </div>
+1041: 
+1042:       {/* Main Hero Typography & HUD */}
+1043:       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-8 mt-auto pt-36 sm:pt-44">
+1044:         <div className="border-l-2 border-[#FFAA24] pl-4 sm:pl-6 max-w-3xl">
+1045:           <motion.p
+1046:             initial={{ opacity: 0, y: 16 }}
+1047:             animate={{ opacity: 1, y: 0 }}
+1048:             transition={{ duration: 0.65, delay: 0.1, ease: EASE_SWISS }}
+1049:             className="font-serif italic text-lg sm:text-2xl text-[#FFAA24] mb-1"
+1050:           >
+1051:             Every Card Holds a Story.
+1052:           </motion.p>
+1053: 
+1054:           <motion.h1
+1055:             initial={{ opacity: 0, y: 24 }}
+1056:             animate={{ opacity: 1, y: 0 }}
+1057:             transition={{ duration: 0.75, delay: 0.18, ease: EASE_SWISS }}
+1058:             className="font-display text-6xl sm:text-8xl lg:text-[7.25rem] leading-[0.88] tracking-tight text-[#FFF4E0] uppercase drop-shadow-[0_6px_30px_rgba(18,14,21,0.95)]"
+1059:           >
+1060:             DECK OF{" "}
+1061:             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFAA24] via-[#E65C19] to-[#FFF4E0]">
+1062:               DESTINIES
+1063:             </span>
+1064:           </motion.h1>
+1065: 
+1066:           <motion.p
+1067:             initial={{ opacity: 0, y: 20 }}
+1068:             animate={{ opacity: 1, y: 0 }}
+1069:             transition={{ duration: 0.75, delay: 0.28, ease: EASE_SWISS }}
+1070:             className="mt-3 sm:mt-4 font-tech text-xs sm:text-base text-[#FFF4E0]/85 max-w-xl leading-relaxed"
+1071:           >
+1072:             Every card represents a different destiny, talent, culture and identity. Together, they create an unpredictable world of experiences.
+1073:           </motion.p>
+1074: 
+1075:           {/* Interactive Monolith Corridor Surge Prompt */}
+1076:           {heroMode === "corridor" && (
+1077:             <motion.div
+1078:               initial={{ opacity: 0, y: 8 }}
+1079:               animate={{ opacity: 1, y: 0 }}
+1080:               className="mt-3 inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#FFAA24]/10 border border-[#FFAA24]/40 text-[#FFAA24] text-[11px] font-mono uppercase tracking-wider"
+1081:             >
+1082:               <Icon.Zap className="w-3.5 h-3.5 animate-pulse text-cyan-400" />
+1083:               <span>Click anywhere on corridor to trigger Warp Surge</span>
+1084:             </motion.div>
+1085:           )}
+1086:         </div>
+1087: 
+1088:         {/* HUD Control Strip & Explore CTA */}
+1089:         <motion.div
+1090:           initial={{ opacity: 0, y: 24 }}
+1091:           animate={{ opacity: 1, y: 0 }}
+1092:           transition={{ duration: 0.75, delay: 0.38, ease: EASE_SWISS }}
+1093:           className="mt-6 sm:mt-8 flex flex-col lg:flex-row lg:items-end justify-between gap-4"
+1094:         >
+1095:           <ThreeUISpatialHUD
+1096:             mode={heroMode}
+1097:             shuffleCount={shuffleCount}
+1098:             cardCount={18}
+1099:             webglActive={webglActive}
+1100:             surgeActive={surgeActive}
+1101:             onModeChange={handleModeChange}
+1102:             onShuffleBurst={handleShuffleBurst}
+1103:             onDrawFortune={handleDrawFortune}
+1104:             onTriggerSurge={handleTriggerCorridorSurge}
+1105:           />
+1106: 
+1107:           <button
+1108:             type="button"
+1109:             onClick={onExploreGallery}
+1110:             className="self-start lg:self-end inline-flex items-center gap-2 px-4 py-3 rounded-xl bg-[#FFF4E0] hover:bg-[#FFAA24] text-[#120E15] font-tech text-xs font-bold tracking-widest uppercase transition-colors cursor-pointer"
+1111:           >
+1112:             <span>Explore Festival</span>
+1113:             <Icon.ChevronRight className="w-4 h-4" />
+1114:           </button>
+1115:         </motion.div>
+1116:       </div>
+1117: 
+1118:       {/* Draw Fortune Modal */}
+1119:       <AnimatePresence>
+1120:         {drawnFortune && (
+1121:           <motion.div
+1122:             initial={{ opacity: 0 }}
+1123:             animate={{ opacity: 1 }}
+1124:             exit={{ opacity: 0 }}
+1125:             onClick={() => setDrawnFortune(null)}
+1126:             className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#120E15]/85 backdrop-blur-md"
+1127:           >
+1128:             <motion.div
+1129:               initial={{ scale: 0.84, rotateY: -25, opacity: 0 }}
+1130:               animate={{ scale: 1, rotateY: 0, opacity: 1 }}
+1131:               exit={{ scale: 0.88, opacity: 0 }}
+1132:               transition={{ duration: 0.45, ease: EASE_SWISS }}
+1133:               onClick={(e) => e.stopPropagation()}
+1134:               className="relative w-full max-w-sm rounded-3xl bg-[#FFF4E0] text-[#120E15] p-6 sm:p-7 border-4 border-[#FFAA24] shadow-[0_0_70px_rgba(255,170,36,0.45)]"
+1135:             >
+1136:               <button
+1137:                 type="button"
+1138:                 onClick={() => setDrawnFortune(null)}
+1139:                 aria-label="Close Destiny Card"
+1140:                 className="absolute top-4 right-4 w-9 h-9 rounded-full bg-[#120E15] text-[#FFF4E0] flex items-center justify-center hover:bg-[#8B1E24] transition-colors cursor-pointer"
+1141:               >
+1142:                 <Icon.X className="w-4 h-4" />
+1143:               </button>
+1144: 
+1145:               <div className="flex items-center justify-between border-b border-[#120E15]/15 pb-3">
+1146:                 <div className="flex items-baseline gap-2">
+1147:                   <span className="font-display text-4xl text-[#8B1E24]">{drawnFortune.rank}</span>
+1148:                   <span className="text-2xl text-[#8B1E24]">{drawnFortune.suit}</span>
+1149:                 </div>
+1150:                 <span className="font-tech text-[11px] font-bold tracking-widest uppercase px-2.5 py-1 rounded bg-[#120E15] text-[#FFAA24]">
+1151:                   {drawnFortune.house}
+1152:                 </span>
+1153:               </div>
+1154: 
+1155:               <div className="my-6 text-center">
+1156:                 <div className="w-20 h-20 mx-auto mb-4 rounded-2xl bg-[#120E15] text-[#FFAA24] flex items-center justify-center text-5xl shadow-inner border border-[#8B1E24]">
+1157:                   {drawnFortune.suit}
+1158:                 </div>
+1159:                 <h3 className="font-display text-3xl sm:text-4xl tracking-tight text-[#120E15]">{drawnFortune.title}</h3>
+1160:                 <p className="mt-3 font-serif italic text-lg leading-relaxed text-[#120E15]/85">
+1161:                   &ldquo;{drawnFortune.prophecy}&rdquo;
+1162:                 </p>
+1163:               </div>
+1164: 
+1165:               <div className="flex gap-2">
+1166:                 <button
+1167:                   type="button"
+1168:                   onClick={handleDrawFortune}
+1169:                   className="flex-1 py-3 px-4 rounded-xl bg-[#8B1E24] hover:bg-[#E65C19] text-[#FFF4E0] font-tech text-xs font-bold tracking-widest uppercase transition-colors cursor-pointer"
+1170:                 >
+1171:                   Draw Another
+1172:                 </button>
+1173:                 <button
+1174:                   type="button"
+1175:                   onClick={() => setDrawnFortune(null)}
+1176:                   className="py-3 px-4 rounded-xl bg-[#120E15] text-[#FFF4E0] font-tech text-xs font-bold tracking-widest uppercase cursor-pointer"
+1177:                 >
+1178:                   Keep Card
+1179:                 </button>
+1180:               </div>
+1181:             </motion.div>
+1182:           </motion.div>
+1183:         )}
+1184:       </AnimatePresence>
+1185:     </section>
+1186:   );
+1187: }
+</file>
+
+<file path="src/components/event/herosetction.tsx">
+1: export { default } from "./HeroSection";
+2: export * from "./HeroSection";
+</file>
+
+<file path="src/components/event/Navbar.tsx">
+ 1: "use client";
+ 2: 
+ 3: import React from "react";
+ 4: import { Button } from "@/components/ui/button";
+ 5: import { Sparkles, Calendar, ArrowRight } from "lucide-react";
+ 6: 
+ 7: export default function Navbar() {
+ 8:   const scrollToWaitlist = () => {
+ 9:     const el = document.getElementById("pre-register");
+10:     if (el) {
+11:       el.scrollIntoView({ behavior: "smooth" });
+12:     }
+13:   };
+14: 
+15:   return (
+16:     <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 mx-auto max-w-7xl backdrop-blur-xl bg-slate-950/40 border-b border-slate-800/60 rounded-b-2xl mt-0">
+17:       <div className="flex items-center gap-3">
+18:         <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-cyan-400 p-[2px] shadow-lg shadow-blue-500/20">
+19:           <div className="flex items-center justify-center w-full h-full bg-slate-950 rounded-[10px]">
+20:             <Sparkles className="w-5 h-5 text-cyan-400" />
+21:           </div>
+22:         </div>
+23:         <div>
+24:           <span className="text-lg font-black tracking-wider text-white">
+25:             SASKARAN <span className="text-cyan-400 font-mono text-xs px-1.5 py-0.5 rounded border border-cyan-500/30 bg-cyan-950/40">2026</span>
+26:           </span>
+27:           <p className="text-[10px] text-slate-400 tracking-widest uppercase">Deck of Cards Event</p>
+28:         </div>
+29:       </div>
+30: 
+31:       <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+32:         <a href="#about" className="hover:text-cyan-400 transition-colors">Experience</a>
+33:         <a href="#cards" className="hover:text-cyan-400 transition-colors">The Deck</a>
+34:         <a href="#pre-register" className="hover:text-cyan-400 transition-colors">Waitlist</a>
+35:       </nav>
+36: 
+37:       <div className="flex items-center gap-3">
+38:         <div className="hidden sm:flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/30 bg-emerald-950/30 text-emerald-400 text-xs font-mono">
+39:           <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+40:           Prelaunch Stage
+41:         </div>
+42:         <Button onClick={scrollToWaitlist} variant="glow" size="sm">
+43:           Get VIP Pass
+44:           <ArrowRight className="w-3.5 h-3.5" />
+45:         </Button>
+46:       </div>
+47:     </header>
+48:   );
+49: }
+</file>
+
+<file path="src/components/event/ParallaxBackground.tsx">
+  1: "use client";
+  2: 
+  3: import React, { useEffect, useRef, useState } from "react";
+  4: 
+  5: export default function ParallaxBackground() {
+  6:   const [scrollY, setScrollY] = useState(0);
+  7:   const [pointer, setPointer] = useState({ x: 0, y: 0 });
+  8:   const canvasRef = useRef<HTMLCanvasElement>(null);
+  9: 
+ 10:   // Track window scroll and mouse pointer
+ 11:   useEffect(() => {
+ 12:     let ticking = false;
+ 13: 
+ 14:     const handleScroll = () => {
+ 15:       if (!ticking) {
+ 16:         window.requestAnimationFrame(() => {
+ 17:           setScrollY(window.scrollY);
+ 18:           ticking = false;
+ 19:         });
+ 20:         ticking = true;
+ 21:       }
+ 22:     };
+ 23: 
+ 24:     const handlePointerMove = (e: MouseEvent) => {
+ 25:       const nx = (e.clientX / window.innerWidth) * 2 - 1;
+ 26:       const ny = (e.clientY / window.innerHeight) * 2 - 1;
+ 27:       setPointer({ x: nx, y: ny });
+ 28:     };
+ 29: 
+ 30:     window.addEventListener("scroll", handleScroll, { passive: true });
+ 31:     window.addEventListener("mousemove", handlePointerMove, { passive: true });
+ 32: 
+ 33:     return () => {
+ 34:       window.removeEventListener("scroll", handleScroll);
+ 35:       window.removeEventListener("mousemove", handlePointerMove);
+ 36:     };
+ 37:   }, []);
+ 38: 
+ 39:   // Ambient floating particle embers on canvas
+ 40:   useEffect(() => {
+ 41:     const canvas = canvasRef.current;
+ 42:     if (!canvas) return;
+ 43: 
+ 44:     const ctx = canvas.getContext("2d");
+ 45:     if (!ctx) return;
+ 46: 
+ 47:     let animId = 0;
+ 48:     const dpr = Math.min(window.devicePixelRatio || 1, 2);
+ 49: 
+ 50:     const resize = () => {
+ 51:       canvas.width = window.innerWidth * dpr;
+ 52:       canvas.height = window.innerHeight * dpr;
+ 53:       ctx.scale(dpr, dpr);
+ 54:     };
+ 55:     resize();
+ 56:     window.addEventListener("resize", resize);
+ 57: 
+ 58:     const count = 45;
+ 59:     const particles = Array.from({ length: count }, () => ({
+ 60:       x: Math.random() * window.innerWidth,
+ 61:       y: Math.random() * window.innerHeight,
+ 62:       size: Math.random() * 2 + 1,
+ 63:       speedY: Math.random() * 0.4 + 0.15,
+ 64:       speedX: (Math.random() - 0.5) * 0.2,
+ 65:       opacity: Math.random() * 0.6 + 0.2,
+ 66:       color: Math.random() > 0.4 ? "#FFAA24" : "#E65C19",
+ 67:     }));
+ 68: 
+ 69:     const render = () => {
+ 70:       ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+ 71: 
+ 72:       for (const p of particles) {
+ 73:         p.y -= p.speedY;
+ 74:         p.x += p.speedX;
+ 75: 
+ 76:         // Reset if off top
+ 77:         if (p.y < -10) {
+ 78:           p.y = window.innerHeight + 10;
+ 79:           p.x = Math.random() * window.innerWidth;
+ 80:         }
+ 81: 
+ 82:         ctx.fillStyle = p.color;
+ 83:         ctx.globalAlpha = p.opacity;
+ 84:         ctx.beginPath();
+ 85:         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+ 86:         ctx.fill();
+ 87:       }
+ 88: 
+ 89:       ctx.globalAlpha = 1;
+ 90:       animId = requestAnimationFrame(render);
+ 91:     };
+ 92: 
+ 93:     render();
+ 94: 
+ 95:     return () => {
+ 96:       cancelAnimationFrame(animId);
+ 97:       window.removeEventListener("resize", resize);
+ 98:     };
+ 99:   }, []);
+100: 
+101:   // Compute parallax offsets
+102:   const orb1Y = scrollY * 0.18 + pointer.y * 30;
+103:   const orb1X = pointer.x * 25;
+104: 
+105:   const orb2Y = -scrollY * 0.12 - pointer.y * 25;
+106:   const orb2X = -pointer.x * 35;
+107: 
+108:   const orb3Y = scrollY * 0.25 + pointer.y * 20;
+109: 
+110:   return (
+111:     <div
+112:       aria-hidden="true"
+113:       className="fixed inset-0 pointer-events-none z-0 overflow-hidden bg-[#120E15]"
+114:     >
+115:       {/* Dynamic Parallax Glow Orb 1 (Solar Flare Amber) */}
+116:       <div
+117:         style={{
+118:           transform: `translate3d(${orb1X}px, ${orb1Y}px, 0)`,
+119:           transition: "transform 0.15s cubic-bezier(0.22, 1, 0.36, 1)",
+120:         }}
+121:         className="absolute -top-[10%] left-[20%] w-[700px] h-[700px] rounded-full bg-gradient-to-br from-[#FFAA24]/16 via-[#E65C19]/10 to-transparent blur-[140px]"
+122:       />
+123: 
+124:       {/* Dynamic Parallax Glow Orb 2 (Crimson Wire) */}
+125:       <div
+126:         style={{
+127:           transform: `translate3d(${orb2X}px, ${orb2Y}px, 0)`,
+128:           transition: "transform 0.2s cubic-bezier(0.22, 1, 0.36, 1)",
+129:         }}
+130:         className="absolute top-[40%] -right-[15%] w-[800px] h-[800px] rounded-full bg-gradient-to-bl from-[#8B1E24]/20 via-[#E65C19]/8 to-transparent blur-[160px]"
+131:       />
+132: 
+133:       {/* Dynamic Parallax Glow Orb 3 (Deep Obsidian & Golden Ember Horizon) */}
+134:       <div
+135:         style={{
+136:           transform: `translate3d(0, ${orb3Y}px, 0)`,
+137:           transition: "transform 0.18s cubic-bezier(0.22, 1, 0.36, 1)",
+138:         }}
+139:         className="absolute -bottom-[20%] left-[10%] w-[900px] h-[700px] rounded-full bg-gradient-to-tr from-[#FFAA24]/12 via-[#8B1E24]/15 to-transparent blur-[180px]"
+140:       />
+141: 
+142:       {/* Floating Canvas Embers */}
+143:       <canvas
+144:         ref={canvasRef}
+145:         className="absolute inset-0 w-full h-full opacity-70"
+146:       />
+147: 
+148:       {/* 4-Column Swiss Architectural Vertical Grid Lines */}
+149:       <div className="absolute inset-0 max-w-7xl mx-auto px-4 sm:px-8 grid grid-cols-4 pointer-events-none">
+150:         <div className="border-l border-[#FFF4E0]/[0.035] h-full" />
+151:         <div className="border-l border-[#FFF4E0]/[0.035] h-full" />
+152:         <div className="border-l border-[#FFF4E0]/[0.035] h-full" />
+153:         <div className="border-x border-[#FFF4E0]/[0.035] h-full" />
+154:       </div>
+155: 
+156:       {/* Risograph Noise Film Texture */}
+157:       <div
+158:         className="absolute inset-0 opacity-[0.035] pointer-events-none"
+159:         style={{
+160:           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+161:         }}
+162:       />
+163:     </div>
+164:   );
+165: }
+</file>
+
+<file path="src/components/event/WaitlistSection.tsx">
+  1: "use client";
+  2: 
+  3: import React, { useState } from "react";
+  4: import confetti from "canvas-confetti";
+  5: import { Button } from "@/components/ui/button";
+  6: import { CardSpotlight } from "@/components/ui/card-spotlight";
+  7: import { CheckCircle2, Mail, Sparkles, Send } from "lucide-react";
+  8: 
+  9: export default function WaitlistSection() {
+ 10:   const [email, setEmail] = useState("");
+ 11:   const [submitted, setSubmitted] = useState(false);
+ 12:   const [loading, setLoading] = useState(false);
+ 13: 
+ 14:   const handleSubmit = (e: React.FormEvent) => {
+ 15:     e.preventDefault();
+ 16:     if (!email) return;
+ 17: 
+ 18:     setLoading(true);
+ 19:     setTimeout(() => {
+ 20:       setLoading(false);
+ 21:       setSubmitted(true);
+ 22: 
+ 23:       // Celebratory golden ember confetti burst
+ 24:       try {
+ 25:         confetti({
+ 26:           particleCount: 120,
+ 27:           spread: 85,
+ 28:           origin: { y: 0.6 },
+ 29:           colors: ["#FFAA24", "#E65C19", "#8B1E24", "#FFF4E0"],
+ 30:         });
+ 31:       } catch {
+ 32:         // Fallback gracefully
+ 33:       }
+ 34:     }, 600);
+ 35:   };
+ 36: 
+ 37:   return (
+ 38:     <section id="pre-register" className="relative py-24 px-4 sm:px-8 max-w-4xl mx-auto z-10">
+ 39:       <CardSpotlight
+ 40:         color="rgba(255, 170, 36, 0.22)"
+ 41:         className="p-8 sm:p-14 text-center border-[#FFAA24]/60 bg-gradient-to-b from-[#1C1622] via-[#151019] to-[#120E15] shadow-[0_20px_60px_rgba(255,170,36,0.12)]"
+ 42:       >
+ 43:         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#8B1E24] bg-[#120E15]/80 text-[#FFAA24] text-xs font-mono uppercase tracking-wider mb-6">
+ 44:           <Sparkles className="w-3.5 h-3.5 text-[#FFAA24]" /> 04 // EARLY ACCESS PASS
+ 45:         </div>
+ 46: 
+ 47:         <h2 className="font-display text-4xl sm:text-6xl text-[#FFF4E0] uppercase tracking-tight mb-3">
+ 48:           CLAIM YOUR SEAT AT THE <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFAA24] to-[#E65C19]">TABLE</span>
+ 49:         </h2>
+ 50:         <p className="font-serif italic text-lg sm:text-xl text-[#FFAA24] mb-2">
+ 51:           Every Card Holds a Story.
+ 52:         </p>
+ 53:         <p className="font-tech text-xs sm:text-sm text-[#FFF4E0]/75 max-w-xl mx-auto mb-10 leading-relaxed">
+ 54:           Be the first to step inside the Deck of Destinies 3D arena. VIP attendees receive instant priority invites and exclusive holographic card skins.
+ 55:         </p>
+ 56: 
+ 57:         {submitted ? (
+ 58:           <div className="flex flex-col items-center justify-center p-8 rounded-2xl bg-[#120E15] border border-[#FFAA24]/60 text-center animate-in fade-in zoom-in-95 duration-300">
+ 59:             <div className="w-14 h-14 rounded-full bg-[#18121D] flex items-center justify-center text-[#FFAA24] mb-4 border border-[#FFAA24]/50 shadow-[0_0_25px_rgba(255,170,36,0.4)]">
+ 60:               <CheckCircle2 className="w-8 h-8" />
+ 61:             </div>
+ 62:             <h3 className="font-display text-3xl text-[#FFF4E0] mb-2 uppercase">You&apos;re on the VIP List!</h3>
+ 63:             <p className="font-tech text-xs sm:text-sm text-[#FFF4E0]/80 max-w-md">
+ 64:               We&apos;ve reserved your queue number. Keep an eye on <span className="text-[#FFAA24] font-mono">{email}</span> for your early access pass key.
+ 65:             </p>
+ 66:           </div>
+ 67:         ) : (
+ 68:           <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+ 69:             <div className="relative flex-1">
+ 70:               <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#FFF4E0]/40" />
+ 71:               <input
+ 72:                 type="email"
+ 73:                 required
+ 74:                 value={email}
+ 75:                 onChange={(e) => setEmail(e.target.value)}
+ 76:                 placeholder="Enter student / personal email..."
+ 77:                 className="w-full h-12 pl-12 pr-4 rounded-xl bg-[#120E15] border border-[#FFF4E0]/20 text-[#FFF4E0] placeholder-[#FFF4E0]/40 font-tech text-xs sm:text-sm focus:outline-none focus:border-[#FFAA24] focus:ring-2 focus:ring-[#FFAA24]/30 transition-all"
+ 78:               />
+ 79:             </div>
+ 80:             <Button
+ 81:               type="submit"
+ 82:               disabled={loading}
+ 83:               className="h-12 shrink-0 bg-gradient-to-r from-[#8B1E24] to-[#E65C19] hover:brightness-110 text-[#FFF4E0] border border-[#FFAA24] font-tech text-xs font-bold tracking-widest uppercase shadow-[0_0_25px_rgba(230,92,25,0.45)] px-6"
+ 84:             >
+ 85:               {loading ? (
+ 86:                 "Securing..."
+ 87:               ) : (
+ 88:                 <>
+ 89:                   Pre-Register
+ 90:                   <Send className="w-3.5 h-3.5 ml-1.5" />
+ 91:                 </>
+ 92:               )}
+ 93:             </Button>
+ 94:           </form>
+ 95:         )}
+ 96: 
+ 97:         <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-[11px] text-[#FFF4E0]/50 font-mono">
+ 98:           <span>✓ NO SPAM GUARANTEE</span>
+ 99:           <span>✓ PRIORITY ACCESS BADGE</span>
+100:           <span>✓ GENESIS CARD DROP</span>
+101:         </div>
+102:       </CardSpotlight>
+103:     </section>
+104:   );
+105: }
+</file>
+
+<file path="src/components/ui/button.tsx">
+ 1: "use client";
+ 2: 
+ 3: import * as React from "react";
+ 4: import { Slot } from "@radix-ui/react-slot";
+ 5: import { cva, type VariantProps } from "class-variance-authority";
+ 6: import { cn } from "@/lib/utils";
+ 7: 
+ 8: const buttonVariants = cva(
+ 9:   "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 cursor-pointer active:scale-[0.98]",
+10:   {
+11:     variants: {
+12:       variant: {
+13:         default:
+14:           "bg-blue-600 text-white shadow-lg shadow-blue-500/25 hover:bg-blue-500 hover:shadow-blue-500/40",
+15:         destructive:
+16:           "bg-red-600 text-white shadow-sm hover:bg-red-500",
+17:         outline:
+18:           "border border-slate-700 bg-slate-900/60 backdrop-blur-md hover:bg-slate-800 text-slate-100 hover:border-slate-500",
+19:         secondary:
+20:           "bg-slate-800 text-slate-100 shadow-sm hover:bg-slate-700",
+21:         ghost: "hover:bg-slate-800/80 hover:text-slate-100 text-slate-300",
+22:         link: "text-blue-400 underline-offset-4 hover:underline",
+23:         glow: "relative bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 text-white shadow-[0_0_25px_rgba(59,130,246,0.5)] hover:shadow-[0_0_35px_rgba(6,182,212,0.6)] border border-blue-400/30",
+24:       },
+25:       size: {
+26:         default: "h-11 px-5 py-2",
+27:         sm: "h-9 rounded-md px-3.5 text-xs",
+28:         lg: "h-13 rounded-xl px-8 text-base font-semibold",
+29:         icon: "h-10 w-10",
+30:       },
+31:     },
+32:     defaultVariants: {
+33:       variant: "default",
+34:       size: "default",
+35:     },
+36:   }
+37: );
+38: 
+39: export interface ButtonProps
+40:   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+41:     VariantProps<typeof buttonVariants> {
+42:   asChild?: boolean;
+43: }
+44: 
+45: const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+46:   ({ className, variant, size, asChild = false, ...props }, ref) => {
+47:     const Comp = asChild ? Slot : "button";
+48:     return (
+49:       <Comp
+50:         className={cn(buttonVariants({ variant, size, className }))}
+51:         ref={ref}
+52:         {...props}
+53:       />
+54:     );
+55:   }
+56: );
+57: Button.displayName = "Button";
+58: 
+59: export { Button, buttonVariants };
+</file>
+
+<file path="src/components/ui/card-spotlight.tsx">
+ 1: "use client";
+ 2: 
+ 3: import React, { useRef, useState, MouseEvent } from "react";
+ 4: import { cn } from "@/lib/utils";
+ 5: 
+ 6: interface CardSpotlightProps extends React.HTMLAttributes<HTMLDivElement> {
+ 7:   radius?: number;
+ 8:   color?: string;
+ 9: }
+10: 
+11: export function CardSpotlight({
+12:   children,
+13:   radius = 350,
+14:   color = "rgba(59, 130, 246, 0.15)",
+15:   className,
+16:   ...props
+17: }: CardSpotlightProps) {
+18:   const divRef = useRef<HTMLDivElement>(null);
+19:   const [isFocused, setIsFocused] = useState(false);
+20:   const [position, setPosition] = useState({ x: 0, y: 0 });
+21:   const [opacity, setOpacity] = useState(0);
+22: 
+23:   const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
+24:     if (!divRef.current || isFocused) return;
+25: 
+26:     const div = divRef.current;
+27:     const rect = div.getBoundingClientRect();
+28: 
+29:     setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+30:   };
+31: 
+32:   const handleFocus = () => {
+33:     setIsFocused(true);
+34:     setOpacity(1);
+35:   };
+36: 
+37:   const handleBlur = () => {
+38:     setIsFocused(false);
+39:     setOpacity(0);
+40:   };
+41: 
+42:   const handleMouseEnter = () => {
+43:     setOpacity(1);
+44:   };
+45: 
+46:   const handleMouseLeave = () => {
+47:     setOpacity(0);
+48:   };
+49: 
+50:   return (
+51:     <div
+52:       ref={divRef}
+53:       onMouseMove={handleMouseMove}
+54:       onFocus={handleFocus}
+55:       onBlur={handleBlur}
+56:       onMouseEnter={handleMouseEnter}
+57:       onMouseLeave={handleMouseLeave}
+58:       className={cn(
+59:         "relative overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/70 p-8 shadow-2xl backdrop-blur-xl transition-all duration-300 hover:border-slate-700/80 hover:shadow-[0_0_30px_rgba(59,130,246,0.15)]",
+60:         className
+61:       )}
+62:       {...props}
+63:     >
+64:       <div
+65:         className="pointer-events-none absolute -inset-px transition-opacity duration-300"
+66:         style={{
+67:           opacity,
+68:           background: `radial-gradient(${radius}px circle at ${position.x}px ${position.y}px, ${color}, transparent 80%)`,
+69:         }}
+70:       />
+71:       <div className="relative z-10">{children}</div>
+72:     </div>
+73:   );
+74: }
+</file>
+
+<file path="src/components/ui/card.tsx">
+ 1: import * as React from "react";
+ 2: import { cn } from "@/lib/utils";
+ 3: 
+ 4: const Card = React.forwardRef<
+ 5:   HTMLDivElement,
+ 6:   React.HTMLAttributes<HTMLDivElement>
+ 7: >(({ className, ...props }, ref) => (
+ 8:   <div
+ 9:     ref={ref}
+10:     className={cn(
+11:       "rounded-2xl border border-slate-800/80 bg-slate-900/60 text-slate-100 shadow-xl backdrop-blur-xl transition-all hover:border-slate-700",
+12:       className
+13:     )}
+14:     {...props}
+15:   />
+16: ));
+17: Card.displayName = "Card";
+18: 
+19: const CardHeader = React.forwardRef<
+20:   HTMLDivElement,
+21:   React.HTMLAttributes<HTMLDivElement>
+22: >(({ className, ...props }, ref) => (
+23:   <div
+24:     ref={ref}
+25:     className={cn("flex flex-col space-y-1.5 p-6", className)}
+26:     {...props}
+27:   />
+28: ));
+29: CardHeader.displayName = "CardHeader";
+30: 
+31: const CardTitle = React.forwardRef<
+32:   HTMLParagraphElement,
+33:   React.HTMLAttributes<HTMLHeadingElement>
+34: >(({ className, ...props }, ref) => (
+35:   <h3
+36:     ref={ref}
+37:     className={cn(
+38:       "text-xl font-bold leading-none tracking-tight text-white",
+39:       className
+40:     )}
+41:     {...props}
+42:   />
+43: ));
+44: CardTitle.displayName = "CardTitle";
+45: 
+46: const CardDescription = React.forwardRef<
+47:   HTMLParagraphElement,
+48:   React.HTMLAttributes<HTMLParagraphElement>
+49: >(({ className, ...props }, ref) => (
+50:   <p
+51:     ref={ref}
+52:     className={cn("text-sm text-slate-400 leading-relaxed", className)}
+53:     {...props}
+54:   />
+55: ));
+56: CardDescription.displayName = "CardDescription";
+57: 
+58: const CardContent = React.forwardRef<
+59:   HTMLDivElement,
+60:   React.HTMLAttributes<HTMLDivElement>
+61: >(({ className, ...props }, ref) => (
+62:   <div ref={ref} className={cn("p-6 pt-0", className)} {...props} />
+63: ));
+64: CardContent.displayName = "CardContent";
+65: 
+66: const CardFooter = React.forwardRef<
+67:   HTMLDivElement,
+68:   React.HTMLAttributes<HTMLDivElement>
+69: >(({ className, ...props }, ref) => (
+70:   <div
+71:     ref={ref}
+72:     className={cn("flex items-center p-6 pt-0", className)}
+73:     {...props}
+74:   />
+75: ));
+76: CardFooter.displayName = "CardFooter";
+77: 
+78: export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent };
+</file>
+
+<file path="src/lib/utils.ts">
+1: import { clsx, type ClassValue } from "clsx";
+2: import { twMerge } from "tailwind-merge";
+3: 
+4: export function cn(...inputs: ClassValue[]) {
+5:   return twMerge(clsx(inputs));
+6: }
+</file>
+
+<file path="components.json">
+ 1: {
+ 2:   "$schema": "https://ui.shadcn.com/schema.json",
+ 3:   "style": "new-york",
+ 4:   "rsc": true,
+ 5:   "tsx": true,
+ 6:   "tailwind": {
+ 7:     "config": "",
+ 8:     "css": "src/app/globals.css",
+ 9:     "baseColor": "slate",
+10:     "cssVariables": true,
+11:     "prefix": ""
+12:   },
+13:   "aliases": {
+14:     "components": "@/components",
+15:     "utils": "@/lib/utils",
+16:     "ui": "@/components/ui",
+17:     "lib": "@/lib",
+18:     "hooks": "@/hooks"
+19:   },
+20:   "iconLibrary": "lucide"
+21: }
+</file>
+
+<file path="context.md">
+ 1: # Project Architecture & Context — 3D Prelaunch Showcase Website
+ 2: 
+ 3: ## Project Purpose
+ 4: High-impact, immersive 3D prelaunch showcase website for an upcoming event ("Saskaran / Deck of Cards 2026"). The site features interactive 3D WebGL scenes, smooth page transitions, interactive canvas shaders, particle systems, dynamic countdown, and waitlist/prelaunch registration UI.
+ 5: 
+ 6: ## Architecture
+ 7: - **Framework**: Next.js 16 (React 19) App Router
+ 8: - **3D & Graphics Engine**: Three.js, WebGL shaders, PerspectiveCamera, PBR lighting, custom particle nebula (`/threejs-webgl`)
+ 9: - **Animation Suite**: GSAP, Motion / Framer Motion
+10: - **UI & Design System**: Tailwind CSS v4, Radix UI primitives, shadcn/ui components, Aceternity UI effects (`/design`, `/design-system`)
+11: - **Fast Discovery & Memory Architecture**:
+12:   - `/repomix`: Full repository context packed into [repomix-output.xml](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/repomix-output.xml).
+13:   - `/serena`: O(1) symbol lookup and semantic keyword indexing in `.serena/symbols.json` via `node scripts/serena-lookup.mjs <query>`.
+14:   - `/agentmemory`: Persistent episodic and domain invariant vector/KV store in `.agentmemory/memory.json` via `node scripts/agentmemory.mjs query <term>`.
+15: - **Type Safety**: TypeScript strict mode
+16: - **Deployment & Hosting Strategy**: Static export ready (`output: 'export'`) or Vercel / Netlify edge deployment for zero-cold-start landing performance.
+17: 
+18: ## Key Directories
+19: - `src/app`: App Router pages, layout, and global CSS tokens.
+20: - `src/components/3d`: Three.js WebGL canvas scenes, particle systems, camera rigs, and interactive 3D elements.
+21: - `src/components/ui`: Reusable UI primitives (shadcn/ui + Radix UI + Aceternity UI components).
+22: - `src/components/event`: Event-specific showcase sections (hero, countdown, cards/lore, schedule, pre-registration).
+23: - `src/lib`: Utility functions (`cn` helper, event constants, 3D math helpers).
+24: - `scripts/`: Tooling for repomix, serena semantic symbol indexing, and agentmemory queries.
+25: - `.serena/`: O(1) codebase symbols index (`symbols.json`).
+26: - `.agentmemory/`: Domain invariants, component contracts, and debugging history (`memory.json`).
+27: 
+28: ## Core Invariants
+29: 1. **WebGL SSR Boundary**: All 3D canvas modules must be loaded with dynamic import `{ ssr: false }`.
+30: 2. **GPU Memory Disposal**: Every geometry, material, texture, and WebGLRenderer must be explicitly disposed on unmount.
+31: 3. **DPR Cap**: Maximum device pixel ratio capped at 2 (`Math.min(window.devicePixelRatio, 2)`).
+32: 4. **Three-Layer Tokens**: CSS custom properties organized into Primitive -> Semantic -> Component variables.
+</file>
+
+<file path="features_implemented.md">
+ 1: # Features Implemented
+ 2: 
+ 3: ## Current Status Overview
+ 4: All foundational libraries, 3D WebGL scenes, UI components, O(1) discovery engines, and the full interactive **3D Shuffle to Monolith Corridor HeroSection with Entrance Deal and Warp Surge** have been built and verified.
+ 5: 
+ 6: ### 1. Monolith Corridor & 3D Shuffle Hero (`/react-three-fiber`, `/gsap-animation`, `/threejs-webgl`)
+ 7: - **Status**: Implemented
+ 8: - **Description**: Recreated from the reference design. 18 procedural cards featuring:
+ 9:   - **Timed Entrance Sequence**: On initial page load, cards deal in dynamically from off-screen sides with staggered 3D tilt, settle and hold in the **3D Shuffle (Riffle Helix)** formation for exactly 1.0 second, and then automatically morph smoothly into the **Monolith Corridor** with a GSAP timeline (`introDeal` -> 1s pause -> `modeBlend: 1.0`).
+10:   - **Clickable Monolith Corridor Warp Surge**: Clicking anywhere in the corridor or pressing the `Surge Corridor` HUD button triggers an intense, cinematic 3D warp (camera Z plunge, golden solar emissive flare, accelerated warp embers, backlight surge).
+11:   - **Persistent Viewport Stacking & Transparent Canvas**: WebGL canvas is mounted with `fixed inset-0 pointer-events-none z-[1]` and transparent background (`alpha: true`), allowing cards to remain persistently visible across the entire page as the user scrolls.
+12:   - **Continuous Movie Vertical Parallax (Henrietta-Style)**:
+13:     - Replaced the previous "minimize into infinity" mechanic ($scale \to 0.001$) with a smooth, continuous vertical 3D filmic scroll inspired by [Henrietta (Tattoo Digital)](https://henrietta.wearetattoodigital.com/).
+14:     - **Full Physical Scale Everywhere**: All 18 cards maintain their full physical scale ($1.05\times$ scale) with textured card faces, playing card pips, and glowing metallic edges throughout the entire scroll journey.
+15:     - **Continuous Vertical Drift**: As the user scrolls vertically ($scroll = scrollY / windowH$), cards float smoothly past the camera at differential layer velocities ($2.4$ to $4.5\times$ multiplier) with staggered base vertical elevations.
+16:     - **Gutter Flanking**: Cards smoothly fan out to flank the left ($X \approx -3.1$ to $-4.5$) and right ($X \approx +3.1$ to $+4.5$) margins, keeping the central reading column completely clear for content.
+17:     - **Layered 3D Depth & Cinematic Sway**: Cards occupy natural depth tiers ($Z \approx +1.8$ to $-6.5$) with gentle rotational roll, pitch, and global mouse cursor parallax.
+18:     - **Vertical Camera Tracking**: Camera smoothly tilts and tracks downward along $Y$ during scroll ($scrollCamY = -scroll \times 0.8$), amplifying the feeling of an unbroken tracking shot.
+19:   - **Global Mouse Cursor Tracking**: Full-window cursor tracking continuously tilts and sways cards with spring depth physics wherever the cursor moves.
+20:   - **Interactive Destiny Modal**: "Draw Card" button triggers an impulse burst and draws destiny cards with 3D flip inspection.
+21: - **Key Files**: [HeroSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroSection.tsx), [herosetction.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/herosetction.tsx)
+22: - **Verification**: Verified via `npm run build` compilation and static page generation.
+23: 
+24: ### 2. New Core Members Section ("The Court Architects") (`/gsap-animation`)
+25: - **Status**: Implemented
+26: - **Description**: Recreated from the festival data and card design references:
+27:   - **Six Student Stewards**:
+28:     1. Kabir Verma (Festival Secretary, Executive Council, `crimson-vanguard`, 10♦)
+29:     2. Meera Sharma (Head of Curation, Sanskaran Conclave, `checkered-sovereign`, Q♦)
+30:     3. Rohan Kapoor (Technical & 3D Lead, Digital Architecture, `cyber-horizon`, A♠)
+31:     4. Tara Menon (Creative Director, Scenography & Print, `crimson-vanguard`, 10♦)
+32:     5. Devansh Nair (Events & Production, Sahotsava Arena, `checkered-sovereign`, Q♦)
+33:     6. Zoya Siddiqui (Alliances & Outreach, External Relations, `cyber-horizon`, A♠)
+34:   - **Reference SVG Vector Artworks**:
+35:     - `crimson-vanguard`: Dynamic crimson/ignited amber polygonal shields and spears.
+36:     - `checkered-sovereign`: Isometric checkered playing court with royal chess sovereign silhouette.
+37:     - `cyber-horizon`: Dual-tone daytime/obsidian horizon with glowing orbital concentric rings.
+38:   - **GSAP ScrollTrigger Per-Card Side Entrance Deal**:
+39:     - Each card in the court layout has its own individual `ScrollTrigger` bound to `top 88%` of the viewport:
+40:       - As the user scrolls down, **every single card** (Card 0 through Card 5) sweeps in from the side as it enters the viewport (even cards from $X = -300\text{px}$, odd cards from $X = +300\text{px}$, with 3D $Y$-tilt and $Z$-rotation), settling into place with `ease: "power3.out"`.
+41:       - Reversing scroll smoothly reverses the cards back out to the sides.
+42:     - Dedicated interactive button `[RE-DEAL (#01)]` allows visitors to re-trigger the dealing animation for all cards with staggered delay.
+43:   - **3D Hero Staggered Sequential Deal**:
+44:     - In `HeroSection.tsx`, updated the 3D scene so that each of the 18 cards has its own staggered deal progress (`cardDealStagger = (i / 18) * 0.45`), dealing in all 18 cards from the sides one by one rather than as a single static block.
+45:   - **Archetype Showcase Side Entrance**:
+46:     - In `CardShowcase.tsx`, added alternating side entrance animations (`x: -120` / `+120`, rotate `±8°`) so all 4 archetype cards also fly in from the sides on scroll.
+47:   - **Interactive 3D Card Flip**:
+48:     - Tap or click (and keyboard Enter/Space) smoothly flips each card 180° (`preserve-3d`, `backface-visibility: hidden`), revealing back face with member vertical, archetype, year, and detailed vision quote.
+49:   - **Mouse Cursor 3D Tilt & Specular Sheen**:
+50:     - Real-time tracking applies subtle 3D rotational tilt on hover along with an interactive glare sheen that follows pointer movement.
+51:   - **House Category Filtering**:
+52:     - Filter tabs ("ALL ARCHITECTS", "CRIMSON VANGUARD", "CHECKERED SOVEREIGN", "CYBER HORIZON") that seamlessly re-deal and filter visible cards.
+53:   - **Synthesized Audio Tactile Feedback**:
+54:     - Low-latency synthesized Web Audio card click/deal sounds without external audio assets.
+55:   - **3D Background Sentinel Synchronization**:
+56:     - Connected `diamondInfluence` in `HeroSection.tsx`, summoning the 3D Queen of Diamonds ♦ card as an ambient background sentinel when browsing this section.
+57: - **Key Files**: [src/components/event/CoreMembersSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/CoreMembersSection.tsx), [src/app/page.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/app/page.tsx), [src/components/event/HeroSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroSection.tsx)
+58: - **Verification**: Verified via `npm run build` with 0 compilation or static page generation errors.
+59: 
+60: ### 3. Framework & Core Architecture
+61: - **Status**: Implemented
+62: - **Description**: Next.js 16 App Router with React 19, TypeScript, Turbopack, Tailwind CSS v4, Bebas Neue, Cormorant Garamond, and Space Grotesk fonts.
+63: - **Key Files**: [src/app/layout.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/app/layout.tsx), [src/app/globals.css](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/app/globals.css), [src/app/page.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/app/page.tsx)
+64: 
+65: ### 4. Removed Legacy Sections
+66: - **Status**: Removed
+67: - **Description**:
+68:   - `CardShowcase.tsx` ("THE ARCHETYPES OF SANSKARAN"): Removed completely from page and disk as requested.
+69:   - `FeaturesGrid.tsx` ("ENGINEERED FOR TOTAL IMMERSION"): Removed completely from page and disk as requested.
+70:   - [src/app/page.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/app/page.tsx) updated with streamlined layout.
+71: 
+72: ### 5. O(1) Discovery & Memory Pipeline (`/repomix`, `/serena`, `/agentmemory`)
+73: - **Status**: Implemented
+74: - **Description**:
+75:   - `npm run repomix`: Full packed repository snapshot [repomix-output.xml](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/repomix-output.xml).
+76:   - `npm run serena:find <symbol>`: O(1) symbol lookup in [.serena/symbols.json](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/.serena/symbols.json).
+77:   - `npm run memory query <category>`: Persistent domain invariants in [.agentmemory/memory.json](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/.agentmemory/memory.json).
+</file>
+
+<file path="tracker.md">
+  1: # Agent Handoff Log — tracker.md
+  2: 
+  3: ## 2026-11-14 — Setup & Architecture Validation of 3D Prelaunch Website
+  4: (Completed foundational Next.js 16 + React 19 + Three.js + Tailwind v4 + GSAP + Motion setup).
+  5: 
+  6: ## 2026-11-14 — Implementation of /repomix, /serena, and /agentmemory O(1) Tooling
+  7: (Completed repomix packaging, serena AST indexing, and agentmemory store).
+  8: 
+  9: ## 2026-11-14 — Recreating Monolith Corridor & 3D Shuffle HeroSection with GSAP Transition
+ 10: (Completed base 18-card corridor and shuffle scene with ThreeUI HUD and Destiny modal).
+ 11: 
+ 12: ---
+ 13: 
+ 14: ## 2026-11-14 — Side Card Entrance, 1s Hold, and Interactive Monolith Corridor Warp Surge
+ 15: 
+ 16: ### Objective
+ 17: Enhance [src/components/event/HeroSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroSection.tsx) so the website loads with cards sweeping in from the sides into the 3D Shuffle position, holds for exactly 1.0 second, and then automatically converts into the Monolith Corridor. In the Monolith Corridor view, clicking anywhere triggers an exhilarating 3D Corridor Warp Surge animation.
+ 18: 
+ 19: ### Changes Made
+ 20: - Added timed entrance sequence via GSAP timeline:
+ 21:   - Cards fly in from off-screen left and right (`(1 - deal) * 20` offset with staggered 3D tilt).
+ 22:   - Cards settle and hold in 3D Shuffle (Riffle Helix) position for 1.0s.
+ 23:   - Cards then smoothly morph into the Monolith Corridor formation via GSAP `power2.inOut` tween.
+ 24: - Built interactive Monolith Corridor Warp Surge:
+ 25:   - Added click listener on the hero container and a dedicated HUD action button (`Surge Corridor`).
+ 26:   - When in Monolith Corridor mode, clicking triggers:
+ 27:     1. Camera zoom plunge: Swoops forward along Z by 7.5 units deep into the card avenue towards the horizon.
+ 28:     2. Kinetic wave & emissive pulse: Cards ripple vertically and flare with golden solar glow (`#FFAA24`).
+ 29:     3. Horizon backlight surges from 7.0 to 25.0 intensity.
+ 30:     4. Ember warp trails accelerate by 6x.
+ 31:     5. Camera smoothly decelerates back to scenic corridor viewpoint.
+ 32:   - Added cyber HUD status indicator (`⚡ WARP SURGE ACTIVE`).
+ 33: - Verified build and static export with `npm run build` (0 errors).
+ 34: - Refreshed Serena symbol index and Repomix snapshot.
+ 35: 
+ 36: ### Files Changed
+ 37: - `src/components/event/HeroSection.tsx`
+ 38: - `features_implemented.md`
+ 39: - `tracker.md`
+ 40: - `.serena/symbols.json`
+ 41: - `repomix-output.xml`
+ 42: 
+ 43: ### Verification
+ 44: - `npm run build` finished with code 0.
+ 45: - `npm run serena:find HeroSection` verified.
+ 46: 
+ 47: ### Next Agent Instructions
+ 48: 1. Inspect [HeroSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroSection.tsx) to adjust timing delays or camera dive speed if requested.
+ 49: 2. Proceed to next user-requested sections (e.g., About Festival, Spread Rows Gallery, Core Members playing cards).
+ 50: 
+ 51: ---
+ 52: 
+ 53: ## 2026-11-14 — Persistent Fixed 3D Viewport, Visible Sequential Cascade, and Global Cursor Parallax
+ 54: 
+ 55: ### Objective
+ 56: Resolve user issue where 3D cards disappeared upon scrolling down into "THE ARCHETYPES OF SANSKARAN" ("where are the cards ?"). Ensure cards remain prominently visible, cascade down one-by-one as user scrolls down, rise back up one-by-one on scroll up, and track the mouse cursor across the entire screen.
+ 57: 
+ 58: ### Root Cause Analysis
+ 59: 1. **Container Scrolled Out of View**: The WebGL container `<div ref={mountRef}>` was styled with `absolute inset-0` inside the `<section id="hero">`. When the user scrolled past the hero section, the entire container scrolled off-screen.
+ 60: 2. **Excessive Vertical Drop Formula**: `cascadeDropY` was set to `dropEased * 10.5`. In Three.js units with camera at $Z \approx 7.8$, a drop of 10.5 plunged the cards completely below the camera's bottom frustum boundary ($Y \approx -3.2$).
+ 61: 3. **Local Mouse Tracking Scope**: Pointer move listener was attached to `#hero`, preventing cursor updates once scrolled into other sections.
+ 62: 4. **Opaque Scene Background & Atmospheric Overlay**: Three.js had solid black `scene.background = new THREE.Color("#120E15")` and an 88% dark bottom gradient blocking visibility.
+ 63: 
+ 64: ### Changes Made
+ 65: - **Fixed Persistent Canvas**: Changed `<div ref={mountRef}>` to `fixed inset-0 pointer-events-none z-[1] overflow-hidden` so the 3D scene stays pinned to the viewport across all sections.
+ 66: - **Transparent WebGL Layer**: Removed `scene.background`, added `renderer.setClearColor(0x000000, 0)`, and enabled `alpha: true` so the global multi-layer `ParallaxBackground` shines through.
+ 67: - **Tuned Sequential Cascade**:
+ 68:   - `cardCascadeStagger = (i / CARD_COUNT) * 0.45`
+ 69:   - `rawDrop = THREE.MathUtils.clamp((scroll - cardCascadeStagger) * 1.8, 0, 1)`
+ 70:   - `cascadeDropY = dropEased * 1.9` (keeps cards comfortably in view on screen)
+ 71:   - `flankSpreadX = (i % 2 === 0 ? -1.65 : 1.65) * dropEased` (cards shift outward to the left and right margins, framing "The Archetypes of Sanskaran" like monolith sentinels)
+ 72:   - Smooth reverse ascent when scrolling up.
+ 73: - **Global Window Cursor Tracking**: Added `window.addEventListener("mousemove", ...)` tracking normalized $-1$ to $+1$ coordinates anywhere on the page for real-time card tilt and spring follow.
+ 74: - **Atmospheric Cleanup**: Removed opaque bottom gradient and softened ambient vignette.
+ 75: 
+ 76: ### Files Changed
+ 77: - `src/components/event/HeroSection.tsx`
+ 78: - `features_implemented.md`
+ 79: - `tracker.md`
+ 80: 
+ 81: ### Verification
+ 82: - Ran `npm run build`: Compiled with 0 errors, Turbopack and TypeScript checks passed.
+ 83: - Ran `npm run serena:index`: Re-indexed all symbols.
+ 84: - Ran `npm run repomix`: Full context repacked.
+ 85: 
+ 86: ### Next Agent Instructions
+ 87: 1. Inspect [HeroSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroSection.tsx) if fine-tuning horizontal flanking spacing or drop speed is requested.
+ 88: 2. Continue building next event sections (e.g. Schedule, Interactive Ticket Deck, FAQ, Artist Grid).
+ 89: 
+ 90: ---
+ 91: 
+ 92: ## 2026-11-14 — Section-by-Section Single Card Spotlight Choreography
+ 93: 
+ 94: ### Objective
+ 95: Update the scroll animation choreography so that the entire card bundle does NOT drop down together. Instead, as the user scrolls away from the Hero:
+ 96: - The full card deck recedes backwards into the distant ambient fog.
+ 97: - For the **"What is Sanskaran" / Archetypes (`#cards`)** section, **ONLY the Ace of Spades ♠** descends down to spotlight the section.
+ 98: - For the **Gallery / Capabilities (`#about`)** section, **ONLY the Ace of Clubs ♣** descends down to spotlight the gallery.
+ 99: - For the **Genesis Pass / Pre-register (`#pre-register`)** section, **ONLY the King of Hearts ♥** descends down.
+100: - As the user scrolls between sections, the previous card smoothly recedes and the next card glides in.
+101: - Scrolling back up reverses the animation and seamlessly restores the full 18-card Monolith Corridor at the Hero section.
+102: 
+103: ### Implementation Details
+104: 1. **Dynamic Section Influence Measurement**:
+105:    - In `HeroSection.tsx`, added `calcSectionInfluence(elementId, windowH)` using smoothstep-weighted viewport proximity to `#cards`, `#about`, and `#pre-register`.
+106:    - `heroInfluence` smoothly drops from 1 to 0 past the hero.
+107: 2. **Per-Card Targeted Motion in `animateLoop`**:
+108:    - `Card 0 (Ace of Spades ♠)`:
+109:      - Blends between its in-hero position and its spotlight position ($X = 2.4$, $Y = 0.35$, $Z = 3.8$, scaled to 1.95 on desktop) based on `spadeInfluence`.
+110:      - When `spadeInfluence = 0` and scrolled past hero, recedes backwards into fog.
+111:    - `Card 1 (Ace of Clubs ♣)`:
+112:      - Blends between in-hero position and its gallery spotlight position based on `clubInfluence`.
+113:    - `Card 2 (King of Hearts ♥)`:
+114:      - Blends into its pass spotlight position based on `heartInfluence`.
+115:    - `Cards 3..17 (Background bundle)`:
+116:      - When `heroInfluence < 1`, smoothly recede into the distance ($Z \to -16$, $Y \to +3$, scale $\to 0.001$), eliminating visual clutter.
+117: 3. **Cursor Parallax Integration**:
+118:    - Each spotlighted card dynamically tilts and tracks the user's cursor (`pointerX`, `pointerY`) with depth-spring lag.
+119: 
+120: ### Verification
+121: - `npm run build`: Compiled with 0 errors, static pages generated.
+122: - `npm run serena:index` & `npm run repomix`: Refreshed.
+123: 
+124: ### Current State
+125: Hero loads with 18-card shuffle -> 1.0s hold -> Monolith Corridor. Scrolling down smoothly recedes background cards and summons ONLY the Ace of Spades for Sanskaran, ONLY the Ace of Clubs for the Gallery, and ONLY the King of Hearts for Genesis Pass. Cursor parallax is active across all sections.
+126: 
+127: ### Next Agent Instructions
+128: 1. Inspect [HeroSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroSection.tsx) to adjust coordinates or tilt angles if requested.
+129: 2. Proceed to next user features.
+130: 
+131: ---
+132: 
+133: ## 2026-11-14 — New Core Members Section with GSAP Side Entrance Deal & 3D Interactive Flip
+134: 
+135: ### Objective
+136: Build the "NEW CORE MEMBERS" ("The Court Architects") section using the provided reference festival data and 3 reference card artworks (`crimson-vanguard`, `checkered-sovereign`, `cyber-horizon`). Animate the cards flying in smoothly from alternating sides using `/gsap-animation` with ScrollTrigger, support on-demand re-dealing, 3D flip inspection, real-time mouse tilt, category filters, and 3D background sentinel synchronization.
+137: 
+138: ### Changes Made
+139: - Created [src/components/event/CoreMembersSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/CoreMembersSection.tsx):
+140:   - Structured data for 6 Core Members:
+141:     1. Kabir Verma (Festival Secretary, Executive Council, 10♦, `crimson-vanguard`)
+142:     2. Meera Sharma (Head of Curation, Sanskaran Conclave, Q♦, `checkered-sovereign`)
+143:     3. Rohan Kapoor (Technical & 3D Lead, Digital Architecture, A♠, `cyber-horizon`)
+144:     4. Tara Menon (Creative Director, Scenography & Print, 10♦, `crimson-vanguard`)
+145:     5. Devansh Nair (Events & Production, Sahotsava Arena, Q♦, `checkered-sovereign`)
+146:     6. Zoya Siddiqui (Alliances & Outreach, External Relations, A♠, `cyber-horizon`)
+147:   - Scalable vector reference artworks (`ReferenceCardArtwork`) for the 3 distinct design variants.
+148:   - GSAP ScrollTrigger side entrance sequence:
+149:     - Even cards fly in from the left ($X = -240\text{px}$, rotation $-14^\circ$, scale $0.82$, opacity $0$).
+150:     - Odd cards fly in from the right ($X = +240\text{px}$, rotation $+14^\circ$, scale $0.82$, opacity $0$).
+151:     - Staggered dealing physics with `ease: "power3.out"` and automatic transform cleanup.
+152:   - Interactive Action Controls:
+153:     - Filter pills ("ALL ARCHITECTS", "CRIMSON VANGUARD", "CHECKERED SOVEREIGN", "CYBER HORIZON") that dynamically filter and re-deal cards.
+154:     - `[RE-DEAL (#01)]` action button enabling visitors to re-trigger the side entrance deal anytime on demand.
+155:   - Interactive 3D Card Flip & Mouse Tilt:
+156:     - Card flip with `[transform-style:preserve-3d]` and `[backface-visibility:hidden]`.
+157:     - Clicking, tapping, or pressing Enter/Space smoothly rotates the card 180° to read full vision statements, vertical, degree, and archetype.
+158:     - Hover tracking creates 3D `rotateX`/`rotateY` tilt and moves a specular glare sheen across the surface.
+159:     - Synthesized Web Audio click/deal audio without external assets.
+160: - Integrated into [src/app/page.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/app/page.tsx) directly following the Archetypes section.
+161: - Synchronized with [src/components/event/HeroSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroSection.tsx):
+162:   - Added `diamondInfluence` calculated against `#core-members`.
+163:   - When scrolling into `#core-members`, Card 3 (Queen of Diamonds Q♦) descends as an ambient 3D sentinel.
+164: 
+165: ### Files Changed
+166: - `src/components/event/CoreMembersSection.tsx` (created)
+167: - `src/app/page.tsx` (modified)
+168: - `src/components/event/HeroSection.tsx` (modified)
+169: - `features_implemented.md` (updated)
+170: - `tracker.md` (updated)
+171: 
+172: ### Verification
+173: - `npm run build` executed successfully (exit code 0):
+174:   - Turbopack optimized production build generated.
+175:   - TypeScript strict type checks passed.
+176:   - Static pages prerendered without errors.
+177: 
+178: ### Current State
+179: New Core Members section is fully live and styled in the Swiss typographic, Obsidian, Crimson Wire, and Ignited Amber design language. Cards deal in dynamically from the sides via GSAP ScrollTrigger, flip in 3D to reveal student quotes and archetypes, tilt in response to mouse cursor, and support filter categories and interactive re-dealing.
+180: 
+181: ### Next Agent Instructions
+182: 1. Inspect [CoreMembersSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/CoreMembersSection.tsx) if adjusting member quotes, photos, or card dimensions is requested.
+183: 2. Proceed to next sections such as Dignitaries & Founders or Spread Rows Gallery if requested.
+184: 
+185: ---
+186: 
+187: ## 2026-11-14 — Individual Per-Card Side Entrance Animations Across All Cards
+188: 
+189: ### Objective
+190: Ensure that **all cards** have the dynamic "came in from side" animation as they scroll into view, rather than only the first card.
+191: 
+192: ### Root Cause Analysis
+193: In `CoreMembersSection.tsx`, ScrollTrigger was previously bound to the entire container (`containerRef.current`). When the top of the container hit 78% of the viewport, all cards immediately triggered their animation at the same time. Because cards 1, 2, 3, 4, and 5 were below the fold, they finished animating while offscreen. When the user scrolled down, only the first card appeared to have had the side entrance animation.
+194: 
+195: ### Changes Made
+196: 1. **Per-Card ScrollTrigger in `CoreMembersSection.tsx`**:
+197:    - Replaced container-level trigger with individual `ScrollTrigger` instances on each `.core-card-wrapper`:
+198:      - Even cards ($0, 2, 4$) fly in from the left ($X = -300\text{px}$, rotation $-16^\circ$, rotation $Y = 28^\circ$, scale $0.80$, opacity $0$).
+199:      - Odd cards ($1, 3, 5$) fly in from the right ($X = +300\text{px}$, rotation $+16^\circ$, rotation $Y = -28^\circ$, scale $0.80$, opacity $0$).
+200:      - Triggered at `start: "top 88%"`, so each card visibly swooshes in from the side the exact moment it enters the viewport.
+201:      - `toggleActions: "play none none reverse"` smoothly animates them back to the sides on reverse scroll and deals them in again when scrolling down.
+202: 2. **Sequential Deal in 3D Hero (`HeroSection.tsx`)**:
+203:    - Updated `sideFlyX`, `sideFlyRotZ`, and `sideFlyRotY` to use individual per-card deal stagger (`cardDealStagger = (i / CARD_COUNT) * 0.45`).
+204:    - All 18 cards in the 3D scene now fly in sequentially from alternating sides rather than sliding together as a uniform block.
+205: 3. **Archetype Side Entrance in `CardShowcase.tsx`**:
+206:    - Added alternating side entrances (`x: -120` / `+120`, rotate $\pm 8^\circ$) to all 4 archetype cards.
+207: 
+208: ### Files Changed
+209: - `src/components/event/CoreMembersSection.tsx`
+210: - `src/components/event/HeroSection.tsx`
+211: - `src/components/event/CardShowcase.tsx`
+212: - `features_implemented.md`
+213: - `tracker.md`
+214: 
+215: ### Verification
+216: - `npm run build` executed and passed with exit code 0 (`✓ Compiled successfully in 2.5s`, static pages prerendered).
+217: 
+218: ### Current State
+219: Every single card across the entire website (in Core Members, Hero, and Archetypes) now triggers its own dynamic side-entrance animation as the user scrolls into its view.
+220: 
+221: ### Next Agent Instructions
+222: 1. Inspect [CoreMembersSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/CoreMembersSection.tsx) to adjust side offsets or easing if required.
+223: 2. Continue building next sections requested by user.
+224: 
+225: ---
+226: 
+227: ## 2026-11-14 — Complete Removal of Archetypes and Engineered for Total Immersion Sections
+228: 
+229: ### Objective
+230: Completely remove "THE ARCHETYPES OF SANSKARAN" (`CardShowcase.tsx`) and "ENGINEERED FOR TOTAL IMMERSION" (`FeaturesGrid.tsx`) sections as requested by the user.
+231: 
+232: ### Changes Made
+233: - Updated [src/app/page.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/app/page.tsx):
+234:   - Removed `<CardShowcase />` and `<FeaturesGrid />` from imports and JSX layout.
+235:   - Page now cleanly streams from `HeroSection` directly into `CoreMembersSection`, `WaitlistSection`, and `Footer`.
+236: - Deleted files:
+237:   - `src/components/event/CardShowcase.tsx`
+238:   - `src/components/event/FeaturesGrid.tsx`
+239: - Updated `features_implemented.md` and `tracker.md`.
+240: 
+241: ### Verification
+242: - `npm run build` executed successfully (exit code 0):
+243:   - Turbopack compilation: `✓ Compiled successfully in 4.3s`.
+244:   - TypeScript checking passed in 3.3s with zero errors.
+245:   - All static pages prerendered smoothly.
+246: 
+247: ### Current State
+248: Both legacy sections have been completely removed. The page flow is streamlined: 3D Shuffle/Corridor Hero -> New Core Members ("The Court Architects" with side-entrance deal and 3D card flip) -> VIP Pass / Waitlist -> Footer.
+249: 
+250: ### Next Agent Instructions
+251: 1. Inspect [src/app/page.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/app/page.tsx) to add next desired sections (e.g., Dignitaries & Founders or Gallery Spread Rows) if requested.
+252: 2. Maintain persistent handoff tracking across all future tasks.
+253: 
+254: ---
+255: 
+256: ## 2026-11-14 — Continuous Vertical Parallax Movie Architecture (Henrietta-Style)
+257: 
+258: ### Objective
+259: Replace the previous "minimize into infinity" mechanic ($scale \to 0.001$, $Z \to -16$) with a smooth, continuous vertical 3D parallax scroll animation inspired by [Henrietta (Tattoo Digital)](https://henrietta.wearetattoodigital.com/), preserving full card scale and establishing an unbroken filmic flow as the user scrolls vertically.
+260: 
+261: ### Changes Made
+262: 1. **Eliminated Scale & Depth Collapse**:
+263:    - Removed `destScale = 0.001` and $Z \to -16$ recession code completely across all cards in [HeroSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroSection.tsx).
+264:    - Preserved full physical scale ($1.05\times$ scale) on all 18 procedural cards throughout the entire scroll journey.
+265: 2. **Continuous Vertical Parallax Formula**:
+266:    - Each card $i$ is assigned a staggered vertical base ($Y = ((i \% 6) - 2.5) \times 2.4$) and a differential layer speed ($2.4$ to $4.5\times$).
+267:    - As $scroll$ progresses, cards drift smoothly upward along $Y$ (`verticalParallaxY = verticalBaseY + scroll * parallaxSpeed * 2.2`), creating a continuous cinematic tracking motion.
+268: 3. **Gutter Flanking**:
+269:    - Cards smoothly fan out to flank the left ($X \approx -3.1$ to $-4.5$) and right ($X \approx +3.1$ to $+4.5$) gutters as the user scrolls away from the hero, keeping the central reading column completely clear for content.
+270: 4. **Cinematic Rotational Sway & Depth**:
+271:    - Layered $Z$-depths ($Z \approx +1.8$ to $-6.5$) with natural perspective.
+272:    - Rotational roll ($Z$) and pitch ($X$) sway with phase offsets, plus global mouse cursor parallax tracking.
+273: 5. **Vertical Camera Tracking**:
+274:    - Added subtle vertical camera descent and lookAt tracking ($scrollCamY = -scroll \times 0.8$), deepening the filmic perspective.
+275: 
+276: ### Files Changed
+277: - `src/components/event/HeroSection.tsx`
+278: - `features_implemented.md`
+279: - `tracker.md`
+280: 
+281: ### Verification
+282: - `npm run build` executed successfully (code 0):
+283:   - Turbopack compilation: `✓ Compiled successfully in 2.7s`.
+284:   - TypeScript checking passed in 4.9s with zero errors.
+285:   - Static pages prerendered.
+286: 
+287: ### Current State
+288: Cards remain at full physical scale and glide continuously along the vertical axis with differential parallax speeds like an unbroken movie shot as the user scrolls, seamlessly framing the New Core Members section and beyond.
+289: 
+290: ### Next Agent Instructions
+291: 1. Inspect [HeroSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroSection.tsx) if adjusting vertical drift speed or horizontal gutter spacing is requested.
+292: 2. Proceed to next user features.
+</file>
+
+<file path="src/app/globals.css">
+ 1: @import "tailwindcss";
+ 2: 
+ 3: @layer base {
+ 4:   :root {
+ 5:     --deep-obsidian: #120E15;
+ 6:     --crimson-wire: #8B1E24;
+ 7:     --ignited-amber: #E65C19;
+ 8:     --solar-flare: #FFAA24;
+ 9:     --radiant-ivory: #FFF4E0;
+10: 
+11:     --background: 280 20% 7%;
+12:     --foreground: 39 100% 94%;
+13: 
+14:     --card: 280 22% 9%;
+15:     --card-foreground: 39 100% 94%;
+16: 
+17:     --primary: 36 100% 57%;
+18:     --primary-foreground: 280 20% 7%;
+19: 
+20:     --border: 356 64% 33%;
+21:     --ring: 36 100% 57%;
+22:     --radius: 0.75rem;
+23:   }
+24: }
+25: 
+26: .font-display {
+27:   font-family: var(--font-bebas-neue), Impact, sans-serif;
+28:   letter-spacing: 0.02em;
+29: }
+30: 
+31: .font-serif {
+32:   font-family: var(--font-cormorant), Georgia, serif;
+33: }
+34: 
+35: .font-tech {
+36:   font-family: var(--font-space-grotesk), monospace, -apple-system, sans-serif;
+37: }
+38: 
+39: /* Custom Range Scrubber Styling */
+40: input[type='range']::-webkit-slider-thumb {
+41:   -webkit-appearance: none;
+42:   appearance: none;
+43:   width: 16px;
+44:   height: 16px;
+45:   border-radius: 9999px;
+46:   background: #FFAA24;
+47:   border: 2px solid #FFF4E0;
+48:   cursor: pointer;
+49:   box-shadow: 0 0 12px rgba(255, 170, 36, 0.7);
+50: }
+51: 
+52: html {
+53:   scroll-behavior: smooth;
+54:   background-color: #120E15;
+55:   color: #FFF4E0;
+56: }
+57: 
+58: body {
+59:   margin: 0;
+60:   background-color: #120E15;
+61:   color: #FFF4E0;
+62:   overflow-x: hidden;
+63: }
+</file>
+
+<file path="src/app/layout.tsx">
+ 1: import type { Metadata } from "next";
+ 2: import { Bebas_Neue, Cormorant_Garamond, Space_Grotesk } from "next/font/google";
+ 3: import "./globals.css";
+ 4: 
+ 5: const bebasNeue = Bebas_Neue({
+ 6:   weight: "400",
+ 7:   subsets: ["latin"],
+ 8:   variable: "--font-bebas-neue",
+ 9: });
+10: 
+11: const cormorant = Cormorant_Garamond({
+12:   weight: ["500", "600", "700"],
+13:   subsets: ["latin"],
+14:   variable: "--font-cormorant",
+15:   style: ["normal", "italic"],
+16: });
+17: 
+18: const spaceGrotesk = Space_Grotesk({
+19:   weight: ["400", "500", "600", "700"],
+20:   subsets: ["latin"],
+21:   variable: "--font-space-grotesk",
+22: });
+23: 
+24: export const metadata: Metadata = {
+25:   title: "DECK OF DESTINIES // Sanskaran & Sahotsava",
+26:   description:
+27:     "Every card represents a different destiny, talent, culture and identity. Together, they create an unpredictable world of experiences.",
+28:   openGraph: {
+29:     title: "DECK OF DESTINIES // Sanskaran & Sahotsava",
+30:     description:
+31:       "Interactive 3D Monolith Corridor and Riffle Deck Experience for Sanskaran & Sahotsava.",
+32:     siteName: "Deck of Destinies",
+33:     type: "website",
+34:   },
+35: };
+36: 
+37: export default function RootLayout({
+38:   children,
+39: }: {
+40:   children: React.ReactNode;
+41: }) {
+42:   return (
+43:     <html
+44:       lang="en"
+45:       className={`${bebasNeue.variable} ${cormorant.variable} ${spaceGrotesk.variable} h-full antialiased dark`}
+46:     >
+47:       <body className="min-h-full flex flex-col bg-[#120E15] text-[#FFF4E0] selection:bg-[#FFAA24] selection:text-[#120E15]">
+48:         {children}
+49:       </body>
+50:     </html>
+51:   );
+52: }
+</file>
+
+<file path="src/app/page.tsx">
+ 1: "use client";
+ 2: 
+ 3: import React, { useRef } from "react";
+ 4: import ParallaxBackground from "@/components/event/ParallaxBackground";
+ 5: import HeroSection from "@/components/event/HeroSection";
+ 6: import CoreMembersSection from "@/components/event/CoreMembersSection";
+ 7: import WaitlistSection from "@/components/event/WaitlistSection";
+ 8: import Footer from "@/components/event/Footer";
+ 9: 
+10: export default function Home() {
+11:   const scrollTargetRef = useRef<HTMLDivElement>(null);
+12: 
+13:   const handleExploreFestival = () => {
+14:     if (scrollTargetRef.current) {
+15:       scrollTargetRef.current.scrollIntoView({ behavior: "smooth" });
+16:     }
+17:   };
+18: 
+19:   return (
+20:     <main className="relative min-h-screen bg-[#120E15] text-[#FFF4E0] selection:bg-[#FFAA24] selection:text-[#120E15] overflow-x-hidden">
+21:       {/* 1. Global Multi-Layer Parallax Background with Dynamic Orbs & Floating Embers */}
+22:       <ParallaxBackground />
+23: 
+24:       {/* 2. Monolith Corridor & 3D Shuffle Hero Section with Cascading Card Scroll */}
+25:       <HeroSection onExploreGallery={handleExploreFestival} />
+26: 
+27:       {/* 3. Interactive Festival & Card Experience Sections */}
+28:       <div ref={scrollTargetRef} className="relative z-10">
+29:         <CoreMembersSection />
+30:         <WaitlistSection />
+31:         <Footer />
+32:       </div>
+33:     </main>
+34:   );
+35: }
+</file>
+
+<file path="next.config.ts">
+ 1: import type { NextConfig } from "next";
+ 2: 
+ 3: const nextConfig: NextConfig = {
+ 4:   /* config options here */
+ 5:   cacheComponents: true,
+ 6:   partialPrefetching: true,
+ 7:   turbopack: {
+ 8:     rules: {
+ 9:       "*.css": {
+10:         loaders: ["@tailwindcss/turbopack"],
+11:         as: "*.css",
+12:       },
+13:     },
+14:   },
+15: };
+16: 
+17: export default nextConfig;
+</file>
+
+<file path="package.json">
+ 1: {
+ 2:   "name": "saskaran-app",
+ 3:   "version": "0.1.0",
+ 4:   "private": true,
+ 5:   "scripts": {
+ 6:     "dev": "next dev",
+ 7:     "build": "next build",
+ 8:     "start": "next start",
+ 9:     "lint": "eslint",
+10:     "repomix": "repomix",
+11:     "serena:index": "node scripts/serena-indexer.mjs",
+12:     "serena:find": "node scripts/serena-lookup.mjs",
+13:     "memory": "node scripts/agentmemory.mjs"
+14:   },
+15:   "dependencies": {
+16:     "@gsap/react": "^2.1.2",
+17:     "@radix-ui/react-slot": "^1.5.0",
+18:     "@types/canvas-confetti": "^1.9.0",
+19:     "@types/three": "^0.187.0",
+20:     "canvas-confetti": "^1.9.4",
+21:     "class-variance-authority": "^0.7.1",
+22:     "clsx": "^2.1.1",
+23:     "framer-motion": "^14.14.0",
+24:     "gsap": "^3.15.1",
+25:     "lucide-react": "^1.73.0",
+26:     "motion": "^14.14.0",
+27:     "next": "16.4.6",
+28:     "react": "19.3.0",
+29:     "react-dom": "19.3.0",
+30:     "simplex-noise": "^4.0.3",
+31:     "tailwind-merge": "^3.7.0",
+32:     "three": "^0.187.0"
+33:   },
+34:   "devDependencies": {
+35:     "@tailwindcss/turbopack": "4.3.3",
+36:     "@types/node": "^20",
+37:     "@types/react": "^19",
+38:     "@types/react-dom": "^19",
+39:     "eslint": "^9",
+40:     "eslint-config-next": "16.4.6",
+41:     "repomix": "^1.19.0",
+42:     "tailwindcss": "4.3.3",
+43:     "typescript": "^5"
+44:   }
+45: }
+</file>
+
+</files>

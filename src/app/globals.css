@@ -1,26 +1,63 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --deep-obsidian: #120E15;
+    --crimson-wire: #8B1E24;
+    --ignited-amber: #E65C19;
+    --solar-flare: #FFAA24;
+    --radiant-ivory: #FFF4E0;
+
+    --background: 280 20% 7%;
+    --foreground: 39 100% 94%;
+
+    --card: 280 22% 9%;
+    --card-foreground: 39 100% 94%;
+
+    --primary: 36 100% 57%;
+    --primary-foreground: 280 20% 7%;
+
+    --border: 356 64% 33%;
+    --ring: 36 100% 57%;
+    --radius: 0.75rem;
   }
 }
 
+.font-display {
+  font-family: var(--font-bebas-neue), Impact, sans-serif;
+  letter-spacing: 0.02em;
+}
+
+.font-serif {
+  font-family: var(--font-cormorant), Georgia, serif;
+}
+
+.font-tech {
+  font-family: var(--font-space-grotesk), monospace, -apple-system, sans-serif;
+}
+
+/* Custom Range Scrubber Styling */
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 9999px;
+  background: #FFAA24;
+  border: 2px solid #FFF4E0;
+  cursor: pointer;
+  box-shadow: 0 0 12px rgba(255, 170, 36, 0.7);
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: #120E15;
+  color: #FFF4E0;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  background-color: #120E15;
+  color: #FFF4E0;
+  overflow-x: hidden;
 }

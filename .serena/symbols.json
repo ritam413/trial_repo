@@ -1,0 +1,808 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2026-11-14T12:16:02.893Z",
+  "totalSymbols": 24,
+  "byName": {
+    "DesignTokens": {
+      "name": "DesignTokens",
+      "type": "tokens",
+      "category": "tokens",
+      "file": "src/app/globals.css",
+      "line": 3,
+      "description": "Three-layer CSS custom properties (primitive, semantic, component) & glow variables",
+      "keywords": [
+        "tokens",
+        "css",
+        "theme",
+        "colors",
+        "glow",
+        "background",
+        "foreground"
+      ]
+    },
+    "RootLayout": {
+      "name": "RootLayout",
+      "type": "component",
+      "category": "components",
+      "file": "src/app/layout.tsx",
+      "line": 37,
+      "description": "React component: RootLayout in src/app/layout.tsx",
+      "keywords": [
+        "RootLayout",
+        "component",
+        "ui",
+        "layout"
+      ]
+    },
+    "Home": {
+      "name": "Home",
+      "type": "component",
+      "category": "components",
+      "file": "src/app/page.tsx",
+      "line": 10,
+      "description": "React component: Home in src/app/page.tsx",
+      "keywords": [
+        "Home",
+        "component",
+        "ui",
+        "page"
+      ]
+    },
+    "EventScene": {
+      "name": "EventScene",
+      "type": "component",
+      "category": "threejs",
+      "file": "src/components/3d/EventScene.tsx",
+      "line": 10,
+      "description": "React component: EventScene in src/components/3d/EventScene.tsx",
+      "keywords": [
+        "EventScene",
+        "component",
+        "3d",
+        "EventScene",
+        "threejs",
+        "webgl",
+        "3d",
+        "canvas",
+        "shaders",
+        "motion",
+        "framer-motion",
+        "animation",
+        "tilt"
+      ]
+    },
+    "DesignVariant": {
+      "name": "DesignVariant",
+      "type": "type",
+      "category": "types",
+      "file": "src/components/event/CoreMembersSection.tsx",
+      "line": 53,
+      "description": "Exported TypeScript definition: DesignVariant",
+      "keywords": [
+        "DesignVariant",
+        "typescript",
+        "type",
+        "interface"
+      ]
+    },
+    "CoreMember": {
+      "name": "CoreMember",
+      "type": "type",
+      "category": "types",
+      "file": "src/components/event/CoreMembersSection.tsx",
+      "line": 55,
+      "description": "Exported TypeScript definition: CoreMember",
+      "keywords": [
+        "CoreMember",
+        "typescript",
+        "type",
+        "interface"
+      ]
+    },
+    "CoreMembersSection": {
+      "name": "CoreMembersSection",
+      "type": "component",
+      "category": "components",
+      "file": "src/components/event/CoreMembersSection.tsx",
+      "line": 488,
+      "description": "React component: CoreMembersSection in src/components/event/CoreMembersSection.tsx",
+      "keywords": [
+        "CoreMembersSection",
+        "component",
+        "ui",
+        "CoreMembersSection",
+        "spotlight",
+        "glow",
+        "hover"
+      ]
+    },
+    "Countdown": {
+      "name": "Countdown",
+      "type": "component",
+      "category": "components",
+      "file": "src/components/event/Countdown.tsx",
+      "line": 12,
+      "description": "React component: Countdown in src/components/event/Countdown.tsx",
+      "keywords": [
+        "Countdown",
+        "component",
+        "ui",
+        "Countdown",
+        "countdown",
+        "timer",
+        "date",
+        "clock"
+      ]
+    },
+    "Footer": {
+      "name": "Footer",
+      "type": "component",
+      "category": "components",
+      "file": "src/components/event/Footer.tsx",
+      "line": 6,
+      "description": "React component: Footer in src/components/event/Footer.tsx",
+      "keywords": [
+        "Footer",
+        "component",
+        "ui",
+        "Footer"
+      ]
+    },
+    "Hero": {
+      "name": "Hero",
+      "type": "component",
+      "category": "components",
+      "file": "src/components/event/Hero.tsx",
+      "line": 19,
+      "description": "React component: Hero in src/components/event/Hero.tsx",
+      "keywords": [
+        "Hero",
+        "component",
+        "ui",
+        "Hero",
+        "threejs",
+        "webgl",
+        "3d",
+        "canvas",
+        "shaders"
+      ]
+    },
+    "HeroSection": {
+      "name": "HeroSection",
+      "type": "component",
+      "category": "components",
+      "file": "src/components/event/HeroSection.tsx",
+      "line": 388,
+      "description": "React component: HeroSection in src/components/event/HeroSection.tsx",
+      "keywords": [
+        "HeroSection",
+        "component",
+        "ui",
+        "HeroSection",
+        "threejs",
+        "webgl",
+        "3d",
+        "canvas",
+        "shaders",
+        "motion",
+        "framer-motion",
+        "animation",
+        "tilt",
+        "spotlight",
+        "glow",
+        "hover"
+      ]
+    },
+    "Navbar": {
+      "name": "Navbar",
+      "type": "component",
+      "category": "components",
+      "file": "src/components/event/Navbar.tsx",
+      "line": 7,
+      "description": "React component: Navbar in src/components/event/Navbar.tsx",
+      "keywords": [
+        "Navbar",
+        "component",
+        "ui",
+        "Navbar"
+      ]
+    },
+    "ParallaxBackground": {
+      "name": "ParallaxBackground",
+      "type": "component",
+      "category": "components",
+      "file": "src/components/event/ParallaxBackground.tsx",
+      "line": 5,
+      "description": "React component: ParallaxBackground in src/components/event/ParallaxBackground.tsx",
+      "keywords": [
+        "ParallaxBackground",
+        "component",
+        "ui",
+        "ParallaxBackground"
+      ]
+    },
+    "WaitlistSection": {
+      "name": "WaitlistSection",
+      "type": "component",
+      "category": "components",
+      "file": "src/components/event/WaitlistSection.tsx",
+      "line": 9,
+      "description": "React component: WaitlistSection in src/components/event/WaitlistSection.tsx",
+      "keywords": [
+        "WaitlistSection",
+        "component",
+        "ui",
+        "WaitlistSection",
+        "confetti",
+        "celebration",
+        "rsvp",
+        "spotlight",
+        "glow",
+        "hover"
+      ]
+    },
+    "ButtonProps": {
+      "name": "ButtonProps",
+      "type": "type",
+      "category": "types",
+      "file": "src/components/ui/button.tsx",
+      "line": 39,
+      "description": "Exported TypeScript definition: ButtonProps",
+      "keywords": [
+        "ButtonProps",
+        "typescript",
+        "type",
+        "interface"
+      ]
+    },
+    "Button": {
+      "name": "Button",
+      "type": "forwardRefComponent",
+      "category": "components",
+      "file": "src/components/ui/button.tsx",
+      "line": 45,
+      "description": "Shadcn/UI Radix primitive component: Button",
+      "keywords": [
+        "Button",
+        "shadcn",
+        "radix",
+        "ui"
+      ]
+    },
+    "CardSpotlight": {
+      "name": "CardSpotlight",
+      "type": "component",
+      "category": "components",
+      "file": "src/components/ui/card-spotlight.tsx",
+      "line": 11,
+      "description": "React component: CardSpotlight in src/components/ui/card-spotlight.tsx",
+      "keywords": [
+        "CardSpotlight",
+        "component",
+        "ui",
+        "card-spotlight",
+        "spotlight",
+        "glow",
+        "hover"
+      ]
+    },
+    "Card": {
+      "name": "Card",
+      "type": "forwardRefComponent",
+      "category": "components",
+      "file": "src/components/ui/card.tsx",
+      "line": 4,
+      "description": "Shadcn/UI Radix primitive component: Card",
+      "keywords": [
+        "Card",
+        "shadcn",
+        "radix",
+        "ui"
+      ]
+    },
+    "CardHeader": {
+      "name": "CardHeader",
+      "type": "forwardRefComponent",
+      "category": "components",
+      "file": "src/components/ui/card.tsx",
+      "line": 19,
+      "description": "Shadcn/UI Radix primitive component: CardHeader",
+      "keywords": [
+        "CardHeader",
+        "shadcn",
+        "radix",
+        "ui"
+      ]
+    },
+    "CardTitle": {
+      "name": "CardTitle",
+      "type": "forwardRefComponent",
+      "category": "components",
+      "file": "src/components/ui/card.tsx",
+      "line": 31,
+      "description": "Shadcn/UI Radix primitive component: CardTitle",
+      "keywords": [
+        "CardTitle",
+        "shadcn",
+        "radix",
+        "ui"
+      ]
+    },
+    "CardDescription": {
+      "name": "CardDescription",
+      "type": "forwardRefComponent",
+      "category": "components",
+      "file": "src/components/ui/card.tsx",
+      "line": 46,
+      "description": "Shadcn/UI Radix primitive component: CardDescription",
+      "keywords": [
+        "CardDescription",
+        "shadcn",
+        "radix",
+        "ui"
+      ]
+    },
+    "CardContent": {
+      "name": "CardContent",
+      "type": "forwardRefComponent",
+      "category": "components",
+      "file": "src/components/ui/card.tsx",
+      "line": 58,
+      "description": "Shadcn/UI Radix primitive component: CardContent",
+      "keywords": [
+        "CardContent",
+        "shadcn",
+        "radix",
+        "ui"
+      ]
+    },
+    "CardFooter": {
+      "name": "CardFooter",
+      "type": "forwardRefComponent",
+      "category": "components",
+      "file": "src/components/ui/card.tsx",
+      "line": 66,
+      "description": "Shadcn/UI Radix primitive component: CardFooter",
+      "keywords": [
+        "CardFooter",
+        "shadcn",
+        "radix",
+        "ui"
+      ]
+    },
+    "cn": {
+      "name": "cn",
+      "type": "function",
+      "category": "utilities",
+      "file": "src/lib/utils.ts",
+      "line": 4,
+      "description": "Exported utility function: cn()",
+      "keywords": [
+        "cn",
+        "utility",
+        "function"
+      ]
+    }
+  },
+  "byCategory": {
+    "components": [
+      "RootLayout",
+      "Home",
+      "CoreMembersSection",
+      "Countdown",
+      "Footer",
+      "Hero",
+      "HeroSection",
+      "Navbar",
+      "ParallaxBackground",
+      "WaitlistSection",
+      "Button",
+      "CardSpotlight",
+      "Card",
+      "CardHeader",
+      "CardTitle",
+      "CardDescription",
+      "CardContent",
+      "CardFooter"
+    ],
+    "threejs": [
+      "EventScene"
+    ],
+    "utilities": [
+      "cn"
+    ],
+    "tokens": [
+      "DesignTokens"
+    ],
+    "types": [
+      "DesignVariant",
+      "CoreMember",
+      "ButtonProps"
+    ]
+  },
+  "keywordIndex": {
+    "designtokens": [
+      "DesignTokens"
+    ],
+    "tokens": [
+      "DesignTokens"
+    ],
+    "css": [
+      "DesignTokens"
+    ],
+    "theme": [
+      "DesignTokens"
+    ],
+    "colors": [
+      "DesignTokens"
+    ],
+    "glow": [
+      "DesignTokens",
+      "CoreMembersSection",
+      "HeroSection",
+      "WaitlistSection",
+      "CardSpotlight"
+    ],
+    "background": [
+      "DesignTokens"
+    ],
+    "foreground": [
+      "DesignTokens"
+    ],
+    "three": [
+      "DesignTokens"
+    ],
+    "layer": [
+      "DesignTokens"
+    ],
+    "custom": [
+      "DesignTokens"
+    ],
+    "properties": [
+      "DesignTokens"
+    ],
+    "primitive": [
+      "DesignTokens",
+      "Button",
+      "Card",
+      "CardHeader",
+      "CardTitle",
+      "CardDescription",
+      "CardContent",
+      "CardFooter"
+    ],
+    "semantic": [
+      "DesignTokens"
+    ],
+    "component": [
+      "DesignTokens",
+      "RootLayout",
+      "Home",
+      "EventScene",
+      "CoreMembersSection",
+      "Countdown",
+      "Footer",
+      "Hero",
+      "HeroSection",
+      "Navbar",
+      "ParallaxBackground",
+      "WaitlistSection",
+      "Button",
+      "CardSpotlight",
+      "Card",
+      "CardHeader",
+      "CardTitle",
+      "CardDescription",
+      "CardContent",
+      "CardFooter"
+    ],
+    "variables": [
+      "DesignTokens"
+    ],
+    "rootlayout": [
+      "RootLayout"
+    ],
+    "components": [
+      "RootLayout",
+      "Home",
+      "EventScene",
+      "CoreMembersSection",
+      "Countdown",
+      "Footer",
+      "Hero",
+      "HeroSection",
+      "Navbar",
+      "ParallaxBackground",
+      "WaitlistSection",
+      "Button",
+      "CardSpotlight",
+      "Card",
+      "CardHeader",
+      "CardTitle",
+      "CardDescription",
+      "CardContent",
+      "CardFooter"
+    ],
+    "ui": [
+      "RootLayout",
+      "Home",
+      "CoreMembersSection",
+      "Countdown",
+      "Footer",
+      "Hero",
+      "HeroSection",
+      "Navbar",
+      "ParallaxBackground",
+      "WaitlistSection",
+      "Button",
+      "CardSpotlight",
+      "Card",
+      "CardHeader",
+      "CardTitle",
+      "CardDescription",
+      "CardContent",
+      "CardFooter"
+    ],
+    "layout": [
+      "RootLayout"
+    ],
+    "react": [
+      "RootLayout",
+      "Home",
+      "EventScene",
+      "CoreMembersSection",
+      "Countdown",
+      "Footer",
+      "Hero",
+      "HeroSection",
+      "Navbar",
+      "ParallaxBackground",
+      "WaitlistSection",
+      "CardSpotlight"
+    ],
+    "src": [
+      "RootLayout",
+      "Home",
+      "EventScene",
+      "CoreMembersSection",
+      "Countdown",
+      "Footer",
+      "Hero",
+      "HeroSection",
+      "Navbar",
+      "ParallaxBackground",
+      "WaitlistSection",
+      "CardSpotlight"
+    ],
+    "app": [
+      "RootLayout",
+      "Home"
+    ],
+    "tsx": [
+      "RootLayout",
+      "Home",
+      "EventScene",
+      "CoreMembersSection",
+      "Countdown",
+      "Footer",
+      "Hero",
+      "HeroSection",
+      "Navbar",
+      "ParallaxBackground",
+      "WaitlistSection",
+      "CardSpotlight"
+    ],
+    "home": [
+      "Home"
+    ],
+    "page": [
+      "Home"
+    ],
+    "eventscene": [
+      "EventScene"
+    ],
+    "threejs": [
+      "EventScene",
+      "Hero",
+      "HeroSection"
+    ],
+    "3d": [
+      "EventScene",
+      "Hero",
+      "HeroSection"
+    ],
+    "webgl": [
+      "EventScene",
+      "Hero",
+      "HeroSection"
+    ],
+    "canvas": [
+      "EventScene",
+      "Hero",
+      "HeroSection"
+    ],
+    "shaders": [
+      "EventScene",
+      "Hero",
+      "HeroSection"
+    ],
+    "motion": [
+      "EventScene",
+      "HeroSection"
+    ],
+    "framer-motion": [
+      "EventScene",
+      "HeroSection"
+    ],
+    "animation": [
+      "EventScene",
+      "HeroSection"
+    ],
+    "tilt": [
+      "EventScene",
+      "HeroSection"
+    ],
+    "designvariant": [
+      "DesignVariant"
+    ],
+    "types": [
+      "DesignVariant",
+      "CoreMember",
+      "ButtonProps"
+    ],
+    "typescript": [
+      "DesignVariant",
+      "CoreMember",
+      "ButtonProps"
+    ],
+    "type": [
+      "DesignVariant",
+      "CoreMember",
+      "ButtonProps"
+    ],
+    "interface": [
+      "DesignVariant",
+      "CoreMember",
+      "ButtonProps"
+    ],
+    "exported": [
+      "DesignVariant",
+      "CoreMember",
+      "ButtonProps",
+      "cn"
+    ],
+    "definition": [
+      "DesignVariant",
+      "CoreMember",
+      "ButtonProps"
+    ],
+    "coremember": [
+      "CoreMember"
+    ],
+    "corememberssection": [
+      "CoreMembersSection"
+    ],
+    "spotlight": [
+      "CoreMembersSection",
+      "HeroSection",
+      "WaitlistSection",
+      "CardSpotlight"
+    ],
+    "hover": [
+      "CoreMembersSection",
+      "HeroSection",
+      "WaitlistSection",
+      "CardSpotlight"
+    ],
+    "event": [
+      "CoreMembersSection",
+      "Countdown",
+      "Footer",
+      "Hero",
+      "HeroSection",
+      "Navbar",
+      "ParallaxBackground",
+      "WaitlistSection"
+    ],
+    "countdown": [
+      "Countdown"
+    ],
+    "timer": [
+      "Countdown"
+    ],
+    "date": [
+      "Countdown"
+    ],
+    "clock": [
+      "Countdown"
+    ],
+    "footer": [
+      "Footer"
+    ],
+    "hero": [
+      "Hero"
+    ],
+    "herosection": [
+      "HeroSection"
+    ],
+    "navbar": [
+      "Navbar"
+    ],
+    "parallaxbackground": [
+      "ParallaxBackground"
+    ],
+    "waitlistsection": [
+      "WaitlistSection"
+    ],
+    "confetti": [
+      "WaitlistSection"
+    ],
+    "celebration": [
+      "WaitlistSection"
+    ],
+    "rsvp": [
+      "WaitlistSection"
+    ],
+    "buttonprops": [
+      "ButtonProps"
+    ],
+    "button": [
+      "Button"
+    ],
+    "shadcn": [
+      "Button",
+      "Card",
+      "CardHeader",
+      "CardTitle",
+      "CardDescription",
+      "CardContent",
+      "CardFooter"
+    ],
+    "radix": [
+      "Button",
+      "Card",
+      "CardHeader",
+      "CardTitle",
+      "CardDescription",
+      "CardContent",
+      "CardFooter"
+    ],
+    "cardspotlight": [
+      "CardSpotlight"
+    ],
+    "card-spotlight": [
+      "CardSpotlight"
+    ],
+    "card": [
+      "CardSpotlight",
+      "Card"
+    ],
+    "cardheader": [
+      "CardHeader"
+    ],
+    "cardtitle": [
+      "CardTitle"
+    ],
+    "carddescription": [
+      "CardDescription"
+    ],
+    "cardcontent": [
+      "CardContent"
+    ],
+    "cardfooter": [
+      "CardFooter"
+    ],
+    "cn": [
+      "cn"
+    ],
+    "utilities": [
+      "cn"
+    ],
+    "utility": [
+      "cn"
+    ],
+    "function": [
+      "cn"
+    ]
+  }
+}
