@@ -1,46 +1,16 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useMemo, useCallback } from "react";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
+import React, { useState, useEffect, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(useGSAP);
-}
+import { CLUBS_DATA, ClubItem, ClubPhoto } from "@/lib/clubsData";
 
 /* ==========================================================================
-   1. INLINE VECTOR ICONS
+   INLINE VECTOR ICONS
    ========================================================================== */
 const Icon = {
   Sparkles: ({ className = "w-4 h-4" }: { className?: string }) => (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
       <path d="M12 3l1.9 5.8a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-1.9a2 2 0 0 0 1.3-1.3L12 3z" />
-    </svg>
-  ),
-  Play: ({ className = "w-4 h-4" }: { className?: string }) => (
-    <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
-      <polygon points="5 3 19 12 5 21 5 3" />
-    </svg>
-  ),
-  Pause: ({ className = "w-4 h-4" }: { className?: string }) => (
-    <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
-      <rect x="6" y="4" width="4" height="16" />
-      <rect x="14" y="4" width="4" height="16" />
-    </svg>
-  ),
-  Volume2: ({ className = "w-4 h-4" }: { className?: string }) => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-      <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
-      <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
-    </svg>
-  ),
-  VolumeX: ({ className = "w-4 h-4" }: { className?: string }) => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-      <line x1="23" y1="9" x2="17" y2="15" />
-      <line x1="17" y1="9" x2="23" y2="15" />
     </svg>
   ),
   X: ({ className = "w-4 h-4" }: { className?: string }) => (
@@ -49,24 +19,14 @@ const Icon = {
       <line x1="6" y1="6" x2="18" y2="18" />
     </svg>
   ),
-  ImageIcon: ({ className = "w-4 h-4" }: { className?: string }) => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-      <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-      <circle cx="8.5" cy="8.5" r="1.5" />
-      <polyline points="21 15 16 10 5 21" />
+  ChevronLeft: ({ className = "w-4 h-4" }: { className?: string }) => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <polyline points="15 18 9 12 15 6" />
     </svg>
   ),
-  Sliders: ({ className = "w-4 h-4" }: { className?: string }) => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-      <line x1="4" y1="21" x2="4" y2="14" />
-      <line x1="4" y1="10" x2="4" y2="3" />
-      <line x1="12" y1="21" x2="12" y2="12" />
-      <line x1="12" y1="8" x2="12" y2="3" />
-      <line x1="20" y1="21" x2="20" y2="16" />
-      <line x1="20" y1="12" x2="20" y2="3" />
-      <line x1="1" y1="14" x2="7" y2="14" />
-      <line x1="9" y1="8" x2="15" y2="8" />
-      <line x1="17" y1="16" x2="23" y2="16" />
+  ChevronRight: ({ className = "w-4 h-4" }: { className?: string }) => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <polyline points="9 18 15 12 9 6" />
     </svg>
   ),
   Maximize2: ({ className = "w-4 h-4" }: { className?: string }) => (
@@ -77,576 +37,542 @@ const Icon = {
       <line x1="3" y1="21" x2="10" y2="14" />
     </svg>
   ),
-  Eye: ({ className = "w-4 h-4" }: { className?: string }) => (
+  Layers: ({ className = "w-4 h-4" }: { className?: string }) => (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-      <circle cx="12" cy="12" r="3" />
+      <polygon points="12 2 2 7 12 12 22 7 12 2" />
+      <polyline points="2 17 12 22 22 17" />
+      <polyline points="2 12 12 17 22 12" />
+    </svg>
+  ),
+  Rows: ({ className = "w-4 h-4" }: { className?: string }) => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+      <line x1="3" y1="12" x2="21" y2="12" />
+    </svg>
+  ),
+  Columns: ({ className = "w-4 h-4" }: { className?: string }) => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+      <line x1="12" y1="3" x2="12" y2="21" />
     </svg>
   ),
 };
 
 /* ==========================================================================
-   2. GALLERY DATA (12 SLOTS ACROSS 3 SPREAD ROWS)
+   INDIVIDUAL CLUB EXPANDED THEMES (Distinct Background Color per Club)
    ========================================================================== */
-export interface GalleryItem {
-  id: string;
-  row: number; // 0, 1, 2
-  type: "image" | "video";
-  title: string;
-  tag: string;
-  code: string;
-  src: string;
-  poster?: string;
-  fallbackGradient: string;
-  overlayTop: string;
-  suitWatermark: string;
-  isTypography?: boolean;
+interface ClubExpandedTheme {
+  bg: string;
+  gradient: string;
+  border: string;
+  glow: string;
+  ambient: string;
+  badgeBg: string;
 }
 
-export const GALLERY_ITEMS: GalleryItem[] = [
-  // ROW 0
-  {
-    id: "gal-01",
-    row: 0,
-    type: "image",
-    title: "OPENING CONCLAVE // OVERTURE",
-    tag: "SANSKARAN DAY 01",
-    code: "0034",
-    src: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=900&q=80",
-    fallbackGradient: "linear-gradient(135deg, #8B1E24 0%, #120E15 100%)",
-    overlayTop: "DAY 01",
-    suitWatermark: "♠",
+const CLUB_EXPANDED_THEMES: Record<string, ClubExpandedTheme> = {
+  // 01: THEATRE OF SHADOWS (Dramatics - Crimson Wine Noir)
+  dramatics: {
+    bg: "#150607",
+    gradient: "linear-gradient(180deg, #2A090D 0%, #170507 45%, #0B0203 100%)",
+    border: "rgba(232, 80, 42, 0.45)",
+    glow: "rgba(232, 80, 42, 0.35)",
+    ambient: "#E8502A",
+    badgeBg: "rgba(232, 80, 42, 0.2)",
   },
-  {
-    id: "gal-02",
-    row: 0,
-    type: "video",
-    title: "SOLAR FLARE STAGE & CROWD ROAR",
-    tag: "SAHOTSAVA LIVE",
-    code: "12K",
-    src: "https://assets.mixkit.co/videos/preview/mixkit-crowd-cheering-at-a-concert-14050-large.mp4",
-    poster: "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=900&q=80",
-    fallbackGradient: "linear-gradient(135deg, #E65C19 0%, #120E15 100%)",
-    overlayTop: "LIVE REEL",
-    suitWatermark: "♦",
+  // 02: NOCTURNE SYMPHONY (Music - Solar Amber Bronze Noir)
+  music: {
+    bg: "#160E03",
+    gradient: "linear-gradient(180deg, #2A1804 0%, #150C02 45%, #0A0601 100%)",
+    border: "rgba(255, 170, 36, 0.45)",
+    glow: "rgba(255, 170, 36, 0.35)",
+    ambient: "#FFAA24",
+    badgeBg: "rgba(255, 170, 36, 0.2)",
   },
-  {
-    id: "gal-03",
-    row: 0,
-    type: "image",
-    title: "RISOGRAPH & FINE ARTS PAVILION",
-    tag: "EXHIBITION HALL",
-    code: "2026",
-    src: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=900&q=80",
-    fallbackGradient: "linear-gradient(135deg, #FFAA24 0%, #8B1E24 100%)",
-    overlayTop: "2026 NOV",
-    suitWatermark: "♣",
+  // 03: CRIMSON CYPHER (Dance - Midnight Velvet Magenta / Ruby)
+  dance: {
+    bg: "#1A0512",
+    gradient: "linear-gradient(180deg, #2E0720 0%, #170410 45%, #0B0207 100%)",
+    border: "rgba(244, 63, 94, 0.45)",
+    glow: "rgba(244, 63, 94, 0.35)",
+    ambient: "#F43F5E",
+    badgeBg: "rgba(244, 63, 94, 0.2)",
   },
-  {
-    id: "gal-04",
-    row: 0,
-    type: "image",
-    title: "NOCTURNE SYMPHONY ORCHESTRA",
-    tag: "CULTURAL NIGHT",
-    code: "0095",
-    src: "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&w=900&q=80",
-    fallbackGradient: "linear-gradient(135deg, #120E15 0%, #8B1E24 100%)",
-    overlayTop: "THU",
-    suitWatermark: "♥",
+  // 04: RISOGRAPH PAVILION (Fine Arts - Royal Twilight Indigo / Violet)
+  "fine-arts": {
+    bg: "#0E0A1E",
+    gradient: "linear-gradient(180deg, #1C123B 0%, #0D081B 45%, #06040F 100%)",
+    border: "rgba(185, 172, 240, 0.45)",
+    glow: "rgba(185, 172, 240, 0.35)",
+    ambient: "#B9ACF0",
+    badgeBg: "rgba(185, 172, 240, 0.2)",
   },
-  // ROW 1
-  {
-    id: "gal-05",
-    row: 1,
-    type: "video",
-    title: "CRIMSON CYPHER // NEON STREET DANCE",
-    tag: "BATTLE OF HOUSES",
-    code: "ACE",
-    src: "https://assets.mixkit.co/videos/preview/mixkit-dancer-performing-with-neon-lights-34549-large.mp4",
-    poster: "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?auto=format&fit=crop&w=900&q=80",
-    fallbackGradient: "linear-gradient(135deg, #8B1E24 0%, #E65C19 100%)",
-    overlayTop: "CYPHER",
-    suitWatermark: "♠",
+  // 05: SPOKEN WORD ARENA (Literary - Vintage Sepia Tobacco / Warm Ochre)
+  literary: {
+    bg: "#1A0F03",
+    gradient: "linear-gradient(180deg, #2E1905 0%, #170D02 45%, #0C0601 100%)",
+    border: "rgba(245, 158, 11, 0.45)",
+    glow: "rgba(245, 158, 11, 0.35)",
+    ambient: "#F59E0B",
+    badgeBg: "rgba(245, 158, 11, 0.2)",
   },
-  {
-    id: "gal-06",
-    row: 1,
-    type: "image",
-    title: "THEATRE OF SHADOWS & MONOLOGUES",
-    tag: "DRAMATICS GUILD",
-    code: "ACT II",
-    src: "https://images.unsplash.com/photo-1503095396549-807759245b35?auto=format&fit=crop&w=900&q=80",
-    fallbackGradient: "linear-gradient(135deg, #2A1208 0%, #FFAA24 100%)",
-    overlayTop: "STAGE",
-    suitWatermark: "♦",
+  // 06: AVANT-GARDE RUNWAY (Fashion - Haute Couture Emerald / Spruce Jade)
+  fashion: {
+    bg: "#041611",
+    gradient: "linear-gradient(180deg, #072B21 0%, #041611 45%, #020A08 100%)",
+    border: "rgba(52, 211, 153, 0.45)",
+    glow: "rgba(52, 211, 153, 0.35)",
+    ambient: "#34D399",
+    badgeBg: "rgba(52, 211, 153, 0.2)",
   },
-  {
-    id: "gal-07",
-    row: 1,
-    type: "video",
-    title: "IGNITED AMBER ACOUSTIC SESSIONS",
-    tag: "SANSKARAN UNPLUGGED",
-    code: "0042",
-    src: "https://assets.mixkit.co/videos/preview/mixkit-guitarist-playing-on-stage-with-dramatic-lighting-42874-large.mp4",
-    poster: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=900&q=80",
-    fallbackGradient: "linear-gradient(135deg, #E65C19 0%, #120E15 100%)",
-    overlayTop: "0034 - 0095",
-    suitWatermark: "♣",
+  // 07: MIDNIGHT LENS (Cinematography - Darkroom Sapphire / Electric Cyan Navy)
+  cinematography: {
+    bg: "#040F1F",
+    gradient: "linear-gradient(180deg, #071E3D 0%, #040E1E 45%, #02060F 100%)",
+    border: "rgba(59, 130, 246, 0.45)",
+    glow: "rgba(59, 130, 246, 0.35)",
+    ambient: "#3B82F6",
+    badgeBg: "rgba(59, 130, 246, 0.2)",
   },
-  {
-    id: "gal-08",
-    row: 1,
-    type: "image",
-    title: "AVANT-GARDE COUTURE RUNWAY",
-    tag: "PANACHE SHOWCASE",
-    code: "Q♦",
-    src: "https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=900&q=80",
-    fallbackGradient: "linear-gradient(135deg, #8B1E24 0%, #120E15 100%)",
-    overlayTop: "RUNWAY",
-    suitWatermark: "♥",
-  },
-  // ROW 2
-  {
-    id: "gal-09",
-    row: 2,
-    type: "image",
-    title: "MIDNIGHT LASER & SYNTHESIS LAB",
-    tag: "PRO-SHOW FINALE",
-    code: "A♠",
-    src: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=900&q=80",
-    fallbackGradient: "linear-gradient(135deg, #120E15 0%, #E65C19 100%)",
-    overlayTop: "MADRID // BARCELONA",
-    suitWatermark: "♠",
-  },
-  {
-    id: "gal-10",
-    row: 2,
-    type: "video",
-    title: "GOLDEN EMBER FESTIVAL EUPHORIA",
-    tag: "SAHOTSAVA AFTERMOVIE",
-    code: "4K",
-    src: "https://assets.mixkit.co/videos/preview/mixkit-hands-in-the-air-at-a-music-concert-14052-large.mp4",
-    poster: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=900&q=80",
-    fallbackGradient: "linear-gradient(135deg, #FFAA24 0%, #120E15 100%)",
-    overlayTop: "0316 AVE",
-    suitWatermark: "♦",
-  },
-  {
-    id: "gal-11",
-    row: 2,
-    type: "image",
-    title: "SPOKEN WORD & DIALOGUE ARENA",
-    tag: "LITERARY CONCLAVE",
-    code: "10♦",
-    src: "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=900&q=80",
-    fallbackGradient: "linear-gradient(135deg, #8B1E24 0%, #2B090C 100%)",
-    overlayTop: "SEVILLA",
-    suitWatermark: "♣",
-  },
-  {
-    id: "gal-12",
-    row: 2,
-    type: "image",
-    title: "DECK OF DESTINIES CORONATION",
-    tag: "CLOSING CEREMONY",
-    code: "K♥",
-    src: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=900&q=80",
-    fallbackGradient: "linear-gradient(135deg, #E65C19 0%, #8B1E24 100%)",
-    overlayTop: "DESTINY",
-    suitWatermark: "♥",
-  },
-];
+};
 
-/* ==========================================================================
-   3. SPREAD ROW MEDIA TILE WITH 3D HOVER TILT
-   ========================================================================== */
-interface TileProps {
-  item: GalleryItem;
-  onOpen: (item: GalleryItem) => void;
-}
+const DEFAULT_EXPANDED_THEME: ClubExpandedTheme = {
+  bg: "#090812",
+  gradient: "linear-gradient(180deg, #151322 0%, #090812 50%, #040308 100%)",
+  border: "rgba(255, 255, 255, 0.15)",
+  glow: "rgba(185, 172, 240, 0.25)",
+  ambient: "#B9ACF0",
+  badgeBg: "rgba(255, 255, 255, 0.1)",
+};
 
-function SpreadRowMediaTile({ item, onOpen }: TileProps) {
-  const [imgError, setImgError] = useState(false);
-  const [videoError, setVideoError] = useState(false);
-  const [tilt, setTilt] = useState({ rx: 0, ry: 0 });
-
-  const handlePointerMove = (e: React.PointerEvent<HTMLButtonElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const nx = ((e.clientX - rect.left) / rect.width) * 2 - 1; // -1 to 1
-    const ny = ((e.clientY - rect.top) / rect.height) * 2 - 1;
-    setTilt({ rx: -ny * 8, ry: nx * 8 });
-  };
-
-  const handlePointerLeave = () => {
-    setTilt({ rx: 0, ry: 0 });
-  };
-
-  return (
-    <button
-      type="button"
-      onClick={() => onOpen(item)}
-      onPointerMove={handlePointerMove}
-      onPointerLeave={handlePointerLeave}
-      style={{
-        background: item.fallbackGradient,
-        transform: `perspective(800px) rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg)`,
-        transition: "transform 0.25s cubic-bezier(0.22, 1, 0.36, 1)",
-      }}
-      className="relative w-[210px] h-[160px] sm:w-[280px] sm:h-[210px] lg:w-[335px] lg:h-[245px] shrink-0 rounded-2xl sm:rounded-3xl overflow-hidden border border-[#FFF4E0]/20 hover:border-[#FFAA24] bg-[#0B0B0D] text-left group shadow-[0_14px_34px_rgba(0,0,0,0.65)] cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#FFAA24]"
-    >
-      {/* Media Layer (Video or High-Res Image) */}
-      {item.type === "video" && !videoError ? (
-        <video
-          src={item.src}
-          poster={item.poster}
-          muted
-          loop
-          playsInline
-          autoPlay
-          onError={() => setVideoError(true)}
-          className="absolute inset-0 w-full h-full object-cover opacity-85 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
-        />
-      ) : !imgError ? (
-        <img
-          src={item.type === "video" ? item.poster || item.src : item.src}
-          alt={item.title}
-          loading="lazy"
-          onError={() => setImgError(true)}
-          className="absolute inset-0 w-full h-full object-cover opacity-85 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
-        />
-      ) : (
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="font-serif text-7xl text-[#FFF4E0]/20">{item.suitWatermark}</span>
-        </div>
-      )}
-
-      {/* Atmospheric Ink Gradient Plinth */}
-      <div className="absolute inset-0 bg-gradient-to-t from-[#120E15] via-[#120E15]/30 to-transparent" />
-
-      {/* Top Overlay Badge & Type indicator */}
-      <div className="relative z-10 p-3 sm:p-4 flex items-center justify-between">
-        <span className="font-display text-lg sm:text-xl tracking-wide text-[#FFF4E0] drop-shadow">
-          {item.overlayTop}
-        </span>
-
-        <span
-          className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-tech font-bold uppercase tracking-wider ${
-            item.type === "video"
-              ? "bg-[#E65C19] text-[#FFF4E0]"
-              : "bg-[#120E15]/80 text-[#FFAA24] border border-[#FFAA24]/40"
-          }`}
-        >
-          {item.type === "video" ? (
-            <>
-              <Icon.Play className="w-2.5 h-2.5" />
-              <span>VIDEO</span>
-            </>
-          ) : (
-            <>
-              <Icon.ImageIcon className="w-2.5 h-2.5" />
-              <span>PHOTO</span>
-            </>
-          )}
-        </span>
-      </div>
-
-      {/* Bottom Title & Tag */}
-      <div className="absolute bottom-0 inset-x-0 z-10 p-3 sm:p-4 flex items-end justify-between gap-2">
-        <div className="min-w-0">
-          <p className="font-tech text-[10px] font-bold tracking-widest text-[#FFAA24] uppercase truncate">
-            {item.tag}
-          </p>
-          <h4 className="font-display text-lg sm:text-xl text-[#FFF4E0] leading-tight truncate">
-            {item.title}
-          </h4>
-        </div>
-        <span className="font-mono text-xs font-bold text-[#FFF4E0]/75 shrink-0">
-          {item.code}
-        </span>
-      </div>
-    </button>
-  );
-}
-
-/* ==========================================================================
-   4. MAIN GALLERY SECTION (GSAP SCROLLTRIGGER SPREAD ROWS + ANIMOS TIMELINE)
-   ========================================================================== */
 export default function GallerySection() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const row0Ref = useRef<HTMLDivElement>(null);
-  const row1Ref = useRef<HTMLDivElement>(null);
-  const row2Ref = useRef<HTMLDivElement>(null);
-  const tweensRef = useRef<gsap.core.Tween[]>([]);
+  const [activeClubIndex, setActiveClubIndex] = useState<number | null>(0);
+  const [selectedPhoto, setSelectedPhoto] = useState<{
+    photo: ClubPhoto;
+    club: ClubItem;
+    photoIndex: number;
+  } | null>(null);
 
-  const [selectedMedia, setSelectedMedia] = useState<GalleryItem | null>(null);
-  const [lightboxMuted, setLightboxMuted] = useState<boolean>(false);
+  // Keyboard navigation for modal
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (!selectedPhoto) return;
 
-  // Group items into 3 rows
-  const rows = useMemo(() => {
-    return [
-      GALLERY_ITEMS.filter((i) => i.row === 0),
-      GALLERY_ITEMS.filter((i) => i.row === 1),
-      GALLERY_ITEMS.filter((i) => i.row === 2),
-    ];
-  }, []);
-
-  // Duplicate items 4x per row so -50% translation provides a completely seamless, infinite loop
-  const repeatedRow0 = useMemo(() => [...rows[0], ...rows[0], ...rows[0], ...rows[0]], [rows]);
-  const repeatedRow1 = useMemo(() => [...rows[1], ...rows[1], ...rows[1], ...rows[1]], [rows]);
-  const repeatedRow2 = useMemo(() => [...rows[2], ...rows[2], ...rows[2], ...rows[2]], [rows]);
-
-  // CONTINUOUS AUTONOMOUS GSAP MARQUEE:
-  // Completely independent of page scroll position!
-  // Row 0 & 2 glide Left, Row 1 glides Right with independent speeds
-  useGSAP(
-    () => {
-      // Clean up previous tweens before recreating
-      tweensRef.current.forEach((t) => t.kill());
-      tweensRef.current = [];
-
-      if (!row0Ref.current || !row1Ref.current || !row2Ref.current) return;
-
-      // Set initial starting positions
-      gsap.set(row0Ref.current, { xPercent: 0 });
-      gsap.set(row1Ref.current, { xPercent: -50 });
-      gsap.set(row2Ref.current, { xPercent: 0 });
-
-      // Row 0: Continuous flow Left
-      const t0 = gsap.to(row0Ref.current, {
-        xPercent: -50,
-        duration: 38,
-        ease: "none",
-        repeat: -1,
-      });
-
-      // Row 1: Continuous flow Right (contra-flow)
-      const t1 = gsap.fromTo(
-        row1Ref.current,
-        { xPercent: -50 },
-        { xPercent: 0, duration: 44, ease: "none", repeat: -1 }
-      );
-
-      // Row 2: Continuous flow Left
-      const t2 = gsap.to(row2Ref.current, {
-        xPercent: -50,
-        duration: 32,
-        ease: "none",
-        repeat: -1,
-      });
-
-      tweensRef.current = [t0, t1, t2];
-
-      return () => {
-        t0.kill();
-        t1.kill();
-        t2.kill();
-      };
+      if (e.key === "Escape") {
+        setSelectedPhoto(null);
+      } else if (e.key === "ArrowLeft") {
+        const currentClub = selectedPhoto.club;
+        const prevIdx =
+          (selectedPhoto.photoIndex - 1 + currentClub.images.length) %
+          currentClub.images.length;
+        setSelectedPhoto({
+          photo: currentClub.images[prevIdx],
+          club: currentClub,
+          photoIndex: prevIdx,
+        });
+      } else if (e.key === "ArrowRight") {
+        const currentClub = selectedPhoto.club;
+        const nextIdx = (selectedPhoto.photoIndex + 1) % currentClub.images.length;
+        setSelectedPhoto({
+          photo: currentClub.images[nextIdx],
+          club: currentClub,
+          photoIndex: nextIdx,
+        });
+      }
     },
-    { scope: containerRef }
+    [selectedPhoto]
   );
 
-  // Soft hover velocity dampening so users can comfortably click cards
-  const handleMouseEnter = useCallback(() => {
-    tweensRef.current.forEach((t) => {
-      gsap.to(t, { timeScale: 0.25, duration: 0.4 });
-    });
-  }, []);
-
-  const handleMouseLeave = useCallback(() => {
-    tweensRef.current.forEach((t) => {
-      gsap.to(t, { timeScale: 1.0, duration: 0.4 });
-    });
-  }, []);
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [handleKeyDown]);
 
   return (
     <section
       id="gallery"
-      ref={containerRef}
-      className="relative py-20 sm:py-28 overflow-hidden z-10 bg-[#120E15] border-b border-[#8B1E24]/40"
+      className="relative w-full py-10 sm:py-16 bg-[#000000] border-0 border-none overflow-hidden select-none"
     >
-      {/* 3D Ambient Studio Grid Background */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 pointer-events-none opacity-[0.06]"
-        style={{
-          backgroundImage: `radial-gradient(#FFAA24 1px, transparent 1px)`,
-          backgroundSize: "28px 28px",
-        }}
-      />
+      {/* 100% Full-Width Edge-to-Edge Container (Zero side-box borders or arbitrary squeezes) */}
+      <div className="w-full px-2 sm:px-4 md:px-6">
+        {/* ====================================================================
+            HEADER LOCKUP & PROTOTYPE VIEWPORT SELECTOR
+            ==================================================================== */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6 sm:mb-8 px-1 sm:px-2">
+          <div>
+            <div className="inline-flex items-center gap-2 text-xs font-mono text-[#FFAA24] mb-1.5 uppercase tracking-wider">
+              <Icon.Sparkles className="w-3.5 h-3.5" />
+              <span>THE SEVEN CULTURAL SOCIETIES OF SANSKARAN</span>
+            </div>
 
-      {/* Header Container */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 mb-10 sm:mb-14 relative z-10">
-        <div className="max-w-2xl">
-         
-
-          <h2 className="font-display text-4xl sm:text-6xl lg:text-7xl text-[#FFF4E0] leading-none uppercase tracking-tight">
-            GALLERY{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFAA24] via-[#E65C19] to-[#FFF4E0]">
-              SECTION
-            </span>
-          </h2>
-
-          <p className="mt-3 font-tech text-xs sm:text-sm text-[#FFF4E0]/75 leading-relaxed">
-            Experience the visual realm through 3 continuous spread rows flowing autonomously at independent speeds, completely free of scroll position.
-          </p>
+            <h2 className="font-display text-4xl sm:text-5xl md:text-6xl text-[#EDE8FF] leading-none uppercase tracking-tight">
+              GALLERY{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#DED5FF] via-[#B9ACF0] to-[#FFAA24]">
+                SECTION
+              </span>
+            </h2>
+          </div>
         </div>
-      </div>
+
+        {/* ====================================================================
+            FULL-WIDTH VERTICAL STACK SLITS (Minimal gap, Zero border)
+            ==================================================================== */}
+        <div className="w-full flex flex-col gap-1 sm:gap-1.5">
+          {CLUBS_DATA.map((club, index) => {
+            const isExpanded = activeClubIndex === index;
+            const theme = CLUB_EXPANDED_THEMES[club.id] || DEFAULT_EXPANDED_THEME;
+
+              return (
+                <motion.div
+                  key={club.id}
+                  layout
+                  transition={{
+                    layout: { duration: 0.42, ease: [0.16, 1, 0.3, 1] },
+                  }}
+                  onClick={() => setActiveClubIndex(isExpanded ? null : index)}
+                  className="group relative w-full overflow-hidden rounded-2xl sm:rounded-3xl border-0 border-none cursor-pointer"
+                  style={{
+                    backgroundColor: isExpanded ? theme.bg : "#0D0C15",
+                    border: isExpanded
+                      ? `1.5px solid ${theme.border}`
+                      : "1px solid rgba(255, 255, 255, 0.05)",
+                    boxShadow: isExpanded
+                      ? `0 24px 70px rgba(0,0,0,0.92), 0 0 50px ${theme.glow}`
+                      : "none",
+                    transition:
+                      "background-color 400ms cubic-bezier(0.16, 1, 0.3, 1), border-color 400ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 400ms cubic-bezier(0.16, 1, 0.3, 1)",
+                  }}
+                >
+                  {/* Atmospheric Backdrop Slice (Visible when collapsed) */}
+                  {!isExpanded && (
+                    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                      <img
+                        src={club.coverImage}
+                        alt={club.name}
+                        className="size-full object-cover transition-transform duration-700 opacity-45 group-hover:opacity-65 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/40 to-black/90" />
+                      <div
+                        className="absolute inset-0 opacity-40 mix-blend-screen pointer-events-none"
+                        style={{
+                          background: `radial-gradient(ellipse at 50% 50%, ${club.accentColor} 0%, transparent 75%)`,
+                        }}
+                      />
+                    </div>
+                  )}
+
+                  {/* -------------------------------------------------------------
+                      COLLAPSED SLIT BAR (Matching media_1794858120650_f35d2634.jpg)
+                      ------------------------------------------------------------- */}
+                  {!isExpanded && (
+                    <div className="relative z-10 w-full h-11 sm:h-13 md:h-15 px-3 sm:px-6 flex items-center justify-between select-none overflow-hidden">
+                      {/* Left: Metadata */}
+                      <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+                        <span className="font-mono text-[10px] sm:text-xs font-bold text-[#FFAA24] bg-black/60 px-2 py-0.5 rounded-full">
+                          {club.number}
+                        </span>
+                        <span className="font-tech text-[9px] sm:text-[10px] tracking-widest text-[#B9ACF0]/80 uppercase">
+                          {club.category}
+                        </span>
+                      </div>
+
+                      {/* Center: Expansive Italic Calligraphy Bleeding Across Slit */}
+                      <div className="flex-1 px-2 sm:px-6 text-center overflow-hidden">
+                        <p className="font-slit-editorial text-lg sm:text-2xl md:text-3xl text-[#FFF4E0] tracking-wide whitespace-nowrap drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)] group-hover:scale-[1.01] transition-transform">
+                          {club.name}
+                        </p>
+                      </div>
+
+                      {/* Right: Code / Photo Tag */}
+                      <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+                        <span className="font-mono text-[9px] sm:text-[10px] text-[#FFAA24] bg-black/50 px-2 py-0.5 rounded-full">
+                          {club.images.length} ARCHIVES
+                        </span>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* -------------------------------------------------------------
+                      EXPANDED FULL-WIDTH POSTER + 6-IMAGE GRID (Exact Layout from Screenshot, Centered Text)
+                      ------------------------------------------------------------- */}
+                  <AnimatePresence initial={false}>
+                    {isExpanded && (
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
+                        className="relative z-10 w-full flex flex-col p-5 sm:p-8 md:p-10 overflow-hidden"
+                        style={{
+                          background: theme.gradient,
+                        }}
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        {/* Ambient Backlight Glow matching club accent color */}
+                        <div
+                          aria-hidden="true"
+                          className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 w-[650px] h-[320px] rounded-full blur-[110px] opacity-40 transition-colors duration-500"
+                          style={{
+                            backgroundColor: theme.ambient,
+                          }}
+                        />
+
+                        {/* Close Button */}
+                        <button
+                          type="button"
+                          onClick={() => setActiveClubIndex(null)}
+                          className="absolute top-4 right-4 sm:top-6 sm:right-6 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors cursor-pointer z-20"
+                          aria-label="Close slit"
+                        >
+                          <Icon.X className="w-4 h-4" />
+                        </button>
+
+                        {/* =========================================================
+                            EXACT HEADER LOCKUP (CENTERED TEXT AS REQUESTED)
+                            ========================================================= */}
+                        <div className="w-full flex flex-col items-center justify-center text-center">
+                          {/* Top Meta Line: 02 // MUSIC SOCIETY  •  6 ARCHIVES */}
+                          <div className="flex items-center justify-center gap-2.5 sm:gap-3 text-xs sm:text-sm font-mono tracking-wider mb-2 text-[#B9ACF0]">
+                            <span className="text-[#FFAA24] font-bold">
+                              {club.number}
+                            </span>
+                            <span className="font-tech text-[11px] sm:text-xs font-bold tracking-widest uppercase">
+                              {club.category}
+                            </span>
+                            <span className="text-white/30">•</span>
+                            <span className="text-[#FFAA24] font-mono font-bold">
+                              {club.images.length} ARCHIVES
+                            </span>
+                          </div>
+
+                          {/* Giant Club Title (Centered) */}
+                          <h3
+                            className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tight leading-none uppercase drop-shadow-[0_4px_24px_rgba(0,0,0,0.9)]"
+                            style={{ color: club.accentColor }}
+                          >
+                            {club.name}
+                          </h3>
+
+                          {/* Editorial Motto / Subtitle (Centered) */}
+                          <p className="mt-2.5 font-serif italic text-base sm:text-lg md:text-xl text-[#FFF4E0]/90 max-w-2xl mx-auto">
+                            &ldquo;{club.motto}&rdquo;
+                          </p>
+                        </div>
+
+                        {/* Thin Divider Line Across Full Width */}
+                        <div className="w-full border-t border-white/10 my-6 sm:my-8" />
+
+                        {/* =========================================================
+                            EXACT 3-COLUMN x 2-ROW GRID (6 Photo Cards)
+                            ========================================================= */}
+                        <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
+                          {club.images.map((photo, photoIdx) => (
+                            <motion.button
+                              key={photo.id}
+                              type="button"
+                              onClick={() =>
+                                setSelectedPhoto({
+                                  photo,
+                                  club,
+                                  photoIndex: photoIdx,
+                                })
+                              }
+                              whileHover={{ scale: 1.02 }}
+                              whileTap={{ scale: 0.98 }}
+                              transition={{ duration: 0.2 }}
+                              className="group/img relative aspect-[16/10] rounded-2xl overflow-hidden border-0 border-none bg-[#111019] text-center cursor-pointer shadow-[0_8px_24px_rgba(0,0,0,0.7)] focus:outline-none"
+                            >
+                              {/* Photo Image */}
+                              <img
+                                src={photo.src}
+                                alt={photo.title}
+                                loading="lazy"
+                                className="size-full object-cover transition-transform duration-500 group-hover/img:scale-106"
+                              />
+
+                              {/* Dark Vignette Bottom Gradient */}
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/35 to-transparent opacity-90 group-hover/img:opacity-95 transition-opacity" />
+
+                              {/* Top-Right Badge: # 01, # 02, etc. */}
+                              <div className="absolute top-3.5 right-3.5 z-10">
+                                <span className="font-mono text-[11px] sm:text-xs font-bold text-white bg-black/80 px-2.5 py-1 rounded-md shadow-md border border-white/10">
+                                  {photo.code}
+                                </span>
+                              </div>
+
+                              {/* Bottom Centered Meta & Title */}
+                              <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5 z-10 flex flex-col items-center justify-center text-center">
+                                <p className="font-tech text-[10px] sm:text-[11px] font-bold tracking-wider text-[#B9ACF0] uppercase truncate drop-shadow-sm max-w-full">
+                                  {photo.tag}
+                                </p>
+                                <h4 className="font-display text-sm sm:text-base md:text-lg text-[#FFF4E0] font-bold leading-tight uppercase mt-1 tracking-wide truncate drop-shadow-md max-w-full">
+                                  {photo.title}
+                                </h4>
+                              </div>
+
+                              {/* Hover Inspect Icon */}
+                              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity bg-black/40">
+                                <Icon.Maximize2 className="w-6 h-6 text-[#FFAA24] drop-shadow-md" />
+                              </div>
+                            </motion.button>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
 
       {/* ====================================================================
-          FULL-WIDTH EDGE-TO-EDGE SPREAD ROWS (100% SCREEN VIEWPORT)
-          ==================================================================== */}
-      <div
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        className="relative w-full overflow-hidden"
-      >
-        {/* Subtle Edge Vignettes to elegantly blend cards into screen edges */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-y-0 left-0 w-16 sm:w-28 bg-gradient-to-r from-[#120E15] to-transparent z-20"
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-y-0 right-0 w-16 sm:w-28 bg-gradient-to-l from-[#120E15] to-transparent z-20"
-        />
-
-        <div className="space-y-4 sm:space-y-6 overflow-hidden py-3">
-          {/* ROW 0: Continuous Flow Left */}
-          {rows[0].length > 0 && (
-            <div className="w-full overflow-hidden">
-              <div
-                ref={row0Ref}
-                className="flex items-center gap-3.5 sm:gap-5 px-4 w-max will-change-transform"
-              >
-                {repeatedRow0.map((item, idx) => (
-                  <SpreadRowMediaTile
-                    key={`r0-${item.id}-${idx}`}
-                    item={item}
-                    onOpen={setSelectedMedia}
-                  />
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* ROW 1: Continuous Flow Right (Contra-Flow) */}
-          {rows[1].length > 0 && (
-            <div className="w-full overflow-hidden">
-              <div
-                ref={row1Ref}
-                className="flex items-center gap-3.5 sm:gap-5 px-4 w-max will-change-transform"
-              >
-                {repeatedRow1.map((item, idx) => (
-                  <SpreadRowMediaTile
-                    key={`r1-${item.id}-${idx}`}
-                    item={item}
-                    onOpen={setSelectedMedia}
-                  />
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* ROW 2: Continuous Flow Left */}
-          {rows[2].length > 0 && (
-            <div className="w-full overflow-hidden">
-              <div
-                ref={row2Ref}
-                className="flex items-center gap-3.5 sm:gap-5 px-4 w-max will-change-transform"
-              >
-                {repeatedRow2.map((item, idx) => (
-                  <SpreadRowMediaTile
-                    key={`r2-${item.id}-${idx}`}
-                    item={item}
-                    onOpen={setSelectedMedia}
-                  />
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* ====================================================================
-          HD LIGHTBOX MODAL WITH FULL VIDEO / PHOTO INSPECTOR
+          HD LIGHTBOX MODAL WITH FULL PHOTOGRAPH INSPECTOR
           ==================================================================== */}
       <AnimatePresence>
-        {selectedMedia && (
+        {selectedPhoto && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={() => setSelectedMedia(null)}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-[#120E15]/90 backdrop-blur-lg"
+            onClick={() => setSelectedPhoto(null)}
+            className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/95 backdrop-blur-xl"
           >
             <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
+              initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.92, opacity: 0 }}
-              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              transition={{ duration: 0.25, ease: [0.23, 1, 0.32, 1] }}
               onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-4xl rounded-3xl overflow-hidden bg-[#18121D] border-2 border-[#FFAA24] shadow-[0_24px_80px_rgba(0,0,0,0.85)]"
+              className="relative w-full max-w-4xl rounded-2xl sm:rounded-3xl overflow-hidden bg-[#0A0914] border-0 border-none shadow-[0_24px_80px_rgba(0,0,0,0.95)] flex flex-col"
             >
-              {/* Lightbox Header */}
-              <div className="flex items-center justify-between px-4 sm:px-6 py-3.5 bg-[#120E15] border-b border-[#FFF4E0]/10">
-                <div>
-                  <span className="font-tech text-[10px] font-bold tracking-widest text-[#FFAA24] uppercase">
-                    {selectedMedia.tag} // SLOT {selectedMedia.code}
+              {/* Modal Header */}
+              <div className="flex items-center justify-between px-4 sm:px-6 py-3.5 bg-[#05040A]">
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <span className="text-[#FFAA24]">
+                    <Icon.Sparkles className="w-5 h-5" />
                   </span>
-                  <h3 className="font-display text-2xl sm:text-3xl text-[#FFF4E0] leading-none">
-                    {selectedMedia.title}
-                  </h3>
+                  <div>
+                    <span className="font-tech text-[10px] font-bold tracking-widest text-[#B9ACF0] uppercase">
+                      {selectedPhoto.club.category} // {selectedPhoto.photo.code}
+                    </span>
+                    <h3 className="font-display text-lg sm:text-2xl text-[#FFF4E0] leading-none">
+                      {selectedPhoto.photo.title}
+                    </h3>
+                  </div>
                 </div>
 
                 <div className="flex items-center gap-2">
-                  {selectedMedia.type === "video" && (
-                    <button
-                      type="button"
-                      onClick={() => setLightboxMuted((m) => !m)}
-                      aria-label={lightboxMuted ? "Unmute video" : "Mute video"}
-                      className="w-10 h-10 rounded-xl bg-[#18121D] border border-[#FFF4E0]/20 text-[#FFF4E0] flex items-center justify-center hover:border-[#FFAA24] cursor-pointer"
-                    >
-                      {lightboxMuted ? (
-                        <Icon.VolumeX className="w-4 h-4 text-[#E65C19]" />
-                      ) : (
-                        <Icon.Volume2 className="w-4 h-4 text-[#FFAA24]" />
-                      )}
-                    </button>
-                  )}
+                  <span className="font-mono text-xs text-white/60 bg-black/60 px-2.5 py-1 rounded-md hidden sm:inline-block">
+                    IMAGE {selectedPhoto.photoIndex + 1} OF{" "}
+                    {selectedPhoto.club.images.length}
+                  </span>
+
                   <button
                     type="button"
-                    onClick={() => setSelectedMedia(null)}
-                    aria-label="Close lightbox"
-                    className="w-10 h-10 rounded-xl bg-[#8B1E24] hover:bg-[#E65C19] text-[#FFF4E0] flex items-center justify-center transition-colors cursor-pointer"
+                    onClick={() => setSelectedPhoto(null)}
+                    aria-label="Close modal"
+                    className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/10 hover:bg-white/20 text-[#EDE8FF] flex items-center justify-center transition-colors cursor-pointer"
                   >
-                    <Icon.X className="w-5 h-5" />
+                    <Icon.X className="w-4 h-4" />
                   </button>
                 </div>
               </div>
 
-              {/* Lightbox Media Canvas */}
-              <div
-                style={{ background: selectedMedia.fallbackGradient }}
-                className="relative aspect-video w-full bg-[#0B0B0D] flex items-center justify-center"
-              >
-                {selectedMedia.type === "video" ? (
-                  <video
-                    src={selectedMedia.src}
-                    poster={selectedMedia.poster}
-                    controls
-                    autoPlay
-                    loop
-                    muted={lightboxMuted}
-                    playsInline
-                    className="w-full h-full object-contain"
-                  />
-                ) : (
-                  <img
-                    src={selectedMedia.src}
-                    alt={selectedMedia.title}
-                    className="w-full h-full object-contain"
-                  />
-                )}
+              {/* Main Photo Canvas */}
+              <div className="relative aspect-[16/10] sm:aspect-video w-full bg-[#050508] flex items-center justify-center overflow-hidden">
+                <img
+                  src={selectedPhoto.photo.src}
+                  alt={selectedPhoto.photo.title}
+                  className="w-full h-full object-contain select-none"
+                />
+
+                {/* Left Navigation Arrow */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    const currentClub = selectedPhoto.club;
+                    const prevIdx =
+                      (selectedPhoto.photoIndex - 1 + currentClub.images.length) %
+                      currentClub.images.length;
+                    setSelectedPhoto({
+                      photo: currentClub.images[prevIdx],
+                      club: currentClub,
+                      photoIndex: prevIdx,
+                    });
+                  }}
+                  aria-label="Previous photograph"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/75 hover:bg-[#FFAA24] text-white hover:text-black flex items-center justify-center transition-all cursor-pointer shadow-xl backdrop-blur-sm"
+                >
+                  <Icon.ChevronLeft className="w-5 h-5" />
+                </button>
+
+                {/* Right Navigation Arrow */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    const currentClub = selectedPhoto.club;
+                    const nextIdx =
+                      (selectedPhoto.photoIndex + 1) % currentClub.images.length;
+                    setSelectedPhoto({
+                      photo: currentClub.images[nextIdx],
+                      club: currentClub,
+                      photoIndex: nextIdx,
+                    });
+                  }}
+                  aria-label="Next photograph"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/75 hover:bg-[#FFAA24] text-white hover:text-black flex items-center justify-center transition-all cursor-pointer shadow-xl backdrop-blur-sm"
+                >
+                  <Icon.ChevronRight className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Modal Footer Narrative */}
+              <div className="p-4 sm:p-5 bg-[#06050C] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div className="max-w-xl">
+                  <p className="font-tech text-xs text-[#B9ACF0] uppercase font-bold tracking-wider">
+                    {selectedPhoto.photo.tag}
+                  </p>
+                  <p className="mt-0.5 text-xs sm:text-sm text-[#EDE8FF]/80 leading-relaxed font-tech">
+                    {selectedPhoto.photo.description}
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2 shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const currentClub = selectedPhoto.club;
+                      const prevIdx =
+                        (selectedPhoto.photoIndex - 1 + currentClub.images.length) %
+                        currentClub.images.length;
+                      setSelectedPhoto({
+                        photo: currentClub.images[prevIdx],
+                        club: currentClub,
+                        photoIndex: prevIdx,
+                      });
+                    }}
+                    className="px-3 py-1.5 rounded-lg bg-[#141220] hover:bg-[#FFAA24] hover:text-black text-white font-mono text-xs transition-colors cursor-pointer"
+                  >
+                    ← PREV
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const currentClub = selectedPhoto.club;
+                      const nextIdx =
+                        (selectedPhoto.photoIndex + 1) % currentClub.images.length;
+                      setSelectedPhoto({
+                        photo: currentClub.images[nextIdx],
+                        club: currentClub,
+                        photoIndex: nextIdx,
+                      });
+                    }}
+                    className="px-3 py-1.5 rounded-lg bg-[#141220] hover:bg-[#FFAA24] hover:text-black text-white font-mono text-xs transition-colors cursor-pointer"
+                  >
+                    NEXT →
+                  </button>
+                </div>
               </div>
             </motion.div>
           </motion.div>

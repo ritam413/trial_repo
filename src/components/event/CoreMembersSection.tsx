@@ -58,8 +58,6 @@ export interface CoreMember {
   role: string;
   vertical: string;
   designVariant: DesignVariant;
-  rank: string;
-  suit: string;
   archetype: string;
   quote: string;
   year: string;
@@ -72,10 +70,8 @@ export const CORE_MEMBERS: CoreMember[] = [
     role: "FESTIVAL SECRETARY",
     vertical: "EXECUTIVE COUNCIL",
     designVariant: "crimson-vanguard",
-    rank: "10",
-    suit: "♦",
     archetype: "THE CRIMSON VANGUARD",
-    quote: "Every card in our deck represents an unfiltered student voice ready to ignite the campus.",
+    quote: "Every initiative we spearhead represents an unfiltered student voice ready to ignite the campus.",
     year: "FINAL YEAR // B.TECH",
   },
   {
@@ -84,10 +80,8 @@ export const CORE_MEMBERS: CoreMember[] = [
     role: "HEAD OF CURATION",
     vertical: "SANSKARAN CONCLAVE",
     designVariant: "checkered-sovereign",
-    rank: "Q",
-    suit: "♦",
     archetype: "SOVEREIGN OF CULTURE",
-    quote: "Heritage is not static—it is a living checkered court of ideas, art, and dialogue.",
+    quote: "Heritage is not static—it is a living court of ideas, art, and intellectual dialogue.",
     year: "THIRD YEAR // DESIGN",
   },
   {
@@ -96,8 +90,6 @@ export const CORE_MEMBERS: CoreMember[] = [
     role: "TECHNICAL & 3D LEAD",
     vertical: "DIGITAL ARCHITECTURE",
     designVariant: "cyber-horizon",
-    rank: "A",
-    suit: "♠",
     archetype: "ARCHITECT OF THE HORIZON",
     quote: "Where Swiss typographic discipline collides with obsidian-and-amber spectacle.",
     year: "FINAL YEAR // CSE",
@@ -108,10 +100,8 @@ export const CORE_MEMBERS: CoreMember[] = [
     role: "CREATIVE DIRECTOR",
     vertical: "SCENOGRAPHY & PRINT",
     designVariant: "crimson-vanguard",
-    rank: "10",
-    suit: "♦",
     archetype: "KEEPER OF THE EMBERS",
-    quote: "We transform open-air plazas into a surreal corridor of monumental cards and light.",
+    quote: "We transform open-air plazas into a surreal corridor of monumental installations and light.",
     year: "THIRD YEAR // ARCH",
   },
   {
@@ -120,8 +110,6 @@ export const CORE_MEMBERS: CoreMember[] = [
     role: "EVENTS & PRODUCTION",
     vertical: "SAHOTSAVA ARENA",
     designVariant: "checkered-sovereign",
-    rank: "Q",
-    suit: "♦",
     archetype: "MASTER OF CEREMONIES",
     quote: "Forty-five events, seventy-two hours, one shared heartbeat across the entire university.",
     year: "FINAL YEAR // MECH",
@@ -132,8 +120,6 @@ export const CORE_MEMBERS: CoreMember[] = [
     role: "ALLIANCES & OUTREACH",
     vertical: "EXTERNAL RELATIONS",
     designVariant: "cyber-horizon",
-    rank: "A",
-    suit: "♠",
     archetype: "CATALYST OF SYNERGY",
     quote: "Connecting student visionaries with artists, thinkers, and patrons across the country.",
     year: "THIRD YEAR // MGMT",
@@ -339,18 +325,18 @@ function CoreMemberCard({ member, index }: CardProps) {
             toggleFlip();
           }
         }}
-        aria-label={`${member.name} — ${member.role}. Rank ${member.rank}${member.suit}. Tap or press Enter to flip card.`}
+        aria-label={`${member.name} — ${member.role}. Tap or press Enter to flip profile.`}
         style={{
           transform: `rotateX(${tilt.rx}deg) rotateY(${tilt.ry + (flipped ? 180 : 0)}deg)`,
           transition: "transform 0.65s cubic-bezier(0.22, 1, 0.36, 1)",
         }}
-        className="relative w-full aspect-[3/4.35] rounded-[24px] [transform-style:preserve-3d] cursor-pointer shadow-[0_22px_50px_rgba(0,0,0,0.72)] group select-none focus:outline-none focus:ring-2 focus:ring-[#FFAA24]"
+        className="relative w-full aspect-[3/4.35] rounded-[24px] [transform-style:preserve-3d] cursor-pointer shadow-[0_22px_50px_rgba(0,0,0,0.85)] group select-none focus:outline-none focus:ring-2 focus:ring-[#B9ACF0]"
       >
         {/* Dynamic Specular Sheen Glare following Mouse */}
         <div
           aria-hidden="true"
           style={{
-            background: `radial-gradient(circle at ${tilt.px}% ${tilt.py}%, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0) 65%)`,
+            background: `radial-gradient(circle at ${tilt.px}% ${tilt.py}%, rgba(222,213,255,0.25) 0%, rgba(222,213,255,0) 65%)`,
           }}
           className="absolute inset-0 z-30 pointer-events-none rounded-[24px] transition-opacity duration-300 opacity-0 group-hover:opacity-100"
         />
@@ -358,122 +344,81 @@ function CoreMemberCard({ member, index }: CardProps) {
         {/* ==============================================================
             FRONT FACE (IVORY FINE-CARDSTOCK WITH REFERENCE ARTWORK)
             ============================================================== */}
-        <div className="absolute inset-0 [backface-visibility:hidden] rounded-[24px] overflow-hidden border-[3px] border-[#FFF4E0] group-hover:border-[#FFAA24] transition-colors bg-[#FFF4E0]">
+        <div className="absolute inset-0 [backface-visibility:hidden] rounded-[24px] overflow-hidden border-[3px] border-[#EDE8FF] group-hover:border-[#B9ACF0] transition-colors bg-[#FFF4E0]">
           {/* Reference Card Artwork SVG */}
           <div className="absolute inset-0">
             <ReferenceCardArtwork variant={member.designVariant} />
           </div>
 
-          {/* Internal Thin Playing Card Inset Border */}
-          <div className="absolute inset-2.5 rounded-[16px] border border-[#8B1E24]/45 pointer-events-none" />
-
-          {/* Top-Left Rank & Suit Index Pip */}
-          <div className="absolute top-4 left-4 z-10 flex flex-col items-center leading-none">
-            <span
-              className={`font-display text-3xl sm:text-4xl font-bold ${
-                member.suit === "♦" ? "text-[#8B1E24]" : "text-[#120E15]"
-              }`}
-            >
-              {member.rank}
-            </span>
-            <span
-              className={`text-xl sm:text-2xl ${
-                member.suit === "♦" ? "text-[#8B1E24]" : "text-[#120E15]"
-              }`}
-            >
-              {member.suit}
+          {/* Top-Left Profile Index */}
+          <div className="absolute top-4 left-4 z-10 flex flex-col items-start leading-none">
+            <span className="font-mono text-xs font-bold text-[#FFAA24] bg-black/80 px-2 py-0.5 rounded border border-[#FFAA24]/30 shadow-sm">
+              #{index + 1 < 10 ? `0${index + 1}` : index + 1}
             </span>
           </div>
 
           {/* Top-Right Flip Button Indicator */}
-          <div className="absolute top-4 right-4 z-10 inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#120E15]/85 text-[#FFAA24] font-tech text-[10px] font-bold tracking-wider uppercase border border-[#FFAA24]/30 shadow-md">
-            <Icon.RotateCw className="w-3 h-3 text-[#FFAA24] group-hover:rotate-180 transition-transform duration-500" />
+          <div className="absolute top-4 right-4 z-10 inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#07060D]/85 text-[#DED5FF] font-tech text-[10px] font-bold tracking-wider uppercase border border-[#B9ACF0]/40 shadow-md">
+            <Icon.RotateCw className="w-3 h-3 text-[#B9ACF0] group-hover:rotate-180 transition-transform duration-500" />
             <span>FLIP</span>
           </div>
 
-          {/* Bottom-Right Inverted Rank & Suit Index Pip */}
-          <div className="absolute bottom-24 right-4 z-10 flex flex-col items-center leading-none rotate-180 pointer-events-none">
-            <span
-              className={`font-display text-3xl font-bold ${
-                isCyber
-                  ? "text-[#FFAA24]"
-                  : member.suit === "♦"
-                  ? "text-[#8B1E24]"
-                  : "text-[#120E15]"
-              }`}
-            >
-              {member.rank}
-            </span>
-            <span
-              className={`text-xl ${
-                isCyber
-                  ? "text-[#FFAA24]"
-                  : member.suit === "♦"
-                  ? "text-[#8B1E24]"
-                  : "text-[#120E15]"
-              }`}
-            >
-              {member.suit}
-            </span>
-          </div>
-
           {/* Bottom Information Plinth with Ink Black Gradient */}
-          <div className="absolute inset-x-0 bottom-0 z-10 p-4 bg-gradient-to-t from-[#120E15] via-[#120E15]/95 to-transparent text-[#FFF4E0]">
-            <p className="font-tech text-[10px] font-bold tracking-[0.18em] text-[#FFAA24] uppercase">
+          <div className="absolute inset-x-0 bottom-0 z-10 p-4 bg-gradient-to-t from-[#07060D] via-[#07060D]/95 to-transparent text-[#EDE8FF]">
+            <p className="font-tech text-[10px] font-bold tracking-[0.18em] text-[#B9ACF0] uppercase">
               {member.role}
             </p>
-            <h3 className="font-display text-2xl sm:text-3xl tracking-wide text-[#FFF4E0] leading-tight">
+            <h3 className="font-display text-2xl sm:text-3xl tracking-wide text-[#EDE8FF] leading-tight">
               {member.name}
             </h3>
           </div>
         </div>
 
         {/* ==============================================================
-            BACK FACE (DEEP OBSIDIAN & CRIMSON WITH ARCHETYPE & QUOTE)
+            BACK FACE (DEEP OBSIDIAN & TWILIGHT WITH ARCHETYPE & QUOTE)
             ============================================================== */}
-        <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-[24px] overflow-hidden border-[3px] border-[#FFAA24] bg-gradient-to-br from-[#1C1622] via-[#151019] to-[#120E15] text-[#FFF4E0] p-6 flex flex-col justify-between shadow-[inset_0_0_40px_rgba(255,170,36,0.15)]">
-          {/* Subtle Watermark Suit */}
+        <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-[24px] overflow-hidden border-[3px] border-[#B9ACF0] bg-gradient-to-br from-[#0D0C18] via-[#131224] to-[#07060D] text-[#EDE8FF] p-6 flex flex-col justify-between shadow-[inset_0_0_40px_rgba(185,172,240,0.15)]">
+          {/* Subtle Watermark Index */}
           <span
             aria-hidden="true"
-            className="absolute -right-4 -bottom-6 font-serif text-[10.5rem] leading-none text-[#FFAA24]/[0.08] select-none pointer-events-none"
+            className="absolute -right-4 -bottom-6 font-display text-[9rem] font-black leading-none text-[#B9ACF0]/[0.05] select-none pointer-events-none"
           >
-            {member.suit}
+            0{index + 1}
           </span>
 
           <div className="relative z-10">
-            {/* Header: Vertical badge and Card identifier */}
-            <div className="flex items-center justify-between border-b border-[#8B1E24] pb-3">
+            {/* Header: Vertical badge and Curator Index */}
+            <div className="flex items-center justify-between border-b border-white/10 pb-3">
               <span className="font-tech text-[10px] font-bold tracking-widest text-[#FFAA24] uppercase">
                 {member.vertical}
               </span>
-              <span className="font-display text-2xl text-[#FFAA24]">
-                {member.rank}
-                {member.suit}
+              <span className="font-mono text-xs font-bold text-[#FFAA24]">
+                #{index + 1 < 10 ? `0${index + 1}` : index + 1}
               </span>
             </div>
 
             {/* Archetype & Full Identity Details */}
-            <p className="mt-4 font-tech text-xs font-bold tracking-widest text-[#E65C19] uppercase">
+            <p className="mt-4 font-tech text-xs font-bold tracking-widest text-[#B9ACF0] uppercase">
               {member.archetype}
             </p>
-            <h3 className="mt-1 font-display text-3xl sm:text-4xl text-[#FFF4E0] leading-none">
+            <h3 className="mt-1 font-display text-3xl sm:text-4xl text-[#EDE8FF] leading-none">
               {member.name}
             </h3>
-            <p className="mt-1 font-tech text-xs text-[#FFF4E0]/65">
+            <p className="mt-1 font-tech text-xs text-[#EDE8FF]/65">
               {member.role} • {member.year}
             </p>
 
             {/* Student Vision Statement / Quote */}
-            <blockquote className="mt-5 font-serif italic text-lg sm:text-xl leading-relaxed text-[#FFF4E0]/90 border-l-2 border-[#FFAA24] pl-3.5">
+            <blockquote className="mt-5 font-serif italic text-lg sm:text-xl leading-relaxed text-[#EDE8FF]/90 border-l-2 border-[#B9ACF0] pl-3.5">
               &ldquo;{member.quote}&rdquo;
             </blockquote>
           </div>
 
           {/* Footer Callout */}
-          <div className="relative z-10 pt-3 border-t border-[#FFF4E0]/10 flex items-center justify-between text-[11px] font-tech text-[#FFAA24]">
+          <div className="relative z-10 pt-3 border-t border-[#EDE8FF]/10 flex items-center justify-between text-[11px] font-tech text-[#B9ACF0]">
             <span className="tracking-wider">SANSKARAN &amp; SAHOTSAVA</span>
-            <span className="inline-flex items-center gap-1 uppercase font-bold text-[#FFF4E0] hover:text-[#FFAA24] transition-colors">
-              <Icon.RotateCw className="w-3 h-3 text-[#FFAA24]" /> Tap to return
+            <span className="inline-flex items-center gap-1 uppercase font-bold text-[#EDE8FF] hover:text-[#DED5FF] transition-colors">
+              <Icon.RotateCw className="w-3 h-3 text-[#B9ACF0]" /> Tap to return
             </span>
           </div>
         </div>
@@ -605,14 +550,14 @@ export default function CoreMembersSection() {
     <section
       id="core-members"
       ref={containerRef}
-      className="relative py-20 sm:py-28 overflow-hidden z-10 bg-[#120E15] border-b border-[#8B1E24]/40"
+      className="relative py-20 sm:py-28 overflow-hidden z-10 bg-[#000000] border-b border-[#B9ACF0]/20"
     >
-      {/* 3D Ambient Studio Grid Background (Same as Gallery Section) */}
+      {/* 3D Ambient Studio Grid Background */}
       <div
         aria-hidden="true"
         className="absolute inset-0 pointer-events-none opacity-[0.06]"
         style={{
-          backgroundImage: `radial-gradient(#FFAA24 1px, transparent 1px)`,
+          backgroundImage: `radial-gradient(#B9ACF0 1px, transparent 1px)`,
           backgroundSize: "28px 28px",
         }}
       />
@@ -620,7 +565,7 @@ export default function CoreMembersSection() {
       {/* Background Ambient Glow Plinth */}
       <div
         aria-hidden="true"
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[450px] bg-gradient-to-r from-[#8B1E24]/15 via-[#FFAA24]/10 to-transparent blur-[120px] pointer-events-none"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[450px] bg-gradient-to-r from-[#3A3F8E]/25 via-[#62649A]/15 to-transparent blur-[120px] pointer-events-none"
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-8 relative z-10">
@@ -628,12 +573,12 @@ export default function CoreMembersSection() {
       {/* Section Header with Swiss Architectural Typography */}
       <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12 sm:mb-16">
         <div className="max-w-2xl">
-          <h2 className="core-anim-header font-display text-4xl sm:text-6xl lg:text-7xl text-[#FFF4E0] leading-none uppercase tracking-tight">
-            NEW CORE <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFAA24] via-[#E65C19] to-[#FFF4E0]">MEMBERS</span>
+          <h2 className="core-anim-header font-display text-4xl sm:text-6xl lg:text-7xl text-[#EDE8FF] leading-none uppercase tracking-tight">
+            NEW CORE <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#DED5FF] via-[#B9ACF0] to-[#62649A]">MEMBERS</span>
           </h2>
 
-          <p className="core-anim-header mt-3 font-tech text-xs sm:text-sm text-[#FFF4E0]/75 leading-relaxed">
-            Six student stewards holding the face cards of this year&rsquo;s edition. Dealt in from the sides with GSAP physics—tap any card to flip and inspect their vision.
+          <p className="core-anim-header mt-3 font-tech text-xs sm:text-sm text-[#EDE8FF]/75 leading-relaxed">
+            Six student stewards curating this year&rsquo;s edition. Dealt in from the sides with GSAP physics—tap any profile to flip and discover their editorial vision.
           </p>
         </div>
       </div>

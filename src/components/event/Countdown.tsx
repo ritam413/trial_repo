@@ -18,7 +18,7 @@ export default function Countdown() {
   });
 
   useEffect(() => {
-    // Target event date: Deck of Cards 2026 Showcase
+    // Target event date: Sanskaran & Sahotsava 2026 Showcase
     const targetDate = new Date("2026-10-24T00:00:00Z").getTime();
 
     const interval = setInterval(() => {

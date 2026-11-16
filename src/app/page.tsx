@@ -3,7 +3,7 @@
 import React from "react";
 import Navbar, { gsapScrollTo, SMOOTH_SCROLL_CONFIG } from "@/components/event/Navbar";
 import ParallaxBackground from "@/components/event/ParallaxBackground";
-import HeroSection from "@/components/event/HeroSection";
+import ShowcaseHeroSection from "@/components/event/ShowcaseHeroSection";
 import AboutFestivalSection from "@/components/event/AboutFestivalSection";
 import GallerySection from "@/components/event/GallerySection";
 import CoreMembersSection from "@/components/event/CoreMembersSection";
@@ -17,18 +17,20 @@ export default function Home() {
   };
 
   return (
-    <main className="relative min-h-screen bg-[#120E15] text-[#FFF4E0] selection:bg-[#FFAA24] selection:text-[#120E15] overflow-x-hidden">
-      {/* 1. Top Navbar with Real-Time Glowing Scroll Progress Bar */}
+    <main className="relative min-h-screen bg-[#000000] text-[#EDE8FF] selection:bg-[#B9ACF0] selection:text-[#07060D] overflow-x-hidden">
+      {/* 1. Top Navbar with Real-Time Glowing Scroll Progress Bar (Reveals smoothly on scroll) */}
       <Navbar />
 
-      {/* 2. Global Multi-Layer Parallax Background with Dynamic Orbs & Floating Embers */}
+      {/* 2. Global Multi-Layer Parallax Background */}
       <ParallaxBackground />
 
-      {/* 3. Monolith Corridor & 3D Shuffle Hero Section with Cascading Card Scroll */}
-      <HeroSection onExploreGallery={handleExploreFestival} />
+      {/* 3. Hero Section (Locked Stage Video & Hollow Outline Typography) */}
+      <div id="hero" className="sticky top-0 z-0 h-screen w-full overflow-hidden select-none">
+        <ShowcaseHeroSection onExplore={handleExploreFestival} />
+      </div>
 
-      {/* 4. Interactive Festival & Card Experience Sections */}
-      <div id="festival-content" className="relative z-10">
+      {/* 4. Interactive Festival Experience Sections (Card Up Sliding Sheet) */}
+      <div id="festival-content" className="relative z-20 w-full">
         <AboutFestivalSection />
         <GallerySection />
         <CoreMembersSection />

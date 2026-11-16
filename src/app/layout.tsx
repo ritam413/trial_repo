@@ -22,14 +22,14 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "DECK OF DESTINIES // Sanskaran & Sahotsava",
+  title: "Sanskaran & Sahotsava 2026",
   description:
-    "Every card represents a different destiny, talent, culture and identity. Together, they create an unpredictable world of experiences.",
+    "Official portal for Sanskaran & Sahotsava 2026 — the annual cultural and music conclave where intellectual heritage meets stadium euphoria.",
   openGraph: {
-    title: "DECK OF DESTINIES // Sanskaran & Sahotsava",
+    title: "Sanskaran & Sahotsava 2026",
     description:
-      "Interactive 3D Monolith Corridor and Riffle Deck Experience for Sanskaran & Sahotsava.",
-    siteName: "Deck of Destinies",
+      "Official portal for Sanskaran & Sahotsava 2026 — the annual cultural and music conclave where intellectual heritage meets stadium euphoria.",
+    siteName: "Sanskaran & Sahotsava 2026",
     type: "website",
   },
 };
@@ -44,7 +44,7 @@ export default function RootLayout({
       lang="en"
       className={`${bebasNeue.variable} ${cormorant.variable} ${spaceGrotesk.variable} h-full antialiased dark`}
     >
-      <body className="min-h-full flex flex-col bg-[#120E15] text-[#FFF4E0] selection:bg-[#FFAA24] selection:text-[#120E15]">
+      <body className="min-h-full flex flex-col bg-[#000000] text-[#EDE8FF] selection:bg-[#B9ACF0] selection:text-[#07060D]">
         {children}
       </body>
     </html>

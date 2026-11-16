@@ -1,9 +1,125 @@
 # Features Implemented
 
 ## Current Status Overview
-All foundational libraries, 3D WebGL scenes, UI components, O(1) discovery engines, and the full interactive **3D Shuffle to Monolith Corridor HeroSection with Entrance Deal and Warp Surge** have been built and verified.
+All foundational libraries, responsive layout engines, and the streamlined **DevFest Showcase HeroSection** with locked widescreen video and hollow outline typography have been cleaned up and verified. All obsolete prototypes, prototype view switchers (Grid vs Stack, Skiper 53 vs Skiper 52), and the legacy "Deck of Destinies" playing card metaphor (suits `♠`, `♥`, `♦`, `♣`, ranks, card pips, card deck quotes) have been completely eliminated across the codebase, establishing a cohesive festival identity for **Sanskaran & Sahotsava 2026**.
 
-### 1. Monolith Corridor & Multi-Formation Cardistry Hero (`/react-three-fiber`, `/gsap-animation`, `/threejs-webgl`, `/design-taste-frontend`, `/taste-skill`)
+### 1. Sanskaran & Sahotsava Cultural Conclave Platform Architecture
+- **Status**: Implemented
+- **Description**: Production festival portal engineered with Next.js 16 (Turbopack), Tailwind CSS v4, GSAP ScrollTrigger, and Framer Motion:
+  - **Clean Hero Section**:
+    - Direct integration of `ShowcaseHeroSection` with zero floating switcher overlays or unneeded mode toggles.
+    - Deleted obsolete components: `src/components/originkit`, `src/components/event/HeroSection.tsx`, `src/components/event/Hero.tsx`, and `src/components/3d`.
+    - Auto-starting stage video playback with `videoRef` triggering `.play()` as soon as the dark website is active.
+  - **Permanent DevFest Dual Realm Showcase (`AboutFestivalSection.tsx`)**:
+    - Removed `cardLayout` state and deleted the `View: [ ⊞ DevFest Grid | 🂠 Card Stack ]` switcher.
+    - Locked layout to the side-by-side DevFest Grid realm cards with Google 4-color accent tokens, vector doodle backdrop, and interactive discipline inspection modal dossiers.
+  - **Pure Vertical Slit Gallery with Club Themes (`GallerySection.tsx`)**:
+    - Deleted the prototype switcher bar (`[ Skiper 53 | Dual Adaptive | Skiper 52 ]`) and obsolete horizontal accordion code.
+    - Completely removed card suits and ranks (`club.suit`, `club.cardRank`).
+    - Unified `rounded-2xl sm:rounded-3xl` border geometry eliminating oval warping and snap glitches during expansion.
+    - Applied distinct atmospheric dark gradients, borders, and ambient halos for each of the 7 cultural societies upon expansion.
+    - Centered editorial header lockup, thin separator rule, and 6-photo grid with lightbox inspection modal.
+  - **Complete Elimination of Playing Card Metaphor Across All Sections**:
+    - `Navbar.tsx`: Replaced playing card suit logo `♠` with glowing festival star `✦`, changed subtitle to `CULTURAL CONCLAVE`, updated CTA to `Explore Festival`.
+    - `Footer.tsx`: Updated branding to `SANSKARAN & SAHOTSAVA 2026` with tagline `"Where Intellectual Heritage Meets Stadium Euphoria"`.
+    - `layout.tsx`: Updated global metadata title to `"Sanskaran & Sahotsava 2026"` and description.
+    - `clubsData.ts`: Removed `suit` and `cardRank` from `ClubItem` and all 7 societies; updated anthology description.
+    - `DignitariesSection.tsx` & `FoundersSection.tsx`: Removed `suit`, `rank`, watermark suits, and corner card index pips.
+    - `CoreMembersSection.tsx`: Removed `suit` and `rank`, replaced corner pips with clean architect sequence identifiers (`#01`, `#02`, etc.), and updated quotes to remove card/deck metaphors.
+  - **Exact 9-Image Diamond Mosaic Spatial Layout**:
+    - Image 1 (Far Left): `left: 7.85%`, `top: 38.9%`, `w: 19.86%`, `h: 27.9%` (`dx: -18, dy: -18, rot: -12`).
+    - Images 2 & 3 (Mid-Left Col): `left: 27.7%`, `top: 30%` & `top: 52.05%`, `w: 15.97%`, `h: ~22%` (`dx: 0, dy: -24, rot: 8` and `dx: -24, dy: 4, rot: -8`).
+    - Images 4, 5, 6 (Center Col): `left: 43.68%`, `top: 17.38%`, `38.38%`, `58.79%`, `w: ~14.3%`, `h: ~21%` (`dx: 18, dy: -18`, `dx: 26, dy: -2`, `dx: -16, dy: 22`).
+    - Images 7 & 8 (Mid-Right Col): `left: 57.92%` / `57.85%`, `top: 30%` & `52.44%`, `w: ~15%`, `h: ~22%` (`dx: 10, dy: -26`, `dx: 22, dy: 24`).
+    - Image 9 (Far Right): `left: 72.78%`, `top: 41.31%`, `w: 19.31%`, `h: 28.42%` (`dx: 28, dy: 14, rot: -14`).
+  - **Sequential Left-to-Right Entry Animation (1s to 2s duration)**:
+    - Images enter from left to right with staggered timing (`delay = index * staggerDelay`).
+    - Configurable duration modes: Snappy 1s (`stagger = 110ms`) and Cinematic 2s (`stagger = 190ms`).
+    - Each image fades in smoothly with `opacity: 1`, `transition: opacity 400ms ease`.
+  - **Kinetic Scatter and Fade Phase**:
+    - Upon holding the full mosaic, images scatter outward across the screen along their exact velocity vectors:
+      `transform: translate(dx vw, dy vh) rotate(rot deg) scale(0.7)`, `opacity: 0`.
+    - Eased with explosive deceleration curve: `cubic-bezier(.5, 0, .75, .4)` over 900ms.
+  - **Authentic Hollow Outline Typography (DevFest Spec & Google Outline Fonts)**:
+    - **DevFest Inverted SVG Mask (`cB` Architecture)**:
+      - Recreated DevFest Kolkata's SVG inverted cutout mask: `<mask id="..."><rect fill="#fff" /><text fill="#000" stroke="none">{text}</text></mask>` paired with `<text mask="url(#...)" fill="none" stroke="currentColor" strokeLinejoin="round">`.
+      - Eliminates 100% of inner body fill while generating smooth, rounded 8px outer contours (`Google Sans`).
+    - **Native Hollow Fonts & Interactive Switcher**:
+      - Integrated Google Fonts hollow outline families (`Londrina Outline`, `Bungee Outline`) with zero fill.
+      - Provided a live hollow font selector (`Google Sans (DevFest)`, `Londrina Outline`, `Bungee Outline`) in the floating hero controls bar.
+    - **DevFest**: Thick, bold hollow white outline (`color: #ffffff`) with drop-shadow.
+    - **Kolkata’26**: Thick, bold hollow blue outline (`color: #4285F4`) with glow drop-shadow.
+    - **Bengali Motto**: *"কলকাতার ছন্দে, DevFest-এর আনন্দে !"* in clean, crisp white text.
+    - **Get Tickets CTA**: White pill button with Google 4-color gradient border (`#F63130`, `#4787EA`, `#34A853`, `#FBC02D`) and scroll-down bouncing chevron.
+  - **Video Zoom & Scale Controller**:
+    - Centralized `VIDEO_ZOOM_SCALE = 1.22` (22% zoom) in `ShowcaseHeroSection.tsx` applied via `transform: scale(VIDEO_ZOOM_SCALE)` on the `<video>` element, bringing the stage and performers closer into view.
+  - **Official Sanskaran / Sahotsava Aftermovie Background Video (180° Inverted Widescreen)**:
+    - Transcoded and inverted 180° with `ffmpeg` (`-vf "hflip,vflip"`) into 1280x720 16:9 widescreen landscape (`public/videos/hero-background.mp4`).
+    - Rendered via a native HTML5 `<video>` element (`autoPlay`, `loop`, `muted`, `playsInline`, `absolute inset-0 w-full h-full object-cover`) taking up 100% of the screen with zero black bars.
+  - **Logo Migration**:
+    - Central logo transitions seamlessly to top-left header position with `cubic-bezier(.33, 0, .2, 1)` as the experience activates.
+  - **Website Hero Reveal**:
+    - Canvas switches to Obsidian Void (`#000000`).
+    - Embeds cinematic video/ambient backdrop with multi-stage gradient overlay.
+    - SVG outline masked headline typography ("DevFest", "Kolkata’26"), Bengali cultural motto ("কলকাতার ছন্দে, DevFest-এর আনন্দে !"), and secondary festival edition line.
+    - Interactive "Explore Festival ↓" button linking to `#about` via GSAP smooth scroll.
+    - Dedicated "↺ Replay Showcase" button and 1s/2s speed switcher.
+- **Key Files**:
+  - `src/components/event/ShowcaseHeroSection.tsx`
+  - `src/app/globals.css`
+  - `src/app/page.tsx`
+  - `public/showcase/*` (9 authentic webp images)
+  - `public/hero-tram/*`
+- **Verification**: Verified via `npm run build` compilation (0 errors, code 0) and static page generation.
+
+### 1. Unified 3-Layer Design System & Site-Wide Theme Overhaul (`/design-system`, `/impeccable`)
+- **Status**: Implemented
+- **Description**: Authored the full project design system in [DESIGN.md](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site%20-%20Copy/DESIGN.md) and overhauled the colour theme across the entire application:
+  - **3-Layer Token Architecture**:
+    - **Layer 1 (Primitives)**: `--color-obsidian-void: #000000;`, `--color-sky-zenith: #3A3F8E;`, `--color-sky-mid: #4A5290;`, `--color-sky-horizon: #62649A;`, `--color-lavender-glint: #B9ACF0;`, `--color-lavender-bright: #DED5FF;`, `--color-pale-frost: #EDE8FF;`, `--color-starlight-coral: #E8502A;`, `--color-solar-amber: #FFAA24;`.
+    - **Layer 2 (Semantics)**: `--canvas-base`, `--canvas-surface`, `--canvas-card`, `--brand-primary`, `--brand-secondary`, `--brand-accent`, `--brand-highlight`, `--border-subtle`, `--border-strong`.
+    - **Layer 3 (Components)**: `--hero-scene-bg`, `--hero-sky-top`, `--hero-sky-horizon`, `--nav-bg`, `--card-bg`, etc.
+  - **Site-Wide Surface Transition**:
+    - Replaced legacy brownish-crimson backgrounds (`#120E15`, `#1C1622`, `#8B1E24`) with pure Obsidian Void (`#000000`), deep twilight navy surfaces (`#0D0C18`, `#131224`), and soft lavender border strokes (`#B9ACF0`/20).
+    - Updated `ParallaxBackground.tsx` ambient glow orbs to deep zenith blue (`#3A3F8E`), horizon haze (`#62649A`), and lavender particles (`#B9ACF0`, `#DED5FF`).
+    - Updated `Navbar.tsx`, `AboutFestivalSection.tsx`, `GallerySection.tsx`, `CoreMembersSection.tsx`, `DignitariesSection.tsx`, `FoundersSection.tsx`, and `Footer.tsx` with cohesive twilight glow treatments and frosted cardstock.
+    - Updated UI primitives (`button.tsx`, `card.tsx`, `card-spotlight.tsx`).
+- **Key Files**:
+  - `DESIGN.md`
+  - `src/app/globals.css`
+  - `src/app/layout.tsx`
+  - `src/app/page.tsx`
+  - `src/components/event/*`
+  - `src/components/ui/*`
+- **Verification**: Verified via `npm run build` compilation (0 errors, code 0) and static page generation.
+
+### 2. Hero 59: Glimmer Vale 3D Heightfield Shader (`/impeccable`, `/design-system`, `/threejs-webgl`)
+- **Status**: Implemented
+- **Description**: Integrated using the authentic Originkit CLI (`npx originkit@latest add hero-59 --prompt`) and enhanced with the required design system tokens:
+  - **Aesthetic Principles**:
+    - **Perspective camera over heightfield**: Camera positioned over a heightfield solved back from traced screen crest lines so the composition reads as consistent frame fractions across all aspect ratios.
+    - **Dark terrain mesh depth occlusion**: Dark terrain mesh writes to the depth buffer so near ridges occlude background glitter rows and hillside flowers folding behind them.
+    - **Iridescent glitter crests**: Glitter strung in rows at fixed offsets from crest lines, shifting iridescently from warm peach on lit shoulders to magenta and violet down the face.
+    - **Six-level bloom chain HDR pass**: 6-level downsample/upsample bloom chain allowing crests, flower cores, and glints to bleed softly into the sky while maintaining vivid hues.
+    - **Defocusing daisy sprites**: Foreground daisy sprites whose petal notches fill in as they defocus, featuring magenta rim fringing, orange-ringed dark cores, and warm specks on backlit tips.
+    - **Seamless wave loop**: Harmonic wave term that begins and returns to zero at cycle boundaries for a completely seamless loop.
+  - **Three-Layer Design System Color Integration**:
+    - `background`: `#000000` (Flat colour behind the whole scene, seen through the sky and dark floor at front).
+    - `skyTop`: `#3A3F8E` (Colour at the top of the frame, deepest sky above ridges).
+    - `skyHorizon`: `#62649A` (Colour the sky washes to right where it meets the hills, setting the warm glow behind crests).
+  - **Hero Typography & Humanized Teaser Copy (`/anti-ai-slop`, `/humanizer`)**:
+    - **H1 Title**: Prominently set to `Sanskaran` on the left-hand side.
+    - **Teaser Caption**: Grounded, anti-ai-slop humanized copy introducing Sanskaran as the cultural side of the festival (live theatre, debates, fine arts, musical showcases) and leading visitors into photographs from past Sahotsava arena nights, concerts, and stages with zero buzzwords or forced triads.
+  - **Tactical View Switcher**: A floating HUD badge on the hero section allowing visitors to switch between `✦ Glimmer Vale (Hero 59)` and `🂠 Cardistry Deck`.
+- **Key Files**:
+  - `src/components/originkit/hero-59.tsx`
+  - `src/components/originkit/ui/hero-59/glimmer-vale.tsx`
+  - `src/components/originkit/ui/hero-59/section-hero.tsx`
+  - `src/components/originkit/ui/hero-59/hero-59-content.tsx`
+  - `src/components/originkit/hero-59.css`
+- **Verification**: Verified via `npm run build` compilation (0 errors, code 0) and static page generation.
+
+### 2. Monolith Corridor & Multi-Formation Cardistry Hero (`/react-three-fiber`, `/gsap-animation`, `/threejs-webgl`, `/design-taste-frontend`, `/taste-skill`)
 - **Status**: Implemented
 - **Description**: Recreated from the user's reference media and cardistry choreography specifications:
   - **Hero Re-Entry Animation Loop Auto-Revival**: Scrolling back to the top of the page (or clicking Back to Top / `#hero`) immediately revives and smoothly restarts the continuous 5-stage cardistry animation loop, transitioning seamlessly back into Formation 0 (3D Shuffle) or replaying the opening sequence.
@@ -64,33 +180,45 @@ All foundational libraries, 3D WebGL scenes, UI components, O(1) discovery engin
 - **Key Files**: [src/components/event/CoreMembersSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/CoreMembersSection.tsx), [src/app/page.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/app/page.tsx), [src/components/event/HeroSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroSection.tsx)
 - **Verification**: Verified via `npm run build` with 0 compilation or static page generation errors.
 
-### 3. Gallery Section ("GALLERY SECTION") (`/gsap-animation`, `/3d-web-experience`)
+### 3. Skiper UI 7-Club ExpandOnHover Gallery Section (`/implement`, `/emil-prototype`, `/impeccable`, `/design-taste-frontend`, `@skiper-ui/skiper52`, `skiper53`)
 - **Status**: Implemented
-- **Description**: Recreated from the user's reference media:
-  - **Title Updated to "GALLERY SECTION"**: Clean, bold typography replacing the previous "SIDE-FLOWING GALLERY" label.
-  - **Removed Editor Widgets & Red Borders**:
-    - Removed the bottom keyframe timeline scrubber HUD completely as requested.
-    - Removed the top filter tab pills (`ALL`, `PHOTOS`, `REELS`) and frame mode selector.
-    - Removed red/crimson borders from all pills and badges (swapped to subtle amber `border-[#FFAA24]/30`).
-  - **100% Full-Width Edge-to-Edge Spread Rows**:
-    - Replaced the constrained `max-w-6xl` boxed container with a true edge-to-edge layout (`w-full overflow-hidden`) that flows across the entire viewport.
-    - Added subtle horizontal edge gradient vignettes (`pointer-events-none`) so cards smoothly drift into and out of the viewport edges.
-  - **Removed Vertical Yellow Line & Header Borders**:
-    - Removed `border-l-2 border-[#FFAA24]` vertical accent line from the header container.
-    - Removed border from the category badge pill for a clean, minimalist typography layout.
-  - **12 Media Slots Across 3 Counter-Flowing Spread Rows**:
-    - Row 0: Flows smoothly to the Left (Day 01 Conclave, Solar Flare Stage Reel, Risograph Pavilion, Nocturne Symphony).
-    - Row 1: Flows smoothly to the Right (Crimson Cypher Reel, Theatre of Shadows, Ignited Amber Acoustic, Avant-Garde Runway).
-    - Row 2: Flows smoothly to the Left (Midnight Laser Lab, Golden Ember Reel, Spoken Word Arena, Deck of Destinies Coronation).
-  - **Scroll-Independent Autonomous Motion**:
-    - Completely decoupled from page scroll position (`ScrollTrigger` removed). Vertical scrolling has zero effect on row translation.
-    - Continuous, infinite marquee loops powered by GSAP tweens (`repeat: -1`, `ease: "none"`) with 4x duplication per row for seamless loop wrapping without visual jumps.
-    - Hover velocity dampening (`timeScale: 0.25` on enter, `1.0` on leave) allowing users to pause and click cards with precision.
-  - **Borderless, Frameless Showcase Canvas**:
-    - Clean, modern, borderless dark studio aesthetic with soft ambient shadow.
-  - **High-Definition 3D Lightbox Inspector**:
-    - Clicking any photo or video card opens an immersive modal inspector with audio unmute/mute, detailed metadata, archetype badges, and keyboard Escape close.
-- **Key Files**: [src/components/event/GallerySection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/GallerySection.tsx), [src/app/page.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/app/page.tsx)
+- **Description**: Rebuilt based on Skiper UI's `ExpandOnHover` (`skiper52` horizontal accordion and `skiper53` vertical slit stack) and user-provided visual references (`media_1794858120650_f35d2634.jpg` and `media_1794858125198_b479f74e.jpg`):
+  - **100% Full-Width Edge-to-Edge Canvas**:
+    - Eliminated boxed `max-w-7xl` constraints; slits now span the full width of the screen (`w-full px-2 sm:px-4 md:px-6`).
+    - Removed all border outlines and divider lines (`border-0 border-none ring-0 outline-none`).
+  - **Ultra-Tight Minimal Slit Spacing (~4px)**:
+    - Stacked slit gap reduced to `gap-1 sm:gap-1.5` (~4px to 6px) replicating physical stacked card/paper slips.
+  - **No Truncation / Fluid Slit Typography**:
+    - Removed text truncation ellipsis (`...`).
+    - Bold italic calligraphic editorial typography (`.font-slit-editorial`) bleeds smoothly across the slit with center spotlight artwork slice and corner metadata (`# 23`, `01`, `♠`).
+  - **Dramatic Poster Expansion (ROSE THOR.N Style)**:
+    - When expanded, the card morphs into a tall graphic festival poster (`h-64 sm:h-80 md:h-96`) with giant center typography (`text-4xl sm:text-6xl md:text-8xl`), quote motto, and `# 23` badge.
+    - Sits flush atop the 6-image exhibition grid (`grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1.5 sm:gap-2 p-2 sm:p-3 bg-black/70`) with zero borders.
+  - **7 Sanskaran Cultural Societies / Guilds**:
+    1. **01 // Theatre of Shadows** (Dramatics Guild, Ace of Spades ♠, Crimson `#E8502A`)
+    2. **02 // Nocturne Symphony** (Music Society, King of Diamonds ♦, Solar Amber `#FFAA24`)
+    3. **03 // Crimson Cypher** (Dance Troupe, Queen of Hearts ♥, Starlight Coral `#F43F5E`)
+    4. **04 // Risograph Pavilion** (Fine Arts Atelier, Jack of Clubs ♣, Lavender Glint `#B9ACF0`)
+    5. **05 // Spoken Word Arena** (Debate & Literature Conclave, 10 of Diamonds ♦, Amber `#F59E0B`)
+    6. **06 // Avant-Garde Runway** (Haute Couture Guild, Queen of Diamonds ♦, Pale Frost `#EDE8FF`)
+    7. **07 // Midnight Lens** (Cinematography & Media Collective, ♠ King of Spades, Electric Blue `#3B82F6`)
+  - **High-Definition Lightbox Modal Inspector**:
+    - Clicking any photo in the 6-image grid opens an immersive full-screen modal inspector.
+    - Shows high-resolution image, title, club designation, and narrative description.
+    - Sequential navigation (`← PREV` / `NEXT →`) cycling through that club's 6 images.
+    - Keyboard controls: `Escape` to close, `ArrowLeft` for previous photo, `ArrowRight` for next photo.
+  - **Emil Prototype Visual Mode Switcher (`/emil-prototype`)**:
+    - Clean, borderless mode switcher allowing live flipping between:
+      1. `Skiper 53 (Vertical Stack)`: Full-width stacked horizontal slits on all screens (default matching reference screenshot).
+      2. `Dual Adaptive`: Automatic responsive layout (Skiper 52 horizontal on desktop, Skiper 53 vertical stack on mobile/tablet).
+      3. `Skiper 52 (Horizontal)`: Side-by-side panoramic expanding columns.
+- **Key Files**:
+  - `src/components/event/GallerySection.tsx`
+  - `src/lib/clubsData.ts`
+  - `src/components/v1/skiper52.tsx`
+  - `src/components/v1/skiper53.tsx`
+  - `src/components/ui/skiper-ui/skiper52.tsx`
+  - `src/app/globals.css`
 - **Verification**: Verified via `npm run build` compilation (0 errors, code 0) and static page generation.
 
 ### 4. Navbar & Real-Time Glowing Scroll Progress Bar (`/gsap-animation`)

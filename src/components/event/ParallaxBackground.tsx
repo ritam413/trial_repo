@@ -63,7 +63,7 @@ export default function ParallaxBackground() {
       speedY: Math.random() * 0.4 + 0.15,
       speedX: (Math.random() - 0.5) * 0.2,
       opacity: Math.random() * 0.6 + 0.2,
-      color: Math.random() > 0.4 ? "#FFAA24" : "#E65C19",
+      color: Math.random() > 0.4 ? "#B9ACF0" : (Math.random() > 0.5 ? "#DED5FF" : "#62649A"),
     }));
 
     const render = () => {
@@ -118,25 +118,25 @@ export default function ParallaxBackground() {
           transform: `translate3d(${orb1X}px, ${orb1Y}px, 0)`,
           transition: "transform 0.15s cubic-bezier(0.22, 1, 0.36, 1)",
         }}
-        className="absolute -top-[10%] left-[20%] w-[700px] h-[700px] rounded-full bg-gradient-to-br from-[#FFAA24]/16 via-[#E65C19]/10 to-transparent blur-[140px]"
+        className="absolute -top-[10%] left-[20%] w-[700px] h-[700px] rounded-full bg-gradient-to-br from-[#3A3F8E]/25 via-[#62649A]/15 to-transparent blur-[160px]"
       />
 
-      {/* Dynamic Parallax Glow Orb 2 (Crimson Wire) */}
+      {/* Dynamic Parallax Glow Orb 2 (Sky Horizon & Lavender Glint) */}
       <div
         style={{
           transform: `translate3d(${orb2X}px, ${orb2Y}px, 0)`,
           transition: "transform 0.2s cubic-bezier(0.22, 1, 0.36, 1)",
         }}
-        className="absolute top-[40%] -right-[15%] w-[800px] h-[800px] rounded-full bg-gradient-to-bl from-[#8B1E24]/20 via-[#E65C19]/8 to-transparent blur-[160px]"
+        className="absolute top-[40%] -right-[15%] w-[800px] h-[800px] rounded-full bg-gradient-to-bl from-[#62649A]/22 via-[#B9ACF0]/12 to-transparent blur-[180px]"
       />
 
-      {/* Dynamic Parallax Glow Orb 3 (Deep Obsidian & Golden Ember Horizon) */}
+      {/* Dynamic Parallax Glow Orb 3 (Deep Zenith Abyss) */}
       <div
         style={{
           transform: `translate3d(0, ${orb3Y}px, 0)`,
           transition: "transform 0.18s cubic-bezier(0.22, 1, 0.36, 1)",
         }}
-        className="absolute -bottom-[20%] left-[10%] w-[900px] h-[700px] rounded-full bg-gradient-to-tr from-[#FFAA24]/12 via-[#8B1E24]/15 to-transparent blur-[180px]"
+        className="absolute -bottom-[20%] left-[10%] w-[900px] h-[700px] rounded-full bg-gradient-to-tr from-[#3A3F8E]/20 via-[#07060D]/50 to-transparent blur-[180px]"
       />
 
       {/* Floating Canvas Embers */}

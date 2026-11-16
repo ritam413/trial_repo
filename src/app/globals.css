@@ -1,25 +1,72 @@
+@import url("https://fonts.googleapis.com/css2?family=Bungee+Outline&family=Londrina+Outline&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Audiowide&family=DM+Mono:wght@400;500&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Hedvig+Letters+Serif:opsz@12..24&family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&family=Lato:wght@400;700&family=Manrope:wght@400;500;600;700&family=Monda:wght@400;500;600;700&family=Outfit:wght@400;500;600&family=Playfair+Display:ital,wght@0,700;1,700&family=Red+Hat+Display:wght@400;500;600;700&family=Rethink+Sans:wght@400;500;600;700&family=Tillana:wght@400;500;600;700&family=Urbanist:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
 
 @layer base {
   :root {
-    --deep-obsidian: #120E15;
-    --crimson-wire: #8B1E24;
-    --ignited-amber: #E65C19;
-    --solar-flare: #FFAA24;
-    --radiant-ivory: #FFF4E0;
+    /* =========================================================================
+       THREE-LAYER DESIGN SYSTEM TOKENS (/design-system)
+       Theme: Sanskaran 2026 Glimmer Vale / Twilight Horizon
+       ========================================================================= */
 
-    --background: 280 20% 7%;
-    --foreground: 39 100% 94%;
+    /* Layer 1: Primitive Tokens (Raw Palette Values) */
+    --color-obsidian-void: #000000;
+    --color-night-abyss: #07060D;
+    --color-surface-deep: #0D0C18;
+    --color-surface-card: #131224;
+    --color-surface-glass: rgba(13, 12, 24, 0.75);
 
-    --card: 280 22% 9%;
-    --card-foreground: 39 100% 94%;
+    --color-sky-zenith: #3A3F8E;       /* Deep twilight zenith at top */
+    --color-sky-mid: #4A5290;          /* Mid-gradient sky */
+    --color-sky-horizon: #62649A;      /* Warm horizon haze where hills meet sky */
+    --color-horizon-glow: #F6E8E2;     /* Peach glow */
 
-    --primary: 36 100% 57%;
-    --primary-foreground: 280 20% 7%;
+    --color-lavender-glint: #B9ACF0;   /* Light violet crest line and accent */
+    --color-lavender-bright: #DED5FF;  /* Pale luminous violet highlights */
+    --color-pale-frost: #EDE8FF;       /* Soft frost text */
+    --color-starlight-coral: #E8502A;  /* Flower core & warm spectrum accent */
+    --color-solar-amber: #FFAA24;      /* Gold starlight & badge highlight */
 
-    --border: 356 64% 33%;
-    --ring: 36 100% 57%;
+    /* Layer 2: Semantic Tokens (Purpose Aliases & Context Mapping) */
+    --background: 0 0% 0%;
+    --foreground: 255 100% 98%;
+    --canvas-base: var(--color-obsidian-void);
+    --canvas-surface: var(--color-surface-deep);
+    --canvas-card: var(--color-surface-card);
+    --canvas-glass: var(--color-surface-glass);
+
+    --brand-primary: var(--color-sky-zenith);
+    --brand-secondary: var(--color-sky-horizon);
+    --brand-accent: var(--color-lavender-glint);
+    --brand-highlight: var(--color-lavender-bright);
+    --brand-warmth: var(--color-solar-amber);
+
+    --border-subtle: rgba(185, 172, 240, 0.16);
+    --border-strong: rgba(185, 172, 240, 0.38);
+    --border-glow: rgba(222, 213, 255, 0.60);
+
+    /* Historical aliases smoothly re-mapped to twilight palette */
+    --deep-obsidian: var(--color-obsidian-void);
+    --crimson-wire: var(--color-sky-zenith);
+    --ignited-amber: var(--color-sky-horizon);
+    --solar-flare: var(--color-solar-amber);
+    --radiant-ivory: var(--color-pale-frost);
+
+    --card: 250 30% 6%;
+    --card-foreground: 255 100% 98%;
+
+    --primary: 255 80% 82%;
+    --primary-foreground: 0 0% 0%;
+
+    --border: 245 20% 25%;
+    --ring: 255 80% 80%;
     --radius: 0.75rem;
+
+    /* Layer 3: Component Tokens (Component-Specific Wiring) */
+    --hero-scene-bg: var(--canvas-base);
+    --hero-sky-top: var(--color-sky-zenith);
+    --hero-sky-horizon: var(--color-sky-horizon);
   }
 }
 
@@ -34,6 +81,16 @@
 
 .font-tech {
   font-family: var(--font-space-grotesk), monospace, -apple-system, sans-serif;
+}
+
+.font-slit-editorial {
+  font-family: "Instrument Serif", var(--font-cormorant), Georgia, serif;
+  font-style: italic;
+  font-weight: 700;
+}
+
+.writing-vertical {
+  writing-mode: vertical-rl;
 }
 
 /* Custom Range Scrubber Styling */
@@ -52,13 +109,133 @@ input[type='range']::-webkit-slider-thumb {
 html {
   /* Let GSAP handle smooth scroll without browser native interpolation collision */
   scroll-behavior: auto;
-  background-color: #120E15;
+  background-color: #000000;
   color: #FFF4E0;
+}
+
+@font-face {
+  font-family: "Google Sans";
+  src: url("/fonts/GoogleSans.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+.product_sans,
+.google_sans {
+  font-family: "Google Sans", system-ui, -apple-system, sans-serif;
+}
+
+/* =========================================================================
+   AUTHENTIC HOLLOW OUTLINE STYLES (DevFest Kolkata Spec & Google Outline Fonts)
+   ========================================================================= */
+
+/* DevFest Kolkata SVG Inverted Mask Technique */
+.d4-outline {
+  letter-spacing: 0.045em;
+  font-family: "Google Sans", system-ui, -apple-system, sans-serif;
+}
+
+.d4-outline text {
+  font-family: "Google Sans", system-ui, -apple-system, sans-serif;
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 4px;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.d4-outline mask text {
+  font-family: "Google Sans", system-ui, -apple-system, sans-serif;
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  fill: #000000;
+  stroke: none;
+}
+
+@media (min-width: 640px) {
+  .d4-outline text {
+    stroke-width: 5px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .d4-outline text {
+    stroke-width: 7.5px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .d4-outline text {
+    stroke-width: 9px;
+  }
+}
+
+/* Pure Native Google Outline Fonts */
+.font-londrina-outline {
+  font-family: "Londrina Outline", cursive, sans-serif;
+  letter-spacing: 0.05em;
+  font-weight: 400;
+}
+
+.font-bungee-outline {
+  font-family: "Bungee Outline", cursive, sans-serif;
+  letter-spacing: 0.06em;
+  font-weight: 400;
+}
+
+/* Fallback CSS Outline Strokes */
+.outline-devfest {
+  font-family: "Google Sans", system-ui, -apple-system, sans-serif;
+  font-weight: 700;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 4.5px #ffffff;
+  letter-spacing: 0.045em;
+  line-height: 1;
+  filter: drop-shadow(0 2px 14px rgba(0, 0, 0, 0.7));
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+.outline-kolkata {
+  font-family: "Google Sans", system-ui, -apple-system, sans-serif;
+  font-weight: 700;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 4.5px #4285F4;
+  letter-spacing: 0.045em;
+  line-height: 1;
+  filter: drop-shadow(0 2px 14px rgba(66, 133, 244, 0.45));
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (min-width: 768px) {
+  .outline-devfest {
+    -webkit-text-stroke: 6px #ffffff;
+  }
+  .outline-kolkata {
+    -webkit-text-stroke: 6px #4285F4;
+  }
+}
+
+@media (min-width: 1280px) {
+  .outline-devfest {
+    -webkit-text-stroke: 8px #ffffff;
+  }
+  .outline-kolkata {
+    -webkit-text-stroke: 8px #4285F4;
+  }
 }
 
 body {
   margin: 0;
-  background-color: #120E15;
+  background-color: #000000;
   color: #FFF4E0;
   overflow-x: hidden;
 }
