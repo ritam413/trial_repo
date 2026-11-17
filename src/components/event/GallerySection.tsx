@@ -234,7 +234,7 @@ export default function GallerySection() {
             return (
               <div
                 key={club.id}
-                className={`group relative w-full overflow-hidden rounded-2xl sm:rounded-3xl border transition-[border-color,box-shadow] duration-300 ${
+                className={`group relative w-full overflow-hidden rounded-lg sm:rounded-lg border transition-[border-color,box-shadow] duration-300 ${
                   isExpanded ? "cursor-default" : "cursor-pointer hover:border-[#714cb6]/50"
                 }`}
                 style={{
