@@ -115,7 +115,8 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { label: "DUALITY", target: "#about" },
+    { label: "SANSKARAN", target: "#about" },
+    { label: "SAHOTSAVA", target: "#sahotsava" },
     { label: "GALLERY", target: "#gallery" },
     { label: "ARCHITECTS", target: "#core-members" },
     { label: "PATRONS", target: "#dignitaries" },
@@ -131,7 +132,7 @@ export default function Navbar() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         hasScrolled
-          ? "opacity-100 translate-y-0 bg-[#000000]/90 backdrop-blur-xl border-b border-[#FFF4E0]/15 shadow-[0_12px_40px_rgba(0,0,0,0.8)] pointer-events-auto"
+          ? "opacity-100 translate-y-0 bg-[#f2f0eb]/95 backdrop-blur-xl border-b border-[#e3e3e2] shadow-[0_4px_24px_rgba(41,40,39,0.08)] pointer-events-auto"
           : "opacity-0 -translate-y-3 pointer-events-none"
       }`}
     >
@@ -142,36 +143,36 @@ export default function Navbar() {
           onClick={(e) => handleNavClick(e, "#hero")}
           className="flex items-center gap-2.5 sm:gap-3 group cursor-pointer shrink min-w-0"
         >
-          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-[#0D0C18] border border-[#B9ACF0]/50 flex items-center justify-center text-base sm:text-lg text-[#FFAA24] shadow-[0_0_16px_rgba(185,172,240,0.25)] shrink-0 group-hover:border-[#DED5FF] group-hover:scale-105 transition-transform duration-200">
+          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-[#ffffff] border border-[#e3e3e2] flex items-center justify-center text-base sm:text-lg text-[#714cb6] shadow-[0_2px_8px_rgba(113,76,182,0.18)] shrink-0 group-hover:border-[#714cb6] group-hover:scale-105 transition-transform duration-200">
             ✦
           </div>
           <div className="flex flex-col min-w-0">
             <div className="flex items-center gap-2">
-              <span className="font-display text-xl sm:text-2xl md:text-3xl tracking-wider text-[#EDE8FF] group-hover:text-[#DED5FF] transition-colors uppercase leading-none truncate">
+              <span className="font-display text-xl sm:text-2xl md:text-3xl tracking-wider text-[#292827] group-hover:text-[#714cb6] transition-colors uppercase leading-none truncate">
                 SANSKARAN
               </span>
-              <span className="hidden sm:inline-flex font-tech text-[10px] font-bold tracking-widest text-[#DED5FF] px-1.5 py-0.5 rounded bg-[#3A3F8E]/30 border border-[#B9ACF0]/30 shrink-0">
+              <span className="hidden sm:inline-flex font-tech text-[10px] font-bold tracking-widest text-[#714cb6] px-1.5 py-0.5 rounded bg-[#d4c7ff]/40 border border-[#714cb6]/30 shrink-0">
                 2026
               </span>
             </div>
-            <span className="font-tech text-[8.5px] sm:text-[10px] text-[#EDE8FF]/50 tracking-[0.16em] sm:tracking-[0.22em] uppercase truncate">
-              <span className="sm:hidden text-[#B9ACF0] font-bold mr-1">’26 •</span>
+            <span className="font-tech text-[8.5px] sm:text-[10px] text-[#666666] tracking-[0.16em] sm:tracking-[0.22em] uppercase truncate">
+              <span className="sm:hidden text-[#714cb6] font-bold mr-1">’26 •</span>
               CULTURAL CONCLAVE
             </span>
           </div>
         </a>
 
         {/* Center Navigation Links with GSAP Smooth Scrolling */}
-        <nav className="hidden md:flex items-center gap-8 font-tech text-xs font-semibold tracking-[0.2em] text-[#EDE8FF]/70 uppercase">
+        <nav className="hidden md:flex items-center gap-8 font-tech text-xs font-semibold tracking-[0.2em] text-[#292827]/80 uppercase">
           {navLinks.map((link) => (
             <a
               key={link.target}
               href={link.target}
               onClick={(e) => handleNavClick(e, link.target)}
-              className="hover:text-[#DED5FF] transition-colors relative py-1 group/link cursor-pointer"
+              className="hover:text-[#714cb6] transition-colors relative py-1 group/link cursor-pointer"
             >
               <span>{link.label}</span>
-              <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#B9ACF0] group-hover/link:w-full transition-all duration-300" />
+              <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#714cb6] group-hover/link:w-full transition-all duration-300" />
             </a>
           ))}
         </nav>
@@ -180,7 +181,7 @@ export default function Navbar() {
         <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           <span
             ref={percentTextRef}
-            className="font-mono text-[10px] font-bold text-[#DED5FF] px-2 py-0.5 rounded-full bg-[#0D0C18] border border-[#B9ACF0]/30 hidden sm:inline-block tabular-nums shadow-[0_0_10px_rgba(185,172,240,0.15)]"
+            className="font-mono text-[10px] font-bold text-[#714cb6] px-2 py-0.5 rounded-full bg-[#ffffff] border border-[#e3e3e2] hidden sm:inline-block tabular-nums shadow-[0_0_8px_rgba(113,76,182,0.1)]"
           >
             0%
           </span>
@@ -188,24 +189,24 @@ export default function Navbar() {
           <button
             type="button"
             onClick={() => gsapScrollTo("#about", SMOOTH_SCROLL_CONFIG.duration, SMOOTH_SCROLL_CONFIG.offset)}
-            className="group/btn inline-flex items-center justify-center gap-1.5 sm:gap-2 h-9 sm:h-11 px-3 sm:px-5 rounded-lg sm:rounded-xl bg-gradient-to-r from-[#3A3F8E] to-[#62649A] hover:brightness-115 text-[#EDE8FF] font-tech text-[11px] sm:text-xs font-bold tracking-wider uppercase border border-[#B9ACF0]/50 shadow-[0_0_20px_rgba(58,63,142,0.45)] active:scale-[0.97] transition-all duration-150 cursor-pointer whitespace-nowrap"
+            className="group/btn inline-flex items-center justify-center gap-1.5 sm:gap-2 h-9 sm:h-11 px-3 sm:px-5 rounded-lg sm:rounded-xl bg-[#421d24] hover:bg-[#421d24]/90 text-[#ffffff] font-tech text-[11px] sm:text-xs font-bold tracking-wider uppercase border border-[#421d24] shadow-[0_4px_16px_rgba(66,29,36,0.25)] active:scale-[0.97] transition-all duration-150 cursor-pointer whitespace-nowrap"
           >
             <span className="sm:hidden">Explore</span>
             <span className="hidden sm:inline">Explore Festival</span>
-            <span className="text-[#B9ACF0] text-xs sm:text-sm leading-none transition-transform duration-200 group-hover/btn:translate-y-0.5">↓</span>
+            <span className="text-[#d4c7ff] text-xs sm:text-sm leading-none transition-transform duration-200 group-hover/btn:translate-y-0.5">↓</span>
           </button>
         </div>
       </div>
 
       {/* Real-Time Glowing GPU-Accelerated Scroll Progress Bar */}
-      <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#EDE8FF]/10 overflow-hidden pointer-events-none">
+      <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#e3e3e2] overflow-hidden pointer-events-none">
         <div
           ref={progressBarRef}
           style={{ transform: "scaleX(0)", transformOrigin: "left" }}
-          className="h-full w-full bg-gradient-to-r from-[#3A3F8E] via-[#62649A] to-[#B9ACF0] shadow-[0_0_12px_rgba(185,172,240,0.9)] will-change-transform relative"
+          className="h-full w-full bg-gradient-to-r from-[#421d24] via-[#714cb6] to-[#d4c7ff] shadow-[0_0_10px_rgba(113,76,182,0.6)] will-change-transform relative"
         >
           {/* Leading Photon Dot */}
-          <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-[#FFFFFF] shadow-[0_0_8px_#DED5FF]" />
+          <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-[#ffffff] shadow-[0_0_8px_#714cb6]" />
         </div>
       </div>
     </header>

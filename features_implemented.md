@@ -1,24 +1,50 @@
 # Features Implemented
 
 ## Current Status Overview
-All foundational libraries, responsive layout engines, and the streamlined **DevFest Showcase HeroSection** with locked widescreen video and hollow outline typography have been cleaned up and verified. All obsolete prototypes, prototype view switchers (Grid vs Stack, Skiper 53 vs Skiper 52), and the legacy "Deck of Destinies" playing card metaphor (suits `♠`, `♥`, `♦`, `♣`, ranks, card pips, card deck quotes) have been completely eliminated across the codebase, establishing a cohesive festival identity for **Sanskaran & Sahotsava 2026**.
+All foundational libraries, responsive layout engines, and the streamlined **DevFest Showcase HeroSection** with locked widescreen video and hollow outline typography have been cleaned up and verified. The color system has been updated to the editorial **Superhuman** design system palette (`warm-parchment`, `midnight-wine`, `royal-violet`, `lilac-mist`, `deep-lagoon`, `soft-mist`, `ink-charcoal`, `paper-white`), replacing the legacy twilight palette while preserving all animations, responsive grids, and interactive features.
 
 ### 1. Sanskaran & Sahotsava Cultural Conclave Platform Architecture
 - **Status**: Implemented
 - **Description**: Production festival portal engineered with Next.js 16 (Turbopack), Tailwind CSS v4, GSAP ScrollTrigger, and Framer Motion:
-  - **Clean Hero Section**:
+  - **Superhuman Editorial Color System & Alternating Section Cadence (`globals.css`)**:
+    - **Alternating Visual Rhythm**:
+      1. Showcase Hero: Black (`#000000`) opening canvas.
+      2. Sanskaran: White / Warm Parchment (`#f2f0eb`) ground with Paper White cards and Ink Charcoal text.
+      3. Sahotsava: Green / Deep Lagoon (`#0c4243`) ground with glowing SVG soundwave watermark and white text.
+      4. Cultural Gallery: White / Warm Parchment (`#f2f0eb`) ground with Paper White slit cards.
+      5. Core Members: Green / Deep Lagoon (`#0c4243`) ground with Lilac Mist ambient grid and 3D card physics.
+      6. Dignitaries: White / Warm Parchment (`#f2f0eb`) ground with Paper White spotlight cards.
+      7. Founders: Green / Deep Lagoon (`#0c4243`) ground with glowing emerald monograms.
+      8. Footer: Midnight Wine (`#421d24`) ground with Lilac Mist typography.
+    - Surface Level 0: Warm Parchment (`#f2f0eb`) base canvas across page body.
+    - Surface Level 1: Paper White (`#ffffff`) elevated card surfaces.
+    - Surface Level 2: Lilac Mist (`#d4c7ff`) secondary fills and badges.
+    - Surface Level 3: Deep Lagoon (`#0c4243`) dark band feature storytelling section in Sahotsava & Founders.
+    - Surface Level 4: Midnight Wine (`#421d24`) footer ground and primary action buttons.
+    - Royal Violet (`#714cb6`) text and border accents; Ink Charcoal (`#292827`) body text; Soft Mist (`#e3e3e2`) hairline dividers.
+  - **Dedicated Sanskaran & Sahotsava Storytelling Sections (`AboutFestivalSection.tsx`)**:
+    - Split into two standalone full-width sections replacing the side-by-side single row.
+    - **Sanskaran Section (`#about` / `#sanskaran`)**: Warm Parchment editorial canvas with definition on the left and staggered fading-in heritage images on the right (clean borderless photo tiles with soft backdrop shadow) driven by GSAP ScrollTrigger.
+    - **Sahotsava Section (`#sahotsava`)**: Deep Lagoon arena canvas with vector Sahotsava Logo Watermark backdrop, concert definition on the left, and cascading stadium images on the right (clean borderless photo tiles with soft backdrop shadow) with GSAP ScrollTrigger.
+    - Interactive inspection modal dossier for exploring guild disciplines and arena lineup pillars.
+    - Opening showcase pre-scatter canvas updated to pure black (`#000000`) for seamless contrast with the 9 diamond mosaic imagery.
     - Direct integration of `ShowcaseHeroSection` with zero floating switcher overlays or unneeded mode toggles.
     - Deleted obsolete components: `src/components/originkit`, `src/components/event/HeroSection.tsx`, `src/components/event/Hero.tsx`, and `src/components/3d`.
     - Auto-starting stage video playback with `videoRef` triggering `.play()` as soon as the dark website is active.
   - **Permanent DevFest Dual Realm Showcase (`AboutFestivalSection.tsx`)**:
     - Removed `cardLayout` state and deleted the `View: [ ⊞ DevFest Grid | 🂠 Card Stack ]` switcher.
     - Locked layout to the side-by-side DevFest Grid realm cards with Google 4-color accent tokens, vector doodle backdrop, and interactive discipline inspection modal dossiers.
-  - **Pure Vertical Slit Gallery with Club Themes (`GallerySection.tsx`)**:
+  - **Pure Vertical Slit Gallery with Downward Curtain Unfold (`GallerySection.tsx`)**:
     - Deleted the prototype switcher bar (`[ Skiper 53 | Dual Adaptive | Skiper 52 ]`) and obsolete horizontal accordion code.
     - Completely removed card suits and ranks (`club.suit`, `club.cardRank`).
     - Unified `rounded-2xl sm:rounded-3xl` border geometry eliminating oval warping and snap glitches during expansion.
     - Applied distinct atmospheric dark gradients, borders, and ambient halos for each of the 7 cultural societies upon expansion.
+    - **Downward Curtain Unfolding Motion**: Outer container expands height (`0` to `"auto"`, `0.5s`, `cubic-bezier(0.16, 1, 0.3, 1)`) while inner content translates downward (`y: -30px` to `0`, `0.48s`), creating a seamless physical downward curtain reveal.
+    - **Smooth Retracting Motion**: On close / `(X)` click, outer container shrinks height (`"auto"` to `0`, `0.4s`, `cubic-bezier(0.32, 0.72, 0, 1)`) while inner content glides upward (`y: 0` to `-24px`, `0.25s`) with clean fade-out.
+    - Consistent dark theme background across collapsed and expanded states eliminating white flash artifacts.
     - Centered editorial header lockup, thin separator rule, and 6-photo grid with lightbox inspection modal.
+    - **100% Mathematically & Visually Centered Slit Typography**: Pinned society titles using absolute inset positioning (`absolute inset-0 flex items-center justify-center`) ensuring all 7 society titles align down a single true vertical center axis.
+    - **Streamlined Minimalist Slits**: Removed clutter elements (number badges `01..07` and `6 ARCHIVES ▾` chips) from slit bars and expanded headers.
   - **Complete Elimination of Playing Card Metaphor Across All Sections**:
     - `Navbar.tsx`: Replaced playing card suit logo `♠` with glowing festival star `✦`, changed subtitle to `CULTURAL CONCLAVE`, updated CTA to `Explore Festival`.
     - `Footer.tsx`: Updated branding to `SANSKARAN & SAHOTSAVA 2026` with tagline `"Where Intellectual Heritage Meets Stadium Euphoria"`.

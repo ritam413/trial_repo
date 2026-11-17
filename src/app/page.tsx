@@ -17,7 +17,7 @@ export default function Home() {
   };
 
   return (
-    <main className="relative min-h-screen bg-[#000000] text-[#EDE8FF] selection:bg-[#B9ACF0] selection:text-[#07060D] overflow-x-hidden">
+    <main className="relative min-h-screen bg-[#000000] text-[#292827] selection:bg-[#d4c7ff] selection:text-[#421d24] overflow-x-hidden">
       {/* 1. Top Navbar with Real-Time Glowing Scroll Progress Bar (Reveals smoothly on scroll) */}
       <Navbar />
 
@@ -29,8 +29,8 @@ export default function Home() {
         <ShowcaseHeroSection onExplore={handleExploreFestival} />
       </div>
 
-      {/* 4. Interactive Festival Experience Sections (Card Up Sliding Sheet) */}
-      <div id="festival-content" className="relative z-20 w-full">
+      {/* 4. Interactive Festival Experience Sections (Warm Parchment Editorial Canvas) */}
+      <div id="festival-content" className="relative z-20 w-full bg-[#f2f0eb]">
         <AboutFestivalSection />
         <GallerySection />
         <CoreMembersSection />

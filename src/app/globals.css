@@ -3,70 +3,73 @@
 @import url("https://fonts.googleapis.com/css2?family=Audiowide&family=DM+Mono:wght@400;500&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Hedvig+Letters+Serif:opsz@12..24&family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&family=Lato:wght@400;700&family=Manrope:wght@400;500;600;700&family=Monda:wght@400;500;600;700&family=Outfit:wght@400;500;600&family=Playfair+Display:ital,wght@0,700;1,700&family=Red+Hat+Display:wght@400;500;600;700&family=Rethink+Sans:wght@400;500;600;700&family=Tillana:wght@400;500;600;700&family=Urbanist:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
 
+@theme {
+  --color-midnight-wine: #421d24;
+  --color-royal-violet: #714cb6;
+  --color-lilac-mist: #d4c7ff;
+  --color-deep-lagoon: #0c4243;
+  --color-warm-parchment: #f2f0eb;
+  --color-soft-mist: #e3e3e2;
+  --color-ink-charcoal: #292827;
+  --color-stone-gray: #666666;
+  --color-paper-white: #ffffff;
+}
+
 @layer base {
   :root {
     /* =========================================================================
-       THREE-LAYER DESIGN SYSTEM TOKENS (/design-system)
-       Theme: Sanskaran 2026 Glimmer Vale / Twilight Horizon
+       SUPERHUMAN EDITORIAL DESIGN SYSTEM TOKENS (/design-taste-frontend)
+       Extracted Tokens: Warm Parchment, Midnight Wine, Royal Violet, Deep Lagoon
        ========================================================================= */
 
-    /* Layer 1: Primitive Tokens (Raw Palette Values) */
-    --color-obsidian-void: #000000;
-    --color-night-abyss: #07060D;
-    --color-surface-deep: #0D0C18;
-    --color-surface-card: #131224;
-    --color-surface-glass: rgba(13, 12, 24, 0.75);
+    /* Layer 1: Primitive Color Tokens */
+    --color-midnight-wine: #421d24;
+    --color-royal-violet: #714cb6;
+    --color-lilac-mist: #d4c7ff;
+    --color-deep-lagoon: #0c4243;
+    --color-warm-parchment: #f2f0eb;
+    --color-soft-mist: #e3e3e2;
+    --color-ink-charcoal: #292827;
+    --color-stone-gray: #666666;
+    --color-paper-white: #ffffff;
 
-    --color-sky-zenith: #3A3F8E;       /* Deep twilight zenith at top */
-    --color-sky-mid: #4A5290;          /* Mid-gradient sky */
-    --color-sky-horizon: #62649A;      /* Warm horizon haze where hills meet sky */
-    --color-horizon-glow: #F6E8E2;     /* Peach glow */
+    /* Layer 2: Semantic Surface Levels */
+    --surface-parchment: #f2f0eb; /* Level 0: Base page background, dominant surface */
+    --surface-paper: #ffffff;     /* Level 1: Elevated cards, floating UI elements */
+    --surface-lilac: #d4c7ff;     /* Level 2: Accent surface for secondary buttons & selected states */
+    --surface-lagoon: #0c4243;    /* Level 3: Dark band section background for feature storytelling */
+    --surface-wine: #421d24;      /* Level 4: Footer and announcement banner ground */
 
-    --color-lavender-glint: #B9ACF0;   /* Light violet crest line and accent */
-    --color-lavender-bright: #DED5FF;  /* Pale luminous violet highlights */
-    --color-pale-frost: #EDE8FF;       /* Soft frost text */
-    --color-starlight-coral: #E8502A;  /* Flower core & warm spectrum accent */
-    --color-solar-amber: #FFAA24;      /* Gold starlight & badge highlight */
+    /* Layer 3: Semantic Purpose Tokens */
+    --background: 43 17% 94%;      /* #f2f0eb */
+    --foreground: 25 3% 15%;       /* #292827 */
+    --canvas-base: var(--color-warm-parchment);
+    --canvas-surface: var(--color-paper-white);
+    --canvas-card: var(--color-paper-white);
+    --canvas-dark-band: var(--color-deep-lagoon);
+    --canvas-wine: var(--color-midnight-wine);
 
-    /* Layer 2: Semantic Tokens (Purpose Aliases & Context Mapping) */
-    --background: 0 0% 0%;
-    --foreground: 255 100% 98%;
-    --canvas-base: var(--color-obsidian-void);
-    --canvas-surface: var(--color-surface-deep);
-    --canvas-card: var(--color-surface-card);
-    --canvas-glass: var(--color-surface-glass);
+    --brand-primary: var(--color-midnight-wine);
+    --brand-secondary: var(--color-royal-violet);
+    --brand-accent: var(--color-royal-violet);
+    --brand-highlight: var(--color-lilac-mist);
+    --brand-muted: var(--color-stone-gray);
 
-    --brand-primary: var(--color-sky-zenith);
-    --brand-secondary: var(--color-sky-horizon);
-    --brand-accent: var(--color-lavender-glint);
-    --brand-highlight: var(--color-lavender-bright);
-    --brand-warmth: var(--color-solar-amber);
+    --border-subtle: var(--color-soft-mist);
+    --border-strong: rgba(113, 76, 182, 0.35);
+    --border-glow: rgba(212, 199, 255, 0.65);
 
-    --border-subtle: rgba(185, 172, 240, 0.16);
-    --border-strong: rgba(185, 172, 240, 0.38);
-    --border-glow: rgba(222, 213, 255, 0.60);
+    --card: 0 0% 100%;
+    --card-foreground: 25 3% 15%;
 
-    /* Historical aliases smoothly re-mapped to twilight palette */
-    --deep-obsidian: var(--color-obsidian-void);
-    --crimson-wire: var(--color-sky-zenith);
-    --ignited-amber: var(--color-sky-horizon);
-    --solar-flare: var(--color-solar-amber);
-    --radiant-ivory: var(--color-pale-frost);
+    --primary: 349 39% 19%;        /* #421d24 */
+    --primary-foreground: 0 0% 100%;
 
-    --card: 250 30% 6%;
-    --card-foreground: 255 100% 98%;
-
-    --primary: 255 80% 82%;
-    --primary-foreground: 0 0% 0%;
-
-    --border: 245 20% 25%;
-    --ring: 255 80% 80%;
+    --border: 40 4% 89%;          /* #e3e3e2 */
+    --ring: 262 43% 51%;          /* #714cb6 */
     --radius: 0.75rem;
 
-    /* Layer 3: Component Tokens (Component-Specific Wiring) */
-    --hero-scene-bg: var(--canvas-base);
-    --hero-sky-top: var(--color-sky-zenith);
-    --hero-sky-horizon: var(--color-sky-horizon);
+    --hero-scene-bg: #000000;
   }
 }
 

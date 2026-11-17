@@ -89,14 +89,14 @@ export default function FoundersSection() {
     <section
       id="founders"
       ref={containerRef}
-      className="relative py-20 sm:py-28 px-4 sm:px-8 bg-[#000000] border-b border-[#B9ACF0]/20 overflow-hidden z-10"
+      className="relative py-20 sm:py-28 px-4 sm:px-8 bg-[#0c4243] text-[#ffffff] border-b border-white/15 overflow-hidden z-10"
     >
       {/* 3D Ambient Studio Grid Background */}
       <div
         aria-hidden="true"
         className="absolute inset-0 pointer-events-none opacity-[0.06]"
         style={{
-          backgroundImage: `radial-gradient(#B9ACF0 1px, transparent 1px)`,
+          backgroundImage: `radial-gradient(#d4c7ff 1px, transparent 1px)`,
           backgroundSize: "28px 28px",
         }}
       />
@@ -104,10 +104,10 @@ export default function FoundersSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-8 relative z-10">
         {/* Section Header */}
         <div className="founders-header-reveal mb-12 sm:mb-16 max-w-3xl">
-          <h2 className="font-display text-4xl sm:text-6xl lg:text-7xl text-[#EDE8FF] leading-none uppercase tracking-tight">
+          <h2 className="font-display text-4xl sm:text-6xl lg:text-7xl text-[#ffffff] leading-none uppercase tracking-tight">
             FOUNDERS OF SANSKARAN
           </h2>
-          <p className="mt-2.5 font-tech text-xs sm:text-base text-[#EDE8FF]/75 max-w-2xl leading-relaxed">
+          <p className="mt-2.5 font-tech text-xs sm:text-base text-[#d4c7ff]/85 max-w-2xl leading-relaxed">
             The visionary student founders and alumni stewards who established the initial charter of Sanskaran and expanded its creative momentum into Sahotsava.
           </p>
         </div>
@@ -118,13 +118,13 @@ export default function FoundersSection() {
             <div key={person.id} className="founder-card-reveal flex">
               <CardSpotlight
                 radius={360}
-                color="rgba(98, 100, 154, 0.3)"
-                className="relative overflow-hidden rounded-2xl sm:rounded-3xl border-2 border-[#3A3F8E]/70 hover:border-[#B9ACF0] bg-gradient-to-b from-[#0D0C18] via-[#141026] to-[#07060D] shadow-[0_20px_50px_rgba(0,0,0,0.85)] p-6 sm:p-7 transition-all duration-300 hover:-translate-y-1.5 group flex flex-col justify-between w-full"
+                color="rgba(113, 76, 182, 0.2)"
+                className="relative overflow-hidden rounded-2xl sm:rounded-3xl border-2 border-white/15 hover:border-[#d4c7ff] bg-[#ffffff]/10 backdrop-blur-md shadow-[0_20px_50px_rgba(0,0,0,0.35)] p-6 sm:p-7 transition-all duration-300 hover:-translate-y-1.5 group flex flex-col justify-between w-full"
               >
                 {/* Background Watermark Monogram */}
                 <span
                   aria-hidden="true"
-                  className="absolute -right-4 -bottom-6 font-display text-[9rem] sm:text-[11rem] font-black leading-none text-[#3A3F8E]/10 select-none pointer-events-none transition-transform duration-500 group-hover:scale-105"
+                  className="absolute -right-4 -bottom-6 font-display text-[9rem] sm:text-[11rem] font-black leading-none text-[#ffffff]/5 select-none pointer-events-none transition-transform duration-500 group-hover:scale-105"
                 >
                   {person.monogram}
                 </span>
@@ -134,7 +134,7 @@ export default function FoundersSection() {
                   aria-hidden="true"
                   className="absolute inset-0 opacity-[0.05] pointer-events-none"
                   style={{
-                    backgroundImage: `radial-gradient(#B9ACF0 1px, transparent 1px)`,
+                    backgroundImage: `radial-gradient(#d4c7ff 1px, transparent 1px)`,
                     backgroundSize: "18px 18px",
                   }}
                 />
@@ -142,23 +142,23 @@ export default function FoundersSection() {
                 <div className="relative z-10 flex flex-col">
                   {/* Top Badge */}
                   <div className="flex items-center justify-between gap-2 mb-4">
-                    <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-tech font-bold tracking-widest uppercase bg-[#3A3F8E]/30 border border-[#B9ACF0]/40 text-[#DED5FF]">
+                    <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-tech font-bold tracking-widest uppercase bg-[#ffffff]/15 border border-[#d4c7ff]/40 text-[#d4c7ff]">
                       {person.badge}
                     </span>
-                    <span className="text-[#B9ACF0] font-tech text-xs">
+                    <span className="text-[#d4c7ff] font-tech text-xs">
                       ✦ FOUNDING STEWARD
                     </span>
                   </div>
 
                   {/* HERO PORTRAIT / PHOTO CARD PLINTH */}
-                  <div className="relative w-full aspect-[4/5] sm:h-72 rounded-xl sm:rounded-2xl border-2 border-[#B9ACF0]/60 bg-gradient-to-b from-[#141026] via-[#0E0C1C] to-[#07060D] overflow-hidden flex flex-col justify-center items-center p-3.5 shadow-inner transition-transform duration-300 group-hover:scale-[1.02]">
+                  <div className="relative w-full aspect-[4/5] sm:h-72 rounded-xl sm:rounded-2xl border border-white/15 bg-gradient-to-b from-[#082b2c] to-[#041c1d] overflow-hidden flex flex-col justify-center items-center p-3.5 shadow-inner transition-transform duration-300 group-hover:scale-[1.02]">
                     {/* Center Monogram / Portrait Artwork */}
                     <div className="relative flex items-center justify-center my-auto">
-                      <div className="absolute w-28 h-28 sm:w-36 sm:h-36 rounded-full bg-[#B9ACF0]/15 blur-2xl pointer-events-none transition-all duration-300 group-hover:scale-125" />
-                      <div className="absolute w-24 h-24 sm:w-32 sm:h-32 rounded-full border border-[#EDE8FF]/10 pointer-events-none" />
-                      <div className="absolute w-28 h-28 sm:w-36 sm:h-36 rounded-full border border-dashed border-[#EDE8FF]/10 pointer-events-none" />
+                      <div className="absolute w-28 h-28 sm:w-36 sm:h-36 rounded-full bg-[#d4c7ff]/20 blur-2xl pointer-events-none transition-all duration-300 group-hover:scale-125" />
+                      <div className="absolute w-24 h-24 sm:w-32 sm:h-32 rounded-full border border-white/10 pointer-events-none" />
+                      <div className="absolute w-28 h-28 sm:w-36 sm:h-36 rounded-full border border-dashed border-white/10 pointer-events-none" />
 
-                      <span className="font-display text-6xl sm:text-7xl lg:text-8xl font-black tracking-wider leading-none select-none relative z-10 drop-shadow-[0_10px_20px_rgba(0,0,0,0.8)] text-transparent bg-clip-text bg-gradient-to-b from-[#FFFFFF] via-[#DED5FF] to-[#62649A]">
+                      <span className="font-display text-6xl sm:text-7xl lg:text-8xl font-black tracking-wider leading-none select-none relative z-10 drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)] text-transparent bg-clip-text bg-gradient-to-b from-[#ffffff] via-[#d4c7ff] to-[#714cb6]">
                         {person.monogram}
                       </span>
                     </div>
@@ -166,10 +166,10 @@ export default function FoundersSection() {
 
                   {/* HIGHLIGHTED NAME & CLEAN ROLE */}
                   <div className="mt-5 text-center sm:text-left">
-                    <h3 className="font-display text-2xl sm:text-3xl text-[#EDE8FF] leading-none tracking-wide uppercase transition-colors duration-200 group-hover:text-[#DED5FF]">
+                    <h3 className="font-display text-2xl sm:text-3xl text-[#ffffff] leading-none tracking-wide uppercase transition-colors duration-200 group-hover:text-[#d4c7ff]">
                       {person.name}
                     </h3>
-                    <p className="font-tech text-xs font-bold tracking-widest uppercase mt-1.5 text-[#B9ACF0]">
+                    <p className="font-tech text-xs font-bold tracking-widest uppercase mt-1.5 text-[#d4c7ff]">
                       {person.designation}
                     </p>
                   </div>

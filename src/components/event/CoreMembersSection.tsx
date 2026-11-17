@@ -344,7 +344,7 @@ function CoreMemberCard({ member, index }: CardProps) {
         {/* ==============================================================
             FRONT FACE (IVORY FINE-CARDSTOCK WITH REFERENCE ARTWORK)
             ============================================================== */}
-        <div className="absolute inset-0 [backface-visibility:hidden] rounded-[24px] overflow-hidden border-[3px] border-[#EDE8FF] group-hover:border-[#B9ACF0] transition-colors bg-[#FFF4E0]">
+        <div className="absolute inset-0 [backface-visibility:hidden] rounded-[24px] overflow-hidden border-[2px] border-[#e3e3e2] group-hover:border-[#714cb6] transition-colors bg-[#ffffff]">
           {/* Reference Card Artwork SVG */}
           <div className="absolute inset-0">
             <ReferenceCardArtwork variant={member.designVariant} />
@@ -352,36 +352,36 @@ function CoreMemberCard({ member, index }: CardProps) {
 
           {/* Top-Left Profile Index */}
           <div className="absolute top-4 left-4 z-10 flex flex-col items-start leading-none">
-            <span className="font-mono text-xs font-bold text-[#FFAA24] bg-black/80 px-2 py-0.5 rounded border border-[#FFAA24]/30 shadow-sm">
+            <span className="font-mono text-xs font-bold text-[#ffffff] bg-[#421d24] px-2 py-0.5 rounded border border-[#421d24] shadow-sm">
               #{index + 1 < 10 ? `0${index + 1}` : index + 1}
             </span>
           </div>
 
           {/* Top-Right Flip Button Indicator */}
-          <div className="absolute top-4 right-4 z-10 inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#07060D]/85 text-[#DED5FF] font-tech text-[10px] font-bold tracking-wider uppercase border border-[#B9ACF0]/40 shadow-md">
-            <Icon.RotateCw className="w-3 h-3 text-[#B9ACF0] group-hover:rotate-180 transition-transform duration-500" />
+          <div className="absolute top-4 right-4 z-10 inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#ffffff] text-[#714cb6] font-tech text-[10px] font-bold tracking-wider uppercase border border-[#e3e3e2] shadow-md">
+            <Icon.RotateCw className="w-3 h-3 text-[#714cb6] group-hover:rotate-180 transition-transform duration-500" />
             <span>FLIP</span>
           </div>
 
-          {/* Bottom Information Plinth with Ink Black Gradient */}
-          <div className="absolute inset-x-0 bottom-0 z-10 p-4 bg-gradient-to-t from-[#07060D] via-[#07060D]/95 to-transparent text-[#EDE8FF]">
-            <p className="font-tech text-[10px] font-bold tracking-[0.18em] text-[#B9ACF0] uppercase">
+          {/* Bottom Information Plinth with Ink Charcoal Gradient */}
+          <div className="absolute inset-x-0 bottom-0 z-10 p-4 bg-gradient-to-t from-[#292827] via-[#292827]/95 to-transparent text-[#ffffff]">
+            <p className="font-tech text-[10px] font-bold tracking-[0.18em] text-[#d4c7ff] uppercase">
               {member.role}
             </p>
-            <h3 className="font-display text-2xl sm:text-3xl tracking-wide text-[#EDE8FF] leading-tight">
+            <h3 className="font-display text-2xl sm:text-3xl tracking-wide text-[#ffffff] leading-tight">
               {member.name}
             </h3>
           </div>
         </div>
 
         {/* ==============================================================
-            BACK FACE (DEEP OBSIDIAN & TWILIGHT WITH ARCHETYPE & QUOTE)
+            BACK FACE (MIDNIGHT WINE WITH ARCHETYPE & QUOTE)
             ============================================================== */}
-        <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-[24px] overflow-hidden border-[3px] border-[#B9ACF0] bg-gradient-to-br from-[#0D0C18] via-[#131224] to-[#07060D] text-[#EDE8FF] p-6 flex flex-col justify-between shadow-[inset_0_0_40px_rgba(185,172,240,0.15)]">
+        <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-[24px] overflow-hidden border-[2px] border-[#714cb6] bg-gradient-to-br from-[#421d24] via-[#33151b] to-[#200c10] text-[#ffffff] p-6 flex flex-col justify-between shadow-[inset_0_0_40px_rgba(113,76,182,0.2)]">
           {/* Subtle Watermark Index */}
           <span
             aria-hidden="true"
-            className="absolute -right-4 -bottom-6 font-display text-[9rem] font-black leading-none text-[#B9ACF0]/[0.05] select-none pointer-events-none"
+            className="absolute -right-4 -bottom-6 font-display text-[9rem] font-black leading-none text-[#ffffff]/[0.05] select-none pointer-events-none"
           >
             0{index + 1}
           </span>
@@ -389,36 +389,36 @@ function CoreMemberCard({ member, index }: CardProps) {
           <div className="relative z-10">
             {/* Header: Vertical badge and Curator Index */}
             <div className="flex items-center justify-between border-b border-white/10 pb-3">
-              <span className="font-tech text-[10px] font-bold tracking-widest text-[#FFAA24] uppercase">
+              <span className="font-tech text-[10px] font-bold tracking-widest text-[#d4c7ff] uppercase">
                 {member.vertical}
               </span>
-              <span className="font-mono text-xs font-bold text-[#FFAA24]">
+              <span className="font-mono text-xs font-bold text-[#d4c7ff]">
                 #{index + 1 < 10 ? `0${index + 1}` : index + 1}
               </span>
             </div>
 
             {/* Archetype & Full Identity Details */}
-            <p className="mt-4 font-tech text-xs font-bold tracking-widest text-[#B9ACF0] uppercase">
+            <p className="mt-4 font-tech text-xs font-bold tracking-widest text-[#d4c7ff] uppercase">
               {member.archetype}
             </p>
-            <h3 className="mt-1 font-display text-3xl sm:text-4xl text-[#EDE8FF] leading-none">
+            <h3 className="mt-1 font-display text-3xl sm:text-4xl text-[#ffffff] leading-none">
               {member.name}
             </h3>
-            <p className="mt-1 font-tech text-xs text-[#EDE8FF]/65">
+            <p className="mt-1 font-tech text-xs text-[#ffffff]/75">
               {member.role} • {member.year}
             </p>
 
             {/* Student Vision Statement / Quote */}
-            <blockquote className="mt-5 font-serif italic text-lg sm:text-xl leading-relaxed text-[#EDE8FF]/90 border-l-2 border-[#B9ACF0] pl-3.5">
+            <blockquote className="mt-5 font-serif italic text-lg sm:text-xl leading-relaxed text-[#ffffff] border-l-2 border-[#d4c7ff] pl-3.5">
               &ldquo;{member.quote}&rdquo;
             </blockquote>
           </div>
 
           {/* Footer Callout */}
-          <div className="relative z-10 pt-3 border-t border-[#EDE8FF]/10 flex items-center justify-between text-[11px] font-tech text-[#B9ACF0]">
+          <div className="relative z-10 pt-3 border-t border-white/10 flex items-center justify-between text-[11px] font-tech text-[#d4c7ff]">
             <span className="tracking-wider">SANSKARAN &amp; SAHOTSAVA</span>
-            <span className="inline-flex items-center gap-1 uppercase font-bold text-[#EDE8FF] hover:text-[#DED5FF] transition-colors">
-              <Icon.RotateCw className="w-3 h-3 text-[#B9ACF0]" /> Tap to return
+            <span className="inline-flex items-center gap-1 uppercase font-bold text-[#ffffff] hover:text-[#d4c7ff] transition-colors">
+              <Icon.RotateCw className="w-3 h-3 text-[#d4c7ff]" /> Tap to return
             </span>
           </div>
         </div>
@@ -550,14 +550,14 @@ export default function CoreMembersSection() {
     <section
       id="core-members"
       ref={containerRef}
-      className="relative py-20 sm:py-28 overflow-hidden z-10 bg-[#000000] border-b border-[#B9ACF0]/20"
+      className="relative py-20 sm:py-28 overflow-hidden z-10 bg-[#0c4243] text-[#ffffff] border-b border-[#0c4243]/40"
     >
       {/* 3D Ambient Studio Grid Background */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 pointer-events-none opacity-[0.06]"
+        className="absolute inset-0 pointer-events-none opacity-[0.08]"
         style={{
-          backgroundImage: `radial-gradient(#B9ACF0 1px, transparent 1px)`,
+          backgroundImage: `radial-gradient(#d4c7ff 1px, transparent 1px)`,
           backgroundSize: "28px 28px",
         }}
       />
@@ -565,7 +565,7 @@ export default function CoreMembersSection() {
       {/* Background Ambient Glow Plinth */}
       <div
         aria-hidden="true"
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[450px] bg-gradient-to-r from-[#3A3F8E]/25 via-[#62649A]/15 to-transparent blur-[120px] pointer-events-none"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[450px] bg-gradient-to-r from-[#714cb6]/20 via-[#d4c7ff]/10 to-transparent blur-[140px] pointer-events-none"
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-8 relative z-10">
@@ -573,11 +573,11 @@ export default function CoreMembersSection() {
       {/* Section Header with Swiss Architectural Typography */}
       <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12 sm:mb-16">
         <div className="max-w-2xl">
-          <h2 className="core-anim-header font-display text-4xl sm:text-6xl lg:text-7xl text-[#EDE8FF] leading-none uppercase tracking-tight">
-            NEW CORE <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#DED5FF] via-[#B9ACF0] to-[#62649A]">MEMBERS</span>
+          <h2 className="core-anim-header font-display text-4xl sm:text-6xl lg:text-7xl text-[#ffffff] leading-none uppercase tracking-tight">
+            NEW CORE <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ffffff] via-[#d4c7ff] to-[#714cb6]">MEMBERS</span>
           </h2>
 
-          <p className="core-anim-header mt-3 font-tech text-xs sm:text-sm text-[#EDE8FF]/75 leading-relaxed">
+          <p className="core-anim-header mt-3 font-tech text-xs sm:text-sm text-[#d4c7ff]/80 leading-relaxed">
             Six student stewards curating this year&rsquo;s edition. Dealt in from the sides with GSAP physics—tap any profile to flip and discover their editorial vision.
           </p>
         </div>

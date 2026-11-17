@@ -1,5 +1,52 @@
 # Agent Handoff Log — tracker.md
 
+## 2026-11-18 — Center Gallery Slit Titles & Remove Numbers and Archive Badges
+
+### Objective
+1. Ensure the society names (THEATRE OF SHADOWS, MIDNIGHT LENS, etc.) are 100% mathematically and visually centered across the entire card width, eliminating the rightward displacement caused by asymmetrical left category labels.
+2. Remove the society number pills (01, 02, etc.) and the 6 ARCHIVES badge chips from the slit bars and expanded headers.
+
+### Changes Made
+1. **Absolute Centering for Titles (`src/components/event/GallerySection.tsx`)**:
+   - Anchored the society titles with `absolute inset-0 flex items-center justify-center pointer-events-none px-4 sm:px-16`.
+   - Titles now align precisely to the horizontal (50%) and vertical center of each card regardless of varying category label lengths (e.g. CINEMATOGRAPHY & MEDIA vs DANCE TROUPE).
+2. **Removed Clutter Elements**:
+   - Removed the `{club.number}` gold circular badge chip from both the slit header and expanded header.
+   - Removed the `{club.images.length} ARCHIVES` pill badge from the right side of the slit bar and expanded header.
+   - Left side now displays only the society category, right side contains only the close button (X) when expanded, leaving the collapsed slit clean, balanced, and uncluttered.
+
+### Verification
+- `npm run build` executed with status code 0 via Next.js 16.4.6 (Turbopack) & React 19.
+- Verified visual centering of MIDNIGHT LENS and all 6 other society titles.
+
+---
+
+## 2026-11-18 — Smooth Downward Gallery Unfolding & Retracting Animation
+
+### Objective
+Implement a smooth downward opening animation when clicking gallery society cards, and an equally smooth upward retracting animation when clicking the close cross button (X), eliminating abrupt visual snapping, duplicate headers, or background color flashes.
+
+### Changes Made
+1. **Curtain Downward Slide + Height Unfold (src/components/event/GallerySection.tsx)**:
+   - Engineered coordinated dual-layer animation using Framer Motion AnimatePresence:
+     - Outer container unfolds height from 0 to auto over 0.5s with smooth Apple-style decelerating curve cubic-bezier(0.16, 1, 0.3, 1).
+     - Inner content simultaneously translates downward from y: -30px to y: 0 (opacity: 0 to 1) over 0.48s.
+   - On close / cross click:
+     - Outer container contracts height from auto to 0 over 0.4s with responsive iOS drawer retract curve cubic-bezier(0.32, 0.72, 0, 1).
+     - Inner content glides upward from y: 0 to y: -24px with swift exit fade over 0.25s.
+2. **Unified Theme Background & Zero White Flash**:
+   - Both collapsed and expanded card states now share the respective club's rich dark theme background (	heme.bg), preventing any jarring color flips or white flash artifacts during transitions.
+   - Pinned clean, accessible circular (X) close button to the top-right header with scale and hover feedback.
+   - Smoothly faded the collapsed calligraphy title when expanding to prevent duplicate title rendering with the showcase display header.
+3. **Gallery Section Styling**:
+   - Pinned clean #ffffff gallery background with subtle border, serving as an ultra-clean canvas for the dark obsidian slit cards.
+
+### Verification
+- npm run build executed with status code 0 via Next.js 16.4.6 (Turbopack) & React 19.
+- Verified smooth downward motion on open, crisp upward glide on close, and seamless ScrollTrigger.refresh() integration.
+
+---
+
 ## 2026-11-17 — Deployment to Remote GitHub Repository (techno-sahotsava/2026-static-site)
 
 ### Objective

@@ -89,14 +89,14 @@ export default function DignitariesSection() {
     <section
       id="dignitaries"
       ref={containerRef}
-      className="relative py-20 sm:py-28 px-4 sm:px-8 bg-[#000000] border-b border-[#B9ACF0]/20 overflow-hidden z-10"
+      className="relative py-20 sm:py-28 px-4 sm:px-8 bg-[#f2f0eb] border-b border-[#e3e3e2] overflow-hidden z-10"
     >
       {/* 3D Ambient Studio Grid Background */}
       <div
         aria-hidden="true"
         className="absolute inset-0 pointer-events-none opacity-[0.06]"
         style={{
-          backgroundImage: `radial-gradient(#B9ACF0 1px, transparent 1px)`,
+          backgroundImage: `radial-gradient(#714cb6 1px, transparent 1px)`,
           backgroundSize: "28px 28px",
         }}
       />
@@ -104,10 +104,10 @@ export default function DignitariesSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-8 relative z-10">
         {/* Section Header */}
         <div className="dignitaries-header-reveal mb-12 sm:mb-16 max-w-3xl">
-          <h2 className="font-display text-4xl sm:text-6xl lg:text-7xl text-[#EDE8FF] leading-none uppercase tracking-tight">
+          <h2 className="font-display text-4xl sm:text-6xl lg:text-7xl text-[#292827] leading-none uppercase tracking-tight">
             DIGNITARIES &amp; COUNCIL
           </h2>
-          <p className="mt-2.5 font-tech text-xs sm:text-base text-[#EDE8FF]/75 max-w-2xl leading-relaxed">
+          <p className="mt-2.5 font-tech text-xs sm:text-base text-[#666666] max-w-2xl leading-relaxed">
             The institutional leadership, academic heads, and faculty deans providing official stewardship, governance, and enduring patronage for Sanskaran &amp; Sahotsava 2026.
           </p>
         </div>
@@ -118,13 +118,13 @@ export default function DignitariesSection() {
             <div key={person.id} className="dignitary-card-reveal flex">
               <CardSpotlight
                 radius={360}
-                color="rgba(185, 172, 240, 0.25)"
-                className="relative overflow-hidden rounded-2xl sm:rounded-3xl border-2 border-[#B9ACF0]/50 hover:border-[#DED5FF] bg-gradient-to-b from-[#0D0C18] via-[#131224] to-[#07060D] shadow-[0_20px_50px_rgba(0,0,0,0.85)] p-6 sm:p-7 transition-all duration-300 hover:-translate-y-1.5 group flex flex-col justify-between w-full"
+                color="rgba(113, 76, 182, 0.15)"
+                className="relative overflow-hidden rounded-2xl sm:rounded-3xl border-2 border-[#e3e3e2] hover:border-[#714cb6] bg-[#ffffff] shadow-[0_20px_50px_rgba(41,40,39,0.06)] p-6 sm:p-7 transition-all duration-300 hover:-translate-y-1.5 group flex flex-col justify-between w-full"
               >
                 {/* Background Watermark Monogram */}
                 <span
                   aria-hidden="true"
-                  className="absolute -right-4 -bottom-6 font-display text-[9rem] sm:text-[11rem] font-black leading-none text-[#B9ACF0]/5 select-none pointer-events-none transition-transform duration-500 group-hover:scale-105"
+                  className="absolute -right-4 -bottom-6 font-display text-[9rem] sm:text-[11rem] font-black leading-none text-[#714cb6]/5 select-none pointer-events-none transition-transform duration-500 group-hover:scale-105"
                 >
                   {person.monogram}
                 </span>
@@ -134,7 +134,7 @@ export default function DignitariesSection() {
                   aria-hidden="true"
                   className="absolute inset-0 opacity-[0.05] pointer-events-none"
                   style={{
-                    backgroundImage: `radial-gradient(#B9ACF0 1px, transparent 1px)`,
+                    backgroundImage: `radial-gradient(#714cb6 1px, transparent 1px)`,
                     backgroundSize: "18px 18px",
                   }}
                 />
@@ -142,23 +142,23 @@ export default function DignitariesSection() {
                 <div className="relative z-10 flex flex-col">
                   {/* Top Badge */}
                   <div className="flex items-center justify-between gap-2 mb-4">
-                    <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-tech font-bold tracking-widest uppercase bg-[#3A3F8E]/30 border border-[#B9ACF0]/40 text-[#DED5FF]">
+                    <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-tech font-bold tracking-widest uppercase bg-[#d4c7ff]/40 border border-[#714cb6]/30 text-[#714cb6]">
                       {person.badge}
                     </span>
-                    <span className="text-[#FFAA24] font-tech text-xs">
+                    <span className="text-[#421d24] font-tech text-xs">
                       ✦ OFFICIAL PATRON
                     </span>
                   </div>
 
                   {/* HERO PORTRAIT / PHOTO CARD PLINTH */}
-                  <div className="relative w-full aspect-[4/5] sm:h-72 rounded-xl sm:rounded-2xl border-2 border-[#B9ACF0]/60 bg-gradient-to-b from-[#141026] via-[#0E0C1C] to-[#07060D] overflow-hidden flex flex-col justify-center items-center p-3.5 shadow-inner transition-transform duration-300 group-hover:scale-[1.02]">
+                  <div className="relative w-full aspect-[4/5] sm:h-72 rounded-xl sm:rounded-2xl border border-[#e3e3e2] bg-gradient-to-b from-[#f2f0eb] to-[#e3e3e2] overflow-hidden flex flex-col justify-center items-center p-3.5 shadow-inner transition-transform duration-300 group-hover:scale-[1.02]">
                     {/* Center Monogram / Portrait Artwork */}
                     <div className="relative flex items-center justify-center my-auto">
-                      <div className="absolute w-28 h-28 sm:w-36 sm:h-36 rounded-full bg-[#B9ACF0]/15 blur-2xl pointer-events-none transition-all duration-300 group-hover:scale-125" />
-                      <div className="absolute w-24 h-24 sm:w-32 sm:h-32 rounded-full border border-[#EDE8FF]/10 pointer-events-none" />
-                      <div className="absolute w-28 h-28 sm:w-36 sm:h-36 rounded-full border border-dashed border-[#EDE8FF]/10 pointer-events-none" />
+                      <div className="absolute w-28 h-28 sm:w-36 sm:h-36 rounded-full bg-[#d4c7ff]/30 blur-2xl pointer-events-none transition-all duration-300 group-hover:scale-125" />
+                      <div className="absolute w-24 h-24 sm:w-32 sm:h-32 rounded-full border border-[#292827]/10 pointer-events-none" />
+                      <div className="absolute w-28 h-28 sm:w-36 sm:h-36 rounded-full border border-dashed border-[#292827]/10 pointer-events-none" />
 
-                      <span className="font-display text-6xl sm:text-7xl lg:text-8xl font-black tracking-wider leading-none select-none relative z-10 drop-shadow-[0_10px_20px_rgba(0,0,0,0.8)] text-transparent bg-clip-text bg-gradient-to-b from-[#FFFFFF] via-[#DED5FF] to-[#62649A]">
+                      <span className="font-display text-6xl sm:text-7xl lg:text-8xl font-black tracking-wider leading-none select-none relative z-10 drop-shadow-[0_10px_20px_rgba(41,40,39,0.15)] text-transparent bg-clip-text bg-gradient-to-b from-[#421d24] via-[#714cb6] to-[#421d24]">
                         {person.monogram}
                       </span>
                     </div>
@@ -166,10 +166,10 @@ export default function DignitariesSection() {
 
                   {/* HIGHLIGHTED NAME & CLEAN ROLE */}
                   <div className="mt-5 text-center sm:text-left">
-                    <h3 className="font-display text-2xl sm:text-3xl text-[#EDE8FF] leading-none tracking-wide uppercase transition-colors duration-200 group-hover:text-[#DED5FF]">
+                    <h3 className="font-display text-2xl sm:text-3xl text-[#292827] leading-none tracking-wide uppercase transition-colors duration-200 group-hover:text-[#714cb6]">
                       {person.name}
                     </h3>
-                    <p className="font-tech text-xs font-bold tracking-widest uppercase mt-1.5 text-[#B9ACF0]">
+                    <p className="font-tech text-xs font-bold tracking-widest uppercase mt-1.5 text-[#714cb6]">
                       {person.designation}
                     </p>
                   </div>

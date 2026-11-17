@@ -63,7 +63,7 @@ export default function ParallaxBackground() {
       speedY: Math.random() * 0.4 + 0.15,
       speedX: (Math.random() - 0.5) * 0.2,
       opacity: Math.random() * 0.6 + 0.2,
-      color: Math.random() > 0.4 ? "#B9ACF0" : (Math.random() > 0.5 ? "#DED5FF" : "#62649A"),
+      color: Math.random() > 0.4 ? "#714cb6" : (Math.random() > 0.5 ? "#d4c7ff" : "#421d24"),
     }));
 
     const render = () => {
@@ -110,33 +110,33 @@ export default function ParallaxBackground() {
   return (
     <div
       aria-hidden="true"
-      className="fixed inset-0 pointer-events-none z-0 overflow-hidden bg-[#120E15]"
+      className="fixed inset-0 pointer-events-none z-0 overflow-hidden bg-[#000000]"
     >
-      {/* Dynamic Parallax Glow Orb 1 (Solar Flare Amber) */}
+      {/* Dynamic Parallax Glow Orb 1 (Royal Violet) */}
       <div
         style={{
           transform: `translate3d(${orb1X}px, ${orb1Y}px, 0)`,
           transition: "transform 0.15s cubic-bezier(0.22, 1, 0.36, 1)",
         }}
-        className="absolute -top-[10%] left-[20%] w-[700px] h-[700px] rounded-full bg-gradient-to-br from-[#3A3F8E]/25 via-[#62649A]/15 to-transparent blur-[160px]"
+        className="absolute -top-[10%] left-[20%] w-[700px] h-[700px] rounded-full bg-gradient-to-br from-[#714cb6]/20 via-[#d4c7ff]/10 to-transparent blur-[160px]"
       />
 
-      {/* Dynamic Parallax Glow Orb 2 (Sky Horizon & Lavender Glint) */}
+      {/* Dynamic Parallax Glow Orb 2 (Midnight Wine & Lilac Mist) */}
       <div
         style={{
           transform: `translate3d(${orb2X}px, ${orb2Y}px, 0)`,
           transition: "transform 0.2s cubic-bezier(0.22, 1, 0.36, 1)",
         }}
-        className="absolute top-[40%] -right-[15%] w-[800px] h-[800px] rounded-full bg-gradient-to-bl from-[#62649A]/22 via-[#B9ACF0]/12 to-transparent blur-[180px]"
+        className="absolute top-[40%] -right-[15%] w-[800px] h-[800px] rounded-full bg-gradient-to-bl from-[#421d24]/20 via-[#714cb6]/10 to-transparent blur-[180px]"
       />
 
-      {/* Dynamic Parallax Glow Orb 3 (Deep Zenith Abyss) */}
+      {/* Dynamic Parallax Glow Orb 3 (Deep Lagoon) */}
       <div
         style={{
           transform: `translate3d(0, ${orb3Y}px, 0)`,
           transition: "transform 0.18s cubic-bezier(0.22, 1, 0.36, 1)",
         }}
-        className="absolute -bottom-[20%] left-[10%] w-[900px] h-[700px] rounded-full bg-gradient-to-tr from-[#3A3F8E]/20 via-[#07060D]/50 to-transparent blur-[180px]"
+        className="absolute -bottom-[20%] left-[10%] w-[900px] h-[700px] rounded-full bg-gradient-to-tr from-[#0c4243]/25 via-[#421d24]/15 to-transparent blur-[180px]"
       />
 
       {/* Floating Canvas Embers */}
@@ -147,10 +147,10 @@ export default function ParallaxBackground() {
 
       {/* 4-Column Swiss Architectural Vertical Grid Lines */}
       <div className="absolute inset-0 max-w-7xl mx-auto px-4 sm:px-8 grid grid-cols-4 pointer-events-none">
-        <div className="border-l border-[#FFF4E0]/[0.035] h-full" />
-        <div className="border-l border-[#FFF4E0]/[0.035] h-full" />
-        <div className="border-l border-[#FFF4E0]/[0.035] h-full" />
-        <div className="border-x border-[#FFF4E0]/[0.035] h-full" />
+        <div className="border-l border-[#e3e3e2]/[0.05] h-full" />
+        <div className="border-l border-[#e3e3e2]/[0.05] h-full" />
+        <div className="border-l border-[#e3e3e2]/[0.05] h-full" />
+        <div className="border-x border-[#e3e3e2]/[0.05] h-full" />
       </div>
 
       {/* Risograph Noise Film Texture */}

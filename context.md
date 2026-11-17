@@ -6,7 +6,7 @@ High-impact, immersive showcase and festival portal for **Sanskaran & Sahotsava 
 ## Architecture
 - **Framework**: Next.js 16 (React 19) App Router with Turbopack
 - **Animation Suite**: GSAP ScrollTrigger, Framer Motion layout animations (`/gsap-animation`, `/animate`)
-- **UI & Design System**: Tailwind CSS v4, DevFest Kolkata multi-color keyword styling, custom SVG vector art, and atmospheric dark theme gradients
+- **UI & Design System**: Tailwind CSS v4, Superhuman-inspired editorial palette (Warm Parchment, Midnight Wine, Royal Violet, Lilac Mist, Deep Lagoon, Soft Mist, Ink Charcoal, Paper White), custom SVG vector art, and atmospheric dark theme storytelling bands
 - **Type Safety**: TypeScript strict mode
 - **Deployment & Hosting Strategy**: Static export ready or edge deployment for high-concurrency festival traffic
 
@@ -19,3 +19,14 @@ High-impact, immersive showcase and festival portal for **Sanskaran & Sahotsava 
 - `src/components/event/DignitariesSection.tsx` & `FoundersSection.tsx`: Spotlight cards honoring institutional leadership and founding stewards.
 - `src/components/event/Navbar.tsx` & `Footer.tsx`: Glowing progress header and clean brand footer.
 - `src/lib/clubsData.ts`: Central data store for the 7 cultural societies and event photographic archives.
+
+## Alternating Color Architecture & Rhythm
+The page employs an editorial alternating color rhythm to create visual pacing, avoid monotone fatigue, and clearly delineate festival realms:
+1. **Showcase Hero (`ShowcaseHeroSection.tsx`)**: Black (`#000000`) opening canvas.
+2. **Sanskaran (`AboutFestivalSection.tsx` - `SanskaranSection`)**: White / Warm Parchment (`#f2f0eb`) ground.
+3. **Sahotsava (`AboutFestivalSection.tsx` - `SahotsavaSection`)**: Green / Deep Lagoon (`#0c4243`) ground with vector watermark.
+4. **Cultural Gallery (`GallerySection.tsx`)**: White (`#ffffff`) ground with obsidian slit cards.
+5. **Core Members (`CoreMembersSection.tsx`)**: Green / Deep Lagoon (`#0c4243`) ground with Lilac Mist ambient grid and 3D card physics.
+6. **Dignitaries (`DignitariesSection.tsx`)**: White / Warm Parchment (`#f2f0eb`) ground with Paper White spotlight cards.
+7. **Founders (`FoundersSection.tsx`)**: Green / Deep Lagoon (`#0c4243`) ground with emerald spotlight cards.
+8. **Footer (`Footer.tsx`)**: Midnight Wine (`#421d24`) ground.

@@ -1,13 +1,12 @@
 "use client";
 
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
 import { motion, AnimatePresence } from "framer-motion";
 
 if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger, useGSAP);
+  gsap.registerPlugin(ScrollTrigger);
 }
 
 /* ==========================================================================
@@ -35,20 +34,6 @@ const Icon = {
       <path d="M16 3.13a4 4 0 0 1 0 7.75" />
     </svg>
   ),
-  Ticket: ({ className = "w-4 h-4" }: { className?: string }) => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-      <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z" />
-      <path d="M13 5v2" />
-      <path d="M13 17v2" />
-      <path d="M13 11v2" />
-    </svg>
-  ),
-  MapPin: ({ className = "w-4 h-4" }: { className?: string }) => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-      <circle cx="12" cy="10" r="3" />
-    </svg>
-  ),
   Sparkles: ({ className = "w-4 h-4" }: { className?: string }) => (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
       <path d="M12 3l1.9 5.8a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-1.9a2 2 0 0 0 1.3-1.3L12 3z" />
@@ -60,22 +45,20 @@ const Icon = {
       <polyline points="7 7 17 7 17 17" />
     </svg>
   ),
-  Layers: ({ className = "w-4 h-4" }: { className?: string }) => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-      <polygon points="12 2 2 7 12 12 22 7 12 2" />
-      <polyline points="2 17 12 22 22 17" />
-      <polyline points="2 12 12 17 22 12" />
-    </svg>
-  ),
   X: ({ className = "w-4 h-4" }: { className?: string }) => (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className={className}>
       <line x1="18" y1="6" x2="6" y2="18" />
       <line x1="6" y1="6" x2="18" y2="18" />
     </svg>
   ),
+  Music: ({ className = "w-4 h-4" }: { className?: string }) => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <path d="M9 18V5l12-2v13" />
+      <circle cx="6" cy="18" r="3" />
+      <circle cx="18" cy="16" r="3" />
+    </svg>
+  ),
 };
-
-const EASE_SWISS = [0.22, 1, 0.36, 1] as const;
 
 /* ==========================================================================
    2. DATA & PILLARS FOR SANSKARAN AND SAHOTSAVA
@@ -92,37 +75,37 @@ const SANSKARAN_DISCIPLINES: DisciplineDetail[] = [
     title: "Classical & Folk Arts",
     category: "Heritage Guild",
     description: "Honoring India's diverse folk and classical dances, ragas, and traditional craftsmanship.",
-    accent: "#3A3F8E",
+    accent: "#714cb6",
   },
   {
     title: "Thespian Drama & Street Play",
     category: "Theatre Syndicate",
     description: "Original stage productions, proscenium plays, and evocative Nukkad Natak addressing social narratives.",
-    accent: "#FFAA24",
+    accent: "#421d24",
   },
   {
     title: "Parliamentary Debate Conclave",
     category: "Intellectual Sphere",
     description: "Asian Parliamentary & British Parliamentary debate circuits with adjudicators and policy delegates.",
-    accent: "#4285F4",
+    accent: "#0c4243",
   },
   {
     title: "Risograph & Fine Art Atelier",
     category: "Visual Arts",
     description: "Hands-on printmaking, live canvas painting, digital illustration showcases, and sculpting gallery.",
-    accent: "#E8502A",
+    accent: "#714cb6",
   },
   {
     title: "Kavyanjali & Literary Guild",
     category: "Literary Arts",
     description: "Poetry slams, creative writing workshops, bilingual mushairas, and storytelling symposiums.",
-    accent: "#34A853",
+    accent: "#421d24",
   },
   {
     title: "Symphony & Instrumental Rhapsody",
     category: "Acoustic Harmony",
     description: "Orchestral fusions, solo instrumentals, sitar & sarod duets, and meditative raag explorations.",
-    accent: "#B9ACF0",
+    accent: "#714cb6",
   },
 ];
 
@@ -131,481 +114,479 @@ const SAHOTSAVA_DISCIPLINES: DisciplineDetail[] = [
     title: "Celebrity Arena Pro-Nites",
     category: "Mainstage Spectacle",
     description: "Stadium-scale concerts featuring nationally acclaimed artists, playback singers, and headlining bands.",
-    accent: "#EA4335",
+    accent: "#714cb6",
   },
   {
     title: "Battle of the Bands",
     category: "Rock & Metal Arena",
     description: "Electrifying live band face-offs spanning progressive rock, metal, indie-pop, and fusion ensembles.",
-    accent: "#FBBC04",
+    accent: "#421d24",
   },
   {
     title: "Street Dance & Cypher Battles",
     category: "Urban Rhythms",
     description: "High-intensity 1v1 popping, locking, breaking, and all-styles crew choreography showdowns.",
-    accent: "#4285F4",
+    accent: "#0c4243",
   },
   {
     title: "Haute Couture Fashion Runway",
     category: "Vogue & Design",
     description: "Avant-garde student designers showcasing theme-based collections on a 40-foot illuminated runway.",
-    accent: "#34A853",
+    accent: "#714cb6",
   },
   {
     title: "Sunset EDM & DJ Raves",
     category: "Electronic Nexus",
     description: "Sub-bass euphoria and dynamic laser light shows under the open twilight festival sky.",
-    accent: "#B9ACF0",
+    accent: "#421d24",
   },
   {
     title: "Midnight Carnival & Street Food Walk",
     category: "Carnival & Street",
     description: "Festive flea markets, artisanal cuisine stalls, carnival games, and pop-up street performances.",
-    accent: "#FFAA24",
+    accent: "#0c4243",
   },
 ];
 
 /* ==========================================================================
-   3. DEVFEST KOLKATA STYLE REALM CARD COMPONENT
+   3. SAHOTSAVA EMBLEM LOGO WATERMARK (VECTOR BACKDROP)
    ========================================================================== */
-interface DecorItem {
-  type: "frame" | "circle" | "line";
-  color: string;
-  dx?: number;
-  dy?: number;
-  at?: "tl" | "tr" | "bl" | "br" | "t" | "b";
-}
-
-const DECOR_POSITIONS = {
-  tl: { top: "-10px", left: "-10px" },
-  tr: { top: "-10px", right: "-10px" },
-  bl: { bottom: "-10px", left: "-10px" },
-  br: { bottom: "-10px", right: "-10px" },
-};
-
-function DevFestDecor({ items }: { items: DecorItem[] }) {
+function SahotsavaLogoWatermark() {
   return (
-    <>
-      {items.map((item, idx) => {
-        if (item.type === "frame") {
-          return (
-            <div
-              key={idx}
-              aria-hidden="true"
-              className="absolute inset-0 rounded-xl pointer-events-none"
-              style={{
-                border: `2px solid ${item.color}`,
-                transform: `translate(${(item.dx || 0) * 8}px, ${(item.dy || 0) * 8}px)`,
-                zIndex: 0,
-              }}
-            />
-          );
-        }
-        if (item.type === "circle") {
-          const pos = DECOR_POSITIONS[item.at as keyof typeof DECOR_POSITIONS] || DECOR_POSITIONS.tr;
-          return (
-            <div
-              key={idx}
-              aria-hidden="true"
-              className="absolute rounded-full pointer-events-none"
-              style={{
-                width: "24px",
-                height: "24px",
-                border: `2.5px solid ${item.color}`,
-                zIndex: 20,
-                ...pos,
-              }}
-            />
-          );
-        }
-        if (item.type === "line") {
-          return (
-            <div
-              key={idx}
-              aria-hidden="true"
-              className="absolute pointer-events-none"
-              style={{
-                width: "38px",
-                height: "3px",
-                backgroundColor: item.color,
-                borderRadius: "999px",
-                left: item.at === "t" ? "-8px" : "auto",
-                right: item.at === "t" ? "auto" : "-8px",
-                top: item.at === "t" ? "-6px" : "auto",
-                bottom: item.at === "t" ? "auto" : "-6px",
-                zIndex: 20,
-              }}
-            />
-          );
-        }
-        return null;
-      })}
-    </>
-  );
-}
+    <div
+      aria-hidden="true"
+      className="pointer-events-none absolute inset-0 overflow-hidden flex items-center justify-center select-none"
+    >
+      <svg
+        viewBox="0 0 1000 1000"
+        className="w-[125vw] max-w-[1350px] h-auto opacity-[0.075] text-[#ffffff] transform -rotate-6 transition-transform duration-1000 will-change-transform"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        {/* Outer Concentric Soundwave Rings */}
+        <circle cx="500" cy="500" r="470" stroke="currentColor" strokeWidth="1.5" strokeDasharray="8 8" />
+        <circle cx="500" cy="500" r="420" stroke="currentColor" strokeWidth="2" />
+        <circle cx="500" cy="500" r="360" stroke="currentColor" strokeWidth="1.5" strokeDasharray="16 12" />
+        <circle cx="500" cy="500" r="300" stroke="currentColor" strokeWidth="2.5" />
+        <circle cx="500" cy="500" r="230" stroke="currentColor" strokeWidth="1" strokeDasharray="4 6" />
 
-interface DevFestRealmCardProps {
-  realmId: "sanskaran" | "sahotsava";
-  numberBadge: string;
-  categoryBadge: string;
-  title: string;
-  tagline: string;
-  imageSrc: string;
-  imageAlt: string;
-  accentColor: string;
-  coloredStory: { text: string; color?: string }[];
-  disciplinesPills: string[];
-  decorItems: DecorItem[];
-  onInspect: () => void;
-}
+        {/* 8-Point Radial Starburst & Rays */}
+        <path d="M500 40 L500 960 M40 500 L960 500" stroke="currentColor" strokeWidth="1.5" />
+        <path d="M175 175 L825 825 M175 825 L825 175" stroke="currentColor" strokeWidth="1" strokeDasharray="6 6" />
 
-function DevFestRealmCard({
-  numberBadge,
-  categoryBadge,
-  title,
-  tagline,
-  imageSrc,
-  imageAlt,
-  accentColor,
-  coloredStory,
-  disciplinesPills,
-  decorItems,
-  onInspect,
-}: DevFestRealmCardProps) {
-  return (
-    <div className="w-full bg-[#ffffff] rounded-2xl sm:rounded-3xl border border-[#DADCE0] p-6 sm:p-8 shadow-[0_4px_20px_rgba(0,0,0,0.06)] hover:shadow-[0_12px_36px_rgba(0,0,0,0.12)] transition-all duration-300 flex flex-col justify-between group">
-      <div>
-        {/* Top Image Showcase with DevFest Geometric Offset Decors */}
-        <div className="relative mb-6 sm:mb-8 pt-2 px-2">
-          {/* Geometric Frames & Circles */}
-          <DevFestDecor items={decorItems} />
+        {/* Dynamic Diamond Arena Crest */}
+        <polygon points="500,120 880,500 500,880 120,500" stroke="currentColor" strokeWidth="3" />
+        <polygon points="500,180 820,500 500,820 180,500" stroke="currentColor" strokeWidth="1.5" strokeDasharray="12 8" />
 
-          {/* Authentic Photograph */}
-          <div className="relative z-10 w-full h-48 sm:h-56 rounded-xl overflow-hidden shadow-[0_6px_18px_rgba(0,0,0,0.14)] bg-neutral-100">
-            <img
-              src={imageSrc}
-              alt={imageAlt}
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-            />
-            {/* Corner Badge */}
-            <div className="absolute top-3 left-3 px-3 py-1 bg-black/75 backdrop-blur-md rounded-full text-[11px] font-mono font-bold text-white shadow-sm flex items-center gap-1.5">
-              <span style={{ backgroundColor: accentColor }} className="w-2 h-2 rounded-full" />
-              <span>{numberBadge}</span>
-            </div>
-          </div>
-        </div>
+        {/* Central Luminous Sunburst / Festival Star */}
+        <circle cx="500" cy="500" r="140" stroke="currentColor" strokeWidth="3" />
+        <circle cx="500" cy="500" r="90" fill="currentColor" fillOpacity="0.25" />
 
-        {/* Category Pill Badge (DevFest Exact #F1F3F4 / #3C4043) */}
-        <div className="flex items-center gap-2 mb-3">
-          <span className="product_sans inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider bg-[#F1F3F4] text-[#3C4043] border border-[#E8EAED]">
-            {categoryBadge}
-          </span>
-        </div>
-
-        {/* Title in Google Sans */}
-        <h3 className="product_sans text-2xl sm:text-3xl md:text-4xl font-bold text-[#202124] tracking-tight leading-tight">
-          {title}
-        </h3>
-
-        {/* Tagline */}
-        <p className="product_sans text-base sm:text-lg font-medium text-[#5F6368] mt-1.5 leading-snug">
-          {tagline}
-        </p>
-
-        {/* Multi-Colored Keyword Narrative (DevFest Signature ax Token Styling) */}
-        <div className="product_sans text-sm sm:text-base text-[#3C4043] mt-4 leading-relaxed font-normal">
-          {coloredStory.map((token, i) => (
-            <span
-              key={i}
-              style={{
-                color: token.color || "inherit",
-                fontWeight: token.color ? 600 : "inherit",
-              }}
-            >
-              {token.text}
-            </span>
-          ))}
-        </div>
-
-        {/* Highlight Discipline Chips */}
-        <div className="mt-5 flex flex-wrap gap-1.5">
-          {disciplinesPills.map((pill) => (
-            <span
-              key={pill}
-              className="product_sans text-xs font-medium px-2.5 py-1 rounded-md bg-[#F8F9FA] border border-[#E8EAED] text-[#5F6368]"
-            >
-              • {pill}
-            </span>
-          ))}
-        </div>
-      </div>
-
-      {/* Action CTA: Iconic DevFest Button with Google 4-Color Gradient Border */}
-      <div className="mt-8 pt-5 border-t border-[#F1F3F4] flex items-center justify-between">
-        <button
-          type="button"
-          onClick={onInspect}
-          className="product_sans flex h-11 items-center justify-center gap-2 rounded-full px-6 text-[15px] font-semibold text-[#202124] transition-all duration-200 hover:scale-105 active:scale-95 shadow-sm cursor-pointer"
-          style={{
-            background:
-              "linear-gradient(#ffffff, #ffffff) padding-box, linear-gradient(98deg, #F63130 0%, #4787EA 35%, #34A853 72%, #FBBC04 100%) border-box",
-            border: "2.5px solid transparent",
-            borderRadius: "50px",
-          }}
+        {/* Typography Arc Guide */}
+        <text
+          x="500"
+          y="520"
+          textAnchor="middle"
+          dominantBaseline="central"
+          fill="currentColor"
+          fontFamily="system-ui, sans-serif"
+          fontWeight="900"
+          fontSize="110"
+          letterSpacing="0.22em"
         >
-          <span>Explore Disciplines</span>
-          <Icon.ArrowUpRight className="w-4 h-4 text-[#4285F4]" />
-        </button>
+          SAHOTSAVA
+        </text>
 
-        <span className="product_sans text-xs font-medium text-[#80868B]">
-          6 Major Guilds
-        </span>
-      </div>
+        <text
+          x="500"
+          y="620"
+          textAnchor="middle"
+          dominantBaseline="central"
+          fill="currentColor"
+          fontFamily="monospace"
+          fontWeight="700"
+          fontSize="36"
+          letterSpacing="0.5em"
+        >
+          ARENA • 2026
+        </text>
+      </svg>
     </div>
   );
 }
 
 /* ==========================================================================
-   4. MAIN ABOUT FESTIVAL SECTION (SANSKARAN & SAHOTSAVA)
-   AUTHENTIC DEVFEST KOLKATA WEBSITE STYLE
+   4. SECTION 1: SANSKARAN (INTELLECTUAL HERITAGE CONCLAVE)
    ========================================================================== */
-export default function AboutFestivalSection() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [inspectModal, setInspectModal] = useState<"sanskaran" | "sahotsava" | null>(null);
+interface SanskaranSectionProps {
+  onInspect: () => void;
+}
 
-  // GSAP ScrollTrigger Animation (Smooth Card-Up Overlay with Stationary Hero Video)
-  useGSAP(
-    () => {
-      const el = containerRef.current;
-      if (!el) return;
+function SanskaranSection({ onInspect }: SanskaranSectionProps) {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(false);
 
-      gsap.registerPlugin(ScrollTrigger);
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
 
-      // Editorial Content Staggered Entrance
-      const contentTl = gsap.timeline({
-        scrollTrigger: {
-          trigger: el,
-          start: "top 75%",
-          toggleActions: "play none none reverse",
-        },
-      });
+    // Bulletproof Native IntersectionObserver Trigger
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setInView(true);
 
-      contentTl
-        .from(".sheet-badge", {
-          y: 24,
-          autoAlpha: 0,
-          duration: 0.6,
-          ease: "power3.out",
-        })
-        .from(
-          ".sheet-title",
-          {
-            y: 32,
-            autoAlpha: 0,
-            duration: 0.75,
-            ease: "power3.out",
-          },
-          "-=0.35"
-        )
-        .from(
-          ".sheet-subtitle",
-          {
-            y: 20,
-            autoAlpha: 0,
-            duration: 0.65,
-            ease: "power3.out",
-          },
-          "-=0.4"
-        );
+            // Trigger GSAP entrance animation with natural easing
+            const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-      // Dual Realm Cards Grid Animation
-      const cards = el.querySelectorAll(".realm-card-reveal");
-      if (cards.length > 0) {
-        gsap.fromTo(
-          cards,
-          {
-            autoAlpha: 0,
-            y: 40,
-          },
-          {
-            autoAlpha: 1,
-            y: 0,
-            duration: 0.85,
-            stagger: 0.2,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: el.querySelector(".realm-cards-grid"),
-              start: "top 80%",
-              toggleActions: "play none none reverse",
-            },
+            const textElements = el.querySelectorAll(".sanskaran-text-anim");
+            if (textElements.length > 0) {
+              tl.fromTo(
+                textElements,
+                { autoAlpha: 0, y: 32 },
+                { autoAlpha: 1, y: 0, duration: 0.75, stagger: 0.1 },
+                0
+              );
+            }
+
+            const images = el.querySelectorAll(".sanskaran-img-fade");
+            if (images.length > 0) {
+              tl.fromTo(
+                images,
+                { autoAlpha: 0, y: 40, scale: 0.96 },
+                { autoAlpha: 1, y: 0, scale: 1, duration: 0.85, stagger: 0.14 },
+                0.2
+              );
+            }
+
+            observer.unobserve(el);
           }
-        );
+        });
+      },
+      {
+        threshold: 0.1,
+        rootMargin: "0px 0px -40px 0px",
       }
+    );
 
-      const resizeObserver = new ResizeObserver(() => {
-        ScrollTrigger.refresh();
-      });
-      resizeObserver.observe(el);
+    observer.observe(el);
 
-      return () => {
-        resizeObserver.disconnect();
-        contentTl.kill();
-        ScrollTrigger.getAll().forEach((t) => t.kill());
-      };
-    },
-    { scope: containerRef }
-  );
+    // Safety fallback: if not triggered within 1.5s, reveal gracefully
+    const safetyTimer = setTimeout(() => {
+      setInView(true);
+      const textElements = el.querySelectorAll(".sanskaran-text-anim");
+      const images = el.querySelectorAll(".sanskaran-img-fade");
+      gsap.to(textElements, { autoAlpha: 1, y: 0, duration: 0.4 });
+      gsap.to(images, { autoAlpha: 1, y: 0, scale: 1, duration: 0.4 });
+    }, 1500);
 
-  // Colored Stories Matching DevFest Multi-Color Keyword Tokens
-  const SANSKARAN_STORY = [
-    { text: "Sanskaran is our flagship ", color: undefined },
-    { text: "intellectual conclave", color: "#4285F4" },
-    { text: " — a deliberate sanctuary where ", color: undefined },
-    { text: "classical heritage", color: "#F63130" },
-    { text: ", ", color: undefined },
-    { text: "thespian drama", color: "#FBBC04" },
-    { text: ", parliamentary debates, and ", color: undefined },
-    { text: "visual arts", color: "#34A853" },
-    { text: " converge to honor craft, discipline, and student creator mastery.", color: undefined },
-  ];
-
-  const SAHOTSAVA_STORY = [
-    { text: "Sahotsava is the ", color: undefined },
-    { text: "electric pulse", color: "#F63130" },
-    { text: " of our festival — a roaring ", color: undefined },
-    { text: "stadium arena", color: "#4285F4" },
-    { text: " of live ", color: undefined },
-    { text: "celebrity concerts", color: "#FBBC04" },
-    { text: ", subterranean street dance cyphers, and ", color: undefined },
-    { text: "haute couture runways", color: "#34A853" },
-    { text: " uniting thousands in unbridled momentum.", color: undefined },
-  ];
+    return () => {
+      observer.disconnect();
+      clearTimeout(safetyTimer);
+    };
+  }, []);
 
   return (
     <section
       id="about"
-      ref={containerRef}
-      className="relative z-20 w-full rounded-t-3xl sm:rounded-t-[40px] md:rounded-t-[48px] xl:rounded-t-[60px] overflow-hidden select-none bg-[#ffffff] text-[#202124] pb-20 sm:pb-28 will-change-transform"
-      style={{
-        boxShadow: "0 -28px 75px rgba(0, 0, 0, 0.48)",
-      }}
+      ref={sectionRef}
+      className="relative z-20 w-full overflow-hidden select-none bg-[#f2f0eb] text-[#292827] py-20 sm:py-28 lg:py-32 border-b border-[#e3e3e2]"
     >
-      {/* =========================================================================
-          STICKY DOODLE ILLUSTRATION BACKDROP (Exact DevFest Kolkata /background.svg)
-          ========================================================================= */}
+      {/* Subtle Architectural Grid Lines */}
       <div
-        id="doodle-backdrop"
-        className="pointer-events-none absolute inset-0 rounded-t-3xl sm:rounded-t-[40px] md:rounded-t-[48px] xl:rounded-t-[60px]"
         aria-hidden="true"
-        style={{ overflow: "clip" }}
-      >
-        <div
-          className="sticky top-0 h-screen supports-[height:100dvh]:h-dvh w-full opacity-[0.85]"
-          style={{
-            backgroundImage: "url(/background.svg)",
-            backgroundSize: "cover",
-            backgroundPosition: "center top",
-            backgroundRepeat: "no-repeat",
-          }}
-        />
-      </div>
+        className="absolute inset-0 pointer-events-none opacity-[0.035]"
+        style={{
+          backgroundImage: "radial-gradient(#292827 1px, transparent 1px)",
+          backgroundSize: "24px 24px",
+        }}
+      />
 
-      {/* =========================================================================
-          SHEET EDITORIAL HEADER (DEVFEST TYPOGRAPHY & MOTTO)
-          ========================================================================= */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 relative z-10 pt-8 pb-8 sm:pb-12 text-center">
-        {/* Google 4-Color Pulse Badge */}
-        <div className="sheet-badge inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-semibold uppercase tracking-wider mb-3 bg-[#F1F3F4] text-[#3C4043] border border-[#DADCE0] shadow-sm">
-          <span className="w-2 h-2 rounded-full bg-[#4285F4] animate-pulse" />
-          <span>THE TWO REALMS • GDG &amp; FESTIVAL EDITION</span>
-        </div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          {/* =================================================================
+              LEFT COLUMN: DEFINITION & PHILOSOPHY OF SANSKARAN
+              ================================================================= */}
+          <div className="lg:col-span-5 flex flex-col items-start text-left">
+            {/* Monumental Headline */}
+            <h2 className="sanskaran-text-anim product_sans text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-bold tracking-tight text-[#292827] leading-[1.12]">
+              What is Sanskaran ?
+            </h2>
 
-        {/* Headline */}
-        <h2 className="sheet-title product_sans text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-[#202124] leading-tight">
-          What is Sanskaran &amp; Sahotsava ?
-        </h2>
+            {/* Sub-tagline */}
+            <p className="sanskaran-text-anim product_sans text-lg sm:text-xl font-medium text-[#714cb6] mt-3 leading-snug">
+              The Soul of Heritage, Thought &amp; Artistic Mastery
+            </p>
 
-        {/* Subtitle */}
-        <p className="sheet-subtitle product_sans mt-3 text-base sm:text-lg md:text-xl max-w-2xl mx-auto text-[#5F6368] leading-relaxed">
-          Two contrasting realms woven into one monumental cultural conclave — intellectual heritage meets roaring stadium euphoria.
-        </p>
-
-        {/* =====================================================================
-            DEVFEST SIDE-BY-SIDE DUAL REALM CARDS GRID
-            ===================================================================== */}
-        <div className="realm-cards-grid mt-10 sm:mt-12 grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-stretch text-left">
-          {/* CARD I: WHAT IS SANSKARAN */}
-          <div className="realm-card-reveal lg:col-span-6 flex">
-            <DevFestRealmCard
-              realmId="sanskaran"
-              numberBadge="01 // SANSKARAN"
-              categoryBadge="Intellectual & Heritage Guild"
-              title="What is Sanskaran ?"
-              tagline="The Soul of Heritage, Thought & Artistic Mastery"
-              imageSrc="/showcase/kolkata-1.webp"
-              imageAlt="Heritage of Kolkata and Sanskaran Ateliers"
-              accentColor="#4285F4"
-              coloredStory={SANSKARAN_STORY}
-              disciplinesPills={["Classical Arts", "Thespian Drama", "Debate Conclave", "Risograph Fine Art"]}
-              decorItems={[
-                { type: "frame", color: "#4285F4", dx: -1, dy: 1 },
-                { type: "circle", color: "#34A853", at: "tr" },
-                { type: "line", color: "#FBBC04", at: "b" },
-              ]}
-              onInspect={() => setInspectModal("sanskaran")}
-            />
+            {/* Rich Narrative Copy */}
+            <p className="sanskaran-text-anim product_sans text-sm sm:text-base text-[#666666] mt-5 leading-relaxed">
+              Sanskaran is our flagship intellectual and cultural conclave — a deliberate sanctuary where traditional Indian heritage, proscenium thespian drama, parliamentary debates, and fine arts ateliers converge. It is the scholarly heartbeat of the festival where students interrogate literature, express classical forms, and celebrate timeless human craft.
+            </p>
           </div>
 
-          {/* CARD II: WHAT IS SAHOTSAVA */}
-          <div className="realm-card-reveal lg:col-span-6 flex">
-            <DevFestRealmCard
-              realmId="sahotsava"
-              numberBadge="02 // SAHOTSAVA"
-              categoryBadge="Electric Arena & Pro-Nites"
-              title="What is Sahotsava ?"
-              tagline="The Electric Pulse of Music, Spectacle & Euphoria"
-              imageSrc="/showcase/dl30.webp"
-              imageAlt="High-voltage stage and concert pro-nites"
-              accentColor="#F63130"
-              coloredStory={SAHOTSAVA_STORY}
-              disciplinesPills={["Stadium Concerts", "Band Battles", "Street Dance", "Haute Couture Runway"]}
-              decorItems={[
-                { type: "frame", color: "#F63130", dx: 1, dy: 1 },
-                { type: "circle", color: "#FBBC04", at: "tl" },
-                { type: "line", color: "#4285F4", at: "t" },
-              ]}
-              onInspect={() => setInspectModal("sahotsava")}
-            />
+          {/* =================================================================
+              RIGHT COLUMN: FADING-IN STAGGERED IMAGE GALLERY (GSAP)
+              ================================================================= */}
+          <div className="lg:col-span-7 sanskaran-gallery-grid">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+              {/* Image 1: Main Heritage Feature */}
+              <div className="sanskaran-img-fade sm:col-span-2 relative h-64 sm:h-80 rounded-2xl overflow-hidden shadow-lg shadow-black/10 group">
+                <img
+                  src="/showcase/kolkata-1.webp"
+                  alt="Heritage of Kolkata and Sanskaran Ateliers"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+              </div>
+
+              {/* Image 2: Atelier & Interior Craft */}
+              <div className="sanskaran-img-fade relative h-48 sm:h-60 rounded-2xl overflow-hidden shadow-lg shadow-black/10 group">
+                <img
+                  src="/showcase/interior.webp"
+                  alt="Artisan workshops and design pavilions"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+              </div>
+
+              {/* Image 3: Traditional Rhythms & Folk Expression */}
+              <div className="sanskaran-img-fade relative h-48 sm:h-60 rounded-2xl overflow-hidden shadow-lg shadow-black/10 group">
+                <img
+                  src="/showcase/kalighat.webp"
+                  alt="Folk art and spiritual music traditions"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
+    </section>
+  );
+}
 
-      {/* =========================================================================
-          DEVFEST STYLE DISCIPLINE INSPECTION MODAL DOSSIER
-          ========================================================================= */}
+/* ==========================================================================
+   5. SECTION 2: SAHOTSAVA (ELECTRIC ARENA & CONCERT SPECTACLE)
+   ========================================================================== */
+interface SahotsavaSectionProps {
+  onInspect: () => void;
+}
+
+function SahotsavaSection({ onInspect }: SahotsavaSectionProps) {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    // Bulletproof Native IntersectionObserver Trigger
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setInView(true);
+
+            // GSAP Entrance Timeline
+            const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+            // 1. Background logo watermark entry
+            const logo = el.querySelector(".sahotsava-logo-bg");
+            if (logo) {
+              tl.fromTo(
+                logo,
+                { autoAlpha: 0, scale: 0.9, rotate: -10 },
+                { autoAlpha: 1, scale: 1, rotate: -6, duration: 1.1, ease: "power2.out" },
+                0
+              );
+            }
+
+            // 2. Left column text stagger
+            const textElements = el.querySelectorAll(".sahotsava-text-anim");
+            if (textElements.length > 0) {
+              tl.fromTo(
+                textElements,
+                { autoAlpha: 0, y: 32 },
+                { autoAlpha: 1, y: 0, duration: 0.75, stagger: 0.1 },
+                0.1
+              );
+            }
+
+            // 3. Right column concert images stagger & fade-in
+            const images = el.querySelectorAll(".sahotsava-img-fade");
+            if (images.length > 0) {
+              tl.fromTo(
+                images,
+                { autoAlpha: 0, x: 35, y: 25, scale: 0.96 },
+                { autoAlpha: 1, x: 0, y: 0, scale: 1, duration: 0.85, stagger: 0.15 },
+                0.25
+              );
+            }
+
+            observer.unobserve(el);
+          }
+        });
+      },
+      {
+        threshold: 0.08,
+        rootMargin: "0px 0px -30px 0px",
+      }
+    );
+
+    observer.observe(el);
+
+    // Safety fallback: if not triggered within 1.5s (e.g. fast anchor jump), reveal gracefully
+    const safetyTimer = setTimeout(() => {
+      setInView(true);
+      const logo = el.querySelector(".sahotsava-logo-bg");
+      const textElements = el.querySelectorAll(".sahotsava-text-anim");
+      const images = el.querySelectorAll(".sahotsava-img-fade");
+      if (logo) gsap.to(logo, { autoAlpha: 1, scale: 1, rotate: -6, duration: 0.6 });
+      gsap.to(textElements, { autoAlpha: 1, y: 0, duration: 0.4 });
+      gsap.to(images, { autoAlpha: 1, x: 0, y: 0, scale: 1, duration: 0.4 });
+    }, 1500);
+
+    return () => {
+      observer.disconnect();
+      clearTimeout(safetyTimer);
+    };
+  }, []);
+
+  return (
+    <section
+      id="sahotsava"
+      ref={sectionRef}
+      className="relative z-20 w-full overflow-hidden select-none bg-[#0c4243] text-[#ffffff] py-20 sm:py-28 lg:py-32 border-b border-[#e3e3e2]/15"
+    >
+      {/* =====================================================================
+          SAHOTSAVA EMBLEM LOGO WATERMARK AS BACKGROUND
+          ===================================================================== */}
+      <div className="sahotsava-logo-bg absolute inset-0 pointer-events-none z-0">
+        <SahotsavaLogoWatermark />
+      </div>
+
+      {/* Atmospheric Luminous Arena Glow Halos */}
+      <div
+        aria-hidden="true"
+        className="absolute top-1/4 -left-20 w-96 h-96 rounded-full bg-[#714cb6]/20 blur-[130px] pointer-events-none"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute bottom-10 right-0 w-[500px] h-[500px] rounded-full bg-[#421d24]/30 blur-[150px] pointer-events-none"
+      />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          {/* =================================================================
+              LEFT COLUMN: DEFINITION & SPECTACLE OF SAHOTSAVA
+              ================================================================= */}
+          <div className="lg:col-span-5 flex flex-col items-start text-left">
+            {/* Monumental Headline */}
+            <h2 className="sahotsava-text-anim product_sans text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-bold tracking-tight text-[#ffffff] leading-[1.12]">
+              What is Sahotsava ?
+            </h2>
+
+            {/* Sub-tagline */}
+            <p className="sahotsava-text-anim product_sans text-lg sm:text-xl font-medium text-[#d4c7ff] mt-3 leading-snug">
+              The Electric Pulse of Music, Spectacle &amp; Euphoria
+            </p>
+
+            {/* Rich Narrative Copy */}
+            <p className="sahotsava-text-anim product_sans text-sm sm:text-base text-[#ffffff]/80 mt-5 leading-relaxed">
+              Sahotsava is the high-voltage arena of our festival — a roaring open-air colosseum of live celebrity concerts, subterranean street dance cyphers, haute couture fashion runways, and thunderous battle of the bands. It unites thousands of screaming voices under laser-lit festival skies in celebration of unbridled youth momentum.
+            </p>
+          </div>
+
+          {/* =================================================================
+              RIGHT COLUMN: FADING-IN STAGGERED IMAGE GALLERY (GSAP)
+              ================================================================= */}
+          <div className="lg:col-span-7 sahotsava-gallery-grid">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+              {/* Image 1: Main Arena Concert Feature */}
+              <div className="sahotsava-img-fade sm:col-span-2 relative h-64 sm:h-80 rounded-2xl overflow-hidden shadow-xl shadow-black/30 group">
+                <img
+                  src="/showcase/dl30.webp"
+                  alt="High-voltage stage and concert pro-nites"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+              </div>
+
+              {/* Image 2: Neon Rig Synthesis */}
+              <div className="sahotsava-img-fade relative h-48 sm:h-60 rounded-2xl overflow-hidden shadow-xl shadow-black/30 group">
+                <img
+                  src="/showcase/dl29.webp"
+                  alt="Neon light synthesis and laser displays"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+              </div>
+
+              {/* Image 3: Gothic Acoustics & Live Stadium Sound */}
+              <div className="sahotsava-img-fade relative h-48 sm:h-60 rounded-2xl overflow-hidden shadow-xl shadow-black/30 group">
+                <img
+                  src="/showcase/stpauls.webp"
+                  alt="Sound acoustics and live band performance"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ==========================================================================
+   6. MAIN EXPORT: DUAL REALM SECTIONS WITH INTEGRATED MODAL
+   ========================================================================= */
+export default function AboutFestivalSection() {
+  const [inspectModal, setInspectModal] = useState<"sanskaran" | "sahotsava" | null>(null);
+
+  // Refresh ScrollTrigger upon mounting dual sections so all downstream sections re-calculate coordinates
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 300);
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <>
+      {/* 1. Sanskaran Conclave Section (Heritage, Art, Intellect) */}
+      <SanskaranSection onInspect={() => setInspectModal("sanskaran")} />
+
+      {/* 2. Sahotsava Arena Section (Logo Watermark Background, Stadium Concerts) */}
+      <SahotsavaSection onInspect={() => setInspectModal("sahotsava")} />
+
+      {/* =====================================================================
+          DETAILED DISCIPLINE & LINEUP INSPECTION MODAL (PAPER WHITE)
+          ===================================================================== */}
       <AnimatePresence>
         {inspectModal && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setInspectModal(null)}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md"
-          >
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setInspectModal(null)}
+              className="fixed inset-0 bg-black/60 backdrop-blur-md transition-opacity"
+            />
+
+            {/* Modal Dialog Card */}
             <motion.div
               initial={{ scale: 0.92, opacity: 0, y: 24 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.94, opacity: 0, y: 16 }}
               transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
               onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-2xl md:rounded-3xl bg-[#ffffff] border border-[#DADCE0] p-6 sm:p-8 shadow-[0_24px_70px_rgba(0,0,0,0.35)] text-[#202124]"
+              className="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-2xl md:rounded-3xl bg-[#ffffff] border border-[#e3e3e2] p-6 sm:p-8 shadow-[0_24px_70px_rgba(41,40,39,0.25)] text-[#292827] z-10"
             >
               {/* Close Button */}
               <button
                 type="button"
                 onClick={() => setInspectModal(null)}
                 aria-label="Close Discipline Modal"
-                className="absolute top-5 right-5 w-9 h-9 rounded-full bg-[#F1F3F4] text-[#3C4043] flex items-center justify-center hover:bg-[#E8EAED] hover:text-black transition-colors cursor-pointer"
+                className="absolute top-5 right-5 w-9 h-9 rounded-full bg-[#f2f0eb] text-[#292827] flex items-center justify-center hover:bg-[#e3e3e2] transition-colors cursor-pointer"
               >
                 <Icon.X className="w-4 h-4" />
               </button>
@@ -615,17 +596,17 @@ export default function AboutFestivalSection() {
                 <span
                   style={{
                     backgroundColor:
-                      inspectModal === "sanskaran" ? "#4285F4" : "#F63130",
+                      inspectModal === "sanskaran" ? "#714cb6" : "#421d24",
                   }}
                   className="w-3.5 h-3.5 rounded-full inline-block"
                 />
                 <div>
-                  <span className="product_sans text-[11px] font-bold tracking-widest text-[#5F6368] uppercase">
+                  <span className="product_sans text-[11px] font-bold tracking-widest text-[#666666] uppercase">
                     {inspectModal === "sanskaran"
                       ? "INTELLECTUAL & HERITAGE DOSSIER"
                       : "ARENA & SPECTACLE DIRECTORY"}
                   </span>
-                  <h3 className="product_sans text-2xl sm:text-3xl font-bold text-[#202124] leading-tight">
+                  <h3 className="product_sans text-2xl sm:text-3xl font-bold text-[#292827] leading-tight">
                     {inspectModal === "sanskaran"
                       ? "Sanskaran Disciplines"
                       : "Sahotsava Lineup Pillars"}
@@ -633,7 +614,7 @@ export default function AboutFestivalSection() {
                 </div>
               </div>
 
-              <p className="product_sans text-sm text-[#5F6368] mb-6">
+              <p className="product_sans text-sm text-[#666666] mb-6">
                 {inspectModal === "sanskaran"
                   ? "Explore the master workshops, competitive conclaves, and exhibition halls anchored under Sanskaran."
                   : "Experience the high-voltage arena, star headliners, and night spectacles defining Sahotsava."}
@@ -647,7 +628,7 @@ export default function AboutFestivalSection() {
                 ).map((item) => (
                   <div
                     key={item.title}
-                    className="p-4 rounded-xl bg-[#F8F9FA] border border-[#E8EAED] hover:border-[#DADCE0] hover:bg-white hover:shadow-sm transition-all"
+                    className="p-4 rounded-xl bg-[#f2f0eb] border border-[#e3e3e2] hover:border-[#714cb6] hover:bg-white hover:shadow-sm transition-all"
                   >
                     <div className="flex items-center gap-1.5 mb-1.5">
                       <span
@@ -661,33 +642,33 @@ export default function AboutFestivalSection() {
                         {item.category}
                       </span>
                     </div>
-                    <h4 className="product_sans text-lg font-bold text-[#202124] leading-tight mb-1">
+
+                    <h4 className="product_sans text-base font-bold text-[#292827] mb-1">
                       {item.title}
                     </h4>
-                    <p className="product_sans text-xs text-[#5F6368] leading-relaxed">
+
+                    <p className="product_sans text-xs text-[#666666] leading-relaxed">
                       {item.description}
                     </p>
                   </div>
                 ))}
               </div>
 
-              {/* Footer */}
-              <div className="mt-6 pt-5 border-t border-[#E8EAED] flex items-center justify-between">
-                <span className="product_sans text-xs font-medium text-[#80868B]">
-                  DevFest &amp; Sanskaran Conclave 2026
-                </span>
+              {/* Modal Footer */}
+              <div className="mt-8 pt-5 border-t border-[#e3e3e2] flex items-center justify-between text-xs text-[#666666]">
+                <span>Sanskaran &amp; Sahotsava Conclave 2026</span>
                 <button
                   type="button"
                   onClick={() => setInspectModal(null)}
-                  className="px-5 py-2 rounded-full bg-[#202124] hover:bg-black text-white product_sans text-xs font-semibold tracking-wider uppercase cursor-pointer transition-colors shadow-sm"
+                  className="font-semibold text-[#714cb6] hover:underline cursor-pointer"
                 >
                   Close Dossier
                 </button>
               </div>
             </motion.div>
-          </motion.div>
+          </div>
         )}
       </AnimatePresence>
-    </section>
+    </>
   );
 }

@@ -2,7 +2,13 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { CLUBS_DATA, ClubItem, ClubPhoto } from "@/lib/clubsData";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 /* ==========================================================================
    INLINE VECTOR ICONS
@@ -188,26 +194,29 @@ export default function GallerySection() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [handleKeyDown]);
 
+  // Refresh ScrollTrigger smoothly when an accordion slit opens or closes
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 520);
+    return () => clearTimeout(timer);
+  }, [activeClubIndex]);
+
   return (
     <section
       id="gallery"
-      className="relative w-full py-10 sm:py-16 bg-[#000000] border-0 border-none overflow-hidden select-none"
+      className="relative w-full py-16 sm:py-24 bg-[#ffffff] border-b border-[#e3e3e2] overflow-hidden select-none"
     >
-      {/* 100% Full-Width Edge-to-Edge Container (Zero side-box borders or arbitrary squeezes) */}
+      {/* 100% Full-Width Edge-to-Edge Container */}
       <div className="w-full px-2 sm:px-4 md:px-6">
         {/* ====================================================================
-            HEADER LOCKUP & PROTOTYPE VIEWPORT SELECTOR
+            HEADER LOCKUP
             ==================================================================== */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6 sm:mb-8 px-1 sm:px-2">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 sm:mb-10 px-1 sm:px-2">
           <div>
-            <div className="inline-flex items-center gap-2 text-xs font-mono text-[#FFAA24] mb-1.5 uppercase tracking-wider">
-              <Icon.Sparkles className="w-3.5 h-3.5" />
-              <span>THE SEVEN CULTURAL SOCIETIES OF SANSKARAN</span>
-            </div>
-
-            <h2 className="font-display text-4xl sm:text-5xl md:text-6xl text-[#EDE8FF] leading-none uppercase tracking-tight">
+            <h2 className="font-display text-4xl sm:text-5xl md:text-6xl text-[#292827] leading-none uppercase tracking-tight">
               GALLERY{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#DED5FF] via-[#B9ACF0] to-[#FFAA24]">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#292827] via-[#421d24] to-[#714cb6]">
                 SECTION
               </span>
             </h2>
@@ -215,33 +224,35 @@ export default function GallerySection() {
         </div>
 
         {/* ====================================================================
-            FULL-WIDTH VERTICAL STACK SLITS (Minimal gap, Zero border)
+            FULL-WIDTH VERTICAL STACK SLITS (Minimal gap, Smooth Downward Opening)
             ==================================================================== */}
-        <div className="w-full flex flex-col gap-1 sm:gap-1.5">
+        <div className="w-full flex flex-col gap-2 sm:gap-2.5">
           {CLUBS_DATA.map((club, index) => {
             const isExpanded = activeClubIndex === index;
             const theme = CLUB_EXPANDED_THEMES[club.id] || DEFAULT_EXPANDED_THEME;
 
-              return (
-                <motion.div
-                  key={club.id}
-                  layout
-                  transition={{
-                    layout: { duration: 0.42, ease: [0.16, 1, 0.3, 1] },
-                  }}
+            return (
+              <div
+                key={club.id}
+                className={`group relative w-full overflow-hidden rounded-2xl sm:rounded-3xl border transition-[border-color,box-shadow] duration-300 ${
+                  isExpanded ? "cursor-default" : "cursor-pointer hover:border-[#714cb6]/50"
+                }`}
+                style={{
+                  backgroundColor: theme.bg,
+                  borderColor: isExpanded ? theme.border : "rgba(255, 255, 255, 0.12)",
+                  boxShadow: isExpanded
+                    ? `0 24px 60px rgba(0,0,0,0.85), 0 0 35px ${theme.glow}`
+                    : "0 2px 10px rgba(0,0,0,0.12)",
+                }}
+              >
+                {/* -------------------------------------------------------------
+                    TOP SLIT BAR HEADER (Always visible as trigger & control)
+                    ------------------------------------------------------------- */}
+                <div
                   onClick={() => setActiveClubIndex(isExpanded ? null : index)}
-                  className="group relative w-full overflow-hidden rounded-2xl sm:rounded-3xl border-0 border-none cursor-pointer"
-                  style={{
-                    backgroundColor: isExpanded ? theme.bg : "#0D0C15",
-                    border: isExpanded
-                      ? `1.5px solid ${theme.border}`
-                      : "1px solid rgba(255, 255, 255, 0.05)",
-                    boxShadow: isExpanded
-                      ? `0 24px 70px rgba(0,0,0,0.92), 0 0 50px ${theme.glow}`
-                      : "none",
-                    transition:
-                      "background-color 400ms cubic-bezier(0.16, 1, 0.3, 1), border-color 400ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 400ms cubic-bezier(0.16, 1, 0.3, 1)",
-                  }}
+                  className={`relative z-10 w-full h-12 sm:h-14 md:h-16 px-4 sm:px-6 flex items-center justify-between select-none cursor-pointer transition-colors duration-200 ${
+                    isExpanded ? "border-b border-white/10" : ""
+                  }`}
                 >
                   {/* Atmospheric Backdrop Slice (Visible when collapsed) */}
                   {!isExpanded && (
@@ -249,9 +260,9 @@ export default function GallerySection() {
                       <img
                         src={club.coverImage}
                         alt={club.name}
-                        className="size-full object-cover transition-transform duration-700 opacity-45 group-hover:opacity-65 group-hover:scale-105"
+                        className="size-full object-cover transition-transform duration-700 opacity-40 group-hover:opacity-60 group-hover:scale-105"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/40 to-black/90" />
+                      <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/45 to-black/90" />
                       <div
                         className="absolute inset-0 opacity-40 mix-blend-screen pointer-events-none"
                         style={{
@@ -261,52 +272,90 @@ export default function GallerySection() {
                     </div>
                   )}
 
-                  {/* -------------------------------------------------------------
-                      COLLAPSED SLIT BAR (Matching media_1794858120650_f35d2634.jpg)
-                      ------------------------------------------------------------- */}
-                  {!isExpanded && (
-                    <div className="relative z-10 w-full h-11 sm:h-13 md:h-15 px-3 sm:px-6 flex items-center justify-between select-none overflow-hidden">
-                      {/* Left: Metadata */}
-                      <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-                        <span className="font-mono text-[10px] sm:text-xs font-bold text-[#FFAA24] bg-black/60 px-2 py-0.5 rounded-full">
-                          {club.number}
-                        </span>
-                        <span className="font-tech text-[9px] sm:text-[10px] tracking-widest text-[#B9ACF0]/80 uppercase">
-                          {club.category}
-                        </span>
-                      </div>
+                  {/* Left: Category Only (Numbers removed) */}
+                  <div className="relative z-10 flex items-center shrink-0">
+                    <span className="font-tech text-[10px] sm:text-xs tracking-widest text-[#B9ACF0]/90 uppercase font-semibold">
+                      {club.category}
+                    </span>
+                  </div>
 
-                      {/* Center: Expansive Italic Calligraphy Bleeding Across Slit */}
-                      <div className="flex-1 px-2 sm:px-6 text-center overflow-hidden">
-                        <p className="font-slit-editorial text-lg sm:text-2xl md:text-3xl text-[#FFF4E0] tracking-wide whitespace-nowrap drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)] group-hover:scale-[1.01] transition-transform">
-                          {club.name}
-                        </p>
-                      </div>
+                  {/* Center: Absolute 100% True-Centered Calligraphy Title (Visually centered regardless of left/right content) */}
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none px-4 sm:px-16">
+                    <p
+                      className={`font-slit-editorial text-lg sm:text-2xl md:text-3xl text-[#FFF4E0] tracking-wide whitespace-nowrap drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)] transition-all duration-300 ${
+                        isExpanded ? "opacity-0 scale-95" : "opacity-100 scale-100"
+                      }`}
+                    >
+                      {club.name}
+                    </p>
+                  </div>
 
-                      {/* Right: Code / Photo Tag */}
-                      <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-                        <span className="font-mono text-[9px] sm:text-[10px] text-[#FFAA24] bg-black/50 px-2 py-0.5 rounded-full">
-                          {club.images.length} ARCHIVES
-                        </span>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* -------------------------------------------------------------
-                      EXPANDED FULL-WIDTH POSTER + 6-IMAGE GRID (Exact Layout from Screenshot, Centered Text)
-                      ------------------------------------------------------------- */}
-                  <AnimatePresence initial={false}>
+                  {/* Right: Close Cross Button (When Expanded) - Archives badge removed */}
+                  <div className="relative z-10 flex items-center justify-end shrink-0 min-w-[32px] sm:min-w-[40px]">
                     {isExpanded && (
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setActiveClubIndex(null);
+                        }}
+                        className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/15 hover:bg-white/30 text-white flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer border border-white/20 shadow-md"
+                        aria-label="Close slit"
+                      >
+                        <Icon.X className="w-4 h-4 sm:w-4.5 sm:h-4.5" />
+                      </button>
+                    )}
+                  </div>
+                </div>
+
+                {/* -------------------------------------------------------------
+                    EXPANDED FULL-WIDTH POSTER (Opens downward, closes smoothly)
+                    ------------------------------------------------------------- */}
+                <AnimatePresence initial={false}>
+                  {isExpanded && (
+                    <motion.div
+                      key={`expanded-${club.id}`}
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{
+                        height: "auto",
+                        opacity: 1,
+                        transition: {
+                          height: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
+                          opacity: { duration: 0.3, ease: "easeOut" },
+                        },
+                      }}
+                      exit={{
+                        height: 0,
+                        opacity: 0,
+                        transition: {
+                          height: { duration: 0.4, ease: [0.32, 0.72, 0, 1] },
+                          opacity: { duration: 0.2, ease: "easeIn" },
+                        },
+                      }}
+                      className="overflow-hidden"
+                    >
                       <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
+                        initial={{ y: -30, opacity: 0 }}
+                        animate={{
+                          y: 0,
+                          opacity: 1,
+                          transition: {
+                            y: { duration: 0.48, ease: [0.16, 1, 0.3, 1] },
+                            opacity: { duration: 0.35, ease: "easeOut" },
+                          },
+                        }}
+                        exit={{
+                          y: -24,
+                          opacity: 0,
+                          transition: {
+                            y: { duration: 0.25, ease: "easeIn" },
+                            opacity: { duration: 0.2, ease: "easeIn" },
+                          },
+                        }}
                         className="relative z-10 w-full flex flex-col p-5 sm:p-8 md:p-10 overflow-hidden"
                         style={{
                           background: theme.gradient,
                         }}
-                        onClick={(e) => e.stopPropagation()}
                       >
                         {/* Ambient Backlight Glow matching club accent color */}
                         <div
@@ -317,35 +366,12 @@ export default function GallerySection() {
                           }}
                         />
 
-                        {/* Close Button */}
-                        <button
-                          type="button"
-                          onClick={() => setActiveClubIndex(null)}
-                          className="absolute top-4 right-4 sm:top-6 sm:right-6 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors cursor-pointer z-20"
-                          aria-label="Close slit"
-                        >
-                          <Icon.X className="w-4 h-4" />
-                        </button>
-
-                        {/* =========================================================
-                            EXACT HEADER LOCKUP (CENTERED TEXT AS REQUESTED)
-                            ========================================================= */}
+                        {/* Header Lockup (Centered Showcase Title) */}
                         <div className="w-full flex flex-col items-center justify-center text-center">
-                          {/* Top Meta Line: 02 // MUSIC SOCIETY  •  6 ARCHIVES */}
-                          <div className="flex items-center justify-center gap-2.5 sm:gap-3 text-xs sm:text-sm font-mono tracking-wider mb-2 text-[#B9ACF0]">
-                            <span className="text-[#FFAA24] font-bold">
-                              {club.number}
-                            </span>
-                            <span className="font-tech text-[11px] sm:text-xs font-bold tracking-widest uppercase">
-                              {club.category}
-                            </span>
-                            <span className="text-white/30">•</span>
-                            <span className="text-[#FFAA24] font-mono font-bold">
-                              {club.images.length} ARCHIVES
-                            </span>
-                          </div>
+                          <p className="font-tech text-xs sm:text-sm font-bold tracking-widest uppercase text-[#B9ACF0] mb-2">
+                            {club.category}
+                          </p>
 
-                          {/* Giant Club Title (Centered) */}
                           <h3
                             className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tight leading-none uppercase drop-shadow-[0_4px_24px_rgba(0,0,0,0.9)]"
                             style={{ color: club.accentColor }}
@@ -353,7 +379,6 @@ export default function GallerySection() {
                             {club.name}
                           </h3>
 
-                          {/* Editorial Motto / Subtitle (Centered) */}
                           <p className="mt-2.5 font-serif italic text-base sm:text-lg md:text-xl text-[#FFF4E0]/90 max-w-2xl mx-auto">
                             &ldquo;{club.motto}&rdquo;
                           </p>
@@ -362,14 +387,11 @@ export default function GallerySection() {
                         {/* Thin Divider Line Across Full Width */}
                         <div className="w-full border-t border-white/10 my-6 sm:my-8" />
 
-                        {/* =========================================================
-                            EXACT 3-COLUMN x 2-ROW GRID (6 Photo Cards)
-                            ========================================================= */}
+                        {/* 6 Photo Cards Grid */}
                         <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
                           {club.images.map((photo, photoIdx) => (
-                            <motion.button
+                            <div
                               key={photo.id}
-                              type="button"
                               onClick={() =>
                                 setSelectedPhoto({
                                   photo,
@@ -377,30 +399,23 @@ export default function GallerySection() {
                                   photoIndex: photoIdx,
                                 })
                               }
-                              whileHover={{ scale: 1.02 }}
-                              whileTap={{ scale: 0.98 }}
-                              transition={{ duration: 0.2 }}
-                              className="group/img relative aspect-[16/10] rounded-2xl overflow-hidden border-0 border-none bg-[#111019] text-center cursor-pointer shadow-[0_8px_24px_rgba(0,0,0,0.7)] focus:outline-none"
+                              className="group/img relative aspect-[16/10] rounded-2xl overflow-hidden border-0 border-none bg-[#111019] text-center cursor-pointer shadow-[0_8px_24px_rgba(0,0,0,0.7)] focus:outline-none transition-transform duration-300 hover:scale-[1.02] active:scale-[0.98] will-change-transform"
                             >
-                              {/* Photo Image */}
                               <img
                                 src={photo.src}
                                 alt={photo.title}
                                 loading="lazy"
-                                className="size-full object-cover transition-transform duration-500 group-hover/img:scale-106"
+                                className="size-full object-cover transition-transform duration-500 group-hover/img:scale-106 will-change-transform"
                               />
 
-                              {/* Dark Vignette Bottom Gradient */}
                               <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/35 to-transparent opacity-90 group-hover/img:opacity-95 transition-opacity" />
 
-                              {/* Top-Right Badge: # 01, # 02, etc. */}
                               <div className="absolute top-3.5 right-3.5 z-10">
                                 <span className="font-mono text-[11px] sm:text-xs font-bold text-white bg-black/80 px-2.5 py-1 rounded-md shadow-md border border-white/10">
                                   {photo.code}
                                 </span>
                               </div>
 
-                              {/* Bottom Centered Meta & Title */}
                               <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5 z-10 flex flex-col items-center justify-center text-center">
                                 <p className="font-tech text-[10px] sm:text-[11px] font-bold tracking-wider text-[#B9ACF0] uppercase truncate drop-shadow-sm max-w-full">
                                   {photo.tag}
@@ -410,20 +425,20 @@ export default function GallerySection() {
                                 </h4>
                               </div>
 
-                              {/* Hover Inspect Icon */}
                               <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity bg-black/40">
                                 <Icon.Maximize2 className="w-6 h-6 text-[#FFAA24] drop-shadow-md" />
                               </div>
-                            </motion.button>
+                            </div>
                           ))}
                         </div>
                       </motion.div>
-                    )}
-                  </AnimatePresence>
-                </motion.div>
-              );
-            })}
-          </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            );
+          })}
+        </div>
         </div>
 
       {/* ====================================================================

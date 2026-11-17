@@ -365,12 +365,12 @@ export default function ShowcaseHeroSection({
         id="hero-canvas-inner"
         className="relative z-10 h-full w-full overflow-hidden select-none transition-colors duration-1000 will-change-transform origin-center"
         style={{
-          backgroundColor: isDarkWebsite ? "#000000" : "#ffffff",
+          backgroundColor: "#000000",
           overflowX: "hidden",
         }}
       >
         {/* =========================================================================
-            STAGE 1: PRE-SCATTER WHITE SHOWCASE CANVAS (Images - LOGO & TRAM REMOVED)
+            STAGE 1: PRE-SCATTER BLACK SHOWCASE CANVAS (Images - LOGO & TRAM REMOVED)
             ========================================================================= */}
         {!isDarkWebsite && (
           <>
@@ -383,7 +383,7 @@ export default function ShowcaseHeroSection({
                 return (
                   <div
                     key={item.id}
-                    className="absolute pointer-events-none will-change-transform shadow-[0_8px_32px_rgba(0,0,0,0.18)] rounded-sm overflow-hidden"
+                    className="absolute pointer-events-none will-change-transform shadow-[0_8px_32px_rgba(0,0,0,0.6)] border border-white/10 rounded-sm overflow-hidden"
                     style={{
                       left: `${item.left}%`,
                       top: `${item.top}%`,
@@ -414,7 +414,7 @@ export default function ShowcaseHeroSection({
             <button
               type="button"
               onClick={() => setExperienceActive(true)}
-              className={`absolute left-1/2 -translate-x-1/2 flex items-center gap-2 cursor-pointer bg-black/5 hover:bg-black/10 border border-black/10 px-5 py-2.5 rounded-full transition-all duration-500 ease-out group ${
+              className={`absolute left-1/2 -translate-x-1/2 flex items-center gap-2 cursor-pointer bg-white/10 hover:bg-white/20 border border-white/20 px-5 py-2.5 rounded-full transition-all duration-500 ease-out group ${
                 experienceActive
                   ? "opacity-0 -translate-y-3 pointer-events-none"
                   : initialReady
@@ -427,12 +427,12 @@ export default function ShowcaseHeroSection({
                 zIndex: 10,
               }}
             >
-              <span className="font-medium text-black whitespace-nowrap text-sm tracking-wide">
+              <span className="font-medium text-white whitespace-nowrap text-sm tracking-wide">
                 Start the experience
               </span>
               <svg
                 viewBox="0 0 49 25"
-                className="h-auto w-4 text-black transition-transform duration-200 group-hover:translate-x-1"
+                className="h-auto w-4 text-white transition-transform duration-200 group-hover:translate-x-1"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
                 aria-hidden="true"
@@ -441,7 +441,7 @@ export default function ShowcaseHeroSection({
                   fillRule="evenodd"
                   clipRule="evenodd"
                   d="M0 12.5C0 12.1317 0.184363 11.7785 0.51253 11.518C0.840698 11.2576 1.28579 11.1113 1.74989 11.1113H43.0228L32.009 2.37364C31.6804 2.11288 31.4958 1.75922 31.4958 1.39045C31.4958 1.02168 31.6804 0.668012 32.009 0.407253C32.3375 0.146493 32.7832 0 33.2479 0C33.7126 0 34.1582 0.146493 34.4868 0.407253L48.4859 11.5168C48.6489 11.6458 48.7782 11.799 48.8664 11.9678C48.9546 12.1365 49 12.3173 49 12.5C49 12.6827 48.9546 12.8635 48.8664 13.0322C48.7782 13.201 48.6489 13.3542 48.4859 13.4832L34.4868 24.5927C34.1582 24.8535 33.7126 25 33.2479 25C32.7832 25 32.3375 24.8535 32.009 24.5927C31.6804 24.332 31.4958 23.9783 31.4958 23.6096C31.4958 23.2408 31.6804 22.8871 32.009 22.6264L43.0228 13.8887H1.74989C1.28579 13.8887 0.840698 13.7424 0.51253 13.482C0.184363 13.2215 0 12.8683 0 12.5Z"
-                  fill="black"
+                  fill="white"
                 />
               </svg>
             </button>
@@ -512,22 +512,22 @@ export default function ShowcaseHeroSection({
                 }}
               />
 
-              {/* Kolkata’26 (Hollow Blue Outline - Exact DevFest Inverted Mask / Google Outline Fonts) */}
+              {/* 2026 (Hollow Royal Violet Outline) */}
               <OutlineText
                 text="2026"
                 maskId="d4-outline-kolkata"
                 fontMode={fontMode}
-                color="#4285F4"
+                color="#714cb6"
                 className="mt-[0.04em] text-[48px] sm:text-[56px] md:text-[66px] lg:text-[82px] xl:text-[96px] 2xl:text-[108px]"
                 style={{
                   fontWeight: fontMode === "googlesans" ? 500 : 700,
-                  filter: "drop-shadow(0 2px 14px rgba(66,133,244,0.5))",
+                  filter: "drop-shadow(0 2px 14px rgba(113,76,182,0.5))",
                   opacity: heroContentRevealed ? 1 : 0,
                   transition: "opacity 900ms ease 260ms",
                 }}
               />
 
-              {/* Bengali Motto: কলকাতার ছন্দে, DevFest-এর আনন্দে ! */}
+              {/* Bengali Motto / Subtitle */}
               <div
                 className="mt-4 sm:mt-5 max-w-[90vw] text-[18px] sm:text-[21px] md:text-[23px] lg:text-[25px] font-medium text-white tracking-normal drop-shadow-[0_2px_16px_rgba(0,0,0,0.8)]"
                 style={{
@@ -546,17 +546,11 @@ export default function ShowcaseHeroSection({
                   transition: "opacity 900ms ease 540ms",
                 }}
               >
-                {/* Get Tickets Button with Google 4-Color Gradient Border */}
+                {/* Midnight Wine Action Button */}
                 <button
                   type="button"
                   onClick={handleExploreClick}
-                  className="flex h-11 sm:h-12 cursor-pointer select-none items-center justify-center whitespace-nowrap rounded-full px-7 sm:px-8 text-[16px] sm:text-[17px] font-semibold text-black transition-all duration-200 hover:scale-105 active:scale-95 shadow-[0_4px_24px_rgba(0,0,0,0.5)]"
-                  style={{
-                    background:
-                      "linear-gradient(#ffffff, #ffffff) padding-box, linear-gradient(98deg, #F63130 0%, #4787EA 35%, #34A853 72%, #FBC02D 100%) border-box",
-                    border: "3px solid transparent",
-                    borderRadius: "50px",
-                  }}
+                  className="flex h-11 sm:h-12 cursor-pointer select-none items-center justify-center whitespace-nowrap rounded-full px-7 sm:px-8 text-[16px] sm:text-[17px] font-semibold text-[#ffffff] bg-[#421d24] hover:bg-[#421d24]/90 border border-[#714cb6]/50 transition-all duration-200 hover:scale-105 active:scale-95 shadow-[0_4px_24px_rgba(66,29,36,0.6)]"
                 >
                   Explore
                 </button>
