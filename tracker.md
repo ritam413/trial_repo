@@ -1,5 +1,29 @@
 # Agent Handoff Log — tracker.md
 
+## 2026-11-18 — Restore Inverted SVG Cutout Mask on Hero Outline Typography
+
+### Objective
+Fix the double-stroke / intersecting inner polygon line artifacts on `SANSKARAN` that occurred with `-webkit-text-stroke`. Re-instate the authentic DevFest Kolkata inverted SVG mask architecture to ensure clean, hollow, artifact-free letterforms.
+
+### Changes Made
+1. **Outline Text Engine (`src/components/event/ShowcaseHeroSection.tsx`)**:
+   - Re-instated the inverted SVG mask: white rectangle mask passing outer round stroke with solid black mask text cutting away all interior paths and overlapping polygons.
+   - Preserved `inline-block text-center` and proportional responsive font scaling.
+2. **Global Outline Styles (`src/app/globals.css`)**:
+   - Cleaned up `.d4-outline` and `.d4-outline text`, setting `stroke-width: 3px` on mobile, `5px` on tablet/desktop, and up to `9px` on 2K displays.
+   - Removed intermediate `-webkit-text-stroke` rules that caused the font contour artifacts.
+3. **Verification**:
+   - `npm run build` compiled with status code 0 via Next.js 16.4.6 (Turbopack) & React 19.
+
+### Current State
+`SANSKARAN` renders with clean, pristine, hollow outline contours with zero double-strokes, interior artifacts, or polygon crossings.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/ShowcaseHeroSection.tsx` lines 150-250 if outline stroke adjustments are requested.
+2. Keep `origin` and `trial` remote synchronizations.
+
+---
+
 ## 2026-11-18 — Photo Card Title Typography: Switch from Bold Display to Normal Font
 
 ### Objective

@@ -29,7 +29,7 @@ All foundational libraries, responsive layout engines, and the streamlined **Dev
     - Interactive inspection modal dossier for exploring guild disciplines and arena lineup pillars.
     - Opening showcase pre-scatter canvas updated to pure black (`#000000`) for seamless contrast with the 9 diamond mosaic imagery.
     - Direct integration of `ShowcaseHeroSection` with zero floating switcher overlays or unneeded mode toggles.
-    - **Impeccable Hollow Outline Typography Lockup**: Hardware-accelerated CSS outline engine with transparent fill and responsive stroke widths (`2px` mobile to `7.5px` desktop) providing 100% mathematical and optical center alignment across all devices:
+    - **DevFest Inverted SVG Mask Hollow Typography Lockup**: Authentic inverted SVG cutout mask technique eliminating overlapping interior path artifacts while providing 100% hollow outline letterforms across all devices:
       - `SANSKARAN`: White outline with proportional scale ramp (`text-[36px]` mobile up to `144px` desktop) and dual-layer ambient lighting.
       - `2026`: Electric Lavender outline (`#a78bfa`) with calibrated `0.16em` tracking for harmonic balance.
       - `#COMEJOINTHEHAPPINESS`: Space Grotesk tech grotesque subtitle with `tracking-[0.24em]` uppercase styling.

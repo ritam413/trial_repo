@@ -150,12 +150,14 @@ interface OutlineTextProps {
 
 /**
  * Authentic Hollow Outline Text Renderer.
- * Engineered for 100% true visual and mathematical center alignment.
- * Uses hardware-accelerated CSS text-stroke with transparent body fill,
- * ensuring zero SVG mask distortion or viewport clipping.
+ * DevFest Kolkata uses Google Sans with an inverted SVG mask:
+ * - White mask rect passes outer stroke through
+ * - Black mask text completely removes inside body fill
+ * - Rounded line joins give it smooth contours with zero letter-clipping
  */
 export function OutlineText({
   text,
+  maskId,
   className = "",
   style,
   color = "#ffffff",
@@ -191,25 +193,57 @@ export function OutlineText({
     );
   }
 
+  // Authentic DevFest Inverted SVG Mask (100% hollow with round outer stroke & zero interior artifacts)
   return (
     <div
-      className={`relative select-none text-center flex items-center justify-center whitespace-nowrap ${className}`}
+      className={`relative select-none d4-outline whitespace-nowrap text-center inline-block ${className}`}
       style={{
+        color,
         lineHeight: 1,
         ...style,
       }}
     >
-      <span
-        className="block text-center d4-outline-text"
-        style={{
-          color: "transparent",
-          WebkitTextStroke: `var(--outline-stroke, 2.5px) ${color}`,
-          fontFamily: '"Google Sans", system-ui, -apple-system, sans-serif',
-          paintOrder: "stroke fill",
-        }}
+      {/* Invisible spacer text ensuring exact box dimensions and natural wrap */}
+      <span style={{ color: "transparent" }}>{text}</span>
+
+      {/* SVG Outline with Inverted Cutout Mask */}
+      <svg
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 h-full w-full"
+        style={{ overflow: "visible" }}
       >
-        {text}
-      </span>
+        <defs>
+          <mask
+            id={maskId}
+            maskUnits="userSpaceOnUse"
+            x="-20%"
+            y="-20%"
+            width="140%"
+            height="140%"
+          >
+            {/* White allows all outer stroke through */}
+            <rect x="-20%" y="-20%" width="140%" height="140%" fill="#ffffff" />
+            {/* Black completely cuts away the inside fill so it is 100% hollow */}
+            <text
+              x="50%"
+              y="50%"
+              textAnchor="middle"
+              dominantBaseline="central"
+            >
+              {text}
+            </text>
+          </mask>
+        </defs>
+        <text
+          x="50%"
+          y="50%"
+          textAnchor="middle"
+          dominantBaseline="central"
+          mask={`url(#${maskId})`}
+        >
+          {text}
+        </text>
+      </svg>
     </div>
   );
 }
