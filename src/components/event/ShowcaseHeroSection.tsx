@@ -499,7 +499,7 @@ export default function ShowcaseHeroSection({
             <div className="pointer-events-none absolute inset-0 z-20 flex flex-col items-center justify-center px-4 text-center">
               {/* DevFest (Hollow White Outline - Exact DevFest Inverted Mask / Google Outline Fonts) */}
               <OutlineText
-                text="SAHOTSAVA"
+                text="SANSKARAN"
                 maskId="d4-outline-devfest"
                 fontMode={fontMode}
                 color="#ffffff"
@@ -535,7 +535,7 @@ export default function ShowcaseHeroSection({
                   transition: "opacity 900ms ease 400ms",
                 }}
               >
-                Organized By Sanskaran
+                #COMEJOINTHEHAPPINESS
               </div>
 
               {/* Interactive Action Buttons & Chevron */}
