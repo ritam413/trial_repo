@@ -45,6 +45,7 @@ All foundational libraries, responsive layout engines, and the streamlined **Dev
     - Centered editorial header lockup, thin separator rule, and 6-photo grid with lightbox inspection modal.
     - **100% Mathematically & Visually Centered Slit Typography**: Pinned society titles using absolute inset positioning (`absolute inset-0 flex items-center justify-center`) ensuring all 7 society titles align down a single true vertical center axis.
     - **Streamlined Minimalist Slits**: Removed clutter elements (number badges `01..07` and `6 ARCHIVES ▾` chips) from slit bars and expanded headers.
+    - **Responsive Mobile Typography**: Adjusted slit titles to `text-[13px] sm:text-xl md:text-2xl lg:text-3xl` and hid the left category on `< 640px` (`hidden sm:flex`) to eliminate overlapping text collisions on mobile viewports. Expanded poster titles scale smoothly from `text-2xl` on mobile to `text-7xl` on desktop.
   - **Complete Elimination of Playing Card Metaphor Across All Sections**:
     - `Navbar.tsx`: Replaced playing card suit logo `♠` with glowing festival star `✦`, changed subtitle to `CULTURAL CONCLAVE`, updated CTA to `Explore Festival`.
     - `Footer.tsx`: Updated branding to `SANSKARAN & SAHOTSAVA 2026` with tagline `"Where Intellectual Heritage Meets Stadium Euphoria"`.

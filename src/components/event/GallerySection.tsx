@@ -272,17 +272,17 @@ export default function GallerySection() {
                     </div>
                   )}
 
-                  {/* Left: Category Only (Numbers removed) */}
-                  <div className="relative z-10 flex items-center shrink-0">
+                  {/* Left: Category Only (Hidden on mobile to eliminate overlap with centered title) */}
+                  <div className="hidden sm:flex relative z-10 items-center shrink-0">
                     <span className="font-tech text-[10px] sm:text-xs tracking-widest text-[#B9ACF0]/90 uppercase font-semibold">
                       {club.category}
                     </span>
                   </div>
 
-                  {/* Center: Absolute 100% True-Centered Calligraphy Title (Visually centered regardless of left/right content) */}
-                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none px-4 sm:px-16">
+                  {/* Center: Absolute 100% True-Centered Calligraphy Title (Proportional & responsive text sizing) */}
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none px-3 sm:px-16">
                     <p
-                      className={`font-slit-editorial text-lg sm:text-2xl md:text-3xl text-[#FFF4E0] tracking-wide whitespace-nowrap drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)] transition-all duration-300 ${
+                      className={`font-slit-editorial text-[13px] sm:text-xl md:text-2xl lg:text-3xl text-[#FFF4E0] tracking-wide whitespace-nowrap drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)] transition-all duration-300 ${
                         isExpanded ? "opacity-0 scale-95" : "opacity-100 scale-100"
                       }`}
                     >
@@ -368,18 +368,18 @@ export default function GallerySection() {
 
                         {/* Header Lockup (Centered Showcase Title) */}
                         <div className="w-full flex flex-col items-center justify-center text-center">
-                          <p className="font-tech text-xs sm:text-sm font-bold tracking-widest uppercase text-[#B9ACF0] mb-2">
+                          <p className="font-tech text-[10px] sm:text-xs md:text-sm font-bold tracking-widest uppercase text-[#B9ACF0] mb-1.5 sm:mb-2">
                             {club.category}
                           </p>
 
                           <h3
-                            className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tight leading-none uppercase drop-shadow-[0_4px_24px_rgba(0,0,0,0.9)]"
+                            className="font-display text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl tracking-tight leading-none uppercase drop-shadow-[0_4px_24px_rgba(0,0,0,0.9)]"
                             style={{ color: club.accentColor }}
                           >
                             {club.name}
                           </h3>
 
-                          <p className="mt-2.5 font-serif italic text-base sm:text-lg md:text-xl text-[#FFF4E0]/90 max-w-2xl mx-auto">
+                          <p className="mt-2 sm:mt-2.5 font-serif italic text-xs sm:text-base md:text-lg text-[#FFF4E0]/90 max-w-2xl mx-auto">
                             &ldquo;{club.motto}&rdquo;
                           </p>
                         </div>

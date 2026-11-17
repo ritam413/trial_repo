@@ -1,5 +1,24 @@
 # Agent Handoff Log — tracker.md
 
+## 2026-11-18 — Mobile Typography Refinement for Gallery Slits
+
+### Objective
+Resolve mobile typography scaling and overlapping text collisions in `GallerySection.tsx` where long category labels (e.g. `CINEMATOGRAPHY & MEDIA`) were crashing into centered society titles (`MIDNIGHT LENS`) on small viewport widths (< 640px).
+
+### Changes Made
+1. **Prevented Overlapping Text on Mobile (`src/components/event/GallerySection.tsx`)**:
+   - Made the left category label `hidden sm:flex`, hiding it on mobile viewports (< 640px) so the centered society title has the full horizontal width with clean breathing margins.
+   - Retained the category label on tablet/desktop (`sm:` and above) where ample horizontal space exists.
+2. **Proportional Mobile Typography**:
+   - Scaled down the collapsed slit title from `text-lg` to `text-[13px] sm:text-xl md:text-2xl lg:text-3xl`, ensuring zero word breaks or visual crowding on 360px–400px devices.
+   - Scaled the expanded poster showcase title to `text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl` and motto to `text-xs sm:text-base md:text-lg` for mobile screens.
+
+### Verification
+- `npm run build` executed with status code 0 via Next.js 16.4.6 (Turbopack) & React 19.
+- Verified elimination of text collision on mobile and clean responsive scaling across all screen breakpoints.
+
+---
+
 ## 2026-11-18 — Center Gallery Slit Titles & Remove Numbers and Archive Badges
 
 ### Objective
