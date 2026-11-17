@@ -150,14 +150,12 @@ interface OutlineTextProps {
 
 /**
  * Authentic Hollow Outline Text Renderer.
- * DevFest Kolkata uses Google Sans with an inverted SVG mask:
- * - White mask rect passes outer stroke through
- * - Black mask text completely removes inside body fill
- * - Rounded line joins give it smooth contours with zero letter-clipping
+ * Engineered for 100% true visual and mathematical center alignment.
+ * Uses hardware-accelerated CSS text-stroke with transparent body fill,
+ * ensuring zero SVG mask distortion or viewport clipping.
  */
 export function OutlineText({
   text,
-  maskId,
   className = "",
   style,
   color = "#ffffff",
@@ -166,7 +164,7 @@ export function OutlineText({
   if (fontMode === "londrina") {
     return (
       <div
-        className={`font-londrina-outline select-none whitespace-nowrap ${className}`}
+        className={`font-londrina-outline select-none whitespace-nowrap text-center ${className}`}
         style={{
           color,
           lineHeight: 1,
@@ -181,7 +179,7 @@ export function OutlineText({
   if (fontMode === "bungee") {
     return (
       <div
-        className={`font-bungee-outline select-none whitespace-nowrap ${className}`}
+        className={`font-bungee-outline select-none whitespace-nowrap text-center ${className}`}
         style={{
           color,
           lineHeight: 1,
@@ -193,57 +191,25 @@ export function OutlineText({
     );
   }
 
-  // Authentic DevFest Inverted SVG Mask (100% hollow with round outer stroke)
   return (
     <div
-      className={`relative select-none d4-outline whitespace-nowrap ${className}`}
+      className={`relative select-none text-center flex items-center justify-center whitespace-nowrap ${className}`}
       style={{
-        color,
         lineHeight: 1,
         ...style,
       }}
     >
-      {/* Invisible spacer text ensuring exact box dimensions and natural wrap */}
-      <span style={{ color: "transparent" }}>{text}</span>
-
-      {/* SVG Outline with Inverted Cutout Mask */}
-      <svg
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 h-full w-full"
-        style={{ overflow: "visible" }}
+      <span
+        className="block text-center d4-outline-text"
+        style={{
+          color: "transparent",
+          WebkitTextStroke: `var(--outline-stroke, 2.5px) ${color}`,
+          fontFamily: '"Google Sans", system-ui, -apple-system, sans-serif',
+          paintOrder: "stroke fill",
+        }}
       >
-        <defs>
-          <mask
-            id={maskId}
-            maskUnits="userSpaceOnUse"
-            x="-20%"
-            y="-20%"
-            width="140%"
-            height="140%"
-          >
-            {/* White allows all outer stroke through */}
-            <rect x="-20%" y="-20%" width="140%" height="140%" fill="#ffffff" />
-            {/* Black completely cuts away the inside fill so it is 100% hollow */}
-            <text
-              x="50%"
-              y="50%"
-              textAnchor="middle"
-              dominantBaseline="central"
-            >
-              {text}
-            </text>
-          </mask>
-        </defs>
-        <text
-          x="50%"
-          y="50%"
-          textAnchor="middle"
-          dominantBaseline="central"
-          mask={`url(#${maskId})`}
-        >
-          {text}
-        </text>
-      </svg>
+        {text}
+      </span>
     </div>
   );
 }
@@ -491,45 +457,46 @@ export default function ShowcaseHeroSection({
         )}
 
         {/* =========================================================================
-            STAGE 3: HERO CONTENT LOCKUP (EXACT DEVFEST KOLKATA TYPOGRAPHY & LAYOUT)
+            STAGE 3: HERO CONTENT LOCKUP (TRUE CENTERED & IMPECCABLE TYPOGRAPHY)
             ========================================================================= */}
         {isDarkWebsite && (
           <>
-            {/* Center Hero Content Container */}
-            <div className="pointer-events-none absolute inset-0 z-20 flex flex-col items-center justify-center px-4 text-center">
-              {/* DevFest (Hollow White Outline - Exact DevFest Inverted Mask / Google Outline Fonts) */}
+            {/* Center Hero Content Container (Guaranteed 100% Horizontal & Vertical Centering) */}
+            <div className="pointer-events-none absolute inset-0 z-20 w-full max-w-full flex flex-col items-center justify-center px-4 sm:px-8 text-center mx-auto">
+              {/* Primary Festival Title (Hollow White Outline - Scaled proportionally for all mobile widths) */}
               <OutlineText
                 text="SANSKARAN"
                 maskId="d4-outline-devfest"
                 fontMode={fontMode}
                 color="#ffffff"
-                className="text-[72px] sm:text-[84px] md:text-[96px] lg:text-[116px] xl:text-[132px] 2xl:text-[144px]"
+                className="text-[36px] min-[360px]:text-[42px] min-[400px]:text-[48px] min-[520px]:text-[60px] sm:text-[84px] md:text-[98px] lg:text-[118px] xl:text-[134px] 2xl:text-[144px]"
                 style={{
                   fontWeight: 700,
-                  filter: "drop-shadow(0 2px 14px rgba(0,0,0,0.75))",
+                  filter: "drop-shadow(0 2px 20px rgba(255,255,255,0.22)) drop-shadow(0 4px 32px rgba(0,0,0,0.95))",
                   opacity: heroContentRevealed ? 1 : 0,
                   transition: "opacity 900ms ease 120ms",
                 }}
               />
 
-              {/* 2026 (Hollow Royal Violet Outline) */}
+              {/* 2026 (Hollow Electric Lavender Outline with calibrated tracking) */}
               <OutlineText
                 text="2026"
                 maskId="d4-outline-kolkata"
                 fontMode={fontMode}
-                color="#714cb6"
-                className="mt-[0.04em] text-[48px] sm:text-[56px] md:text-[66px] lg:text-[82px] xl:text-[96px] 2xl:text-[108px]"
+                color="#a78bfa"
+                className="mt-1 sm:mt-2.5 text-[24px] min-[360px]:text-[28px] min-[400px]:text-[32px] min-[520px]:text-[42px] sm:text-[54px] md:text-[64px] lg:text-[80px] xl:text-[94px] 2xl:text-[104px]"
                 style={{
-                  fontWeight: fontMode === "googlesans" ? 500 : 700,
-                  filter: "drop-shadow(0 2px 14px rgba(113,76,182,0.5))",
+                  fontWeight: fontMode === "googlesans" ? 600 : 700,
+                  letterSpacing: "0.16em",
+                  filter: "drop-shadow(0 2px 18px rgba(167,139,250,0.65)) drop-shadow(0 4px 24px rgba(0,0,0,0.85))",
                   opacity: heroContentRevealed ? 1 : 0,
                   transition: "opacity 900ms ease 260ms",
                 }}
               />
 
-              {/* Bengali Motto / Subtitle */}
+              {/* Anthem Tagline - Impeccable Tech Grotesque styling */}
               <div
-                className="mt-4 sm:mt-5 max-w-[90vw] text-[18px] sm:text-[21px] md:text-[23px] lg:text-[25px] font-medium text-white tracking-normal drop-shadow-[0_2px_16px_rgba(0,0,0,0.8)]"
+                className="mt-4 sm:mt-6 max-w-[92vw] font-tech text-[10.5px] min-[360px]:text-[12px] min-[400px]:text-[13px] sm:text-[16px] md:text-[17px] font-semibold text-[#FFF4E0] tracking-[0.24em] sm:tracking-[0.3em] uppercase drop-shadow-[0_2px_18px_rgba(0,0,0,0.95)] whitespace-nowrap text-center"
                 style={{
                   opacity: heroContentRevealed ? 1 : 0,
                   transition: "opacity 900ms ease 400ms",
@@ -540,17 +507,17 @@ export default function ShowcaseHeroSection({
 
               {/* Interactive Action Buttons & Chevron */}
               <div
-                className="pointer-events-auto mt-6 sm:mt-8 flex flex-col items-center gap-4"
+                className="pointer-events-auto mt-6 sm:mt-8 flex flex-col items-center gap-4 text-center"
                 style={{
                   opacity: heroContentRevealed ? 1 : 0,
                   transition: "opacity 900ms ease 540ms",
                 }}
               >
-                {/* Midnight Wine Action Button */}
+                {/* Impeccable Glassmorphism Action Button */}
                 <button
                   type="button"
                   onClick={handleExploreClick}
-                  className="flex h-11 sm:h-12 cursor-pointer select-none items-center justify-center whitespace-nowrap rounded-full px-7 sm:px-8 text-[16px] sm:text-[17px] font-semibold text-[#ffffff] bg-[#421d24] hover:bg-[#421d24]/90 border border-[#714cb6]/50 transition-all duration-200 hover:scale-105 active:scale-95 shadow-[0_4px_24px_rgba(66,29,36,0.6)]"
+                  className="flex h-11 sm:h-12 cursor-pointer select-none items-center justify-center whitespace-nowrap rounded-full px-8 sm:px-9 text-xs sm:text-sm font-bold tracking-[0.16em] uppercase text-white bg-white/10 hover:bg-white/20 border border-white/25 hover:border-white/50 backdrop-blur-md transition-all duration-300 hover:scale-105 active:scale-95 shadow-[0_4px_24px_rgba(0,0,0,0.5),0_0_20px_rgba(255,255,255,0.12)]"
                 >
                   Explore
                 </button>
@@ -560,10 +527,10 @@ export default function ShowcaseHeroSection({
                   type="button"
                   onClick={handleExploreClick}
                   aria-label="Scroll to content"
-                  className="mt-1 p-2 text-white/80 hover:text-white cursor-pointer transition-transform duration-300 hover:translate-y-1 animate-bounce"
+                  className="mt-1 p-2 text-white/70 hover:text-white cursor-pointer transition-transform duration-300 hover:translate-y-1 animate-bounce"
                 >
                   <svg
-                    className="w-6 h-6 sm:w-7 sm:h-7 stroke-current"
+                    className="w-5 h-5 sm:w-6 sm:h-6 stroke-current"
                     fill="none"
                     viewBox="0 0 24 24"
                     strokeWidth={2.5}
@@ -576,8 +543,6 @@ export default function ShowcaseHeroSection({
                   </svg>
                 </button>
               </div>
-
-             
             </div>
           </>
         )}
