@@ -1,5 +1,25 @@
 # Agent Handoff Log — tracker.md
 
+## 2026-11-18 — Upload Repository to Temporary GitHub Remote & Gallery Radius Update
+
+### Objective
+1. Add temporary remote `trial` pointing to `https://github.com/ritam413/trial_repo.git` and push the full repository on `main`.
+2. Commit and push the user's corner radius update (`rounded-lg sm:rounded-lg`) on `GallerySection.tsx` across both `origin` and `trial` remotes.
+
+### Changes Made
+1. **Remote Configuration**:
+   - Added remote `trial` pointing to `https://github.com/ritam413/trial_repo.git`.
+   - Pushed `main` branch to `trial`.
+2. **Gallery Slit Radius**:
+   - Updated corner radius of gallery cards to `rounded-lg sm:rounded-lg` (8px border-radius), eliminating pill-like curvature.
+   - Pushed commit `9b83548` to both `origin` and `trial`.
+
+### Verification
+- `git push origin main` and `git push trial main` completed with status code 0.
+- `git status` clean.
+
+---
+
 ## 2026-11-18 — Mobile Typography Refinement for Gallery Slits
 
 ### Objective
