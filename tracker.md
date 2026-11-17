@@ -1,5 +1,41 @@
 # Agent Handoff Log — tracker.md
 
+## 2026-11-18 — Actual Festival Society Titles & Wings in Gallery Section
+
+### Objective
+Update the Cultural Gallery section with the 14 actual student societies, wings, and creative cells of the festival as provided by the user:
+`ARITRAM`, `CHITRAKA DESIGNING & EDITING`, `CHITRAKA PHOTOGRAPHY`, `CHITRAKA ART AND CRAFT`, `CHITRAKA`, `CHECKMATE`, `DHRUBOTARA`, `NRITAKSHA`, `PAPERBACK SOCIETY`, `PHOENIX`, `SWARAKRITI`, `STEP ALPHA`, `DESI GROOVER`, `BEAT BUSTER`.
+
+### Changes Made
+1. **Real Festival Society Registry (`src/lib/clubsData.ts`)**:
+   - Expanded `CLUBS_DATA` from 7 placeholder societies to the complete 14-society lineup.
+   - Configured high-resolution photo archives (6 photos per society, 84 curated photos total), custom festival mottos, rich descriptions, and brand accent colors.
+2. **Individual Expanded Atmospheric Themes (`src/components/event/GallerySection.tsx`)**:
+   - Added tailored color themes and ambient halos in `CLUB_EXPANDED_THEMES` for each of the 14 societies:
+     - `aritram`: Crimson Wine Noir (`#150607`, accent `#E8502A`)
+     - `chitraka-design`: Cyber Cyan Navy (`#04121F`, accent `#38BDF8`)
+     - `chitraka-photography`: Darkroom Amber Gold (`#180D03`, accent `#F59E0B`)
+     - `chitraka-art`: Twilight Lavender (`#0E0A1E`, accent `#B9ACF0`)
+     - `chitraka`: Midnight Fuchsia Velvet (`#190514`, accent `#EC4899`)
+     - `checkmate`: Platinum Slate Noir (`#0B0F15`, accent `#94A3B8`)
+     - `dhrubotara`: Cosmic Deep Indigo (`#07081B`, accent `#818CF8`)
+     - `nritaksha`: Midnight Ruby Velvet (`#1A0512`, accent `#F43F5E`)
+     - `paperback-society`: Vintage Sepia Ochre (`#1A0F03`, accent `#FBBF24`)
+     - `phoenix`: Cyber Flame Neon (`#180603`, accent `#FF5722`)
+     - `swarakriti`: Solar Amber Gold (`#160E03`, accent `#EAB308`)
+     - `step-alpha`: Emerald Street Jade (`#03170E`, accent `#10B981`)
+     - `desi-groover`: Saffron Tangerine Noir (`#1A0B03`, accent `#F97316`)
+     - `beat-buster`: Electric Cyan Teal (`#031418`, accent `#06B6D4`)
+3. **Responsive Slit Layout & Centering**:
+   - Pinned mathematical true-centering for all 14 society titles across the gallery stack.
+   - Preserved `rounded-lg` corner radius and smooth downward accordion unfolding physics.
+
+### Verification
+- `npm run build` executed with status code 0 via Next.js 16.4.6 (Turbopack) & React 19.
+- Verified all 14 societies render cleanly and expand smoothly.
+
+---
+
 ## 2026-11-18 — Upload Repository to Temporary GitHub Remote & Gallery Radius Update
 
 ### Objective

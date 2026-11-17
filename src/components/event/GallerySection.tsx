@@ -77,7 +77,15 @@ interface ClubExpandedTheme {
 }
 
 const CLUB_EXPANDED_THEMES: Record<string, ClubExpandedTheme> = {
-  // 01: THEATRE OF SHADOWS (Dramatics - Crimson Wine Noir)
+  // 01: ARITRAM (Dramatics & Theatre - Crimson Wine Noir)
+  aritram: {
+    bg: "#150607",
+    gradient: "linear-gradient(180deg, #2A090D 0%, #170507 45%, #0B0203 100%)",
+    border: "rgba(232, 80, 42, 0.45)",
+    glow: "rgba(232, 80, 42, 0.35)",
+    ambient: "#E8502A",
+    badgeBg: "rgba(232, 80, 42, 0.2)",
+  },
   dramatics: {
     bg: "#150607",
     gradient: "linear-gradient(180deg, #2A090D 0%, #170507 45%, #0B0203 100%)",
@@ -86,25 +94,33 @@ const CLUB_EXPANDED_THEMES: Record<string, ClubExpandedTheme> = {
     ambient: "#E8502A",
     badgeBg: "rgba(232, 80, 42, 0.2)",
   },
-  // 02: NOCTURNE SYMPHONY (Music - Solar Amber Bronze Noir)
-  music: {
-    bg: "#160E03",
-    gradient: "linear-gradient(180deg, #2A1804 0%, #150C02 45%, #0A0601 100%)",
-    border: "rgba(255, 170, 36, 0.45)",
-    glow: "rgba(255, 170, 36, 0.35)",
-    ambient: "#FFAA24",
-    badgeBg: "rgba(255, 170, 36, 0.2)",
+  // 02: CHITRAKA DESIGNING & EDITING (Digital Design & VFX - Cyber Cyan Navy)
+  "chitraka-design": {
+    bg: "#04121F",
+    gradient: "linear-gradient(180deg, #07223D 0%, #04121F 45%, #02070F 100%)",
+    border: "rgba(56, 189, 248, 0.45)",
+    glow: "rgba(56, 189, 248, 0.35)",
+    ambient: "#38BDF8",
+    badgeBg: "rgba(56, 189, 248, 0.2)",
   },
-  // 03: CRIMSON CYPHER (Dance - Midnight Velvet Magenta / Ruby)
-  dance: {
-    bg: "#1A0512",
-    gradient: "linear-gradient(180deg, #2E0720 0%, #170410 45%, #0B0207 100%)",
-    border: "rgba(244, 63, 94, 0.45)",
-    glow: "rgba(244, 63, 94, 0.35)",
-    ambient: "#F43F5E",
-    badgeBg: "rgba(244, 63, 94, 0.2)",
+  // 03: CHITRAKA PHOTOGRAPHY (Photography & Media - Darkroom Amber Gold)
+  "chitraka-photography": {
+    bg: "#180D03",
+    gradient: "linear-gradient(180deg, #2B1804 0%, #180D03 45%, #0A0501 100%)",
+    border: "rgba(245, 158, 11, 0.45)",
+    glow: "rgba(245, 158, 11, 0.35)",
+    ambient: "#F59E0B",
+    badgeBg: "rgba(245, 158, 11, 0.2)",
   },
-  // 04: RISOGRAPH PAVILION (Fine Arts - Royal Twilight Indigo / Violet)
+  // 04: CHITRAKA ART AND CRAFT (Fine Arts & Sculpture - Twilight Lavender)
+  "chitraka-art": {
+    bg: "#0E0A1E",
+    gradient: "linear-gradient(180deg, #1C123B 0%, #0D081B 45%, #06040F 100%)",
+    border: "rgba(185, 172, 240, 0.45)",
+    glow: "rgba(185, 172, 240, 0.35)",
+    ambient: "#B9ACF0",
+    badgeBg: "rgba(185, 172, 240, 0.2)",
+  },
   "fine-arts": {
     bg: "#0E0A1E",
     gradient: "linear-gradient(180deg, #1C123B 0%, #0D081B 45%, #06040F 100%)",
@@ -113,7 +129,59 @@ const CLUB_EXPANDED_THEMES: Record<string, ClubExpandedTheme> = {
     ambient: "#B9ACF0",
     badgeBg: "rgba(185, 172, 240, 0.2)",
   },
-  // 05: SPOKEN WORD ARENA (Literary - Vintage Sepia Tobacco / Warm Ochre)
+  // 05: CHITRAKA (Creative Arts Atelier - Midnight Fuchsia Velvet)
+  chitraka: {
+    bg: "#190514",
+    gradient: "linear-gradient(180deg, #2E0724 0%, #190514 45%, #0C020A 100%)",
+    border: "rgba(236, 72, 153, 0.45)",
+    glow: "rgba(236, 72, 153, 0.35)",
+    ambient: "#EC4899",
+    badgeBg: "rgba(236, 72, 153, 0.2)",
+  },
+  // 06: CHECKMATE (Chess & Strategy - Platinum Slate Noir)
+  checkmate: {
+    bg: "#0B0F15",
+    gradient: "linear-gradient(180deg, #161D26 0%, #0B0F15 45%, #05070B 100%)",
+    border: "rgba(148, 163, 184, 0.45)",
+    glow: "rgba(148, 163, 184, 0.35)",
+    ambient: "#94A3B8",
+    badgeBg: "rgba(148, 163, 184, 0.2)",
+  },
+  // 07: DHRUBOTARA (Astronomy & Science - Cosmic Deep Indigo)
+  dhrubotara: {
+    bg: "#07081B",
+    gradient: "linear-gradient(180deg, #12143B 0%, #07081B 45%, #03040E 100%)",
+    border: "rgba(129, 140, 248, 0.45)",
+    glow: "rgba(129, 140, 248, 0.35)",
+    ambient: "#818CF8",
+    badgeBg: "rgba(129, 140, 248, 0.2)",
+  },
+  // 08: NRITAKSHA (Dance Troupe - Midnight Ruby Velvet)
+  nritaksha: {
+    bg: "#1A0512",
+    gradient: "linear-gradient(180deg, #2E0720 0%, #170410 45%, #0B0207 100%)",
+    border: "rgba(244, 63, 94, 0.45)",
+    glow: "rgba(244, 63, 94, 0.35)",
+    ambient: "#F43F5E",
+    badgeBg: "rgba(244, 63, 94, 0.2)",
+  },
+  dance: {
+    bg: "#1A0512",
+    gradient: "linear-gradient(180deg, #2E0720 0%, #170410 45%, #0B0207 100%)",
+    border: "rgba(244, 63, 94, 0.45)",
+    glow: "rgba(244, 63, 94, 0.35)",
+    ambient: "#F43F5E",
+    badgeBg: "rgba(244, 63, 94, 0.2)",
+  },
+  // 09: PAPERBACK SOCIETY (Literature & Debate - Vintage Sepia Ochre)
+  "paperback-society": {
+    bg: "#1A0F03",
+    gradient: "linear-gradient(180deg, #2E1905 0%, #170D02 45%, #0C0601 100%)",
+    border: "rgba(251, 191, 36, 0.45)",
+    glow: "rgba(251, 191, 36, 0.35)",
+    ambient: "#FBBF24",
+    badgeBg: "rgba(251, 191, 36, 0.2)",
+  },
   literary: {
     bg: "#1A0F03",
     gradient: "linear-gradient(180deg, #2E1905 0%, #170D02 45%, #0C0601 100%)",
@@ -122,7 +190,67 @@ const CLUB_EXPANDED_THEMES: Record<string, ClubExpandedTheme> = {
     ambient: "#F59E0B",
     badgeBg: "rgba(245, 158, 11, 0.2)",
   },
-  // 06: AVANT-GARDE RUNWAY (Fashion - Haute Couture Emerald / Spruce Jade)
+  // 10: PHOENIX (Tech & Gaming - Cyber Flame Neon)
+  phoenix: {
+    bg: "#180603",
+    gradient: "linear-gradient(180deg, #300C06 0%, #180603 45%, #0A0201 100%)",
+    border: "rgba(255, 87, 34, 0.45)",
+    glow: "rgba(255, 87, 34, 0.35)",
+    ambient: "#FF5722",
+    badgeBg: "rgba(255, 87, 34, 0.2)",
+  },
+  pheonix: {
+    bg: "#180603",
+    gradient: "linear-gradient(180deg, #300C06 0%, #180603 45%, #0A0201 100%)",
+    border: "rgba(255, 87, 34, 0.45)",
+    glow: "rgba(255, 87, 34, 0.35)",
+    ambient: "#FF5722",
+    badgeBg: "rgba(255, 87, 34, 0.2)",
+  },
+  // 11: SWARAKRITI (Music Society - Solar Amber Gold)
+  swarakriti: {
+    bg: "#160E03",
+    gradient: "linear-gradient(180deg, #2A1804 0%, #150C02 45%, #0A0601 100%)",
+    border: "rgba(234, 179, 8, 0.45)",
+    glow: "rgba(234, 179, 8, 0.35)",
+    ambient: "#EAB308",
+    badgeBg: "rgba(234, 179, 8, 0.2)",
+  },
+  music: {
+    bg: "#160E03",
+    gradient: "linear-gradient(180deg, #2A1804 0%, #150C02 45%, #0A0601 100%)",
+    border: "rgba(255, 170, 36, 0.45)",
+    glow: "rgba(255, 170, 36, 0.35)",
+    ambient: "#FFAA24",
+    badgeBg: "rgba(255, 170, 36, 0.2)",
+  },
+  // 12: STEP ALPHA (Urban Hip-Hop & Street - Emerald Street Jade)
+  "step-alpha": {
+    bg: "#03170E",
+    gradient: "linear-gradient(180deg, #062B1A 0%, #03170E 45%, #010B07 100%)",
+    border: "rgba(16, 185, 129, 0.45)",
+    glow: "rgba(16, 185, 129, 0.35)",
+    ambient: "#10B981",
+    badgeBg: "rgba(16, 185, 129, 0.2)",
+  },
+  // 13: DESI GROOVER (Bollywood & Folk Dance - Saffron Tangerine Noir)
+  "desi-groover": {
+    bg: "#1A0B03",
+    gradient: "linear-gradient(180deg, #2E1405 0%, #1A0B03 45%, #0C0501 100%)",
+    border: "rgba(249, 115, 22, 0.45)",
+    glow: "rgba(249, 115, 22, 0.35)",
+    ambient: "#F97316",
+    badgeBg: "rgba(249, 115, 22, 0.2)",
+  },
+  // 14: BEAT BUSTER (Beatbox, Rap & Acoustic - Electric Cyan Teal)
+  "beat-buster": {
+    bg: "#031418",
+    gradient: "linear-gradient(180deg, #05272F 0%, #031418 45%, #010A0C 100%)",
+    border: "rgba(6, 182, 212, 0.45)",
+    glow: "rgba(6, 182, 212, 0.35)",
+    ambient: "#06B6D4",
+    badgeBg: "rgba(6, 182, 212, 0.2)",
+  },
   fashion: {
     bg: "#041611",
     gradient: "linear-gradient(180deg, #072B21 0%, #041611 45%, #020A08 100%)",
@@ -131,7 +259,6 @@ const CLUB_EXPANDED_THEMES: Record<string, ClubExpandedTheme> = {
     ambient: "#34D399",
     badgeBg: "rgba(52, 211, 153, 0.2)",
   },
-  // 07: MIDNIGHT LENS (Cinematography - Darkroom Sapphire / Electric Cyan Navy)
   cinematography: {
     bg: "#040F1F",
     gradient: "linear-gradient(180deg, #071E3D 0%, #040E1E 45%, #02060F 100%)",
