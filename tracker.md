@@ -1,5 +1,28 @@
 # Agent Handoff Log — tracker.md
 
+## 2026-11-18 — Photo Card Title Typography: Switch from Bold Display to Normal Font
+
+### Objective
+Update the photo card titles in the expanded gallery grid (`GallerySection.tsx`) from the heavy, all-caps faux-bold display font (`font-display font-bold uppercase`) to a clean, regular weight sans-serif font (`font-sans font-normal`), as requested by the user.
+
+### Changes Made
+1. **Photo Card Grid Typography (`src/components/event/GallerySection.tsx`)**:
+   - Replaced `font-display font-bold uppercase` with `font-sans font-normal` on `{photo.title}`.
+   - Refined `photo.tag` weight to `font-normal`.
+2. **Lightbox Modal Typography (`src/components/event/GallerySection.tsx`)**:
+   - Replaced `font-display` with `font-sans font-normal` on `{selectedPhoto.photo.title}` in the inspection modal header.
+3. **Verification**:
+   - `npm run build` compiled with status code 0 via Next.js 16.4.6 (Turbopack) & React 19.
+
+### Current State
+Photo titles now render with clean, readable, normal-weight typography without heavy faux-bold distortion.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/GallerySection.tsx` line 582 if further styling tweaks are needed on photo cards.
+2. Maintain `origin` and `trial` remote synchronizations.
+
+---
+
 ## 2026-11-18 — Impeccable Hero Typography & True Center Alignment
 
 ### Objective

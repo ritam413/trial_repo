@@ -576,10 +576,10 @@ export default function GallerySection() {
                               </div>
 
                               <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5 z-10 flex flex-col items-center justify-center text-center">
-                                <p className="font-tech text-[10px] sm:text-[11px] font-bold tracking-wider text-[#B9ACF0] uppercase truncate drop-shadow-sm max-w-full">
+                                <p className="font-tech text-[10px] sm:text-[11px] font-normal tracking-wider text-[#B9ACF0] uppercase truncate drop-shadow-sm max-w-full">
                                   {photo.tag}
                                 </p>
-                                <h4 className="font-display text-sm sm:text-base md:text-lg text-[#FFF4E0] font-bold leading-tight uppercase mt-1 tracking-wide truncate drop-shadow-md max-w-full">
+                                <h4 className="font-sans text-xs sm:text-sm md:text-base text-[#FFF4E0] font-normal leading-tight mt-1 tracking-normal truncate drop-shadow-md max-w-full">
                                   {photo.title}
                                 </h4>
                               </div>
@@ -627,10 +627,10 @@ export default function GallerySection() {
                     <Icon.Sparkles className="w-5 h-5" />
                   </span>
                   <div>
-                    <span className="font-tech text-[10px] font-bold tracking-widest text-[#B9ACF0] uppercase">
+                    <span className="font-tech text-[10px] font-medium tracking-widest text-[#B9ACF0] uppercase">
                       {selectedPhoto.club.category} // {selectedPhoto.photo.code}
                     </span>
-                    <h3 className="font-display text-lg sm:text-2xl text-[#FFF4E0] leading-none">
+                    <h3 className="font-sans text-base sm:text-xl text-[#FFF4E0] font-normal leading-snug mt-0.5">
                       {selectedPhoto.photo.title}
                     </h3>
                   </div>
