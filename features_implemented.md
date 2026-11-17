@@ -37,7 +37,7 @@ All foundational libraries, responsive layout engines, and the streamlined **Dev
   - **Pure Vertical Slit Gallery with 14 Student Societies & Creative Wings (`GallerySection.tsx` & `clubsData.ts`)**:
     - Deleted the prototype switcher bar (`[ Skiper 53 | Dual Adaptive | Skiper 52 ]`) and obsolete horizontal accordion code.
     - Completely removed card suits and ranks (`club.suit`, `club.cardRank`).
-    - Configured all 14 official festival student societies and wings: `ARITRAM`, `CHITRAKA DESIGNING & EDITING`, `CHITRAKA PHOTOGRAPHY`, `CHITRAKA ART AND CRAFT`, `CHITRAKA`, `CHECKMATE`, `DHRUBOTARA`, `NRITAKSHA`, `PAPERBACK SOCIETY`, `PHOENIX`, `SWARAKRITI`, `STEP ALPHA`, `DESI GROOVER`, and `BEAT BUSTER`.
+    - Configured all 14 official festival student societies and wings: `ARITRAM`, `CHITRAKATHA DESIGNING & EDITING`, `CHITRAKATHA PHOTOGRAPHY`, `CHITRAKATHA ART AND CRAFT`, `CHITRAKATHA`, `CHECKMATE`, `DHRUBOTARA`, `NRITAKSHA`, `PAPERBACK SOCIETY`, `PHOENIX`, `SWARAKRITI`, `STEP ALPHA`, `DESI GROOVER`, and `BEAT BUSTER`.
     - Applied distinct atmospheric dark gradients, borders, and ambient halos for each of the 14 societies upon expansion.
     - **Downward Curtain Unfolding Motion**: Outer container expands height (`0` to `"auto"`, `0.5s`, `cubic-bezier(0.16, 1, 0.3, 1)`) while inner content translates downward (`y: -30px` to `0`, `0.48s`), creating a seamless physical downward curtain reveal.
     - **Smooth Retracting Motion**: On close / `(X)` click, outer container shrinks height (`"auto"` to `0`, `0.4s`, `cubic-bezier(0.32, 0.72, 0, 1)`) while inner content glides upward (`y: 0` to `-24px`, `0.25s`) with clean fade-out.

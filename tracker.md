@@ -1,5 +1,34 @@
 # Agent Handoff Log — tracker.md
 
+## 2026-11-18 — Official Society Name Update: Chitraka to Chitrakatha
+
+### Objective
+Update all occurrences of "CHITRAKA" to the official student media, fine arts, and photography society name **Chitrakatha** across `src/lib/clubsData.ts` and `src/components/event/GallerySection.tsx`.
+
+### Changes Made
+1. **Club Schema & Society Registry (`src/lib/clubsData.ts`)**:
+   - Updated `name` and `id` for all 4 Chitrakatha entities:
+     - `chitrakatha-design`: `CHITRAKATHA DESIGNING & EDITING` (Digital Design & VFX)
+     - `chitrakatha-photography`: `CHITRAKATHA PHOTOGRAPHY` (Photography & Media)
+     - `chitrakatha-art`: `CHITRAKATHA ART AND CRAFT` (Fine Arts & Sculpture)
+     - `chitrakatha`: `CHITRAKATHA` (Creative Arts Atelier)
+2. **Atmospheric Color Themes (`src/components/event/GallerySection.tsx`)**:
+   - Registered dedicated keys in `CLUB_EXPANDED_THEMES` for `chitrakatha-design`, `chitrakatha-photography`, `chitrakatha-art`, and `chitrakatha` (while retaining `chitraka*` aliases for backward resilience).
+   - Preserved customized ambient halos, neon borders, and darkroom gradients.
+
+### Verification
+- `npm run build` executed cleanly with status code 0 via Next.js 16.4.6 (Turbopack) and React 19.
+- Verified TypeScript compilation and static page generation.
+
+### Current State
+All 14 societies in the cultural gallery now display accurate, authentic naming. Chitrakatha and its 3 dedicated wings render correctly with true vertical center alignment and smooth downward curtain physics.
+
+### Next Agent Instructions
+1. Inspect `src/lib/clubsData.ts` if user requests additional clubs or wing adjustments.
+2. Maintain `origin` and `trial` remote synchronizations.
+
+---
+
 ## 2026-11-18 — Actual Festival Society Titles & Wings in Gallery Section
 
 ### Objective

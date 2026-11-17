@@ -83,9 +83,9 @@ export const CLUBS_DATA: ClubItem[] = [
     ]
   },
   {
-    "id": "chitraka-design",
+    "id": "chitrakatha-design",
     "number": "02",
-    "name": "CHITRAKA DESIGNING & EDITING",
+    "name": "CHITRAKATHA DESIGNING & EDITING",
     "category": "DIGITAL DESIGN & VFX",
     "accentColor": "#38BDF8",
     "gradient": "from-[#38BDF8] to-[#0284C7]",
@@ -144,9 +144,9 @@ export const CLUBS_DATA: ClubItem[] = [
     ]
   },
   {
-    "id": "chitraka-photography",
+    "id": "chitrakatha-photography",
     "number": "03",
-    "name": "CHITRAKA PHOTOGRAPHY",
+    "name": "CHITRAKATHA PHOTOGRAPHY",
     "category": "PHOTOGRAPHY & MEDIA",
     "accentColor": "#F59E0B",
     "gradient": "from-[#F59E0B] to-[#B45309]",
@@ -205,9 +205,9 @@ export const CLUBS_DATA: ClubItem[] = [
     ]
   },
   {
-    "id": "chitraka-art",
+    "id": "chitrakatha-art",
     "number": "04",
-    "name": "CHITRAKA ART AND CRAFT",
+    "name": "CHITRAKATHA ART AND CRAFT",
     "category": "FINE ARTS & SCULPTURE",
     "accentColor": "#B9ACF0",
     "gradient": "from-[#B9ACF0] to-[#6D28D9]",
@@ -266,9 +266,9 @@ export const CLUBS_DATA: ClubItem[] = [
     ]
   },
   {
-    "id": "chitraka",
+    "id": "chitrakatha",
     "number": "05",
-    "name": "CHITRAKA",
+    "name": "CHITRAKATHA",
     "category": "CREATIVE ARTS ATELIER",
     "accentColor": "#EC4899",
     "gradient": "from-[#EC4899] to-[#9D174D]",

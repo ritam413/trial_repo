@@ -94,7 +94,15 @@ const CLUB_EXPANDED_THEMES: Record<string, ClubExpandedTheme> = {
     ambient: "#E8502A",
     badgeBg: "rgba(232, 80, 42, 0.2)",
   },
-  // 02: CHITRAKA DESIGNING & EDITING (Digital Design & VFX - Cyber Cyan Navy)
+  // 02: CHITRAKATHA DESIGNING & EDITING (Digital Design & VFX - Cyber Cyan Navy)
+  "chitrakatha-design": {
+    bg: "#04121F",
+    gradient: "linear-gradient(180deg, #07223D 0%, #04121F 45%, #02070F 100%)",
+    border: "rgba(56, 189, 248, 0.45)",
+    glow: "rgba(56, 189, 248, 0.35)",
+    ambient: "#38BDF8",
+    badgeBg: "rgba(56, 189, 248, 0.2)",
+  },
   "chitraka-design": {
     bg: "#04121F",
     gradient: "linear-gradient(180deg, #07223D 0%, #04121F 45%, #02070F 100%)",
@@ -103,7 +111,15 @@ const CLUB_EXPANDED_THEMES: Record<string, ClubExpandedTheme> = {
     ambient: "#38BDF8",
     badgeBg: "rgba(56, 189, 248, 0.2)",
   },
-  // 03: CHITRAKA PHOTOGRAPHY (Photography & Media - Darkroom Amber Gold)
+  // 03: CHITRAKATHA PHOTOGRAPHY (Photography & Media - Darkroom Amber Gold)
+  "chitrakatha-photography": {
+    bg: "#180D03",
+    gradient: "linear-gradient(180deg, #2B1804 0%, #180D03 45%, #0A0501 100%)",
+    border: "rgba(245, 158, 11, 0.45)",
+    glow: "rgba(245, 158, 11, 0.35)",
+    ambient: "#F59E0B",
+    badgeBg: "rgba(245, 158, 11, 0.2)",
+  },
   "chitraka-photography": {
     bg: "#180D03",
     gradient: "linear-gradient(180deg, #2B1804 0%, #180D03 45%, #0A0501 100%)",
@@ -112,7 +128,15 @@ const CLUB_EXPANDED_THEMES: Record<string, ClubExpandedTheme> = {
     ambient: "#F59E0B",
     badgeBg: "rgba(245, 158, 11, 0.2)",
   },
-  // 04: CHITRAKA ART AND CRAFT (Fine Arts & Sculpture - Twilight Lavender)
+  // 04: CHITRAKATHA ART AND CRAFT (Fine Arts & Sculpture - Twilight Lavender)
+  "chitrakatha-art": {
+    bg: "#0E0A1E",
+    gradient: "linear-gradient(180deg, #1C123B 0%, #0D081B 45%, #06040F 100%)",
+    border: "rgba(185, 172, 240, 0.45)",
+    glow: "rgba(185, 172, 240, 0.35)",
+    ambient: "#B9ACF0",
+    badgeBg: "rgba(185, 172, 240, 0.2)",
+  },
   "chitraka-art": {
     bg: "#0E0A1E",
     gradient: "linear-gradient(180deg, #1C123B 0%, #0D081B 45%, #06040F 100%)",
@@ -129,7 +153,15 @@ const CLUB_EXPANDED_THEMES: Record<string, ClubExpandedTheme> = {
     ambient: "#B9ACF0",
     badgeBg: "rgba(185, 172, 240, 0.2)",
   },
-  // 05: CHITRAKA (Creative Arts Atelier - Midnight Fuchsia Velvet)
+  // 05: CHITRAKATHA (Creative Arts Atelier - Midnight Fuchsia Velvet)
+  chitrakatha: {
+    bg: "#190514",
+    gradient: "linear-gradient(180deg, #2E0724 0%, #190514 45%, #0C020A 100%)",
+    border: "rgba(236, 72, 153, 0.45)",
+    glow: "rgba(236, 72, 153, 0.35)",
+    ambient: "#EC4899",
+    badgeBg: "rgba(236, 72, 153, 0.2)",
+  },
   chitraka: {
     bg: "#190514",
     gradient: "linear-gradient(180deg, #2E0724 0%, #190514 45%, #0C020A 100%)",
