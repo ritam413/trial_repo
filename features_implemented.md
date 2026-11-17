@@ -43,7 +43,7 @@ All foundational libraries, responsive layout engines, and the streamlined **Dev
     - **Smooth Retracting Motion**: On close / `(X)` click, outer container shrinks height (`"auto"` to `0`, `0.4s`, `cubic-bezier(0.32, 0.72, 0, 1)`) while inner content glides upward (`y: 0` to `-24px`, `0.25s`) with clean fade-out.
     - Consistent dark theme background across collapsed and expanded states eliminating white flash artifacts.
     - Centered editorial header lockup, thin separator rule, and 6-photo grid with lightbox inspection modal.
-    - **100% Mathematically & Visually Centered Slit Typography**: Pinned society titles using absolute inset positioning (`absolute inset-0 flex items-center justify-center`) ensuring all 7 society titles align down a single true vertical center axis.
+    - **100% Mathematically & Visually Centered Slit Typography**: Pinned society titles using absolute inset positioning (`absolute inset-0 flex items-center justify-center`) with bold condensed display typography (**Bebas Neue** / `font-display tracking-wider uppercase`) ensuring all 14 society titles align down a single true vertical center axis.
     - **Streamlined Minimalist Slits**: Removed clutter elements (number badges `01..07` and `6 ARCHIVES ▾` chips) from slit bars and expanded headers.
     - **Responsive Mobile Typography**: Adjusted slit titles to `text-[13px] sm:text-xl md:text-2xl lg:text-3xl` and hid the left category on `< 640px` (`hidden sm:flex`) to eliminate overlapping text collisions on mobile viewports. Expanded poster titles scale smoothly from `text-2xl` on mobile to `text-7xl` on desktop.
   - **Complete Elimination of Playing Card Metaphor Across All Sections**:

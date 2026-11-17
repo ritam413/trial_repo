@@ -438,10 +438,10 @@ export default function GallerySection() {
                     </span>
                   </div>
 
-                  {/* Center: Absolute 100% True-Centered Calligraphy Title (Proportional & responsive text sizing) */}
+                  {/* Center: Absolute 100% True-Centered Display Title (Proportional & responsive text sizing in Bebas Neue) */}
                   <div className="absolute inset-0 flex items-center justify-center pointer-events-none px-3 sm:px-16">
                     <p
-                      className={`font-slit-editorial text-[13px] sm:text-xl md:text-2xl lg:text-3xl text-[#FFF4E0] tracking-wide whitespace-nowrap drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)] transition-all duration-300 ${
+                      className={`font-display font-slit-editorial text-[13px] sm:text-xl md:text-2xl lg:text-3xl text-[#FFF4E0] tracking-wider uppercase whitespace-nowrap drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)] transition-all duration-300 ${
                         isExpanded ? "opacity-0 scale-95" : "opacity-100 scale-100"
                       }`}
                     >

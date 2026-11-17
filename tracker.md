@@ -1,5 +1,27 @@
 # Agent Handoff Log — tracker.md
 
+## 2026-11-18 — Slit Gallery Typography Update to Bebas Neue
+
+### Objective
+Update the font family of the collapsed gallery slit titles from italic serif (`font-slit-editorial` / Instrument Serif) to the bold condensed display font (**Bebas Neue** / `font-display`) requested by the user, while preserving the exact responsive font sizes (`text-[13px] sm:text-xl md:text-2xl lg:text-3xl`).
+
+### Changes Made
+1. **Typography Definition (`src/app/globals.css`)**:
+   - Updated `.font-slit-editorial` to point to `var(--font-bebas-neue), Impact, sans-serif` with `letter-spacing: 0.04em;`, removing italic slant and forcing bold upright display aesthetics.
+2. **Component Integration (`src/components/event/GallerySection.tsx`)**:
+   - Updated the slit title paragraph to apply `font-display font-slit-editorial tracking-wider uppercase` alongside existing responsive scale classes (`text-[13px] sm:text-xl md:text-2xl lg:text-3xl`).
+3. **Verification**:
+   - `npm run build` executed with status code 0 via Next.js 16.4.6 (Turbopack) & React 19.
+
+### Current State
+All collapsed gallery slits now render club titles in the clean, bold, condensed Bebas Neue display typography matching the expanded showcase headers.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/GallerySection.tsx` line 444 if additional typography tweaks are requested.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-18 — Official Society Name Update: Chitraka to Chitrakatha
 
 ### Objective

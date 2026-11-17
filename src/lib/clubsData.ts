@@ -85,7 +85,7 @@ export const CLUBS_DATA: ClubItem[] = [
   {
     "id": "chitrakatha-design",
     "number": "02",
-    "name": "CHITRAKATHA DESIGNING & EDITING",
+    "name": "CHITRAKA DESIGNING & EDITING",
     "category": "DIGITAL DESIGN & VFX",
     "accentColor": "#38BDF8",
     "gradient": "from-[#38BDF8] to-[#0284C7]",
@@ -146,7 +146,7 @@ export const CLUBS_DATA: ClubItem[] = [
   {
     "id": "chitrakatha-photography",
     "number": "03",
-    "name": "CHITRAKATHA PHOTOGRAPHY",
+    "name": "CHITRAKA PHOTOGRAPHY",
     "category": "PHOTOGRAPHY & MEDIA",
     "accentColor": "#F59E0B",
     "gradient": "from-[#F59E0B] to-[#B45309]",
@@ -207,7 +207,7 @@ export const CLUBS_DATA: ClubItem[] = [
   {
     "id": "chitrakatha-art",
     "number": "04",
-    "name": "CHITRAKATHA ART AND CRAFT",
+    "name": "CHITRAKA ART AND CRAFT",
     "category": "FINE ARTS & SCULPTURE",
     "accentColor": "#B9ACF0",
     "gradient": "from-[#B9ACF0] to-[#6D28D9]",
@@ -269,7 +269,7 @@ export const CLUBS_DATA: ClubItem[] = [
     "id": "chitrakatha",
     "number": "05",
     "name": "CHITRAKATHA",
-    "category": "CREATIVE ARTS ATELIER",
+    "category": "film society",
     "accentColor": "#EC4899",
     "gradient": "from-[#EC4899] to-[#9D174D]",
     "coverImage": "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?auto=format&fit=crop&w=1200&q=80",

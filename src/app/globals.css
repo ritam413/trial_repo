@@ -87,9 +87,8 @@
 }
 
 .font-slit-editorial {
-  font-family: "Instrument Serif", var(--font-cormorant), Georgia, serif;
-  font-style: italic;
-  font-weight: 700;
+  font-family: var(--font-bebas-neue), Impact, sans-serif;
+  letter-spacing: 0.04em;
 }
 
 .writing-vertical {
