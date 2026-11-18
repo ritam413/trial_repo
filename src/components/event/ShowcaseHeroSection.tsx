@@ -541,7 +541,7 @@ export default function ShowcaseHeroSection({
                   {["2", "0", "2", "6"].map((digit, i) => (
                     <span
                       key={`year-digit-${i}`}
-                      className="font-display text-[38px] min-[360px]:text-[46px] min-[400px]:text-[54px] min-[520px]:text-[68px] sm:text-[90px] md:text-[112px] lg:text-[132px] xl:text-[150px] 2xl:text-[164px] text-[#a78bfa] font-normal leading-none drop-shadow-[0_4px_24px_rgba(167,139,250,0.6)]"
+                      className="font-display text-[38px] min-[360px]:text-[46px] min-[400px]:text-[54px] min-[520px]:text-[68px] sm:text-[90px] md:text-[112px] lg:text-[132px] xl:text-[150px] 2xl:text-[164px] text-white font-normal leading-none drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]"
                     >
                       {digit}
                     </span>
