@@ -519,43 +519,32 @@ export default function ShowcaseHeroSection({
             <div className="pointer-events-none absolute inset-0 z-20 w-full max-w-full flex flex-col items-center justify-center px-4 sm:px-8 text-center mx-auto">
               {/* Unified Typographic Block (SANSKARAN + 2026 Locked to Exact Same Width) */}
               <div className="inline-flex flex-col items-stretch text-center max-w-[94vw]">
-                {/* Primary Festival Title (Hollow White Outline - Bebas Neue Display matching Gallery Section) */}
-                <OutlineText
-                  text="SANSKARAN"
-                  maskId="d4-outline-devfest"
-                  fontMode={fontMode}
-                  color="#ffffff"
-                  className="text-[38px] min-[360px]:text-[46px] min-[400px]:text-[54px] min-[520px]:text-[68px] sm:text-[92px] md:text-[112px] lg:text-[132px] xl:text-[150px] 2xl:text-[164px]"
+                {/* Primary Festival Title (Solid White Bebas Neue Display matching Gallery Section) */}
+                <h1
+                  className="font-display text-[44px] min-[360px]:text-[52px] min-[400px]:text-[62px] min-[520px]:text-[78px] sm:text-[104px] md:text-[128px] lg:text-[152px] xl:text-[172px] 2xl:text-[188px] text-white tracking-wide uppercase leading-none select-none text-center drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)]"
                   style={{
-                    fontWeight: fontMode === "bebas" ? 400 : 800,
-                    letterSpacing: "0.03em",
-                    filter: "drop-shadow(0 2px 20px rgba(255,255,255,0.22)) drop-shadow(0 4px 32px rgba(0,0,0,0.95))",
                     opacity: heroContentRevealed ? 1 : 0,
                     transition: "opacity 900ms ease 120ms",
                   }}
-                />
+                >
+                  SANSKARAN
+                </h1>
 
                 {/* 2026: Spans the EXACT SAME WIDTH as SANSKARAN via flex justify-between */}
                 <div
-                  className="w-full flex items-center justify-between mt-1 sm:mt-2.5 select-none"
+                  className="w-full flex items-center justify-between mt-1 sm:mt-2 select-none"
                   style={{
                     opacity: heroContentRevealed ? 1 : 0,
                     transition: "opacity 900ms ease 260ms",
                   }}
                 >
                   {["2", "0", "2", "6"].map((digit, i) => (
-                    <OutlineText
+                    <span
                       key={`year-digit-${i}`}
-                      text={digit}
-                      maskId={`d4-outline-digit-${i}`}
-                      fontMode={fontMode}
-                      color="#a78bfa"
-                      className="text-[32px] min-[360px]:text-[38px] min-[400px]:text-[46px] min-[520px]:text-[58px] sm:text-[80px] md:text-[96px] lg:text-[114px] xl:text-[130px] 2xl:text-[142px]"
-                      style={{
-                        fontWeight: fontMode === "bebas" ? 400 : 800,
-                        filter: "drop-shadow(0 2px 18px rgba(167,139,250,0.65)) drop-shadow(0 4px 24px rgba(0,0,0,0.85))",
-                      }}
-                    />
+                      className="font-display text-[38px] min-[360px]:text-[46px] min-[400px]:text-[54px] min-[520px]:text-[68px] sm:text-[90px] md:text-[112px] lg:text-[132px] xl:text-[150px] 2xl:text-[164px] text-[#a78bfa] font-normal leading-none drop-shadow-[0_4px_24px_rgba(167,139,250,0.6)]"
+                    >
+                      {digit}
+                    </span>
                   ))}
                 </div>
               </div>

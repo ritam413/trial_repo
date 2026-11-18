@@ -29,10 +29,9 @@ All foundational libraries, responsive layout engines, and the streamlined **Dev
     - Interactive inspection modal dossier for exploring guild disciplines and arena lineup pillars.
     - Opening showcase pre-scatter canvas updated to pure black (`#000000`) for seamless contrast with the 9 diamond mosaic imagery.
     - Direct integration of `ShowcaseHeroSection` with zero floating switcher overlays or unneeded mode toggles.
-    - **DevFest Inverted SVG Mask Hollow Typography Lockup**: Authentic inverted SVG cutout mask technique using condensed **Bebas Neue** (`font-display`, `var(--font-bebas-neue)`) display typography matching the Gallery Section headline, with a width-locked `2026` yearmark that spans the exact same width as `SANSKARAN`:
-      - `SANSKARAN`: Bold Bebas Neue outline with fluid scale ramp (`text-[38px]` mobile up to `164px` desktop) and dual-layer ambient lighting.
-      - `2026`: Width-locked via `flex justify-between w-full` directly under `SANSKARAN`, guaranteeing identical width down to the pixel across all viewports.
-      - `2026`: Electric Lavender outline (`#a78bfa`) with calibrated spacing for harmonic balance.
+    - **Solid Condensed Bebas Neue Display Typography Lockup**: Solid, high-contrast, non-hollow condensed display typography in **Bebas Neue** (`font-display`, `var(--font-bebas-neue)`) matching the Gallery Section headline, with a width-locked `2026` yearmark that spans the exact same width as `SANSKARAN`:
+      - `SANSKARAN`: Solid crisp white (`text-white`) condensed Bebas Neue title with fluid scale ramp (`text-[44px]` mobile up to `188px` desktop) and cinematic atmospheric drop shadow (`drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)]`).
+      - `2026`: Solid electric lavender (`text-[#a78bfa]`), width-locked via `flex justify-between w-full` directly under `SANSKARAN`, guaranteeing identical width down to the pixel across all viewports.
       - `#COMEJOINTHEHAPPINESS`: Space Grotesk tech grotesque subtitle with `tracking-[0.24em]` uppercase styling.
       - `Explore`: Glassmorphic pill button with subtle backdrop blur and border luminance.
     - Deleted obsolete components: `src/components/originkit`, `src/components/event/HeroSection.tsx`, `src/components/event/Hero.tsx`, and `src/components/3d`.
