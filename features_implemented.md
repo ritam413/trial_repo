@@ -42,12 +42,12 @@ All foundational libraries, responsive layout engines, and the streamlined **Dev
     - Removed `cardLayout` state and deleted the `View: [ ⊞ DevFest Grid | 🂠 Card Stack ]` switcher.
     - Locked layout to the side-by-side DevFest Grid realm cards with Google 4-color accent tokens, vector doodle backdrop, and interactive discipline inspection modal dossiers.
   - **Pure Vertical Slit Gallery with 14 Student Societies & Creative Wings (`GallerySection.tsx` & `clubsData.ts`)**:
-    - **Emil-Prototype Live Aesthetic Direction Switcher (/emil-prototype & /impeccable)**:
-      - Integrated an interactive segmented prototype selector bar directly in the Gallery header (`[ 🧵 Silk Cord ] [ ✦ Floating Zero-G ] [ ⚡ Tension Wire ] [ 🎬 35mm Filmstrip ]`) allowing live, in-browser evaluation and switching of 4 distinct aesthetic directions:
-        1. **`silk-cord` (Silk Cord — Selected & Default)**: Heritage ceremonial braided silk cords and suspension rods in **dark silvering green** (`#16382e` deep pine, `#2a5245` forest, `#9bbab0`/`#a3c2b5` silver sheen) with polished dark silver-green eyelet grommets and an overhead ceiling rail.
-        2. **`floating-minimal` (Floating Zero-G)**: Pure, modern, chain-free aesthetic with calibrated 10px magnetic gap (`gap-2.5 sm:gap-3`), rounded corners (`rounded-xl sm:rounded-2xl`), centered uppercase titles in condensed Bebas Neue, and subtle magnetic hover elevation.
-        3. **`tension-wire` (Tension Wire)**: Sleek architectural suspension featuring ultra-thin 1.5px vertical aircraft steel cables with micro titanium turnbuckles and subtle violet glow nodes.
-        4. **`filmstrip` (35mm Filmstrip)**: Cinematic analog filmstrip aesthetic with sprocket hole perforations on borders and amber film-leader frame dividers (`◄ 24 FPS • ROLL '26 • FRAME ## ►`).
+    - **Dark Silvering Green Silk Cord & Suspension Rod Rig (/impeccable)**:
+      - Validated and permanently implemented the **Silk Cord & Suspension Rod** system across all 14 society slit blocks, retiring the temporary `/emil-prototype` variant switcher (`Floating Zero-G`, `Tension Wire`, `35mm Filmstrip`):
+        - **Suspension Cords & Rods**: 2.5px braided cords and interconnecting rods rendered in dark silvering green (`#16382e` deep pine, `#2a5245` forest green, `#9bbab0` / `#a3c2b5` silver luster sheen) with specular light highlights (`rgba(255,255,255,0.4)`).
+        - **Mounting Eyelets**: Precision dark burnished silver-green arched eyelet rings (`border-[#9bbab0]/80` over `#1a382e`) riveted seamlessly into the top and bottom borders of every block.
+        - **Overhead Gantry**: Slim `h-1.5` dark silvering green overhead suspension rail with twin vertical drops connecting to the first slit block (`ARITRAM`).
+        - **Bottom Terminal Rig**: Symmetrical weighted silver-green teardrop plumb cord terminals anchoring below the final block (`BEAT BUSTER`).
     - Completely removed card suits and ranks (`club.suit`, `club.cardRank`).
     - Configured all 14 official festival student societies and wings: `ARITRAM`, `CHITRAKA DESIGNING & EDITING`, `CHITRAKA PHOTOGRAPHY`, `CHITRAKA ART AND CRAFT`, `CHITRAKATHA`, `CHECKMATE`, `DHRUBOTARA`, `NRITAKSHA`, `PAPERBACK SOCIETY`, `PHOENIX`, `SWARAKRITI`, `STEP ALPHA`, `DESI GROOVER`, and `BEAT BUSTER`.
     - Applied distinct atmospheric dark gradients, borders, and ambient halos for each of the 14 societies upon expansion.

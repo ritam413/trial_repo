@@ -311,45 +311,8 @@ const DEFAULT_EXPANDED_THEME: ClubExpandedTheme = {
 };
 
 /* =============================================================================
-   EMIL-PROTOTYPE RIG VARIANTS (/emil-prototype & /impeccable)
-   4 distinct aesthetic directions switchable live in the browser
+   DARK SILVERING GREEN SILK CORD & SUSPENSION ROD RIG (/impeccable)
    ============================================================================= */
-export type GalleryVariant = "floating-minimal" | "tension-wire" | "filmstrip" | "silk-cord";
-
-function TensionWireSegment() {
-  return (
-    <div className="relative w-full h-4 sm:h-5 flex items-center justify-between pointer-events-none select-none z-20 my-[-1px]">
-      <div className="absolute left-6 sm:left-12 md:left-20 -translate-x-1/2 -top-1 flex flex-col items-center">
-        <div className="w-[1.5px] h-2 bg-gradient-to-b from-[#714cb6] to-[#a78bfa] shadow-[0_0_6px_#714cb6]" />
-        <div className="w-1.5 h-1.5 rounded-full bg-[#d4c7ff] border border-white/40 shadow-sm" />
-        <div className="w-[1.5px] h-2 bg-gradient-to-b from-[#a78bfa] to-[#714cb6] shadow-[0_0_6px_#714cb6]" />
-      </div>
-      <div className="absolute right-6 sm:right-12 md:right-20 translate-x-1/2 -top-1 flex flex-col items-center">
-        <div className="w-[1.5px] h-2 bg-gradient-to-b from-[#714cb6] to-[#a78bfa] shadow-[0_0_6px_#714cb6]" />
-        <div className="w-1.5 h-1.5 rounded-full bg-[#d4c7ff] border border-white/40 shadow-sm" />
-        <div className="w-[1.5px] h-2 bg-gradient-to-b from-[#a78bfa] to-[#714cb6] shadow-[0_0_6px_#714cb6]" />
-      </div>
-    </div>
-  );
-}
-
-function FilmstripDivider({ index }: { index: number }) {
-  return (
-    <div className="relative w-full h-5 sm:h-6 flex items-center justify-between px-3 sm:px-6 pointer-events-none select-none z-20 bg-[#0d0d0e]/80 backdrop-blur-xs">
-      <div className="flex items-center gap-1.5">
-        <span className="w-1.5 h-2 rounded-xs bg-white/20 border border-white/30" />
-        <span className="w-1.5 h-2 rounded-xs bg-white/20 border border-white/30" />
-      </div>
-      <span className="font-tech text-[9px] sm:text-[10px] tracking-widest text-white/40 uppercase">
-        ◄ 24 FPS • ROLL &apos;26 • FRAME {String(index + 1).padStart(2, "0")} ►
-      </span>
-      <div className="flex items-center gap-1.5">
-        <span className="w-1.5 h-2 rounded-xs bg-white/20 border border-white/30" />
-        <span className="w-1.5 h-2 rounded-xs bg-white/20 border border-white/30" />
-      </div>
-    </div>
-  );
-}
 
 function SilkCordSegment() {
   return (
@@ -383,7 +346,6 @@ function SilkCordSegment() {
 
 export default function GallerySection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const [variant, setVariant] = useState<GalleryVariant>("silk-cord");
   const [activeClubIndex, setActiveClubIndex] = useState<number | null>(0);
   const [selectedPhoto, setSelectedPhoto] = useState<{
     photo: ClubPhoto;
@@ -486,9 +448,9 @@ export default function GallerySection() {
       {/* 100% Full-Width Edge-to-Edge Container */}
       <div className="w-full px-2 sm:px-4 md:px-6">
         {/* ====================================================================
-            HEADER LOCKUP & EMIL-PROTOTYPE RIG VARIANT SELECTOR
+            HEADER LOCKUP
             ==================================================================== */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-8 sm:mb-10 px-1 sm:px-2">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 sm:mb-10 px-1 sm:px-2">
           <div>
             <h2 className="font-display text-4xl sm:text-5xl md:text-6xl text-[#EDE8FF] leading-none uppercase tracking-tight">
               GALLERY{" "}
@@ -500,97 +462,44 @@ export default function GallerySection() {
               14 CULTURAL SOCIETIES &amp; ART ATELIERS
             </p>
           </div>
+        </div>
 
-          {/* Emil-Prototype Visual Direction Switcher */}
-          <div className="flex items-center gap-1.5 p-1.5 rounded-2xl bg-[#141416] border border-white/10 shadow-xl overflow-x-auto max-w-full">
-            {[
-              { id: "silk-cord", label: "Silk Cord", icon: "🧵" },
-              { id: "floating-minimal", label: "Floating Zero-G", icon: "✦" },
-              { id: "tension-wire", label: "Tension Wire", icon: "⚡" },
-              { id: "filmstrip", label: "35mm Filmstrip", icon: "🎬" },
-            ].map((v) => (
-              <button
-                key={v.id}
-                type="button"
-                onClick={() => setVariant(v.id as GalleryVariant)}
-                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-tech font-bold tracking-wider uppercase transition-all duration-200 cursor-pointer whitespace-nowrap ${
-                  variant === v.id
-                    ? variant === "silk-cord"
-                      ? "bg-gradient-to-r from-[#1b3b31] via-[#2a5245] to-[#1b3b31] text-[#e2ede7] border border-[#9bbab0]/50 shadow-md shadow-[#1b3b31]/50 scale-[1.02]"
-                      : "bg-[#714cb6] text-white shadow-md shadow-[#714cb6]/40 scale-[1.02]"
-                    : "text-white/60 hover:text-white hover:bg-white/5"
-                }`}
-              >
-                <span>{v.icon}</span>
-                <span>{v.label}</span>
-              </button>
-            ))}
+        {/* ====================================================================
+            OVERHEAD DARK SILVERING GREEN SUSPENSION RIG
+            ==================================================================== */}
+        <div className="overhead-gantry relative w-full mb-1 flex flex-col items-center pointer-events-none select-none">
+          {/* Overhead Dark Silvering Green Suspension Rail / Rod */}
+          <div className="relative w-full h-1.5 rounded-full bg-gradient-to-r from-transparent via-[#2a5245] to-transparent border-t border-[#9bbab0]/40 shadow-[0_0_10px_rgba(155,186,176,0.35)]" />
+          <div className="relative w-full h-5">
+            <div className="absolute left-6 sm:left-12 md:left-20 -translate-x-1/2 top-0 flex flex-col items-center">
+              <div className="w-3.5 h-1.5 rounded-full bg-gradient-to-r from-[#2a5245] via-[#9bbab0] to-[#16382e] border border-[#cbdcd4]/50 shadow-sm" />
+              <div className="w-[2.5px] h-4 bg-gradient-to-b from-[#16382e] via-[#a3c2b5] to-[#2a5245] shadow-[0_0_6px_rgba(155,186,176,0.4)]" />
+            </div>
+            <div className="absolute right-6 sm:right-12 md:right-20 translate-x-1/2 top-0 flex flex-col items-center">
+              <div className="w-3.5 h-1.5 rounded-full bg-gradient-to-r from-[#2a5245] via-[#9bbab0] to-[#16382e] border border-[#cbdcd4]/50 shadow-sm" />
+              <div className="w-[2.5px] h-4 bg-gradient-to-b from-[#16382e] via-[#a3c2b5] to-[#2a5245] shadow-[0_0_6px_rgba(155,186,176,0.4)]" />
+            </div>
           </div>
         </div>
 
         {/* ====================================================================
-            SUSPENSION ANCHOR RIG (Conditional per Emil-Prototype Variant)
-            ==================================================================== */}
-        {variant !== "floating-minimal" && (
-          <div className="overhead-gantry relative w-full mb-1 flex flex-col items-center pointer-events-none select-none transition-all duration-300">
-            {variant === "tension-wire" && (
-              <>
-                <div className="relative w-full h-1.5 rounded-full bg-gradient-to-r from-transparent via-[#714cb6]/60 to-transparent border-t border-[#d4c7ff]/30 shadow-[0_0_12px_rgba(113,76,182,0.4)]" />
-                <div className="relative w-full h-5">
-                  <div className="absolute left-6 sm:left-12 md:left-20 -translate-x-1/2 top-0 w-[1.5px] h-full bg-gradient-to-b from-[#714cb6] to-[#a78bfa] shadow-[0_0_6px_#714cb6]" />
-                  <div className="absolute right-6 sm:right-12 md:right-20 translate-x-1/2 top-0 w-[1.5px] h-full bg-gradient-to-b from-[#714cb6] to-[#a78bfa] shadow-[0_0_6px_#714cb6]" />
-                </div>
-              </>
-            )}
-            {variant === "filmstrip" && (
-              <div className="relative w-full h-6 flex items-center justify-between px-3 sm:px-6 bg-[#141416] border-y border-white/10 rounded-t-md">
-                <span className="font-tech text-[10px] text-white/40 tracking-widest uppercase">● 35MM MOTION PICTURE LEADER</span>
-                <span className="font-tech text-[10px] text-[#FFAA24] tracking-widest uppercase">HEAD REEL 01</span>
-              </div>
-            )}
-            {variant === "silk-cord" && (
-              <div className="relative w-full flex flex-col items-center">
-                {/* Overhead Dark Silvering Green Suspension Rail / Rod */}
-                <div className="relative w-full h-1.5 rounded-full bg-gradient-to-r from-transparent via-[#2a5245] to-transparent border-t border-[#9bbab0]/40 shadow-[0_0_10px_rgba(155,186,176,0.35)]" />
-                <div className="relative w-full h-5">
-                  <div className="absolute left-6 sm:left-12 md:left-20 -translate-x-1/2 top-0 flex flex-col items-center">
-                    <div className="w-3.5 h-1.5 rounded-full bg-gradient-to-r from-[#2a5245] via-[#9bbab0] to-[#16382e] border border-[#cbdcd4]/50 shadow-sm" />
-                    <div className="w-[2.5px] h-4 bg-gradient-to-b from-[#16382e] via-[#a3c2b5] to-[#2a5245] shadow-[0_0_6px_rgba(155,186,176,0.4)]" />
-                  </div>
-                  <div className="absolute right-6 sm:right-12 md:right-20 translate-x-1/2 top-0 flex flex-col items-center">
-                    <div className="w-3.5 h-1.5 rounded-full bg-gradient-to-r from-[#2a5245] via-[#9bbab0] to-[#16382e] border border-[#cbdcd4]/50 shadow-sm" />
-                    <div className="w-[2.5px] h-4 bg-gradient-to-b from-[#16382e] via-[#a3c2b5] to-[#2a5245] shadow-[0_0_6px_rgba(155,186,176,0.4)]" />
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* ====================================================================
             FULL-WIDTH VERTICAL STACK SLITS
             ==================================================================== */}
-        <div className={`w-full flex flex-col ${variant === "floating-minimal" ? "gap-2.5 sm:gap-3" : ""}`}>
+        <div className="w-full flex flex-col">
           {CLUBS_DATA.map((club, index) => {
             const isExpanded = activeClubIndex === index;
             const theme = CLUB_EXPANDED_THEMES[club.id] || DEFAULT_EXPANDED_THEME;
 
             return (
               <React.Fragment key={club.id}>
-                {/* Variant-Specific Inter-Block Connectors */}
-                {index > 0 && variant !== "floating-minimal" && (
-                  <>
-                    {variant === "tension-wire" && <TensionWireSegment />}
-                    {variant === "filmstrip" && <FilmstripDivider index={index} />}
-                    {variant === "silk-cord" && <SilkCordSegment />}
-                  </>
-                )}
+                {/* Inter-Block Silk Cord Connectors */}
+                {index > 0 && <SilkCordSegment />}
 
                 {/* Card Outer Container */}
                 <div
                   className="chain-card-wrapper group relative w-full select-none transform-gpu origin-top transition-transform duration-300"
                   onMouseEnter={(e) => {
-                    if (!isExpanded && variant !== "floating-minimal") {
+                    if (!isExpanded) {
                       gsap.to(e.currentTarget, {
                         rotation: index % 2 === 0 ? 0.35 : -0.35,
                         y: -2,
@@ -603,19 +512,9 @@ export default function GallerySection() {
                     }
                   }}
                 >
-                  {/* Top Eyelet / Shackle for Hardware Variants */}
-                  {variant === "tension-wire" && (
-                    <>
-                      <div className="absolute left-6 sm:left-12 md:left-20 -translate-x-1/2 -top-1 z-30 pointer-events-none w-2 h-2 rounded-full bg-[#d4c7ff] border border-white/50 shadow-sm" />
-                      <div className="absolute right-6 sm:right-12 md:right-20 translate-x-1/2 -top-1 z-30 pointer-events-none w-2 h-2 rounded-full bg-[#d4c7ff] border border-white/50 shadow-sm" />
-                    </>
-                  )}
-                  {variant === "silk-cord" && (
-                    <>
-                      <div className="absolute left-6 sm:left-12 md:left-20 -translate-x-1/2 -top-1 z-30 pointer-events-none w-2.5 h-1.5 rounded-t-full bg-gradient-to-b from-[#9bbab0] to-[#1a382e] border border-[#9bbab0]/80 shadow-xs" />
-                      <div className="absolute right-6 sm:right-12 md:right-20 translate-x-1/2 -top-1 z-30 pointer-events-none w-2.5 h-1.5 rounded-t-full bg-gradient-to-b from-[#9bbab0] to-[#1a382e] border border-[#9bbab0]/80 shadow-xs" />
-                    </>
-                  )}
+                  {/* Top Eyelet Rings */}
+                  <div className="absolute left-6 sm:left-12 md:left-20 -translate-x-1/2 -top-1 z-30 pointer-events-none w-2.5 h-1.5 rounded-t-full bg-gradient-to-b from-[#9bbab0] to-[#1a382e] border border-[#9bbab0]/80 shadow-xs" />
+                  <div className="absolute right-6 sm:right-12 md:right-20 translate-x-1/2 -top-1 z-30 pointer-events-none w-2.5 h-1.5 rounded-t-full bg-gradient-to-b from-[#9bbab0] to-[#1a382e] border border-[#9bbab0]/80 shadow-xs" />
 
                   {/* The Slit & Accordion Card */}
                   <div
@@ -824,19 +723,9 @@ export default function GallerySection() {
                 </AnimatePresence>
               </div>
 
-              {/* Bottom Mounting Eyelet / Shackle for Hardware Variants */}
-              {variant === "tension-wire" && (
-                <>
-                  <div className="absolute left-6 sm:left-12 md:left-20 -translate-x-1/2 -bottom-1 z-30 pointer-events-none w-2 h-2 rounded-full bg-[#d4c7ff] border border-white/50 shadow-sm" />
-                  <div className="absolute right-6 sm:right-12 md:right-20 translate-x-1/2 -bottom-1 z-30 pointer-events-none w-2 h-2 rounded-full bg-[#d4c7ff] border border-white/50 shadow-sm" />
-                </>
-              )}
-              {variant === "silk-cord" && (
-                <>
-                  <div className="absolute left-6 sm:left-12 md:left-20 -translate-x-1/2 -bottom-1 z-30 pointer-events-none w-2.5 h-1.5 rounded-b-full bg-gradient-to-t from-[#9bbab0] to-[#1a382e] border border-[#9bbab0]/80 shadow-xs" />
-                  <div className="absolute right-6 sm:right-12 md:right-20 translate-x-1/2 -bottom-1 z-30 pointer-events-none w-2.5 h-1.5 rounded-b-full bg-gradient-to-t from-[#9bbab0] to-[#1a382e] border border-[#9bbab0]/80 shadow-xs" />
-                </>
-              )}
+              {/* Bottom Eyelet Rings */}
+              <div className="absolute left-6 sm:left-12 md:left-20 -translate-x-1/2 -bottom-1 z-30 pointer-events-none w-2.5 h-1.5 rounded-b-full bg-gradient-to-t from-[#9bbab0] to-[#1a382e] border border-[#9bbab0]/80 shadow-xs" />
+              <div className="absolute right-6 sm:right-12 md:right-20 translate-x-1/2 -bottom-1 z-30 pointer-events-none w-2.5 h-1.5 rounded-b-full bg-gradient-to-t from-[#9bbab0] to-[#1a382e] border border-[#9bbab0]/80 shadow-xs" />
             </div>
           </React.Fragment>
         );
@@ -844,43 +733,18 @@ export default function GallerySection() {
     </div>
 
     {/* ====================================================================
-        BOTTOM TERMINAL RIG (Conditional per Emil-Prototype Variant)
+        BOTTOM TERMINAL RIG (Dark Silvering Green Plumb Cord Ends)
         ==================================================================== */}
-    {variant !== "floating-minimal" && (
-      <div className="relative w-full h-8 mt-2 pointer-events-none select-none flex items-center justify-between">
-        {variant === "tension-wire" && (
-          <>
-            <div className="absolute left-6 sm:left-12 md:left-20 -translate-x-1/2 top-0 flex flex-col items-center">
-              <div className="w-[1.5px] h-3 bg-gradient-to-b from-[#714cb6] to-transparent" />
-              <div className="w-2.5 h-2.5 rounded-full bg-[#714cb6]/40 border border-[#d4c7ff]/40 shadow-sm" />
-            </div>
-            <div className="absolute right-6 sm:right-12 md:right-20 translate-x-1/2 top-0 flex flex-col items-center">
-              <div className="w-[1.5px] h-3 bg-gradient-to-b from-[#714cb6] to-transparent" />
-              <div className="w-2.5 h-2.5 rounded-full bg-[#714cb6]/40 border border-[#d4c7ff]/40 shadow-sm" />
-            </div>
-          </>
-        )}
-        {variant === "filmstrip" && (
-          <div className="w-full flex items-center justify-center">
-            <span className="font-tech text-[10px] text-white/30 tracking-widest uppercase">
-              ● TAIL REEL // END OF 35MM ROLL
-            </span>
-          </div>
-        )}
-        {variant === "silk-cord" && (
-          <>
-            <div className="absolute left-6 sm:left-12 md:left-20 -translate-x-1/2 top-0 flex flex-col items-center">
-              <div className="w-[2.5px] h-3.5 bg-gradient-to-b from-[#2a5245] via-[#9bbab0] to-transparent shadow-[0_0_4px_rgba(155,186,176,0.3)]" />
-              <div className="w-2.5 h-3 rounded-b-full bg-gradient-to-b from-[#9bbab0] to-[#16382e] border border-[#cbdcd4]/60 shadow-[0_2px_6px_rgba(0,0,0,0.8)]" />
-            </div>
-            <div className="absolute right-6 sm:right-12 md:right-20 translate-x-1/2 top-0 flex flex-col items-center">
-              <div className="w-[2.5px] h-3.5 bg-gradient-to-b from-[#2a5245] via-[#9bbab0] to-transparent shadow-[0_0_4px_rgba(155,186,176,0.3)]" />
-              <div className="w-2.5 h-3 rounded-b-full bg-gradient-to-b from-[#9bbab0] to-[#16382e] border border-[#cbdcd4]/60 shadow-[0_2px_6px_rgba(0,0,0,0.8)]" />
-            </div>
-          </>
-        )}
+    <div className="relative w-full h-8 mt-2 pointer-events-none select-none flex items-center justify-between">
+      <div className="absolute left-6 sm:left-12 md:left-20 -translate-x-1/2 top-0 flex flex-col items-center">
+        <div className="w-[2.5px] h-3.5 bg-gradient-to-b from-[#2a5245] via-[#9bbab0] to-transparent shadow-[0_0_4px_rgba(155,186,176,0.3)]" />
+        <div className="w-2.5 h-3 rounded-b-full bg-gradient-to-b from-[#9bbab0] to-[#16382e] border border-[#cbdcd4]/60 shadow-[0_2px_6px_rgba(0,0,0,0.8)]" />
       </div>
-    )}
+      <div className="absolute right-6 sm:right-12 md:right-20 translate-x-1/2 top-0 flex flex-col items-center">
+        <div className="w-[2.5px] h-3.5 bg-gradient-to-b from-[#2a5245] via-[#9bbab0] to-transparent shadow-[0_0_4px_rgba(155,186,176,0.3)]" />
+        <div className="w-2.5 h-3 rounded-b-full bg-gradient-to-b from-[#9bbab0] to-[#16382e] border border-[#cbdcd4]/60 shadow-[0_2px_6px_rgba(0,0,0,0.8)]" />
+      </div>
+    </div>
   </div>
 
       {/* ====================================================================
