@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -310,13 +310,181 @@ const DEFAULT_EXPANDED_THEME: ClubExpandedTheme = {
   badgeBg: "rgba(255, 255, 255, 0.1)",
 };
 
+/* =============================================================================
+   INDUSTRIAL FORGED STEEL CHAIN HARDWARE & SUSPENSION RIG (/impeccable)
+   ============================================================================= */
+
+function VerticalChainSegment({
+  links = 3,
+  className = "",
+}: {
+  links?: number;
+  className?: string;
+}) {
+  const height = links === 4 ? 38 : links === 2 ? 18 : 26;
+  const viewBoxHeight = height;
+
+  return (
+    <svg
+      width="18"
+      height={height}
+      viewBox={`0 0 18 ${viewBoxHeight}`}
+      fill="none"
+      className={`overflow-visible filter drop-shadow-[0_4px_6px_rgba(0,0,0,0.95)] ${className}`}
+      aria-hidden="true"
+    >
+      <defs>
+        {/* Steel Link Gradient (Front-facing oval link) */}
+        <linearGradient id="forgedSteelFront" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#94a3b8" />
+          <stop offset="25%" stopColor="#475569" />
+          <stop offset="50%" stopColor="#f8fafc" />
+          <stop offset="70%" stopColor="#1e293b" />
+          <stop offset="100%" stopColor="#64748b" />
+        </linearGradient>
+
+        {/* Side-Profile Interlocking Link Gradient */}
+        <linearGradient id="forgedSteelSide" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stopColor="#1e293b" />
+          <stop offset="30%" stopColor="#64748b" />
+          <stop offset="50%" stopColor="#cbd5e1" />
+          <stop offset="75%" stopColor="#334155" />
+          <stop offset="100%" stopColor="#0f172a" />
+        </linearGradient>
+
+        {/* Specular Highlight */}
+        <linearGradient id="linkGleam" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="#ffffff" stopOpacity="0.9" />
+          <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
+        </linearGradient>
+      </defs>
+
+      {links === 4 ? (
+        <>
+          {/* Link 1 (Front oval) */}
+          <rect x="3.5" y="1" width="11" height="12" rx="4.5" stroke="url(#forgedSteelFront)" strokeWidth="3" />
+          <rect x="5.5" y="2.5" width="2" height="4" rx="1" fill="url(#linkGleam)" opacity="0.7" />
+
+          {/* Link 2 (Side profile) */}
+          <rect x="7.5" y="8" width="3" height="10" rx="1.5" fill="url(#forgedSteelSide)" stroke="#0f172a" strokeWidth="0.8" />
+
+          {/* Link 3 (Front oval) */}
+          <rect x="3.5" y="14" width="11" height="12" rx="4.5" stroke="url(#forgedSteelFront)" strokeWidth="3" />
+          <rect x="5.5" y="15.5" width="2" height="4" rx="1" fill="url(#linkGleam)" opacity="0.7" />
+
+          {/* Link 4 (Side profile) */}
+          <rect x="7.5" y="21" width="3" height="10" rx="1.5" fill="url(#forgedSteelSide)" stroke="#0f172a" strokeWidth="0.8" />
+
+          {/* Link 5 (Front oval bottom hook) */}
+          <rect x="3.5" y="26" width="11" height="11" rx="4.5" stroke="url(#forgedSteelFront)" strokeWidth="3" />
+        </>
+      ) : links === 2 ? (
+        <>
+          {/* Link 1 (Front oval) */}
+          <rect x="3.5" y="1" width="11" height="11" rx="4.5" stroke="url(#forgedSteelFront)" strokeWidth="3" />
+          {/* Link 2 (Side profile) */}
+          <rect x="7.5" y="7" width="3" height="9" rx="1.5" fill="url(#forgedSteelSide)" stroke="#0f172a" strokeWidth="0.8" />
+        </>
+      ) : (
+        <>
+          {/* Link 1 (Front oval - top) */}
+          <rect x="3.5" y="1" width="11" height="12" rx="4.5" stroke="url(#forgedSteelFront)" strokeWidth="3" />
+          <rect x="5.5" y="2.5" width="2" height="3" rx="1" fill="url(#linkGleam)" opacity="0.7" />
+
+          {/* Link 2 (Side profile - middle interlock) */}
+          <rect x="7.5" y="8" width="3" height="10" rx="1.5" fill="url(#forgedSteelSide)" stroke="#0f172a" strokeWidth="0.8" />
+
+          {/* Link 3 (Front oval - bottom) */}
+          <rect x="3.5" y="14" width="11" height="12" rx="4.5" stroke="url(#forgedSteelFront)" strokeWidth="3" />
+          <rect x="5.5" y="15.5" width="2" height="3" rx="1" fill="url(#linkGleam)" opacity="0.7" />
+        </>
+      )}
+    </svg>
+  );
+}
+
+function CardShackle({ position }: { position: "top" | "bottom" }) {
+  const isTop = position === "top";
+  return (
+    <div className="flex flex-col items-center pointer-events-none select-none" aria-hidden="true">
+      {isTop ? (
+        <>
+          {/* Metal D-Ring / Arch looping upward out of the card */}
+          <div className="w-4 h-3.5 -mb-0.5 rounded-t-full border-2 border-[#94a3b8] bg-gradient-to-b from-[#64748b] to-[#1e293b] shadow-sm flex items-center justify-center">
+            <div className="w-1.5 h-1.5 rounded-t-full bg-black/70" />
+          </div>
+          {/* Mounting Base Plate riveted into the card face */}
+          <div className="w-4.5 h-2.5 rounded-xs bg-gradient-to-b from-[#334155] to-[#0f172a] border border-[#64748b]/70 shadow-[0_2px_4px_rgba(0,0,0,0.8)] flex items-center justify-center">
+            <div className="w-1 h-1 rounded-full bg-[#cbd5e1] shadow-inner" />
+          </div>
+        </>
+      ) : (
+        <>
+          {/* Mounting Base Plate riveted into the card face */}
+          <div className="w-4.5 h-2.5 rounded-xs bg-gradient-to-b from-[#0f172a] to-[#334155] border border-[#64748b]/70 shadow-[0_2px_4px_rgba(0,0,0,0.8)] flex items-center justify-center">
+            <div className="w-1 h-1 rounded-full bg-[#cbd5e1] shadow-inner" />
+          </div>
+          {/* Metal D-Ring / Arch looping downward out of the card */}
+          <div className="w-4 h-3.5 -mt-0.5 rounded-b-full border-2 border-[#94a3b8] bg-gradient-to-t from-[#64748b] to-[#1e293b] shadow-sm flex items-center justify-center">
+            <div className="w-1.5 h-1.5 rounded-b-full bg-black/70" />
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
 export default function GallerySection() {
+  const sectionRef = useRef<HTMLElement>(null);
   const [activeClubIndex, setActiveClubIndex] = useState<number | null>(0);
   const [selectedPhoto, setSelectedPhoto] = useState<{
     photo: ClubPhoto;
     club: ClubItem;
     photoIndex: number;
   } | null>(null);
+
+  // GSAP Entrance & Physics ScrollTrigger (/gsap-animation)
+  useEffect(() => {
+    if (!sectionRef.current) return;
+    const ctx = gsap.context(() => {
+      // 1. Overhead Gantry Reveal
+      gsap.fromTo(
+        ".overhead-gantry",
+        { y: -25, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 80%",
+            toggleActions: "play none none none",
+          },
+        }
+      );
+
+      // 2. Hanging Slit Blocks Dropping into Chain Tension Stagger
+      gsap.fromTo(
+        ".chain-card-wrapper",
+        { y: -20, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.65,
+          stagger: 0.035,
+          ease: "back.out(1.2)",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 75%",
+            toggleActions: "play none none none",
+          },
+        }
+      );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
 
   // Keyboard navigation for modal
   const handleKeyDown = useCallback(
@@ -364,6 +532,7 @@ export default function GallerySection() {
   return (
     <section
       id="gallery"
+      ref={sectionRef}
       className="relative w-full py-16 sm:py-24 bg-[#0d0d0e] border-b border-white/10 overflow-hidden select-none"
     >
       {/* 100% Full-Width Edge-to-Edge Container */}
@@ -383,27 +552,111 @@ export default function GallerySection() {
         </div>
 
         {/* ====================================================================
-            FULL-WIDTH VERTICAL STACK SLITS (Minimal gap, Smooth Downward Opening)
+            OVERHEAD INDUSTRIAL SUSPENSION GANTRY (CEILING BEAM & TOP CHAINS)
             ==================================================================== */}
-        <div className="w-full flex flex-col gap-2 sm:gap-2.5">
+        <div className="overhead-gantry relative w-full mb-1 flex flex-col items-center pointer-events-none select-none">
+          {/* Overhead Heavy Iron Truss / Gantry Beam */}
+          <div className="relative w-full h-3.5 rounded bg-gradient-to-r from-zinc-900 via-zinc-700 to-zinc-900 border-y border-white/15 shadow-[0_6px_20px_rgba(0,0,0,0.95)] flex items-center justify-between px-6 sm:px-12 md:px-20">
+            {/* Structural Rivet Pattern */}
+            <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-4 pointer-events-none opacity-40">
+              <div className="flex gap-4">
+                <span className="w-1.5 h-1.5 rounded-full bg-white/70 shadow-sm" />
+                <span className="w-1.5 h-1.5 rounded-full bg-white/70 shadow-sm" />
+              </div>
+              <div className="flex gap-4">
+                <span className="w-1.5 h-1.5 rounded-full bg-white/70 shadow-sm" />
+                <span className="w-1.5 h-1.5 rounded-full bg-white/70 shadow-sm" />
+              </div>
+            </div>
+
+            {/* Left Ceiling Flange & Shackle */}
+            <div className="relative -translate-x-1/2 -bottom-2 z-10 flex flex-col items-center">
+              <div className="w-5 h-3 rounded-t bg-gradient-to-b from-zinc-500 to-zinc-800 border border-white/20 shadow-md flex items-center justify-center">
+                <div className="w-1.5 h-1.5 rounded-full bg-white shadow-inner" />
+              </div>
+              <div className="w-4 h-3.5 rounded-b-full border-2 border-zinc-400 bg-zinc-900" />
+            </div>
+
+            {/* Right Ceiling Flange & Shackle */}
+            <div className="relative translate-x-1/2 -bottom-2 z-10 flex flex-col items-center">
+              <div className="w-5 h-3 rounded-t bg-gradient-to-b from-zinc-500 to-zinc-800 border border-white/20 shadow-md flex items-center justify-center">
+                <div className="w-1.5 h-1.5 rounded-full bg-white shadow-inner" />
+              </div>
+              <div className="w-4 h-3.5 rounded-b-full border-2 border-zinc-400 bg-zinc-900" />
+            </div>
+          </div>
+
+          {/* Top Hanging Chains (Dropping from Gantry to Card 0) */}
+          <div className="relative w-full h-8 sm:h-9">
+            <div className="absolute left-6 sm:left-12 md:left-20 -translate-x-1/2 -top-0.5">
+              <VerticalChainSegment links={4} />
+            </div>
+            <div className="absolute right-6 sm:right-12 md:right-20 translate-x-1/2 -top-0.5">
+              <VerticalChainSegment links={4} />
+            </div>
+          </div>
+        </div>
+
+        {/* ====================================================================
+            FULL-WIDTH VERTICAL STACK SLITS (Suspended by Inter-Block Chains)
+            ==================================================================== */}
+        <div className="w-full flex flex-col">
           {CLUBS_DATA.map((club, index) => {
             const isExpanded = activeClubIndex === index;
             const theme = CLUB_EXPANDED_THEMES[club.id] || DEFAULT_EXPANDED_THEME;
 
             return (
-              <div
-                key={club.id}
-                className={`group relative w-full overflow-hidden rounded-lg sm:rounded-lg border transition-[border-color,box-shadow] duration-300 ${
-                  isExpanded ? "cursor-default" : "cursor-pointer hover:border-[#714cb6]/50"
-                }`}
-                style={{
-                  backgroundColor: theme.bg,
-                  borderColor: isExpanded ? theme.border : "rgba(255, 255, 255, 0.12)",
-                  boxShadow: isExpanded
-                    ? `0 24px 60px rgba(0,0,0,0.85), 0 0 35px ${theme.glow}`
-                    : "0 2px 10px rgba(0,0,0,0.12)",
-                }}
-              >
+              <React.Fragment key={club.id}>
+                {/* Connecting Chains from card above to this card */}
+                {index > 0 && (
+                  <div className="relative w-full h-5 sm:h-6 flex items-center justify-between pointer-events-none select-none z-20 my-[-2px]">
+                    <div className="absolute left-6 sm:left-12 md:left-20 -translate-x-1/2 -top-1">
+                      <VerticalChainSegment links={3} />
+                    </div>
+                    <div className="absolute right-6 sm:right-12 md:right-20 translate-x-1/2 -top-1">
+                      <VerticalChainSegment links={3} />
+                    </div>
+                  </div>
+                )}
+
+                {/* Card Outer Container with Shackles and Hover Sway */}
+                <div
+                  className="chain-card-wrapper group relative w-full select-none transform-gpu origin-top transition-transform duration-300"
+                  onMouseEnter={(e) => {
+                    if (!isExpanded) {
+                      gsap.to(e.currentTarget, {
+                        rotation: index % 2 === 0 ? 0.35 : -0.35,
+                        y: -2,
+                        duration: 0.25,
+                        yoyo: true,
+                        repeat: 1,
+                        ease: "power1.inOut",
+                        transformOrigin: "center -20px",
+                      });
+                    }
+                  }}
+                >
+                  {/* Top Shackles */}
+                  <div className="absolute left-6 sm:left-12 md:left-20 -translate-x-1/2 -top-2.5 z-30 pointer-events-none">
+                    <CardShackle position="top" />
+                  </div>
+                  <div className="absolute right-6 sm:right-12 md:right-20 translate-x-1/2 -top-2.5 z-30 pointer-events-none">
+                    <CardShackle position="top" />
+                  </div>
+
+                  {/* The Slit & Accordion Card */}
+                  <div
+                    className={`relative w-full overflow-hidden rounded-lg sm:rounded-lg border transition-[border-color,box-shadow,transform] duration-300 ${
+                      isExpanded ? "cursor-default" : "cursor-pointer hover:border-[#714cb6]/60 hover:shadow-[0_12px_30px_rgba(0,0,0,0.6)]"
+                    }`}
+                    style={{
+                      backgroundColor: theme.bg,
+                      borderColor: isExpanded ? theme.border : "rgba(255, 255, 255, 0.12)",
+                      boxShadow: isExpanded
+                        ? `0 24px 60px rgba(0,0,0,0.85), 0 0 35px ${theme.glow}`
+                        : "0 4px 14px rgba(0,0,0,0.35)",
+                    }}
+                  >
                 {/* -------------------------------------------------------------
                     TOP SLIT BAR HEADER (Always visible as trigger & control)
                     ------------------------------------------------------------- */}
@@ -595,10 +848,39 @@ export default function GallerySection() {
                   )}
                 </AnimatePresence>
               </div>
-            );
-          })}
+
+              {/* Bottom Mounting Shackles */}
+              <div className="absolute left-6 sm:left-12 md:left-20 -translate-x-1/2 -bottom-2.5 z-30 pointer-events-none">
+                <CardShackle position="bottom" />
+              </div>
+              <div className="absolute right-6 sm:right-12 md:right-20 translate-x-1/2 -bottom-2.5 z-30 pointer-events-none">
+                <CardShackle position="bottom" />
+              </div>
+            </div>
+          </React.Fragment>
+        );
+      })}
+    </div>
+
+    {/* ====================================================================
+        BOTTOM TERMINAL COUNTERWEIGHT RIG (DANGLING END CHAINS & ANCHORS)
+        ==================================================================== */}
+    <div className="relative w-full h-8 mt-1 pointer-events-none select-none">
+      <div className="absolute left-6 sm:left-12 md:left-20 -translate-x-1/2 top-0 flex flex-col items-center">
+        <VerticalChainSegment links={2} />
+        <div className="w-3.5 h-5 -mt-0.5 rounded-b-full bg-gradient-to-b from-zinc-500 via-zinc-700 to-zinc-900 border border-white/20 shadow-[0_4px_10px_rgba(0,0,0,0.9)] flex items-center justify-center">
+          <div className="w-1.5 h-2 rounded-full bg-zinc-400/40" />
         </div>
+      </div>
+
+      <div className="absolute right-6 sm:right-12 md:right-20 translate-x-1/2 top-0 flex flex-col items-center">
+        <VerticalChainSegment links={2} />
+        <div className="w-3.5 h-5 -mt-0.5 rounded-b-full bg-gradient-to-b from-zinc-500 via-zinc-700 to-zinc-900 border border-white/20 shadow-[0_4px_10px_rgba(0,0,0,0.9)] flex items-center justify-center">
+          <div className="w-1.5 h-2 rounded-full bg-zinc-400/40" />
         </div>
+      </div>
+    </div>
+  </div>
 
       {/* ====================================================================
           HD LIGHTBOX MODAL WITH FULL PHOTOGRAPH INSPECTOR

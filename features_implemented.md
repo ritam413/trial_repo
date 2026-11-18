@@ -42,6 +42,13 @@ All foundational libraries, responsive layout engines, and the streamlined **Dev
     - Removed `cardLayout` state and deleted the `View: [ ⊞ DevFest Grid | 🂠 Card Stack ]` switcher.
     - Locked layout to the side-by-side DevFest Grid realm cards with Google 4-color accent tokens, vector doodle backdrop, and interactive discipline inspection modal dossiers.
   - **Pure Vertical Slit Gallery with 14 Student Societies & Creative Wings (`GallerySection.tsx` & `clubsData.ts`)**:
+    - **Industrial Chain Suspension Rig (/impeccable & /gsap-animation)**:
+      - **Overhead Heavy Gantry Beam**: Dark titanium structural iron truss across the ceiling with rivets and dual heavy-duty ceiling flanges.
+      - **Top Hanging Chains**: 4-link forged steel chains dropping from the ceiling flanges directly to the top edge of the first block (`ARITRAM`).
+      - **Card Hardware Shackles**: Heavy forged steel D-rings with bolted mounting plates riveted to the top and bottom edges of each block.
+      - **Inter-Block Connecting Chains**: Symmetrical vertical steel chain bridges connecting the bottom shackles of block $i$ to the top shackles of block $i+1$, creating a realistic physical installation where each block hangs suspended from the one above it.
+      - **Bottom Terminal Rig**: Dangling 2-link chain ends with heavy teardrop counterweights hanging beneath the final block (`BEAT BUSTER`).
+      - **GSAP Physics & Interaction**: ScrollTrigger elastic chain drop entrance and tactile hover pendulum sway (`transformOrigin: "center -20px"`) providing tangible physical presence.
     - Deleted the prototype switcher bar (`[ Skiper 53 | Dual Adaptive | Skiper 52 ]`) and obsolete horizontal accordion code.
     - Completely removed card suits and ranks (`club.suit`, `club.cardRank`).
     - Configured all 14 official festival student societies and wings: `ARITRAM`, `CHITRAKATHA DESIGNING & EDITING`, `CHITRAKATHA PHOTOGRAPHY`, `CHITRAKATHA ART AND CRAFT`, `CHITRAKATHA`, `CHECKMATE`, `DHRUBOTARA`, `NRITAKSHA`, `PAPERBACK SOCIETY`, `PHOENIX`, `SWARAKRITI`, `STEP ALPHA`, `DESI GROOVER`, and `BEAT BUSTER`.

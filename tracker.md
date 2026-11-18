@@ -1,5 +1,35 @@
 # Agent Handoff Log — tracker.md
 
+## 2026-11-18 — Gallery Section: Suspended Steel Chain Rig & GSAP Physics (/impeccable & /gsap-animation)
+
+### Objective
+Design and implement a realistic, tactile physical installation where the vertical gallery slit blocks appear suspended from heavy industrial forged steel chains hanging from the ceiling, with physical mounting shackles, inter-block connecting chain links, bottom counterweights, and GSAP-powered pendulum micro-sway interactions.
+
+### Changes Made
+1. **Industrial Chain Hardware System (`src/components/event/GallerySection.tsx`)**:
+   - Built `VerticalChainSegment`: high-fidelity SVG component with 3D forged metallic gradients (`#f8fafc` specular highlights, `#94a3b8` steel midtones, `#1e293b` shadow recesses, and realistic dark drop shadows) rendering interlocking oval and side-profile chain links.
+   - Built `CardShackle`: bolted steel mounting plate with rivet details and forged steel D-rings extending past the card borders (`-top-2.5` and `-bottom-2.5`) to clamp the cards into the chain rigging.
+2. **Overhead Industrial Suspension Gantry**:
+   - Engineered an overhead brushed dark titanium gantry beam spanning the gallery width with rivet patterns, heavy ceiling mounting flanges, and two 4-link hanging chains dropping to the top shackles of the first block (`ARITRAM`).
+3. **Inter-Block Chain Connectors**:
+   - Connected every consecutive card in the vertical stack with 3-link forged steel chains spanning between Card $i$'s bottom D-rings and Card $i+1$'s top D-rings on symmetrical left (`left-6 sm:left-12 md:left-20`) and right axes.
+4. **Bottom Terminal Counterweight Rig**:
+   - Added dangling 2-link chain ends with heavy teardrop forged steel counterweight plumb-bobs hanging below the final block (`BEAT BUSTER`).
+5. **GSAP Physics & Micro-Interactions**:
+   - Added ScrollTrigger entrance drop with elastic tension settling (`back.out(1.2)`).
+   - Added tactile pendulum sway on hover (`rotation: ±0.35deg`, `transformOrigin: "center -20px"`) for realistic suspended sign physics.
+6. **Verification**:
+   - `npm run build` compiled with 0 errors via Next.js Turbopack & React 19 in 12.1s.
+
+### Current State
+All 14 society slit blocks visually hang from realistic steel chains descending from an overhead ceiling truss, interconnected link-by-link with forged shackles, and grounded by terminal plumb-bob counterweights.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/GallerySection.tsx` lines 65-180 for any further chain link geometry or tension adjustments.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-18 — Footer Background: Migrate from Midnight Wine to #0d0d0e Carbon Obsidian
 
 ### Objective
