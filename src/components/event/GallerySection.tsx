@@ -364,7 +364,7 @@ export default function GallerySection() {
   return (
     <section
       id="gallery"
-      className="relative w-full py-16 sm:py-24 bg-[#ffffff] border-b border-[#e3e3e2] overflow-hidden select-none"
+      className="relative w-full py-16 sm:py-24 bg-[#0d0d0e] border-b border-white/10 overflow-hidden select-none"
     >
       {/* 100% Full-Width Edge-to-Edge Container */}
       <div className="w-full px-2 sm:px-4 md:px-6">
@@ -373,9 +373,9 @@ export default function GallerySection() {
             ==================================================================== */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 sm:mb-10 px-1 sm:px-2">
           <div>
-            <h2 className="font-display text-4xl sm:text-5xl md:text-6xl text-[#292827] leading-none uppercase tracking-tight">
+            <h2 className="font-display text-4xl sm:text-5xl md:text-6xl text-[#EDE8FF] leading-none uppercase tracking-tight">
               GALLERY{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#292827] via-[#421d24] to-[#714cb6]">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#EDE8FF] via-[#d4c7ff] to-[#714cb6]">
                 SECTION
               </span>
             </h2>

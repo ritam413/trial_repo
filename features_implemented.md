@@ -11,7 +11,7 @@ All foundational libraries, responsive layout engines, and the streamlined **Dev
       1. Showcase Hero: Black (`#000000`) opening canvas.
       2. Sanskaran: White / Warm Parchment (`#f2f0eb`) ground with Paper White cards and Ink Charcoal text.
       3. Sahotsava: Green / Deep Lagoon (`#0c4243`) ground with glowing SVG soundwave watermark and white text.
-      4. Cultural Gallery: White / Warm Parchment (`#f2f0eb`) ground with Paper White slit cards.
+      4. Cultural Gallery: Obsidian (`#0d0d0e`) ground with dark slit cards and luminous typography.
       5. Core Members: Green / Deep Lagoon (`#0c4243`) ground with Lilac Mist ambient grid and 3D card physics.
       6. Dignitaries: White / Warm Parchment (`#f2f0eb`) ground with Paper White spotlight cards.
       7. Founders: Green / Deep Lagoon (`#0c4243`) ground with glowing emerald monograms.

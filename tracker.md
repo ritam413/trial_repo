@@ -1,5 +1,27 @@
 # Agent Handoff Log — tracker.md
 
+## 2026-11-18 — Gallery Section Background: Switch from White to #0d0d0e Obsidian Ground
+
+### Objective
+Update the Cultural Gallery section background from bright white (`#ffffff`) to deep obsidian (`#0d0d0e`) as requested by the user, eliminating jarring white gaps between slits and creating seamless atmospheric cohesion with the dark festival cards.
+
+### Changes Made
+1. **Gallery Canvas Ground (`src/components/event/GallerySection.tsx`)**:
+   - Replaced `bg-[#ffffff]` with `bg-[#0d0d0e]` on `<section id="gallery">`.
+   - Updated section border to subtle `border-white/10`.
+   - Updated header typography from dark ink slate (`#292827`) to luminous ivory/lilac gradient (`from-[#EDE8FF] via-[#d4c7ff] to-[#714cb6]`) for high contrast on `#0d0d0e`.
+2. **Verification**:
+   - `npm run build` compiled with status code 0 via Next.js 16.4.6 (Turbopack) & React 19.
+
+### Current State
+Gallery section sits on deep `#0d0d0e` obsidian canvas. The slits, cards, and headers blend naturally with zero stark white bars.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/GallerySection.tsx` lines 365-410 for any further background or theme adjustments.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-18 — Hero Section Bold Display Typography (Syne ExtraBold 800) & Width-Locked 2026
 
 ### Objective
