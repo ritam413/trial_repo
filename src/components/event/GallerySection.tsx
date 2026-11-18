@@ -334,69 +334,69 @@ function VerticalChainSegment({
       aria-hidden="true"
     >
       <defs>
-        {/* Steel Link Gradient (Front-facing oval link) */}
-        <linearGradient id="forgedSteelFront" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#94a3b8" />
-          <stop offset="25%" stopColor="#475569" />
-          <stop offset="50%" stopColor="#f8fafc" />
-          <stop offset="70%" stopColor="#1e293b" />
-          <stop offset="100%" stopColor="#64748b" />
+        {/* Antique Brass & Forged Gold Link Gradient (Front-facing oval link) */}
+        <linearGradient id="antiqueBrassFront" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#FDE047" />
+          <stop offset="25%" stopColor="#CA8A04" />
+          <stop offset="50%" stopColor="#FEF08A" />
+          <stop offset="72%" stopColor="#78350F" />
+          <stop offset="100%" stopColor="#A16207" />
         </linearGradient>
 
-        {/* Side-Profile Interlocking Link Gradient */}
-        <linearGradient id="forgedSteelSide" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="#1e293b" />
-          <stop offset="30%" stopColor="#64748b" />
-          <stop offset="50%" stopColor="#cbd5e1" />
-          <stop offset="75%" stopColor="#334155" />
-          <stop offset="100%" stopColor="#0f172a" />
+        {/* Side-Profile Interlocking Link Gradient (Burnished Bronze & Amber Gold) */}
+        <linearGradient id="antiqueBrassSide" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stopColor="#451A03" />
+          <stop offset="28%" stopColor="#92400E" />
+          <stop offset="50%" stopColor="#FDE047" />
+          <stop offset="75%" stopColor="#A16207" />
+          <stop offset="100%" stopColor="#291002" />
         </linearGradient>
 
-        {/* Specular Highlight */}
-        <linearGradient id="linkGleam" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stopColor="#ffffff" stopOpacity="0.9" />
-          <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
+        {/* Golden Specular Gleam */}
+        <linearGradient id="brassGleam" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="#FEF9C3" stopOpacity="0.95" />
+          <stop offset="100%" stopColor="#FDE047" stopOpacity="0" />
         </linearGradient>
       </defs>
 
       {links === 4 ? (
         <>
           {/* Link 1 (Front oval) */}
-          <rect x="3.5" y="1" width="11" height="12" rx="4.5" stroke="url(#forgedSteelFront)" strokeWidth="3" />
-          <rect x="5.5" y="2.5" width="2" height="4" rx="1" fill="url(#linkGleam)" opacity="0.7" />
+          <rect x="3.5" y="1" width="11" height="12" rx="4.5" stroke="url(#antiqueBrassFront)" strokeWidth="3" />
+          <rect x="5.5" y="2.5" width="2" height="4" rx="1" fill="url(#brassGleam)" opacity="0.8" />
 
           {/* Link 2 (Side profile) */}
-          <rect x="7.5" y="8" width="3" height="10" rx="1.5" fill="url(#forgedSteelSide)" stroke="#0f172a" strokeWidth="0.8" />
+          <rect x="7.5" y="8" width="3" height="10" rx="1.5" fill="url(#antiqueBrassSide)" stroke="#291002" strokeWidth="0.8" />
 
           {/* Link 3 (Front oval) */}
-          <rect x="3.5" y="14" width="11" height="12" rx="4.5" stroke="url(#forgedSteelFront)" strokeWidth="3" />
-          <rect x="5.5" y="15.5" width="2" height="4" rx="1" fill="url(#linkGleam)" opacity="0.7" />
+          <rect x="3.5" y="14" width="11" height="12" rx="4.5" stroke="url(#antiqueBrassFront)" strokeWidth="3" />
+          <rect x="5.5" y="15.5" width="2" height="4" rx="1" fill="url(#brassGleam)" opacity="0.8" />
 
           {/* Link 4 (Side profile) */}
-          <rect x="7.5" y="21" width="3" height="10" rx="1.5" fill="url(#forgedSteelSide)" stroke="#0f172a" strokeWidth="0.8" />
+          <rect x="7.5" y="21" width="3" height="10" rx="1.5" fill="url(#antiqueBrassSide)" stroke="#291002" strokeWidth="0.8" />
 
           {/* Link 5 (Front oval bottom hook) */}
-          <rect x="3.5" y="26" width="11" height="11" rx="4.5" stroke="url(#forgedSteelFront)" strokeWidth="3" />
+          <rect x="3.5" y="26" width="11" height="11" rx="4.5" stroke="url(#antiqueBrassFront)" strokeWidth="3" />
         </>
       ) : links === 2 ? (
         <>
           {/* Link 1 (Front oval) */}
-          <rect x="3.5" y="1" width="11" height="11" rx="4.5" stroke="url(#forgedSteelFront)" strokeWidth="3" />
+          <rect x="3.5" y="1" width="11" height="11" rx="4.5" stroke="url(#antiqueBrassFront)" strokeWidth="3" />
           {/* Link 2 (Side profile) */}
-          <rect x="7.5" y="7" width="3" height="9" rx="1.5" fill="url(#forgedSteelSide)" stroke="#0f172a" strokeWidth="0.8" />
+          <rect x="7.5" y="7" width="3" height="9" rx="1.5" fill="url(#antiqueBrassSide)" stroke="#291002" strokeWidth="0.8" />
         </>
       ) : (
         <>
           {/* Link 1 (Front oval - top) */}
-          <rect x="3.5" y="1" width="11" height="12" rx="4.5" stroke="url(#forgedSteelFront)" strokeWidth="3" />
-          <rect x="5.5" y="2.5" width="2" height="3" rx="1" fill="url(#linkGleam)" opacity="0.7" />
+          <rect x="3.5" y="1" width="11" height="12" rx="4.5" stroke="url(#antiqueBrassFront)" strokeWidth="3" />
+          <rect x="5.5" y="2.5" width="2" height="3" rx="1" fill="url(#brassGleam)" opacity="0.8" />
 
           {/* Link 2 (Side profile - middle interlock) */}
-          <rect x="7.5" y="8" width="3" height="10" rx="1.5" fill="url(#forgedSteelSide)" stroke="#0f172a" strokeWidth="0.8" />
+          <rect x="7.5" y="8" width="3" height="10" rx="1.5" fill="url(#antiqueBrassSide)" stroke="#291002" strokeWidth="0.8" />
 
           {/* Link 3 (Front oval - bottom) */}
-          <rect x="3.5" y="14" width="11" height="12" rx="4.5" stroke="url(#forgedSteelFront)" strokeWidth="3" />
-          <rect x="5.5" y="15.5" width="2" height="3" rx="1" fill="url(#linkGleam)" opacity="0.7" />
+          <rect x="3.5" y="14" width="11" height="12" rx="4.5" stroke="url(#antiqueBrassFront)" strokeWidth="3" />
+          <rect x="5.5" y="15.5" width="2" height="3" rx="1" fill="url(#brassGleam)" opacity="0.8" />
         </>
       )}
     </svg>
@@ -409,24 +409,24 @@ function CardShackle({ position }: { position: "top" | "bottom" }) {
     <div className="flex flex-col items-center pointer-events-none select-none" aria-hidden="true">
       {isTop ? (
         <>
-          {/* Metal D-Ring / Arch looping upward out of the card */}
-          <div className="w-4 h-3.5 -mb-0.5 rounded-t-full border-2 border-[#94a3b8] bg-gradient-to-b from-[#64748b] to-[#1e293b] shadow-sm flex items-center justify-center">
-            <div className="w-1.5 h-1.5 rounded-t-full bg-black/70" />
+          {/* Forged Brass D-Ring / Arch looping upward out of the card */}
+          <div className="w-4 h-3.5 -mb-0.5 rounded-t-full border-2 border-[#D4AF37] bg-gradient-to-b from-[#A16207] to-[#451A03] shadow-sm flex items-center justify-center">
+            <div className="w-1.5 h-1.5 rounded-t-full bg-black/80" />
           </div>
           {/* Mounting Base Plate riveted into the card face */}
-          <div className="w-4.5 h-2.5 rounded-xs bg-gradient-to-b from-[#334155] to-[#0f172a] border border-[#64748b]/70 shadow-[0_2px_4px_rgba(0,0,0,0.8)] flex items-center justify-center">
-            <div className="w-1 h-1 rounded-full bg-[#cbd5e1] shadow-inner" />
+          <div className="w-4.5 h-2.5 rounded-xs bg-gradient-to-b from-[#78350F] to-[#291002] border border-[#CA8A04]/80 shadow-[0_2px_4px_rgba(0,0,0,0.9)] flex items-center justify-center">
+            <div className="w-1 h-1 rounded-full bg-[#FDE047] shadow-inner" />
           </div>
         </>
       ) : (
         <>
           {/* Mounting Base Plate riveted into the card face */}
-          <div className="w-4.5 h-2.5 rounded-xs bg-gradient-to-b from-[#0f172a] to-[#334155] border border-[#64748b]/70 shadow-[0_2px_4px_rgba(0,0,0,0.8)] flex items-center justify-center">
-            <div className="w-1 h-1 rounded-full bg-[#cbd5e1] shadow-inner" />
+          <div className="w-4.5 h-2.5 rounded-xs bg-gradient-to-b from-[#291002] to-[#78350F] border border-[#CA8A04]/80 shadow-[0_2px_4px_rgba(0,0,0,0.9)] flex items-center justify-center">
+            <div className="w-1 h-1 rounded-full bg-[#FDE047] shadow-inner" />
           </div>
-          {/* Metal D-Ring / Arch looping downward out of the card */}
-          <div className="w-4 h-3.5 -mt-0.5 rounded-b-full border-2 border-[#94a3b8] bg-gradient-to-t from-[#64748b] to-[#1e293b] shadow-sm flex items-center justify-center">
-            <div className="w-1.5 h-1.5 rounded-b-full bg-black/70" />
+          {/* Forged Brass D-Ring / Arch looping downward out of the card */}
+          <div className="w-4 h-3.5 -mt-0.5 rounded-b-full border-2 border-[#D4AF37] bg-gradient-to-t from-[#A16207] to-[#451A03] shadow-sm flex items-center justify-center">
+            <div className="w-1.5 h-1.5 rounded-b-full bg-black/80" />
           </div>
         </>
       )}
@@ -544,9 +544,7 @@ export default function GallerySection() {
           <div>
             <h2 className="font-display text-4xl sm:text-5xl md:text-6xl text-[#EDE8FF] leading-none uppercase tracking-tight">
               GALLERY{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#EDE8FF] via-[#d4c7ff] to-[#714cb6]">
-                SECTION
-              </span>
+              
             </h2>
           </div>
         </div>
@@ -556,33 +554,33 @@ export default function GallerySection() {
             ==================================================================== */}
         <div className="overhead-gantry relative w-full mb-1 flex flex-col items-center pointer-events-none select-none">
           {/* Overhead Heavy Iron Truss / Gantry Beam */}
-          <div className="relative w-full h-3.5 rounded bg-gradient-to-r from-zinc-900 via-zinc-700 to-zinc-900 border-y border-white/15 shadow-[0_6px_20px_rgba(0,0,0,0.95)] flex items-center justify-between px-6 sm:px-12 md:px-20">
+          <div className="relative w-full h-3.5 rounded bg-gradient-to-r from-[#1C1204] via-[#4A3208] to-[#1C1204] border-y border-[#CA8A04]/40 shadow-[0_6px_20px_rgba(0,0,0,0.95)] flex items-center justify-between px-6 sm:px-12 md:px-20">
             {/* Structural Rivet Pattern */}
-            <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-4 pointer-events-none opacity-40">
+            <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-4 pointer-events-none opacity-60">
               <div className="flex gap-4">
-                <span className="w-1.5 h-1.5 rounded-full bg-white/70 shadow-sm" />
-                <span className="w-1.5 h-1.5 rounded-full bg-white/70 shadow-sm" />
+                <span className="w-1.5 h-1.5 rounded-full bg-[#FDE047] shadow-sm" />
+                <span className="w-1.5 h-1.5 rounded-full bg-[#FDE047] shadow-sm" />
               </div>
               <div className="flex gap-4">
-                <span className="w-1.5 h-1.5 rounded-full bg-white/70 shadow-sm" />
-                <span className="w-1.5 h-1.5 rounded-full bg-white/70 shadow-sm" />
+                <span className="w-1.5 h-1.5 rounded-full bg-[#FDE047] shadow-sm" />
+                <span className="w-1.5 h-1.5 rounded-full bg-[#FDE047] shadow-sm" />
               </div>
             </div>
 
             {/* Left Ceiling Flange & Shackle */}
             <div className="relative -translate-x-1/2 -bottom-2 z-10 flex flex-col items-center">
-              <div className="w-5 h-3 rounded-t bg-gradient-to-b from-zinc-500 to-zinc-800 border border-white/20 shadow-md flex items-center justify-center">
-                <div className="w-1.5 h-1.5 rounded-full bg-white shadow-inner" />
+              <div className="w-5 h-3 rounded-t bg-gradient-to-b from-[#A16207] to-[#451A03] border border-[#FDE047]/30 shadow-md flex items-center justify-center">
+                <div className="w-1.5 h-1.5 rounded-full bg-[#FDE047] shadow-inner" />
               </div>
-              <div className="w-4 h-3.5 rounded-b-full border-2 border-zinc-400 bg-zinc-900" />
+              <div className="w-4 h-3.5 rounded-b-full border-2 border-[#D4AF37] bg-[#291002]" />
             </div>
 
             {/* Right Ceiling Flange & Shackle */}
             <div className="relative translate-x-1/2 -bottom-2 z-10 flex flex-col items-center">
-              <div className="w-5 h-3 rounded-t bg-gradient-to-b from-zinc-500 to-zinc-800 border border-white/20 shadow-md flex items-center justify-center">
-                <div className="w-1.5 h-1.5 rounded-full bg-white shadow-inner" />
+              <div className="w-5 h-3 rounded-t bg-gradient-to-b from-[#A16207] to-[#451A03] border border-[#FDE047]/30 shadow-md flex items-center justify-center">
+                <div className="w-1.5 h-1.5 rounded-full bg-[#FDE047] shadow-inner" />
               </div>
-              <div className="w-4 h-3.5 rounded-b-full border-2 border-zinc-400 bg-zinc-900" />
+              <div className="w-4 h-3.5 rounded-b-full border-2 border-[#D4AF37] bg-[#291002]" />
             </div>
           </div>
 
@@ -868,15 +866,15 @@ export default function GallerySection() {
     <div className="relative w-full h-8 mt-1 pointer-events-none select-none">
       <div className="absolute left-6 sm:left-12 md:left-20 -translate-x-1/2 top-0 flex flex-col items-center">
         <VerticalChainSegment links={2} />
-        <div className="w-3.5 h-5 -mt-0.5 rounded-b-full bg-gradient-to-b from-zinc-500 via-zinc-700 to-zinc-900 border border-white/20 shadow-[0_4px_10px_rgba(0,0,0,0.9)] flex items-center justify-center">
-          <div className="w-1.5 h-2 rounded-full bg-zinc-400/40" />
+        <div className="w-3.5 h-5 -mt-0.5 rounded-b-full bg-gradient-to-b from-[#CA8A04] via-[#78350F] to-[#291002] border border-[#FDE047]/40 shadow-[0_4px_10px_rgba(0,0,0,0.95)] flex items-center justify-center">
+          <div className="w-1.5 h-2 rounded-full bg-[#FDE047]/50" />
         </div>
       </div>
 
       <div className="absolute right-6 sm:right-12 md:right-20 translate-x-1/2 top-0 flex flex-col items-center">
         <VerticalChainSegment links={2} />
-        <div className="w-3.5 h-5 -mt-0.5 rounded-b-full bg-gradient-to-b from-zinc-500 via-zinc-700 to-zinc-900 border border-white/20 shadow-[0_4px_10px_rgba(0,0,0,0.9)] flex items-center justify-center">
-          <div className="w-1.5 h-2 rounded-full bg-zinc-400/40" />
+        <div className="w-3.5 h-5 -mt-0.5 rounded-b-full bg-gradient-to-b from-[#CA8A04] via-[#78350F] to-[#291002] border border-[#FDE047]/40 shadow-[0_4px_10px_rgba(0,0,0,0.95)] flex items-center justify-center">
+          <div className="w-1.5 h-2 rounded-full bg-[#FDE047]/50" />
         </div>
       </div>
     </div>

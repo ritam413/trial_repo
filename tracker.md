@@ -1,5 +1,33 @@
 # Agent Handoff Log — tracker.md
 
+## 2026-11-18 — Gallery Chains: Material Recalibration to Antique Brass & Forged Yellow Gold
+
+### Objective
+Recalibrate the gallery chain suspension hardware from industrial cold silver steel to warm **Antique Brass / Forged Yellow Gold & Burnished Bronze** as requested by the user, harmonizing with the warm ivory (`#FFF4E0`) slit lettering, amber accents, and dark carbon `#0d0d0e` canvas.
+
+### Changes Made
+1. **Chain Gradients (`src/components/event/GallerySection.tsx`)**:
+   - Replaced `#forgedSteelFront` with `#antiqueBrassFront`: multi-stop rich antique brass gradient with luminous yellow-gold highlight `#FDE047`, specular glint `#FEF08A`, warm brass `#CA8A04`, rich amber `#A16207`, and burnished copper-bronze shadow `#78350F`.
+   - Replaced `#forgedSteelSide` with `#antiqueBrassSide`: deep espresso-bronze shadow `#451A03` with golden center glint `#FDE047` and warm amber `#92400E`.
+   - Replaced `#linkGleam` with `#brassGleam`: pale champagne gold specular reflection `#FEF9C3`.
+2. **Mounting Shackles & Hardware (`CardShackle`)**:
+   - Updated D-rings to forged brass `#D4AF37` over deep bronze `#451A03`.
+   - Updated mounting base plate to burnished bronze `#78350F` with bright golden rivet `#FDE047`.
+3. **Overhead Gantry & Terminal Rig**:
+   - Updated gantry beam to warm antique bronze `#4A3208` with golden brass rivets and mounting flanges.
+   - Updated terminal plumb-bob counterweights to forged brass & warm bronze `#CA8A04`/`#78350F`.
+4. **Verification**:
+   - `npm run build` compiled with 0 errors via Next.js Turbopack & React 19 in 2.8s.
+
+### Current State
+The gallery blocks hang from warm antique brass and yellow-gold forged chains that match the warm, royal festival aesthetic with deep physical realism.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/GallerySection.tsx` lines 320-435 for any further chain link color or gradient tweaks.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-18 — Gallery Section: Suspended Steel Chain Rig & GSAP Physics (/impeccable & /gsap-animation)
 
 ### Objective

@@ -574,12 +574,8 @@ export default function CoreMembersSection() {
       <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12 sm:mb-16">
         <div className="max-w-2xl">
           <h2 className="core-anim-header font-display text-4xl sm:text-6xl lg:text-7xl text-[#ffffff] leading-none uppercase tracking-tight">
-            NEW CORE <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ffffff] via-[#d4c7ff] to-[#714cb6]">MEMBERS</span>
+             CORE <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ffffff] via-[#d4c7ff] to-[#714cb6]">MEMBERS</span>
           </h2>
-
-          <p className="core-anim-header mt-3 font-tech text-xs sm:text-sm text-[#d4c7ff]/80 leading-relaxed">
-            Six student stewards curating this year&rsquo;s edition. Dealt in from the sides with GSAP physics—tap any profile to flip and discover their editorial vision.
-          </p>
         </div>
       </div>
 
