@@ -1,5 +1,31 @@
 # Agent Handoff Log — tracker.md
 
+## 2026-11-19 — Hero Section: Migrate SANSKARAN Typography to Bebas Neue
+
+### Objective
+Update the Hero Section typography for **SANSKARAN** and **2026** to use the condensed display font **Bebas Neue** (`var(--font-bebas-neue), Impact, sans-serif`), exactly matching the user's reference image of the `GALLERY SECTION` heading.
+
+### Changes Made
+1. **Hero Display Typography (`src/components/event/ShowcaseHeroSection.tsx`)**:
+   - Set default `fontMode` to `"bebas"`.
+   - Updated `fontFamily` definition for `"bebas"` to `"var(--font-bebas-neue), Impact, sans-serif"`.
+   - Updated SVG `<text>` elements in `OutlineText` to pass `letterSpacing: style?.letterSpacing || "normal"` and set `fontWeight: fontMode === "bebas" ? 400 : 800` (preventing faux-bold font distortions on Bebas Neue, which is native weight 400).
+   - Recalibrated responsive scale ramp for `SANSKARAN` from `text-[38px]` up to `text-[164px]` to take full advantage of Bebas Neue's taller condensed proportions.
+   - Maintained width-locked `2026` yearmark directly underneath `SANSKARAN` via `flex justify-between w-full`.
+2. **Documentation Updates**:
+   - Updated `features_implemented.md` and `tracker.md`.
+3. **Verification**:
+   - Ran `npm run build`: Next.js 16.4.6 (Turbopack) and React 19 compiled with 0 errors in 9.2s.
+
+### Current State
+The Hero Section presents `SANSKARAN` and `2026` in condensed, high-impact Bebas Neue outline typography, visually harmonized with the `GALLERY SECTION` display font across all viewports.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/ShowcaseHeroSection.tsx` lines 520-560 for any further typographic sizing or spacing requests.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-19 — Gallery Section: Retire Prototype Switcher & Lock Dark Silvering Green Silk Cord
 
 ### Objective

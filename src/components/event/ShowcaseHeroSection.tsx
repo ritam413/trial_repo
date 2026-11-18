@@ -161,7 +161,7 @@ export function OutlineText({
   className = "",
   style,
   color = "#ffffff",
-  fontMode = "syne",
+  fontMode = "bebas",
 }: OutlineTextProps) {
   if (fontMode === "londrina") {
     return (
@@ -194,10 +194,10 @@ export function OutlineText({
   }
 
   const fontFamily =
-    fontMode === "anton"
+    fontMode === "bebas"
+      ? "var(--font-bebas-neue), Impact, sans-serif"
+      : fontMode === "anton"
       ? "var(--font-anton), Impact, sans-serif"
-      : fontMode === "bebas"
-      ? "var(--font-bebas-neue), sans-serif"
       : fontMode === "googlesans"
       ? '"Google Sans", system-ui, sans-serif'
       : "var(--font-syne), sans-serif";
@@ -239,7 +239,11 @@ export function OutlineText({
               y="50%"
               textAnchor="middle"
               dominantBaseline="central"
-              style={{ fontFamily, fontWeight: style?.fontWeight ?? 800 }}
+              style={{
+                fontFamily,
+                fontWeight: fontMode === "bebas" ? 400 : (style?.fontWeight ?? 800),
+                letterSpacing: style?.letterSpacing || "normal",
+              }}
             >
               {text}
             </text>
@@ -251,7 +255,11 @@ export function OutlineText({
           textAnchor="middle"
           dominantBaseline="central"
           mask={`url(#${maskId})`}
-          style={{ fontFamily, fontWeight: style?.fontWeight ?? 800 }}
+          style={{
+            fontFamily,
+            fontWeight: fontMode === "bebas" ? 400 : (style?.fontWeight ?? 800),
+            letterSpacing: style?.letterSpacing || "normal",
+          }}
         >
           {text}
         </text>
@@ -274,7 +282,7 @@ export default function ShowcaseHeroSection({
   const [isDarkWebsite, setIsDarkWebsite] = useState(false);
   const [heroContentRevealed, setHeroContentRevealed] = useState(false);
   const [animationDuration, setAnimationDuration] = useState<"1s" | "2s">(speedMode);
-  const [fontMode, setFontMode] = useState<"syne" | "anton" | "bebas" | "googlesans" | "londrina" | "bungee">("syne");
+  const [fontMode, setFontMode] = useState<"bebas" | "syne" | "anton" | "googlesans" | "londrina" | "bungee">("bebas");
 
   useEffect(() => {
     if (isDarkWebsite && videoRef.current) {
@@ -511,16 +519,16 @@ export default function ShowcaseHeroSection({
             <div className="pointer-events-none absolute inset-0 z-20 w-full max-w-full flex flex-col items-center justify-center px-4 sm:px-8 text-center mx-auto">
               {/* Unified Typographic Block (SANSKARAN + 2026 Locked to Exact Same Width) */}
               <div className="inline-flex flex-col items-stretch text-center max-w-[94vw]">
-                {/* Primary Festival Title (Hollow White Outline - Bold Syne Display) */}
+                {/* Primary Festival Title (Hollow White Outline - Bebas Neue Display matching Gallery Section) */}
                 <OutlineText
                   text="SANSKARAN"
                   maskId="d4-outline-devfest"
                   fontMode={fontMode}
                   color="#ffffff"
-                  className="text-[34px] min-[360px]:text-[40px] min-[400px]:text-[46px] min-[520px]:text-[58px] sm:text-[80px] md:text-[96px] lg:text-[116px] xl:text-[132px] 2xl:text-[144px]"
+                  className="text-[38px] min-[360px]:text-[46px] min-[400px]:text-[54px] min-[520px]:text-[68px] sm:text-[92px] md:text-[112px] lg:text-[132px] xl:text-[150px] 2xl:text-[164px]"
                   style={{
-                    fontWeight: 800,
-                    letterSpacing: "0.04em",
+                    fontWeight: fontMode === "bebas" ? 400 : 800,
+                    letterSpacing: "0.03em",
                     filter: "drop-shadow(0 2px 20px rgba(255,255,255,0.22)) drop-shadow(0 4px 32px rgba(0,0,0,0.95))",
                     opacity: heroContentRevealed ? 1 : 0,
                     transition: "opacity 900ms ease 120ms",
@@ -542,9 +550,9 @@ export default function ShowcaseHeroSection({
                       maskId={`d4-outline-digit-${i}`}
                       fontMode={fontMode}
                       color="#a78bfa"
-                      className="text-[30px] min-[360px]:text-[36px] min-[400px]:text-[42px] min-[520px]:text-[52px] sm:text-[72px] md:text-[86px] lg:text-[104px] xl:text-[118px] 2xl:text-[130px]"
+                      className="text-[32px] min-[360px]:text-[38px] min-[400px]:text-[46px] min-[520px]:text-[58px] sm:text-[80px] md:text-[96px] lg:text-[114px] xl:text-[130px] 2xl:text-[142px]"
                       style={{
-                        fontWeight: 800,
+                        fontWeight: fontMode === "bebas" ? 400 : 800,
                         filter: "drop-shadow(0 2px 18px rgba(167,139,250,0.65)) drop-shadow(0 4px 24px rgba(0,0,0,0.85))",
                       }}
                     />
