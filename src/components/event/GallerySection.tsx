@@ -311,131 +311,66 @@ const DEFAULT_EXPANDED_THEME: ClubExpandedTheme = {
 };
 
 /* =============================================================================
-   INDUSTRIAL FORGED STEEL CHAIN HARDWARE & SUSPENSION RIG (/impeccable)
+   EMIL-PROTOTYPE RIG VARIANTS (/emil-prototype & /impeccable)
+   4 distinct aesthetic directions switchable live in the browser
    ============================================================================= */
+export type GalleryVariant = "floating-minimal" | "tension-wire" | "filmstrip" | "silk-cord";
 
-function VerticalChainSegment({
-  links = 3,
-  className = "",
-}: {
-  links?: number;
-  className?: string;
-}) {
-  const height = links === 4 ? 38 : links === 2 ? 18 : 26;
-  const viewBoxHeight = height;
-
+function TensionWireSegment() {
   return (
-    <svg
-      width="18"
-      height={height}
-      viewBox={`0 0 18 ${viewBoxHeight}`}
-      fill="none"
-      className={`overflow-visible filter drop-shadow-[0_4px_6px_rgba(0,0,0,0.95)] ${className}`}
-      aria-hidden="true"
-    >
-      <defs>
-        {/* Antique Brass & Forged Gold Link Gradient (Front-facing oval link) */}
-        <linearGradient id="antiqueBrassFront" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#FDE047" />
-          <stop offset="25%" stopColor="#CA8A04" />
-          <stop offset="50%" stopColor="#FEF08A" />
-          <stop offset="72%" stopColor="#78350F" />
-          <stop offset="100%" stopColor="#A16207" />
-        </linearGradient>
-
-        {/* Side-Profile Interlocking Link Gradient (Burnished Bronze & Amber Gold) */}
-        <linearGradient id="antiqueBrassSide" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="#451A03" />
-          <stop offset="28%" stopColor="#92400E" />
-          <stop offset="50%" stopColor="#FDE047" />
-          <stop offset="75%" stopColor="#A16207" />
-          <stop offset="100%" stopColor="#291002" />
-        </linearGradient>
-
-        {/* Golden Specular Gleam */}
-        <linearGradient id="brassGleam" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stopColor="#FEF9C3" stopOpacity="0.95" />
-          <stop offset="100%" stopColor="#FDE047" stopOpacity="0" />
-        </linearGradient>
-      </defs>
-
-      {links === 4 ? (
-        <>
-          {/* Link 1 (Front oval) */}
-          <rect x="3.5" y="1" width="11" height="12" rx="4.5" stroke="url(#antiqueBrassFront)" strokeWidth="3" />
-          <rect x="5.5" y="2.5" width="2" height="4" rx="1" fill="url(#brassGleam)" opacity="0.8" />
-
-          {/* Link 2 (Side profile) */}
-          <rect x="7.5" y="8" width="3" height="10" rx="1.5" fill="url(#antiqueBrassSide)" stroke="#291002" strokeWidth="0.8" />
-
-          {/* Link 3 (Front oval) */}
-          <rect x="3.5" y="14" width="11" height="12" rx="4.5" stroke="url(#antiqueBrassFront)" strokeWidth="3" />
-          <rect x="5.5" y="15.5" width="2" height="4" rx="1" fill="url(#brassGleam)" opacity="0.8" />
-
-          {/* Link 4 (Side profile) */}
-          <rect x="7.5" y="21" width="3" height="10" rx="1.5" fill="url(#antiqueBrassSide)" stroke="#291002" strokeWidth="0.8" />
-
-          {/* Link 5 (Front oval bottom hook) */}
-          <rect x="3.5" y="26" width="11" height="11" rx="4.5" stroke="url(#antiqueBrassFront)" strokeWidth="3" />
-        </>
-      ) : links === 2 ? (
-        <>
-          {/* Link 1 (Front oval) */}
-          <rect x="3.5" y="1" width="11" height="11" rx="4.5" stroke="url(#antiqueBrassFront)" strokeWidth="3" />
-          {/* Link 2 (Side profile) */}
-          <rect x="7.5" y="7" width="3" height="9" rx="1.5" fill="url(#antiqueBrassSide)" stroke="#291002" strokeWidth="0.8" />
-        </>
-      ) : (
-        <>
-          {/* Link 1 (Front oval - top) */}
-          <rect x="3.5" y="1" width="11" height="12" rx="4.5" stroke="url(#antiqueBrassFront)" strokeWidth="3" />
-          <rect x="5.5" y="2.5" width="2" height="3" rx="1" fill="url(#brassGleam)" opacity="0.8" />
-
-          {/* Link 2 (Side profile - middle interlock) */}
-          <rect x="7.5" y="8" width="3" height="10" rx="1.5" fill="url(#antiqueBrassSide)" stroke="#291002" strokeWidth="0.8" />
-
-          {/* Link 3 (Front oval - bottom) */}
-          <rect x="3.5" y="14" width="11" height="12" rx="4.5" stroke="url(#antiqueBrassFront)" strokeWidth="3" />
-          <rect x="5.5" y="15.5" width="2" height="3" rx="1" fill="url(#brassGleam)" opacity="0.8" />
-        </>
-      )}
-    </svg>
+    <div className="relative w-full h-4 sm:h-5 flex items-center justify-between pointer-events-none select-none z-20 my-[-1px]">
+      <div className="absolute left-6 sm:left-12 md:left-20 -translate-x-1/2 -top-1 flex flex-col items-center">
+        <div className="w-[1.5px] h-2 bg-gradient-to-b from-[#714cb6] to-[#a78bfa] shadow-[0_0_6px_#714cb6]" />
+        <div className="w-1.5 h-1.5 rounded-full bg-[#d4c7ff] border border-white/40 shadow-sm" />
+        <div className="w-[1.5px] h-2 bg-gradient-to-b from-[#a78bfa] to-[#714cb6] shadow-[0_0_6px_#714cb6]" />
+      </div>
+      <div className="absolute right-6 sm:right-12 md:right-20 translate-x-1/2 -top-1 flex flex-col items-center">
+        <div className="w-[1.5px] h-2 bg-gradient-to-b from-[#714cb6] to-[#a78bfa] shadow-[0_0_6px_#714cb6]" />
+        <div className="w-1.5 h-1.5 rounded-full bg-[#d4c7ff] border border-white/40 shadow-sm" />
+        <div className="w-[1.5px] h-2 bg-gradient-to-b from-[#a78bfa] to-[#714cb6] shadow-[0_0_6px_#714cb6]" />
+      </div>
+    </div>
   );
 }
 
-function CardShackle({ position }: { position: "top" | "bottom" }) {
-  const isTop = position === "top";
+function FilmstripDivider({ index }: { index: number }) {
   return (
-    <div className="flex flex-col items-center pointer-events-none select-none" aria-hidden="true">
-      {isTop ? (
-        <>
-          {/* Forged Brass D-Ring / Arch looping upward out of the card */}
-          <div className="w-4 h-3.5 -mb-0.5 rounded-t-full border-2 border-[#D4AF37] bg-gradient-to-b from-[#A16207] to-[#451A03] shadow-sm flex items-center justify-center">
-            <div className="w-1.5 h-1.5 rounded-t-full bg-black/80" />
-          </div>
-          {/* Mounting Base Plate riveted into the card face */}
-          <div className="w-4.5 h-2.5 rounded-xs bg-gradient-to-b from-[#78350F] to-[#291002] border border-[#CA8A04]/80 shadow-[0_2px_4px_rgba(0,0,0,0.9)] flex items-center justify-center">
-            <div className="w-1 h-1 rounded-full bg-[#FDE047] shadow-inner" />
-          </div>
-        </>
-      ) : (
-        <>
-          {/* Mounting Base Plate riveted into the card face */}
-          <div className="w-4.5 h-2.5 rounded-xs bg-gradient-to-b from-[#291002] to-[#78350F] border border-[#CA8A04]/80 shadow-[0_2px_4px_rgba(0,0,0,0.9)] flex items-center justify-center">
-            <div className="w-1 h-1 rounded-full bg-[#FDE047] shadow-inner" />
-          </div>
-          {/* Forged Brass D-Ring / Arch looping downward out of the card */}
-          <div className="w-4 h-3.5 -mt-0.5 rounded-b-full border-2 border-[#D4AF37] bg-gradient-to-t from-[#A16207] to-[#451A03] shadow-sm flex items-center justify-center">
-            <div className="w-1.5 h-1.5 rounded-b-full bg-black/80" />
-          </div>
-        </>
-      )}
+    <div className="relative w-full h-5 sm:h-6 flex items-center justify-between px-3 sm:px-6 pointer-events-none select-none z-20 bg-[#0d0d0e]/80 backdrop-blur-xs">
+      <div className="flex items-center gap-1.5">
+        <span className="w-1.5 h-2 rounded-xs bg-white/20 border border-white/30" />
+        <span className="w-1.5 h-2 rounded-xs bg-white/20 border border-white/30" />
+      </div>
+      <span className="font-tech text-[9px] sm:text-[10px] tracking-widest text-white/40 uppercase">
+        ◄ 24 FPS • ROLL &apos;26 • FRAME {String(index + 1).padStart(2, "0")} ►
+      </span>
+      <div className="flex items-center gap-1.5">
+        <span className="w-1.5 h-2 rounded-xs bg-white/20 border border-white/30" />
+        <span className="w-1.5 h-2 rounded-xs bg-white/20 border border-white/30" />
+      </div>
+    </div>
+  );
+}
+
+function SilkCordSegment() {
+  return (
+    <div className="relative w-full h-4 sm:h-5 flex items-center justify-between pointer-events-none select-none z-20 my-[-1px]">
+      <div className="absolute left-6 sm:left-12 md:left-20 -translate-x-1/2 -top-0.5 flex flex-col items-center">
+        <div className="w-2 h-1 rounded-t-full border border-[#D4AF37] bg-[#78350F]" />
+        <div className="w-[2px] h-3 bg-gradient-to-b from-[#714cb6] via-[#d4c7ff] to-[#714cb6] shadow-[0_0_4px_rgba(113,76,182,0.6)]" />
+        <div className="w-2 h-1 rounded-b-full border border-[#D4AF37] bg-[#78350F]" />
+      </div>
+      <div className="absolute right-6 sm:right-12 md:right-20 translate-x-1/2 -top-0.5 flex flex-col items-center">
+        <div className="w-2 h-1 rounded-t-full border border-[#D4AF37] bg-[#78350F]" />
+        <div className="w-[2px] h-3 bg-gradient-to-b from-[#714cb6] via-[#d4c7ff] to-[#714cb6] shadow-[0_0_4px_rgba(113,76,182,0.6)]" />
+        <div className="w-2 h-1 rounded-b-full border border-[#D4AF37] bg-[#78350F]" />
+      </div>
     </div>
   );
 }
 
 export default function GallerySection() {
   const sectionRef = useRef<HTMLElement>(null);
+  const [variant, setVariant] = useState<GalleryVariant>("floating-minimal");
   const [activeClubIndex, setActiveClubIndex] = useState<number | null>(0);
   const [selectedPhoto, setSelectedPhoto] = useState<{
     photo: ClubPhoto;
@@ -538,90 +473,105 @@ export default function GallerySection() {
       {/* 100% Full-Width Edge-to-Edge Container */}
       <div className="w-full px-2 sm:px-4 md:px-6">
         {/* ====================================================================
-            HEADER LOCKUP
+            HEADER LOCKUP & EMIL-PROTOTYPE RIG VARIANT SELECTOR
             ==================================================================== */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 sm:mb-10 px-1 sm:px-2">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-8 sm:mb-10 px-1 sm:px-2">
           <div>
             <h2 className="font-display text-4xl sm:text-5xl md:text-6xl text-[#EDE8FF] leading-none uppercase tracking-tight">
               GALLERY{" "}
-              
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#EDE8FF] via-[#d4c7ff] to-[#714cb6]">
+                SECTION
+              </span>
             </h2>
+            <p className="font-tech text-xs text-white/50 tracking-widest uppercase mt-2">
+              14 CULTURAL SOCIETIES &amp; ART ATELIERS
+            </p>
+          </div>
+
+          {/* Emil-Prototype Visual Direction Switcher */}
+          <div className="flex items-center gap-1.5 p-1.5 rounded-2xl bg-[#141416] border border-white/10 shadow-xl overflow-x-auto max-w-full">
+            {[
+              { id: "floating-minimal", label: "Floating Zero-G", icon: "✦" },
+              { id: "tension-wire", label: "Tension Wire", icon: "⚡" },
+              { id: "filmstrip", label: "35mm Filmstrip", icon: "🎬" },
+              { id: "silk-cord", label: "Silk Cord", icon: "🧵" },
+            ].map((v) => (
+              <button
+                key={v.id}
+                type="button"
+                onClick={() => setVariant(v.id as GalleryVariant)}
+                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-tech font-bold tracking-wider uppercase transition-all duration-200 cursor-pointer whitespace-nowrap ${
+                  variant === v.id
+                    ? "bg-[#714cb6] text-white shadow-md shadow-[#714cb6]/40 scale-[1.02]"
+                    : "text-white/60 hover:text-white hover:bg-white/5"
+                }`}
+              >
+                <span>{v.icon}</span>
+                <span>{v.label}</span>
+              </button>
+            ))}
           </div>
         </div>
 
         {/* ====================================================================
-            OVERHEAD INDUSTRIAL SUSPENSION GANTRY (CEILING BEAM & TOP CHAINS)
+            SUSPENSION ANCHOR RIG (Conditional per Emil-Prototype Variant)
             ==================================================================== */}
-        <div className="overhead-gantry relative w-full mb-1 flex flex-col items-center pointer-events-none select-none">
-          {/* Overhead Heavy Iron Truss / Gantry Beam */}
-          <div className="relative w-full h-3.5 rounded bg-gradient-to-r from-[#1C1204] via-[#4A3208] to-[#1C1204] border-y border-[#CA8A04]/40 shadow-[0_6px_20px_rgba(0,0,0,0.95)] flex items-center justify-between px-6 sm:px-12 md:px-20">
-            {/* Structural Rivet Pattern */}
-            <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-4 pointer-events-none opacity-60">
-              <div className="flex gap-4">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#FDE047] shadow-sm" />
-                <span className="w-1.5 h-1.5 rounded-full bg-[#FDE047] shadow-sm" />
+        {variant !== "floating-minimal" && (
+          <div className="overhead-gantry relative w-full mb-1 flex flex-col items-center pointer-events-none select-none transition-all duration-300">
+            {variant === "tension-wire" && (
+              <>
+                <div className="relative w-full h-1.5 rounded-full bg-gradient-to-r from-transparent via-[#714cb6]/60 to-transparent border-t border-[#d4c7ff]/30 shadow-[0_0_12px_rgba(113,76,182,0.4)]" />
+                <div className="relative w-full h-5">
+                  <div className="absolute left-6 sm:left-12 md:left-20 -translate-x-1/2 top-0 w-[1.5px] h-full bg-gradient-to-b from-[#714cb6] to-[#a78bfa] shadow-[0_0_6px_#714cb6]" />
+                  <div className="absolute right-6 sm:right-12 md:right-20 translate-x-1/2 top-0 w-[1.5px] h-full bg-gradient-to-b from-[#714cb6] to-[#a78bfa] shadow-[0_0_6px_#714cb6]" />
+                </div>
+              </>
+            )}
+            {variant === "filmstrip" && (
+              <div className="relative w-full h-6 flex items-center justify-between px-3 sm:px-6 bg-[#141416] border-y border-white/10 rounded-t-md">
+                <span className="font-tech text-[10px] text-white/40 tracking-widest uppercase">● 35MM MOTION PICTURE LEADER</span>
+                <span className="font-tech text-[10px] text-[#FFAA24] tracking-widest uppercase">HEAD REEL 01</span>
               </div>
-              <div className="flex gap-4">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#FDE047] shadow-sm" />
-                <span className="w-1.5 h-1.5 rounded-full bg-[#FDE047] shadow-sm" />
+            )}
+            {variant === "silk-cord" && (
+              <div className="relative w-full h-5">
+                <div className="absolute left-6 sm:left-12 md:left-20 -translate-x-1/2 top-0 flex flex-col items-center">
+                  <div className="w-3 h-1.5 rounded-full bg-[#D4AF37] shadow-sm" />
+                  <div className="w-[2px] h-3.5 bg-gradient-to-b from-[#714cb6] to-[#d4c7ff]" />
+                </div>
+                <div className="absolute right-6 sm:right-12 md:right-20 translate-x-1/2 top-0 flex flex-col items-center">
+                  <div className="w-3 h-1.5 rounded-full bg-[#D4AF37] shadow-sm" />
+                  <div className="w-[2px] h-3.5 bg-gradient-to-b from-[#714cb6] to-[#d4c7ff]" />
+                </div>
               </div>
-            </div>
-
-            {/* Left Ceiling Flange & Shackle */}
-            <div className="relative -translate-x-1/2 -bottom-2 z-10 flex flex-col items-center">
-              <div className="w-5 h-3 rounded-t bg-gradient-to-b from-[#A16207] to-[#451A03] border border-[#FDE047]/30 shadow-md flex items-center justify-center">
-                <div className="w-1.5 h-1.5 rounded-full bg-[#FDE047] shadow-inner" />
-              </div>
-              <div className="w-4 h-3.5 rounded-b-full border-2 border-[#D4AF37] bg-[#291002]" />
-            </div>
-
-            {/* Right Ceiling Flange & Shackle */}
-            <div className="relative translate-x-1/2 -bottom-2 z-10 flex flex-col items-center">
-              <div className="w-5 h-3 rounded-t bg-gradient-to-b from-[#A16207] to-[#451A03] border border-[#FDE047]/30 shadow-md flex items-center justify-center">
-                <div className="w-1.5 h-1.5 rounded-full bg-[#FDE047] shadow-inner" />
-              </div>
-              <div className="w-4 h-3.5 rounded-b-full border-2 border-[#D4AF37] bg-[#291002]" />
-            </div>
+            )}
           </div>
-
-          {/* Top Hanging Chains (Dropping from Gantry to Card 0) */}
-          <div className="relative w-full h-8 sm:h-9">
-            <div className="absolute left-6 sm:left-12 md:left-20 -translate-x-1/2 -top-0.5">
-              <VerticalChainSegment links={4} />
-            </div>
-            <div className="absolute right-6 sm:right-12 md:right-20 translate-x-1/2 -top-0.5">
-              <VerticalChainSegment links={4} />
-            </div>
-          </div>
-        </div>
+        )}
 
         {/* ====================================================================
-            FULL-WIDTH VERTICAL STACK SLITS (Suspended by Inter-Block Chains)
+            FULL-WIDTH VERTICAL STACK SLITS
             ==================================================================== */}
-        <div className="w-full flex flex-col">
+        <div className={`w-full flex flex-col ${variant === "floating-minimal" ? "gap-2.5 sm:gap-3" : ""}`}>
           {CLUBS_DATA.map((club, index) => {
             const isExpanded = activeClubIndex === index;
             const theme = CLUB_EXPANDED_THEMES[club.id] || DEFAULT_EXPANDED_THEME;
 
             return (
               <React.Fragment key={club.id}>
-                {/* Connecting Chains from card above to this card */}
-                {index > 0 && (
-                  <div className="relative w-full h-5 sm:h-6 flex items-center justify-between pointer-events-none select-none z-20 my-[-2px]">
-                    <div className="absolute left-6 sm:left-12 md:left-20 -translate-x-1/2 -top-1">
-                      <VerticalChainSegment links={3} />
-                    </div>
-                    <div className="absolute right-6 sm:right-12 md:right-20 translate-x-1/2 -top-1">
-                      <VerticalChainSegment links={3} />
-                    </div>
-                  </div>
+                {/* Variant-Specific Inter-Block Connectors */}
+                {index > 0 && variant !== "floating-minimal" && (
+                  <>
+                    {variant === "tension-wire" && <TensionWireSegment />}
+                    {variant === "filmstrip" && <FilmstripDivider index={index} />}
+                    {variant === "silk-cord" && <SilkCordSegment />}
+                  </>
                 )}
 
-                {/* Card Outer Container with Shackles and Hover Sway */}
+                {/* Card Outer Container */}
                 <div
                   className="chain-card-wrapper group relative w-full select-none transform-gpu origin-top transition-transform duration-300"
                   onMouseEnter={(e) => {
-                    if (!isExpanded) {
+                    if (!isExpanded && variant !== "floating-minimal") {
                       gsap.to(e.currentTarget, {
                         rotation: index % 2 === 0 ? 0.35 : -0.35,
                         y: -2,
@@ -634,18 +584,26 @@ export default function GallerySection() {
                     }
                   }}
                 >
-                  {/* Top Shackles */}
-                  <div className="absolute left-6 sm:left-12 md:left-20 -translate-x-1/2 -top-2.5 z-30 pointer-events-none">
-                    <CardShackle position="top" />
-                  </div>
-                  <div className="absolute right-6 sm:right-12 md:right-20 translate-x-1/2 -top-2.5 z-30 pointer-events-none">
-                    <CardShackle position="top" />
-                  </div>
+                  {/* Top Eyelet / Shackle for Hardware Variants */}
+                  {variant === "tension-wire" && (
+                    <>
+                      <div className="absolute left-6 sm:left-12 md:left-20 -translate-x-1/2 -top-1 z-30 pointer-events-none w-2 h-2 rounded-full bg-[#d4c7ff] border border-white/50 shadow-sm" />
+                      <div className="absolute right-6 sm:right-12 md:right-20 translate-x-1/2 -top-1 z-30 pointer-events-none w-2 h-2 rounded-full bg-[#d4c7ff] border border-white/50 shadow-sm" />
+                    </>
+                  )}
+                  {variant === "silk-cord" && (
+                    <>
+                      <div className="absolute left-6 sm:left-12 md:left-20 -translate-x-1/2 -top-1 z-30 pointer-events-none w-2.5 h-2 rounded-t-full bg-[#D4AF37] border border-[#CA8A04]" />
+                      <div className="absolute right-6 sm:right-12 md:right-20 translate-x-1/2 -top-1 z-30 pointer-events-none w-2.5 h-2 rounded-t-full bg-[#D4AF37] border border-[#CA8A04]" />
+                    </>
+                  )}
 
                   {/* The Slit & Accordion Card */}
                   <div
-                    className={`relative w-full overflow-hidden rounded-lg sm:rounded-lg border transition-[border-color,box-shadow,transform] duration-300 ${
-                      isExpanded ? "cursor-default" : "cursor-pointer hover:border-[#714cb6]/60 hover:shadow-[0_12px_30px_rgba(0,0,0,0.6)]"
+                    className={`relative w-full overflow-hidden rounded-xl sm:rounded-2xl border transition-[border-color,box-shadow,transform] duration-300 ${
+                      isExpanded
+                        ? "cursor-default"
+                        : "cursor-pointer hover:border-[#714cb6]/60 hover:-translate-y-0.5 hover:shadow-[0_12px_30px_rgba(0,0,0,0.6)]"
                     }`}
                     style={{
                       backgroundColor: theme.bg,
@@ -847,13 +805,19 @@ export default function GallerySection() {
                 </AnimatePresence>
               </div>
 
-              {/* Bottom Mounting Shackles */}
-              <div className="absolute left-6 sm:left-12 md:left-20 -translate-x-1/2 -bottom-2.5 z-30 pointer-events-none">
-                <CardShackle position="bottom" />
-              </div>
-              <div className="absolute right-6 sm:right-12 md:right-20 translate-x-1/2 -bottom-2.5 z-30 pointer-events-none">
-                <CardShackle position="bottom" />
-              </div>
+              {/* Bottom Mounting Eyelet / Shackle for Hardware Variants */}
+              {variant === "tension-wire" && (
+                <>
+                  <div className="absolute left-6 sm:left-12 md:left-20 -translate-x-1/2 -bottom-1 z-30 pointer-events-none w-2 h-2 rounded-full bg-[#d4c7ff] border border-white/50 shadow-sm" />
+                  <div className="absolute right-6 sm:right-12 md:right-20 translate-x-1/2 -bottom-1 z-30 pointer-events-none w-2 h-2 rounded-full bg-[#d4c7ff] border border-white/50 shadow-sm" />
+                </>
+              )}
+              {variant === "silk-cord" && (
+                <>
+                  <div className="absolute left-6 sm:left-12 md:left-20 -translate-x-1/2 -bottom-1 z-30 pointer-events-none w-2.5 h-2 rounded-b-full bg-[#D4AF37] border border-[#CA8A04]" />
+                  <div className="absolute right-6 sm:right-12 md:right-20 translate-x-1/2 -bottom-1 z-30 pointer-events-none w-2.5 h-2 rounded-b-full bg-[#D4AF37] border border-[#CA8A04]" />
+                </>
+              )}
             </div>
           </React.Fragment>
         );
@@ -861,23 +825,43 @@ export default function GallerySection() {
     </div>
 
     {/* ====================================================================
-        BOTTOM TERMINAL COUNTERWEIGHT RIG (DANGLING END CHAINS & ANCHORS)
+        BOTTOM TERMINAL RIG (Conditional per Emil-Prototype Variant)
         ==================================================================== */}
-    <div className="relative w-full h-8 mt-1 pointer-events-none select-none">
-      <div className="absolute left-6 sm:left-12 md:left-20 -translate-x-1/2 top-0 flex flex-col items-center">
-        <VerticalChainSegment links={2} />
-        <div className="w-3.5 h-5 -mt-0.5 rounded-b-full bg-gradient-to-b from-[#CA8A04] via-[#78350F] to-[#291002] border border-[#FDE047]/40 shadow-[0_4px_10px_rgba(0,0,0,0.95)] flex items-center justify-center">
-          <div className="w-1.5 h-2 rounded-full bg-[#FDE047]/50" />
-        </div>
+    {variant !== "floating-minimal" && (
+      <div className="relative w-full h-8 mt-2 pointer-events-none select-none flex items-center justify-between">
+        {variant === "tension-wire" && (
+          <>
+            <div className="absolute left-6 sm:left-12 md:left-20 -translate-x-1/2 top-0 flex flex-col items-center">
+              <div className="w-[1.5px] h-3 bg-gradient-to-b from-[#714cb6] to-transparent" />
+              <div className="w-2.5 h-2.5 rounded-full bg-[#714cb6]/40 border border-[#d4c7ff]/40 shadow-sm" />
+            </div>
+            <div className="absolute right-6 sm:right-12 md:right-20 translate-x-1/2 top-0 flex flex-col items-center">
+              <div className="w-[1.5px] h-3 bg-gradient-to-b from-[#714cb6] to-transparent" />
+              <div className="w-2.5 h-2.5 rounded-full bg-[#714cb6]/40 border border-[#d4c7ff]/40 shadow-sm" />
+            </div>
+          </>
+        )}
+        {variant === "filmstrip" && (
+          <div className="w-full flex items-center justify-center">
+            <span className="font-tech text-[10px] text-white/30 tracking-widest uppercase">
+              ● TAIL REEL // END OF 35MM ROLL
+            </span>
+          </div>
+        )}
+        {variant === "silk-cord" && (
+          <>
+            <div className="absolute left-6 sm:left-12 md:left-20 -translate-x-1/2 top-0 flex flex-col items-center">
+              <div className="w-[2px] h-3 bg-[#714cb6]" />
+              <div className="w-2.5 h-2.5 rounded-full bg-[#D4AF37]" />
+            </div>
+            <div className="absolute right-6 sm:right-12 md:right-20 translate-x-1/2 top-0 flex flex-col items-center">
+              <div className="w-[2px] h-3 bg-[#714cb6]" />
+              <div className="w-2.5 h-2.5 rounded-full bg-[#D4AF37]" />
+            </div>
+          </>
+        )}
       </div>
-
-      <div className="absolute right-6 sm:right-12 md:right-20 translate-x-1/2 top-0 flex flex-col items-center">
-        <VerticalChainSegment links={2} />
-        <div className="w-3.5 h-5 -mt-0.5 rounded-b-full bg-gradient-to-b from-[#CA8A04] via-[#78350F] to-[#291002] border border-[#FDE047]/40 shadow-[0_4px_10px_rgba(0,0,0,0.95)] flex items-center justify-center">
-          <div className="w-1.5 h-2 rounded-full bg-[#FDE047]/50" />
-        </div>
-      </div>
-    </div>
+    )}
   </div>
 
       {/* ====================================================================

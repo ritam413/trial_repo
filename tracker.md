@@ -1,5 +1,37 @@
 # Agent Handoff Log — tracker.md
 
+## 2026-11-18 — Gallery Section: Emil-Prototype Rig Variants & Floating Zero-G Default
+
+### Objective
+Replace the heavy literal chain links (which conflicted with the clean festival aesthetic) by applying `/emil-prototype` and `/impeccable`. Provide a live, in-browser prototype switcher across 4 distinct aesthetic directions, with the sleek, chain-free **Floating Zero-G** slit design (matching the user's reference image) as the default.
+
+### Changes Made
+1. **Interactive Prototype Switcher (`src/components/event/GallerySection.tsx`)**:
+   - Added `GalleryVariant` state (`"floating-minimal" | "tension-wire" | "filmstrip" | "silk-cord"`) with `"floating-minimal"` as default.
+   - Built a sleek segmented switcher in the gallery header with active indicators:
+     - `[ ✦ Floating Zero-G ]`: Pure, modern floating cards with 10px magnetic gap (`gap-2.5 sm:gap-3`), zero chains/cables, clean `rounded-xl sm:rounded-2xl` corners, and subtle hover elevation.
+     - `[ ⚡ Tension Wire ]`: Ultra-thin 1.5px aircraft steel cables with micro titanium turnbuckles and soft violet glow nodes.
+     - `[ 🎬 35mm Filmstrip ]`: Analog filmstrip aesthetic with border sprocket holes and amber negative leader frame dividers (`◄ 24 FPS • ROLL '26 • FRAME ## ►`).
+     - `[ 🧵 Silk Cord ]`: Heritage ceremonial royal violet braided cords with delicate brass eyelet rings.
+2. **Conditional Rig & Shackle Rendering**:
+   - Replaced static heavy chains and shackles with variant-aware sub-components: `TensionWireSegment`, `FilmstripDivider`, and `SilkCordSegment`.
+   - Hidden overhead beam and bottom counterweights entirely in `floating-minimal` mode.
+   - Standardized 100% true-centered uppercase titles in condensed Bebas Neue with high-contrast text and dark photo overlay.
+3. **Documentation Updates**:
+   - Updated `features_implemented.md` and `tracker.md`.
+4. **Verification**:
+   - Ran `npm run build`: Next.js 16.4.6 (Turbopack) and React 19 compiled with 0 errors in 2.2s.
+
+### Current State
+The Gallery Section defaults to the clean **Floating Zero-G** slit layout matching the user's screenshot, with no chains or heavy clutter. Users and stakeholders can toggle between Floating Zero-G, Tension Wire, 35mm Filmstrip, and Silk Cord live in the browser.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/GallerySection.tsx` lines 315-390 for any variant styling tweaks.
+2. If the user chooses a permanent favorite variant, that variant can be permanently locked and the switcher retired.
+3. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-18 — Gallery Chains: Material Recalibration to Antique Brass & Forged Yellow Gold
 
 ### Objective

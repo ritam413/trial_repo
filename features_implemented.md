@@ -42,23 +42,20 @@ All foundational libraries, responsive layout engines, and the streamlined **Dev
     - Removed `cardLayout` state and deleted the `View: [ ⊞ DevFest Grid | 🂠 Card Stack ]` switcher.
     - Locked layout to the side-by-side DevFest Grid realm cards with Google 4-color accent tokens, vector doodle backdrop, and interactive discipline inspection modal dossiers.
   - **Pure Vertical Slit Gallery with 14 Student Societies & Creative Wings (`GallerySection.tsx` & `clubsData.ts`)**:
-    - **Antique Brass & Forged Gold Chain Suspension Rig (/impeccable & /gsap-animation)**:
-      - **Overhead Heavy Gantry Beam**: Dark burnished bronze structural truss across the ceiling with bright golden brass rivets and dual heavy-duty ceiling flanges.
-      - **Top Hanging Chains**: 4-link antique brass & forged gold chains (`#FDE047`, `#CA8A04`, `#78350F`) dropping from the ceiling flanges directly to the top edge of the first block (`ARITRAM`).
-      - **Card Hardware Shackles**: Heavy forged brass D-rings with bolted amber-bronze mounting plates and gold rivets on the top and bottom edges of each block.
-      - **Inter-Block Connecting Chains**: Symmetrical vertical antique brass chain bridges connecting the bottom shackles of block $i$ to the top shackles of block $i+1$, harmonizing with the warm ivory (`#FFF4E0`) and amber aesthetic.
-      - **Bottom Terminal Rig**: Dangling 2-link chain ends with heavy teardrop forged brass counterweights hanging beneath the final block (`BEAT BUSTER`).
-      - **GSAP Physics & Interaction**: ScrollTrigger elastic chain drop entrance and tactile hover pendulum sway (`transformOrigin: "center -20px"`) providing tangible physical presence.
-    - Deleted the prototype switcher bar (`[ Skiper 53 | Dual Adaptive | Skiper 52 ]`) and obsolete horizontal accordion code.
+    - **Emil-Prototype Live Aesthetic Direction Switcher (/emil-prototype & /impeccable)**:
+      - Integrated an interactive segmented prototype selector bar directly in the Gallery header (`[ ✦ Floating Zero-G ] [ ⚡ Tension Wire ] [ 🎬 35mm Filmstrip ] [ 🧵 Silk Cord ]`) allowing live, in-browser evaluation and switching of 4 distinct aesthetic directions:
+        1. **`floating-minimal` (Floating Zero-G — Default)**: Pure, modern, chain-free aesthetic matching user reference. Sleek stacked slit cards with a uniform 10px magnetic gap (`gap-2.5 sm:gap-3`), rounded corners (`rounded-xl sm:rounded-2xl`), centered uppercase titles in condensed Bebas Neue, and subtle magnetic hover elevation without heavy hardware or overhead beams.
+        2. **`tension-wire` (Tension Wire)**: Sleek architectural suspension featuring ultra-thin 1.5px vertical aircraft steel cables with micro titanium turnbuckles and subtle violet glow nodes.
+        3. **`filmstrip` (35mm Filmstrip)**: Cinematic analog filmstrip aesthetic with sprocket hole perforations on borders and amber film-leader frame dividers (`◄ 24 FPS • ROLL '26 • FRAME ## ►`).
+        4. **`silk-cord` (Silk Cord)**: Heritage ceremonial braided violet silk cords with delicate circular brass eyelet grommets.
     - Completely removed card suits and ranks (`club.suit`, `club.cardRank`).
-    - Configured all 14 official festival student societies and wings: `ARITRAM`, `CHITRAKATHA DESIGNING & EDITING`, `CHITRAKATHA PHOTOGRAPHY`, `CHITRAKATHA ART AND CRAFT`, `CHITRAKATHA`, `CHECKMATE`, `DHRUBOTARA`, `NRITAKSHA`, `PAPERBACK SOCIETY`, `PHOENIX`, `SWARAKRITI`, `STEP ALPHA`, `DESI GROOVER`, and `BEAT BUSTER`.
+    - Configured all 14 official festival student societies and wings: `ARITRAM`, `CHITRAKA DESIGNING & EDITING`, `CHITRAKA PHOTOGRAPHY`, `CHITRAKA ART AND CRAFT`, `CHITRAKATHA`, `CHECKMATE`, `DHRUBOTARA`, `NRITAKSHA`, `PAPERBACK SOCIETY`, `PHOENIX`, `SWARAKRITI`, `STEP ALPHA`, `DESI GROOVER`, and `BEAT BUSTER`.
     - Applied distinct atmospheric dark gradients, borders, and ambient halos for each of the 14 societies upon expansion.
     - **Downward Curtain Unfolding Motion**: Outer container expands height (`0` to `"auto"`, `0.5s`, `cubic-bezier(0.16, 1, 0.3, 1)`) while inner content translates downward (`y: -30px` to `0`, `0.48s`), creating a seamless physical downward curtain reveal.
     - **Smooth Retracting Motion**: On close / `(X)` click, outer container shrinks height (`"auto"` to `0`, `0.4s`, `cubic-bezier(0.32, 0.72, 0, 1)`) while inner content glides upward (`y: 0` to `-24px`, `0.25s`) with clean fade-out.
     - Consistent dark theme background across collapsed and expanded states eliminating white flash artifacts.
     - Centered editorial header lockup, thin separator rule, and 6-photo grid with lightbox inspection modal (using clean regular weight `font-sans font-normal` for photo titles).
-    - **100% Mathematically & Visually Centered Slit Typography**: Pinned society titles using absolute inset positioning (`absolute inset-0 flex items-center justify-center`) with bold condensed display typography (**Bebas Neue** / `font-display tracking-wider uppercase`) ensuring all 14 society titles align down a single true vertical center axis.
-    - **Streamlined Minimalist Slits**: Removed clutter elements (number badges `01..07` and `6 ARCHIVES ▾` chips) from slit bars and expanded headers.
+    - **100% Mathematically & Visually Centered Slit Typography**: Pinned society titles using absolute inset positioning (`absolute inset-0 flex items-center justify-center`) with bold condensed display typography (**Bebas Neue** / `font-display font-slit-editorial tracking-wider uppercase`) ensuring all 14 society titles align down a single true vertical center axis.
     - **Responsive Mobile Typography**: Adjusted slit titles to `text-[13px] sm:text-xl md:text-2xl lg:text-3xl` and hid the left category on `< 640px` (`hidden sm:flex`) to eliminate overlapping text collisions on mobile viewports. Expanded poster titles scale smoothly from `text-2xl` on mobile to `text-7xl` on desktop.
   - **Complete Elimination of Playing Card Metaphor Across All Sections**:
     - `Navbar.tsx`: Replaced playing card suit logo `♠` with glowing festival star `✦`, changed subtitle to `CULTURAL CONCLAVE`, updated CTA to `Explore Festival`.
