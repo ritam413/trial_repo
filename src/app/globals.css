@@ -132,26 +132,35 @@ html {
    AUTHENTIC HOLLOW OUTLINE STYLES (DevFest Kolkata Spec & Google Outline Fonts)
    ========================================================================= */
 
+.font-syne {
+  font-family: var(--font-syne), sans-serif;
+  font-weight: 800;
+}
+
+.font-anton {
+  font-family: var(--font-anton), Impact, sans-serif;
+}
+
 /* DevFest Kolkata SVG Inverted Mask Technique */
 .d4-outline {
   letter-spacing: 0.045em;
-  font-family: "Google Sans", system-ui, -apple-system, sans-serif;
+  font-family: var(--font-syne), "Google Sans", system-ui, -apple-system, sans-serif;
 }
 
 .d4-outline text {
-  font-family: "Google Sans", system-ui, -apple-system, sans-serif;
+  font-family: inherit;
   font-size: inherit;
   font-weight: inherit;
   letter-spacing: inherit;
   fill: none;
   stroke: currentColor;
-  stroke-width: 3px;
+  stroke-width: 3.5px;
   stroke-linejoin: round;
   stroke-linecap: round;
 }
 
 .d4-outline mask text {
-  font-family: "Google Sans", system-ui, -apple-system, sans-serif;
+  font-family: inherit;
   font-size: inherit;
   font-weight: inherit;
   letter-spacing: inherit;

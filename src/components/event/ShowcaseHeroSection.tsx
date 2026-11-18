@@ -145,15 +145,15 @@ interface OutlineTextProps {
   className?: string;
   style?: React.CSSProperties;
   color?: string;
-  fontMode?: "googlesans" | "londrina" | "bungee";
+  fontMode?: "syne" | "anton" | "bebas" | "googlesans" | "londrina" | "bungee";
 }
 
 /**
  * Authentic Hollow Outline Text Renderer.
- * DevFest Kolkata uses Google Sans with an inverted SVG mask:
+ * DevFest Kolkata uses an inverted SVG mask:
  * - White mask rect passes outer stroke through
  * - Black mask text completely removes inside body fill
- * - Rounded line joins give it smooth contours with zero letter-clipping
+ * - Rounded line joins give it smooth contours with zero letter-clipping or interior artifacts
  */
 export function OutlineText({
   text,
@@ -161,7 +161,7 @@ export function OutlineText({
   className = "",
   style,
   color = "#ffffff",
-  fontMode = "googlesans",
+  fontMode = "syne",
 }: OutlineTextProps) {
   if (fontMode === "londrina") {
     return (
@@ -193,6 +193,15 @@ export function OutlineText({
     );
   }
 
+  const fontFamily =
+    fontMode === "anton"
+      ? "var(--font-anton), Impact, sans-serif"
+      : fontMode === "bebas"
+      ? "var(--font-bebas-neue), sans-serif"
+      : fontMode === "googlesans"
+      ? '"Google Sans", system-ui, sans-serif'
+      : "var(--font-syne), sans-serif";
+
   // Authentic DevFest Inverted SVG Mask (100% hollow with round outer stroke & zero interior artifacts)
   return (
     <div
@@ -200,11 +209,12 @@ export function OutlineText({
       style={{
         color,
         lineHeight: 1,
+        fontFamily,
         ...style,
       }}
     >
       {/* Invisible spacer text ensuring exact box dimensions and natural wrap */}
-      <span style={{ color: "transparent" }}>{text}</span>
+      <span style={{ color: "transparent", fontFamily }}>{text}</span>
 
       {/* SVG Outline with Inverted Cutout Mask */}
       <svg
@@ -229,6 +239,7 @@ export function OutlineText({
               y="50%"
               textAnchor="middle"
               dominantBaseline="central"
+              style={{ fontFamily, fontWeight: style?.fontWeight ?? 800 }}
             >
               {text}
             </text>
@@ -240,6 +251,7 @@ export function OutlineText({
           textAnchor="middle"
           dominantBaseline="central"
           mask={`url(#${maskId})`}
+          style={{ fontFamily, fontWeight: style?.fontWeight ?? 800 }}
         >
           {text}
         </text>
@@ -262,7 +274,7 @@ export default function ShowcaseHeroSection({
   const [isDarkWebsite, setIsDarkWebsite] = useState(false);
   const [heroContentRevealed, setHeroContentRevealed] = useState(false);
   const [animationDuration, setAnimationDuration] = useState<"1s" | "2s">(speedMode);
-  const [fontMode, setFontMode] = useState<"googlesans" | "londrina" | "bungee">("googlesans");
+  const [fontMode, setFontMode] = useState<"syne" | "anton" | "bebas" | "googlesans" | "londrina" | "bungee">("syne");
 
   useEffect(() => {
     if (isDarkWebsite && videoRef.current) {
@@ -497,36 +509,48 @@ export default function ShowcaseHeroSection({
           <>
             {/* Center Hero Content Container (Guaranteed 100% Horizontal & Vertical Centering) */}
             <div className="pointer-events-none absolute inset-0 z-20 w-full max-w-full flex flex-col items-center justify-center px-4 sm:px-8 text-center mx-auto">
-              {/* Primary Festival Title (Hollow White Outline - Scaled proportionally for all mobile widths) */}
-              <OutlineText
-                text="SANSKARAN"
-                maskId="d4-outline-devfest"
-                fontMode={fontMode}
-                color="#ffffff"
-                className="text-[36px] min-[360px]:text-[42px] min-[400px]:text-[48px] min-[520px]:text-[60px] sm:text-[84px] md:text-[98px] lg:text-[118px] xl:text-[134px] 2xl:text-[144px]"
-                style={{
-                  fontWeight: 700,
-                  filter: "drop-shadow(0 2px 20px rgba(255,255,255,0.22)) drop-shadow(0 4px 32px rgba(0,0,0,0.95))",
-                  opacity: heroContentRevealed ? 1 : 0,
-                  transition: "opacity 900ms ease 120ms",
-                }}
-              />
+              {/* Unified Typographic Block (SANSKARAN + 2026 Locked to Exact Same Width) */}
+              <div className="inline-flex flex-col items-stretch text-center max-w-[94vw]">
+                {/* Primary Festival Title (Hollow White Outline - Bold Syne Display) */}
+                <OutlineText
+                  text="SANSKARAN"
+                  maskId="d4-outline-devfest"
+                  fontMode={fontMode}
+                  color="#ffffff"
+                  className="text-[34px] min-[360px]:text-[40px] min-[400px]:text-[46px] min-[520px]:text-[58px] sm:text-[80px] md:text-[96px] lg:text-[116px] xl:text-[132px] 2xl:text-[144px]"
+                  style={{
+                    fontWeight: 800,
+                    letterSpacing: "0.04em",
+                    filter: "drop-shadow(0 2px 20px rgba(255,255,255,0.22)) drop-shadow(0 4px 32px rgba(0,0,0,0.95))",
+                    opacity: heroContentRevealed ? 1 : 0,
+                    transition: "opacity 900ms ease 120ms",
+                  }}
+                />
 
-              {/* 2026 (Hollow Electric Lavender Outline with calibrated tracking) */}
-              <OutlineText
-                text="2026"
-                maskId="d4-outline-kolkata"
-                fontMode={fontMode}
-                color="#a78bfa"
-                className="mt-1 sm:mt-2.5 text-[24px] min-[360px]:text-[28px] min-[400px]:text-[32px] min-[520px]:text-[42px] sm:text-[54px] md:text-[64px] lg:text-[80px] xl:text-[94px] 2xl:text-[104px]"
-                style={{
-                  fontWeight: fontMode === "googlesans" ? 600 : 700,
-                  letterSpacing: "0.16em",
-                  filter: "drop-shadow(0 2px 18px rgba(167,139,250,0.65)) drop-shadow(0 4px 24px rgba(0,0,0,0.85))",
-                  opacity: heroContentRevealed ? 1 : 0,
-                  transition: "opacity 900ms ease 260ms",
-                }}
-              />
+                {/* 2026: Spans the EXACT SAME WIDTH as SANSKARAN via flex justify-between */}
+                <div
+                  className="w-full flex items-center justify-between mt-1 sm:mt-2.5 select-none"
+                  style={{
+                    opacity: heroContentRevealed ? 1 : 0,
+                    transition: "opacity 900ms ease 260ms",
+                  }}
+                >
+                  {["2", "0", "2", "6"].map((digit, i) => (
+                    <OutlineText
+                      key={`year-digit-${i}`}
+                      text={digit}
+                      maskId={`d4-outline-digit-${i}`}
+                      fontMode={fontMode}
+                      color="#a78bfa"
+                      className="text-[30px] min-[360px]:text-[36px] min-[400px]:text-[42px] min-[520px]:text-[52px] sm:text-[72px] md:text-[86px] lg:text-[104px] xl:text-[118px] 2xl:text-[130px]"
+                      style={{
+                        fontWeight: 800,
+                        filter: "drop-shadow(0 2px 18px rgba(167,139,250,0.65)) drop-shadow(0 4px 24px rgba(0,0,0,0.85))",
+                      }}
+                    />
+                  ))}
+                </div>
+              </div>
 
               {/* Anthem Tagline - Impeccable Tech Grotesque styling */}
               <div

@@ -1,5 +1,32 @@
 # Agent Handoff Log — tracker.md
 
+## 2026-11-18 — Hero Section Bold Display Typography (Syne ExtraBold 800) & Width-Locked 2026
+
+### Objective
+1. Switch the hero section `SANSKARAN` title to an authoritative, ultra-bold festival display font (**Syne ExtraBold 800**) under `/design-taste-frontend`.
+2. Lock `2026` to span the **exact same width** as the `SANSKARAN` title above it across all breakpoints.
+
+### Changes Made
+1. **Font Pipeline (`src/app/layout.tsx` & `src/app/globals.css`)**:
+   - Integrated `Syne` (`weight: ["700", "800"]`) and `Anton` via `next/font/google` with CSS variables `--font-syne` and `--font-anton`.
+   - Updated `.d4-outline` and SVG text rules in `globals.css` to use `var(--font-syne)` with `font-weight: 800`.
+2. **Width-Locked Typographic Lockup (`src/components/event/ShowcaseHeroSection.tsx`)**:
+   - Structured `SANSKARAN` and `2026` inside an `inline-flex flex-col items-stretch max-w-[94vw]` container.
+   - Rendered `SANSKARAN` in bold Syne hollow outline.
+   - Rendered `2026` in a `w-full flex items-center justify-between` container, mapping each individual digit (`2`, `0`, `2`, `6`) through `OutlineText`.
+   - Digit `2` aligns flush to the left boundary of `SANSKARAN`, digit `6` aligns flush to the right boundary of `SANSKARAN`, and `0` & `2` are distributed evenly, guaranteeing pixel-perfect identical width on every screen size.
+3. **Verification**:
+   - `npm run build` compiled with status code 0 via Next.js 16.4.6 (Turbopack) & React 19.
+
+### Current State
+`SANSKARAN` renders in bold, sculptural Syne ExtraBold (800) outline with pristine contours, and `2026` spans the exact same width as `SANSKARAN` directly underneath.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/ShowcaseHeroSection.tsx` lines 500-550 for any further typographic adjustments.
+2. Maintain `origin` and `trial` remote synchronizations.
+
+---
+
 ## 2026-11-18 — Restore Inverted SVG Cutout Mask on Hero Outline Typography
 
 ### Objective
