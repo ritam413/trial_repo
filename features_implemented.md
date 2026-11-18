@@ -15,12 +15,12 @@ All foundational libraries, responsive layout engines, and the streamlined **Dev
       5. Core Members: Green / Deep Lagoon (`#0c4243`) ground with Lilac Mist ambient grid and 3D card physics.
       6. Dignitaries: Carbon Obsidian (`#0d0d0e`) ground with `#141416` spotlight patron cards and luminous monograms.
       7. Founders: Green / Deep Lagoon (`#0c4243`) ground with glowing emerald monograms.
-      8. Footer: Midnight Wine (`#421d24`) ground with Lilac Mist typography.
+      8. Footer: Carbon Obsidian (`#0d0d0e`) ground with Lilac Mist typography and elevated `#18181b` back-to-top control.
     - Surface Level 0: Carbon Obsidian (`#0d0d0e`) base canvas replacing legacy white/parchment.
     - Surface Level 1: Elevated Carbon Surface (`#141416`) elevated card surfaces.
     - Surface Level 2: Lilac Mist (`#d4c7ff`) secondary fills and badges.
     - Surface Level 3: Deep Lagoon (`#0c4243`) dark band feature storytelling section in Sahotsava & Founders.
-    - Surface Level 4: Midnight Wine (`#421d24`) footer ground and primary action buttons.
+    - Surface Level 4: Carbon Obsidian (`#0d0d0e`) footer ground and primary action buttons.
     - Royal Violet (`#714cb6`) text and border accents; Ink Charcoal (`#292827`) body text; Soft Mist (`#e3e3e2`) hairline dividers.
   - **Dedicated Sanskaran & Sahotsava Storytelling Sections (`AboutFestivalSection.tsx`)**:
     - Split into two standalone full-width sections replacing the side-by-side single row.

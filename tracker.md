@@ -1,5 +1,29 @@
 # Agent Handoff Log — tracker.md
 
+## 2026-11-18 — Footer Background: Migrate from Midnight Wine to #0d0d0e Carbon Obsidian
+
+### Objective
+Update the site footer (`src/components/event/Footer.tsx`) from the legacy midnight wine (`#421d24`) background to deep carbon obsidian `#0d0d0e` as requested by the user, harmonizing the closing section with the rest of the dark carbon design system.
+
+### Changes Made
+1. **Footer Canvas Ground (`src/components/event/Footer.tsx`)**:
+   - Replaced `bg-[#421d24]` with `bg-[#0d0d0e]`.
+   - Updated top divider to sleek `border-t border-white/10`.
+   - Updated `"Back to Top"` button background to elevated `#18181b` with `border-white/15` and hover state `hover:bg-[#714cb6]`.
+2. **Features Documentation (`features_implemented.md`)**:
+   - Updated footer description and Surface Level 4 definitions to `#0d0d0e` carbon obsidian.
+3. **Verification**:
+   - `npm run build` compiled with status code 0 via Next.js 16.4.6 (Turbopack) & React 19 in 2.6s.
+
+### Current State
+Footer sits seamlessly on `#0d0d0e` carbon ground with crisp white headline, italic lilac tagline, and polished back-to-top button.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/Footer.tsx` if any further footer links or social badges are requested.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-18 — Global Dark Carbon Ground Migration (#0d0d0e) Across All Light Sections
 
 ### Objective

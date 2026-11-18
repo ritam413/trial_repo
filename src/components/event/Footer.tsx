@@ -9,7 +9,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="border-t border-[#e3e3e2]/20 bg-[#421d24] text-[#ffffff] py-12 px-4 sm:px-8 text-center z-10 relative">
+    <footer className="border-t border-white/10 bg-[#0d0d0e] text-[#ffffff] py-12 px-4 sm:px-8 text-center z-10 relative">
       <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
         <div className="text-left">
           <p className="font-display text-2xl sm:text-3xl text-[#ffffff] tracking-wide uppercase">
@@ -21,7 +21,7 @@ export default function Footer() {
         <button
           type="button"
           onClick={scrollToTop}
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#292827] hover:bg-[#714cb6] border border-[#d4c7ff]/30 text-[#ffffff] font-tech text-xs font-bold tracking-wider uppercase transition-colors cursor-pointer"
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#18181b] hover:bg-[#714cb6] border border-white/15 text-[#ffffff] font-tech text-xs font-bold tracking-wider uppercase transition-colors cursor-pointer shadow-md"
         >
           <ArrowUp className="w-4 h-4 text-[#d4c7ff]" />
           <span>Back to Top</span>
