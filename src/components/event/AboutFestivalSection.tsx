@@ -291,14 +291,14 @@ function SanskaranSection({ onInspect }: SanskaranSectionProps) {
     <section
       id="about"
       ref={sectionRef}
-      className="relative z-20 w-full overflow-hidden select-none bg-[#f2f0eb] text-[#292827] py-20 sm:py-28 lg:py-32 border-b border-[#e3e3e2]"
+      className="relative z-20 w-full overflow-hidden select-none bg-[#0d0d0e] text-[#ffffff] py-20 sm:py-28 lg:py-32 border-b border-white/10"
     >
       {/* Subtle Architectural Grid Lines */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 pointer-events-none opacity-[0.035]"
+        className="absolute inset-0 pointer-events-none opacity-[0.1]"
         style={{
-          backgroundImage: "radial-gradient(#292827 1px, transparent 1px)",
+          backgroundImage: "radial-gradient(rgba(255, 255, 255, 0.2) 1px, transparent 1px)",
           backgroundSize: "24px 24px",
         }}
       />
@@ -310,17 +310,17 @@ function SanskaranSection({ onInspect }: SanskaranSectionProps) {
               ================================================================= */}
           <div className="lg:col-span-5 flex flex-col items-start text-left">
             {/* Monumental Headline */}
-            <h2 className="sanskaran-text-anim product_sans text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-bold tracking-tight text-[#292827] leading-[1.12]">
-              What is Sanskaran ?
+            <h2 className="sanskaran-text-anim product_sans text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-bold tracking-tight text-[#ffffff] leading-[1.12]">
+               Sanskaran 
             </h2>
 
             {/* Sub-tagline */}
-            <p className="sanskaran-text-anim product_sans text-lg sm:text-xl font-medium text-[#714cb6] mt-3 leading-snug">
+            <p className="sanskaran-text-anim product_sans text-lg sm:text-xl font-medium text-[#d4c7ff] mt-3 leading-snug">
               The Soul of Heritage, Thought &amp; Artistic Mastery
             </p>
 
             {/* Rich Narrative Copy */}
-            <p className="sanskaran-text-anim product_sans text-sm sm:text-base text-[#666666] mt-5 leading-relaxed">
+            <p className="sanskaran-text-anim product_sans text-sm sm:text-base text-white/70 mt-5 leading-relaxed">
               Sanskaran is our flagship intellectual and cultural conclave — a deliberate sanctuary where traditional Indian heritage, proscenium thespian drama, parliamentary debates, and fine arts ateliers converge. It is the scholarly heartbeat of the festival where students interrogate literature, express classical forms, and celebrate timeless human craft.
             </p>
           </div>
@@ -482,7 +482,7 @@ function SahotsavaSection({ onInspect }: SahotsavaSectionProps) {
           <div className="lg:col-span-5 flex flex-col items-start text-left">
             {/* Monumental Headline */}
             <h2 className="sahotsava-text-anim product_sans text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-bold tracking-tight text-[#ffffff] leading-[1.12]">
-              What is Sahotsava ?
+              Sahotsava
             </h2>
 
             {/* Sub-tagline */}
@@ -579,14 +579,14 @@ export default function AboutFestivalSection() {
               exit={{ scale: 0.94, opacity: 0, y: 16 }}
               transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
               onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-2xl md:rounded-3xl bg-[#ffffff] border border-[#e3e3e2] p-6 sm:p-8 shadow-[0_24px_70px_rgba(41,40,39,0.25)] text-[#292827] z-10"
+              className="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-2xl md:rounded-3xl bg-[#141416] border border-white/10 p-6 sm:p-8 shadow-[0_24px_70px_rgba(0,0,0,0.85)] text-white z-10"
             >
               {/* Close Button */}
               <button
                 type="button"
                 onClick={() => setInspectModal(null)}
                 aria-label="Close Discipline Modal"
-                className="absolute top-5 right-5 w-9 h-9 rounded-full bg-[#f2f0eb] text-[#292827] flex items-center justify-center hover:bg-[#e3e3e2] transition-colors cursor-pointer"
+                className="absolute top-5 right-5 w-9 h-9 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white/20 transition-colors cursor-pointer"
               >
                 <Icon.X className="w-4 h-4" />
               </button>
@@ -601,12 +601,12 @@ export default function AboutFestivalSection() {
                   className="w-3.5 h-3.5 rounded-full inline-block"
                 />
                 <div>
-                  <span className="product_sans text-[11px] font-bold tracking-widest text-[#666666] uppercase">
+                  <span className="product_sans text-[11px] font-bold tracking-widest text-white/50 uppercase">
                     {inspectModal === "sanskaran"
                       ? "INTELLECTUAL & HERITAGE DOSSIER"
                       : "ARENA & SPECTACLE DIRECTORY"}
                   </span>
-                  <h3 className="product_sans text-2xl sm:text-3xl font-bold text-[#292827] leading-tight">
+                  <h3 className="product_sans text-2xl sm:text-3xl font-bold text-white leading-tight">
                     {inspectModal === "sanskaran"
                       ? "Sanskaran Disciplines"
                       : "Sahotsava Lineup Pillars"}
@@ -614,7 +614,7 @@ export default function AboutFestivalSection() {
                 </div>
               </div>
 
-              <p className="product_sans text-sm text-[#666666] mb-6">
+              <p className="product_sans text-sm text-white/70 mb-6">
                 {inspectModal === "sanskaran"
                   ? "Explore the master workshops, competitive conclaves, and exhibition halls anchored under Sanskaran."
                   : "Experience the high-voltage arena, star headliners, and night spectacles defining Sahotsava."}
@@ -628,7 +628,7 @@ export default function AboutFestivalSection() {
                 ).map((item) => (
                   <div
                     key={item.title}
-                    className="p-4 rounded-xl bg-[#f2f0eb] border border-[#e3e3e2] hover:border-[#714cb6] hover:bg-white hover:shadow-sm transition-all"
+                    className="p-4 rounded-xl bg-[#1c1b22] border border-white/10 hover:border-[#714cb6] hover:bg-[#23222d] hover:shadow-md transition-all"
                   >
                     <div className="flex items-center gap-1.5 mb-1.5">
                       <span
@@ -643,11 +643,11 @@ export default function AboutFestivalSection() {
                       </span>
                     </div>
 
-                    <h4 className="product_sans text-base font-bold text-[#292827] mb-1">
+                    <h4 className="product_sans text-base font-bold text-white mb-1">
                       {item.title}
                     </h4>
 
-                    <p className="product_sans text-xs text-[#666666] leading-relaxed">
+                    <p className="product_sans text-xs text-white/70 leading-relaxed">
                       {item.description}
                     </p>
                   </div>
@@ -655,12 +655,12 @@ export default function AboutFestivalSection() {
               </div>
 
               {/* Modal Footer */}
-              <div className="mt-8 pt-5 border-t border-[#e3e3e2] flex items-center justify-between text-xs text-[#666666]">
+              <div className="mt-8 pt-5 border-t border-white/10 flex items-center justify-between text-xs text-white/50">
                 <span>Sanskaran &amp; Sahotsava Conclave 2026</span>
                 <button
                   type="button"
                   onClick={() => setInspectModal(null)}
-                  className="font-semibold text-[#714cb6] hover:underline cursor-pointer"
+                  className="font-semibold text-[#d4c7ff] hover:text-white hover:underline cursor-pointer transition-colors"
                 >
                   Close Dossier
                 </button>

@@ -53,12 +53,12 @@ export default function Countdown() {
       {timeBlocks.map((block) => (
         <div
           key={block.label}
-          className="flex flex-col items-center justify-center w-20 h-22 sm:w-26 sm:h-28 rounded-xl bg-[#ffffff] border border-[#e3e3e2] shadow-[0_8px_30px_rgba(41,40,39,0.06)] backdrop-blur-md"
+          className="flex flex-col items-center justify-center w-20 h-22 sm:w-26 sm:h-28 rounded-xl bg-[#141416] border border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.5)] backdrop-blur-md"
         >
-          <span className="text-2xl sm:text-4xl font-extrabold tracking-tight bg-gradient-to-b from-[#292827] to-[#421d24] bg-clip-text text-transparent font-mono">
+          <span className="text-2xl sm:text-4xl font-extrabold tracking-tight bg-gradient-to-b from-[#ffffff] to-[#d4c7ff] bg-clip-text text-transparent font-mono">
             {String(block.value).padStart(2, "0")}
           </span>
-          <span className="text-[10px] sm:text-xs font-semibold tracking-widest text-[#714cb6] mt-1 uppercase">
+          <span className="text-[10px] sm:text-xs font-semibold tracking-widest text-[#d4c7ff] mt-1 uppercase">
             {block.label}
           </span>
         </div>

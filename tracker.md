@@ -1,23 +1,57 @@
 # Agent Handoff Log — tracker.md
 
-## 2026-11-18 — Gallery Section Background: Switch from White to #0d0d0e Obsidian Ground
+## 2026-11-18 — Global Dark Carbon Ground Migration (#0d0d0e) Across All Light Sections
 
 ### Objective
-Update the Cultural Gallery section background from bright white (`#ffffff`) to deep obsidian (`#0d0d0e`) as requested by the user, eliminating jarring white gaps between slits and creating seamless atmospheric cohesion with the dark festival cards.
+Replace all remaining white/warm-parchment background sections (`#f2f0eb` and `#ffffff`) across the entire application with deep carbon obsidian `#0d0d0e` as requested by the user, while inverting typography and border systems for optimal contrast, readability, and atmospheric visual cohesion.
 
 ### Changes Made
-1. **Gallery Canvas Ground (`src/components/event/GallerySection.tsx`)**:
+1. **Container Ground (`src/app/page.tsx`)**:
+   - Updated `#festival-content` container background from `bg-[#f2f0eb]` to `bg-[#0d0d0e]`.
+2. **Sanskaran Storytelling Section (`src/components/event/AboutFestivalSection.tsx`)**:
+   - Replaced `bg-[#f2f0eb]` with `bg-[#0d0d0e]` on `<section id="about">`.
+   - Updated section border to `border-b border-white/10`.
+   - Updated dot grid to subtle white ambient glow (`radial-gradient(rgba(255, 255, 255, 0.2) 1px, transparent 1px)`).
+   - Inverted headline `What is Sanskaran ?` to crisp white (`text-[#ffffff]`).
+   - Updated sub-tagline to lilac mist (`text-[#d4c7ff]`).
+   - Updated narrative body copy to soft white (`text-white/70`).
+   - Updated inspection modal dossier from white card surface (`bg-[#ffffff]`) to elevated carbon card (`bg-[#141416] border border-white/10 text-white`) with dark discipline tiles (`bg-[#1c1b22] border border-white/10 hover:bg-[#23222d]`).
+3. **Cultural Gallery Section (`src/components/event/GallerySection.tsx`)**:
    - Replaced `bg-[#ffffff]` with `bg-[#0d0d0e]` on `<section id="gallery">`.
-   - Updated section border to subtle `border-white/10`.
-   - Updated header typography from dark ink slate (`#292827`) to luminous ivory/lilac gradient (`from-[#EDE8FF] via-[#d4c7ff] to-[#714cb6]`) for high contrast on `#0d0d0e`.
-2. **Verification**:
-   - `npm run build` compiled with status code 0 via Next.js 16.4.6 (Turbopack) & React 19.
+   - Updated section border to `border-b border-white/10`.
+   - Inverted header lockup typography to luminous ivory/lilac gradient (`from-[#EDE8FF] via-[#d4c7ff] to-[#714cb6]`).
+4. **Dignitaries Section (`src/components/event/DignitariesSection.tsx`)**:
+   - Replaced `bg-[#f2f0eb]` with `bg-[#0d0d0e]` on `<section id="dignitaries">`.
+   - Inverted header title to `text-[#ffffff]` and subtitle to `text-white/70`.
+   - Replaced white `CardSpotlight` surface (`bg-[#ffffff] border-[#e3e3e2]`) with elevated carbon cards (`bg-[#141416] border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.6)]`).
+   - Replaced portrait photo plinths from light parchment gradients to carbon dark gradients (`bg-gradient-to-b from-[#18181b] to-[#0d0d0e] border border-white/10`).
+   - Inverted names and designation text to crisp white and lilac mist.
+5. **Fixed Navbar (`src/components/event/Navbar.tsx`)**:
+   - Updated scrolled state background from `bg-[#f2f0eb]/95` to `bg-[#0d0d0e]/95 backdrop-blur-xl border-b border-white/10 shadow-[0_4px_24px_rgba(0,0,0,0.6)]`.
+   - Updated brand icon background to `bg-[#18181b] border-white/15` and logo text to white.
+   - Updated nav links to `text-white/80 hover:text-[#d4c7ff]`.
+   - Updated scroll progress track to `bg-white/10`.
+6. **Countdown Timer (`src/components/event/Countdown.tsx`)**:
+   - Updated cards to `bg-[#141416] border border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.5)]` with white-to-lilac numbers.
+7. **Design System Tokens (`src/app/globals.css`)**:
+   - Updated `--color-warm-parchment: #0d0d0e;`, `--surface-parchment: #0d0d0e;`, `--background: 240 4% 5%;` (`#0d0d0e`), `--foreground: 0 0% 100%;` (`#ffffff`), `--canvas-base: #0d0d0e;`, `--canvas-surface: #141416;`, `--canvas-card: #141416;`.
+8. **Verification**:
+   - `npm run build` compiled with status code 0 via Next.js 16.4.6 (Turbopack) & React 19 in 4.0s.
 
 ### Current State
-Gallery section sits on deep `#0d0d0e` obsidian canvas. The slits, cards, and headers blend naturally with zero stark white bars.
+All sections across the site sit on deep, cohesive dark grounds:
+- Showcase Hero: `#000000`
+- Sanskaran: `#0d0d0e`
+- Sahotsava: `#0c4243`
+- Cultural Gallery: `#0d0d0e`
+- Core Members: `#0c4243`
+- Dignitaries: `#0d0d0e`
+- Founders: `#0c4243`
+- Footer: `#421d24`
+Zero harsh white or parchment bands exist. High-contrast white and lilac typography ensures full legibility.
 
 ### Next Agent Instructions
-1. Inspect `src/components/event/GallerySection.tsx` lines 365-410 for any further background or theme adjustments.
+1. Inspect `src/components/event/AboutFestivalSection.tsx`, `GallerySection.tsx`, and `DignitariesSection.tsx` for any further visual styling.
 2. Keep `origin` and `trial` remotes synchronized.
 
 ---

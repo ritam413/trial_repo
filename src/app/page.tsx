@@ -29,8 +29,8 @@ export default function Home() {
         <ShowcaseHeroSection onExplore={handleExploreFestival} />
       </div>
 
-      {/* 4. Interactive Festival Experience Sections (Warm Parchment Editorial Canvas) */}
-      <div id="festival-content" className="relative z-20 w-full bg-[#f2f0eb]">
+      {/* 4. Interactive Festival Experience Sections (Carbon Obsidian Canvas #0d0d0e) */}
+      <div id="festival-content" className="relative z-20 w-full bg-[#0d0d0e]">
         <AboutFestivalSection />
         <GallerySection />
         <CoreMembersSection />

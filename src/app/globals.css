@@ -8,7 +8,7 @@
   --color-royal-violet: #714cb6;
   --color-lilac-mist: #d4c7ff;
   --color-deep-lagoon: #0c4243;
-  --color-warm-parchment: #f2f0eb;
+  --color-warm-parchment: #0d0d0e;
   --color-soft-mist: #e3e3e2;
   --color-ink-charcoal: #292827;
   --color-stone-gray: #666666;
@@ -19,7 +19,7 @@
   :root {
     /* =========================================================================
        SUPERHUMAN EDITORIAL DESIGN SYSTEM TOKENS (/design-taste-frontend)
-       Extracted Tokens: Warm Parchment, Midnight Wine, Royal Violet, Deep Lagoon
+       Extracted Tokens: Carbon Ground, Midnight Wine, Royal Violet, Deep Lagoon
        ========================================================================= */
 
     /* Layer 1: Primitive Color Tokens */
@@ -27,25 +27,25 @@
     --color-royal-violet: #714cb6;
     --color-lilac-mist: #d4c7ff;
     --color-deep-lagoon: #0c4243;
-    --color-warm-parchment: #f2f0eb;
+    --color-warm-parchment: #0d0d0e;
     --color-soft-mist: #e3e3e2;
     --color-ink-charcoal: #292827;
     --color-stone-gray: #666666;
     --color-paper-white: #ffffff;
 
     /* Layer 2: Semantic Surface Levels */
-    --surface-parchment: #f2f0eb; /* Level 0: Base page background, dominant surface */
-    --surface-paper: #ffffff;     /* Level 1: Elevated cards, floating UI elements */
+    --surface-parchment: #0d0d0e; /* Level 0: Base page background, dominant carbon surface */
+    --surface-paper: #141416;     /* Level 1: Elevated cards, floating UI elements */
     --surface-lilac: #d4c7ff;     /* Level 2: Accent surface for secondary buttons & selected states */
     --surface-lagoon: #0c4243;    /* Level 3: Dark band section background for feature storytelling */
     --surface-wine: #421d24;      /* Level 4: Footer and announcement banner ground */
 
     /* Layer 3: Semantic Purpose Tokens */
-    --background: 43 17% 94%;      /* #f2f0eb */
-    --foreground: 25 3% 15%;       /* #292827 */
-    --canvas-base: var(--color-warm-parchment);
-    --canvas-surface: var(--color-paper-white);
-    --canvas-card: var(--color-paper-white);
+    --background: 240 4% 5%;       /* #0d0d0e */
+    --foreground: 0 0% 100%;       /* #ffffff */
+    --canvas-base: #0d0d0e;
+    --canvas-surface: #141416;
+    --canvas-card: #141416;
     --canvas-dark-band: var(--color-deep-lagoon);
     --canvas-wine: var(--color-midnight-wine);
 

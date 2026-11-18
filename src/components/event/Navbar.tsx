@@ -132,7 +132,7 @@ export default function Navbar() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         hasScrolled
-          ? "opacity-100 translate-y-0 bg-[#f2f0eb]/95 backdrop-blur-xl border-b border-[#e3e3e2] shadow-[0_4px_24px_rgba(41,40,39,0.08)] pointer-events-auto"
+          ? "opacity-100 translate-y-0 bg-[#0d0d0e]/95 backdrop-blur-xl border-b border-white/10 shadow-[0_4px_24px_rgba(0,0,0,0.6)] pointer-events-auto"
           : "opacity-0 -translate-y-3 pointer-events-none"
       }`}
     >
@@ -143,36 +143,36 @@ export default function Navbar() {
           onClick={(e) => handleNavClick(e, "#hero")}
           className="flex items-center gap-2.5 sm:gap-3 group cursor-pointer shrink min-w-0"
         >
-          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-[#ffffff] border border-[#e3e3e2] flex items-center justify-center text-base sm:text-lg text-[#714cb6] shadow-[0_2px_8px_rgba(113,76,182,0.18)] shrink-0 group-hover:border-[#714cb6] group-hover:scale-105 transition-transform duration-200">
+          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-[#18181b] border border-white/15 flex items-center justify-center text-base sm:text-lg text-[#d4c7ff] shadow-[0_2px_8px_rgba(113,76,182,0.25)] shrink-0 group-hover:border-[#714cb6] group-hover:scale-105 transition-transform duration-200">
             ✦
           </div>
           <div className="flex flex-col min-w-0">
             <div className="flex items-center gap-2">
-              <span className="font-display text-xl sm:text-2xl md:text-3xl tracking-wider text-[#292827] group-hover:text-[#714cb6] transition-colors uppercase leading-none truncate">
+              <span className="font-display text-xl sm:text-2xl md:text-3xl tracking-wider text-[#ffffff] group-hover:text-[#d4c7ff] transition-colors uppercase leading-none truncate">
                 SANSKARAN
               </span>
-              <span className="hidden sm:inline-flex font-tech text-[10px] font-bold tracking-widest text-[#714cb6] px-1.5 py-0.5 rounded bg-[#d4c7ff]/40 border border-[#714cb6]/30 shrink-0">
+              <span className="hidden sm:inline-flex font-tech text-[10px] font-bold tracking-widest text-[#d4c7ff] px-1.5 py-0.5 rounded bg-[#714cb6]/30 border border-[#714cb6]/40 shrink-0">
                 2026
               </span>
             </div>
-            <span className="font-tech text-[8.5px] sm:text-[10px] text-[#666666] tracking-[0.16em] sm:tracking-[0.22em] uppercase truncate">
-              <span className="sm:hidden text-[#714cb6] font-bold mr-1">’26 •</span>
+            <span className="font-tech text-[8.5px] sm:text-[10px] text-white/60 tracking-[0.16em] sm:tracking-[0.22em] uppercase truncate">
+              <span className="sm:hidden text-[#d4c7ff] font-bold mr-1">’26 •</span>
               CULTURAL CONCLAVE
             </span>
           </div>
         </a>
 
         {/* Center Navigation Links with GSAP Smooth Scrolling */}
-        <nav className="hidden md:flex items-center gap-8 font-tech text-xs font-semibold tracking-[0.2em] text-[#292827]/80 uppercase">
+        <nav className="hidden md:flex items-center gap-8 font-tech text-xs font-semibold tracking-[0.2em] text-white/80 uppercase">
           {navLinks.map((link) => (
             <a
               key={link.target}
               href={link.target}
               onClick={(e) => handleNavClick(e, link.target)}
-              className="hover:text-[#714cb6] transition-colors relative py-1 group/link cursor-pointer"
+              className="hover:text-[#d4c7ff] transition-colors relative py-1 group/link cursor-pointer"
             >
               <span>{link.label}</span>
-              <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#714cb6] group-hover/link:w-full transition-all duration-300" />
+              <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#d4c7ff] group-hover/link:w-full transition-all duration-300" />
             </a>
           ))}
         </nav>
@@ -181,7 +181,7 @@ export default function Navbar() {
         <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           <span
             ref={percentTextRef}
-            className="font-mono text-[10px] font-bold text-[#714cb6] px-2 py-0.5 rounded-full bg-[#ffffff] border border-[#e3e3e2] hidden sm:inline-block tabular-nums shadow-[0_0_8px_rgba(113,76,182,0.1)]"
+            className="font-mono text-[10px] font-bold text-[#d4c7ff] px-2 py-0.5 rounded-full bg-[#18181b] border border-white/15 hidden sm:inline-block tabular-nums shadow-[0_0_8px_rgba(113,76,182,0.2)]"
           >
             0%
           </span>
@@ -189,7 +189,7 @@ export default function Navbar() {
           <button
             type="button"
             onClick={() => gsapScrollTo("#about", SMOOTH_SCROLL_CONFIG.duration, SMOOTH_SCROLL_CONFIG.offset)}
-            className="group/btn inline-flex items-center justify-center gap-1.5 sm:gap-2 h-9 sm:h-11 px-3 sm:px-5 rounded-lg sm:rounded-xl bg-[#421d24] hover:bg-[#421d24]/90 text-[#ffffff] font-tech text-[11px] sm:text-xs font-bold tracking-wider uppercase border border-[#421d24] shadow-[0_4px_16px_rgba(66,29,36,0.25)] active:scale-[0.97] transition-all duration-150 cursor-pointer whitespace-nowrap"
+            className="group/btn inline-flex items-center justify-center gap-1.5 sm:gap-2 h-9 sm:h-11 px-3 sm:px-5 rounded-lg sm:rounded-xl bg-[#421d24] hover:bg-[#421d24]/90 text-[#ffffff] font-tech text-[11px] sm:text-xs font-bold tracking-wider uppercase border border-[#714cb6]/40 shadow-[0_4px_16px_rgba(66,29,36,0.5)] active:scale-[0.97] transition-all duration-150 cursor-pointer whitespace-nowrap"
           >
             <span className="sm:hidden">Explore</span>
             <span className="hidden sm:inline">Explore Festival</span>
@@ -199,7 +199,7 @@ export default function Navbar() {
       </div>
 
       {/* Real-Time Glowing GPU-Accelerated Scroll Progress Bar */}
-      <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#e3e3e2] overflow-hidden pointer-events-none">
+      <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-white/10 overflow-hidden pointer-events-none">
         <div
           ref={progressBarRef}
           style={{ transform: "scaleX(0)", transformOrigin: "left" }}

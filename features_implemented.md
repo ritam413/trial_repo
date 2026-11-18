@@ -9,15 +9,15 @@ All foundational libraries, responsive layout engines, and the streamlined **Dev
   - **Superhuman Editorial Color System & Alternating Section Cadence (`globals.css`)**:
     - **Alternating Visual Rhythm**:
       1. Showcase Hero: Black (`#000000`) opening canvas.
-      2. Sanskaran: White / Warm Parchment (`#f2f0eb`) ground with Paper White cards and Ink Charcoal text.
+      2. Sanskaran: Carbon Obsidian (`#0d0d0e`) ground with crisp white headline, lilac sub-tagline, and ambient grid.
       3. Sahotsava: Green / Deep Lagoon (`#0c4243`) ground with glowing SVG soundwave watermark and white text.
-      4. Cultural Gallery: Obsidian (`#0d0d0e`) ground with dark slit cards and luminous typography.
+      4. Cultural Gallery: Carbon Obsidian (`#0d0d0e`) ground with borderless full-width expandable club slit cards.
       5. Core Members: Green / Deep Lagoon (`#0c4243`) ground with Lilac Mist ambient grid and 3D card physics.
-      6. Dignitaries: White / Warm Parchment (`#f2f0eb`) ground with Paper White spotlight cards.
+      6. Dignitaries: Carbon Obsidian (`#0d0d0e`) ground with `#141416` spotlight patron cards and luminous monograms.
       7. Founders: Green / Deep Lagoon (`#0c4243`) ground with glowing emerald monograms.
       8. Footer: Midnight Wine (`#421d24`) ground with Lilac Mist typography.
-    - Surface Level 0: Warm Parchment (`#f2f0eb`) base canvas across page body.
-    - Surface Level 1: Paper White (`#ffffff`) elevated card surfaces.
+    - Surface Level 0: Carbon Obsidian (`#0d0d0e`) base canvas replacing legacy white/parchment.
+    - Surface Level 1: Elevated Carbon Surface (`#141416`) elevated card surfaces.
     - Surface Level 2: Lilac Mist (`#d4c7ff`) secondary fills and badges.
     - Surface Level 3: Deep Lagoon (`#0c4243`) dark band feature storytelling section in Sahotsava & Founders.
     - Surface Level 4: Midnight Wine (`#421d24`) footer ground and primary action buttons.
