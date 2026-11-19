@@ -1,5 +1,28 @@
 # Agent Handoff Log — tracker.md
 
+## 2026-11-19 — Cloudinary MCP Server: Setup & Live Verification
+
+### Objective
+Configure the Cloudinary MCP server in Antigravity so that the assistant can interact with Cloudinary, upload media assets, and integrate optimized asset URLs into the website.
+
+### Changes Made
+1. **Antigravity Global MCP Configuration**:
+   - Registered `cloudinary-asset-mgmt` in `C:\Users\ritam\.gemini\config\mcp_config.json` with `@cloudinary/asset-management` package via `npx`.
+   - Wired cloud credentials: Cloud Name `lsyjstbv`, API Key `379457525466968`, API Secret `F89XOoMXgsWGdESsYn61PHcAa7Q`.
+2. **Live MCP Connection Verification**:
+   - Reconnected MCP host environment in Antigravity.
+   - MCP schema directory created at `C:\Users\ritam\.gemini\antigravity\mcp\cloudinary-asset-mgmt` with 23 tools registered (including `upload-asset`, `list-images`, `search-assets`, `get-usage-details`).
+   - Executed live `call_mcp_tool` (`get-usage-details`): Succeeded with `200 OK`, returning active Free plan status.
+
+### Current State
+Cloudinary MCP server is fully configured, connected, and functional inside Antigravity.
+
+### Next Agent Instructions
+1. When the user provides local image folders or assets, use `call_mcp_tool` with `ServerName: "cloudinary-asset-mgmt"` and `ToolName: "upload-asset"` (or batch script) to upload and link into `src/lib/clubsData.ts`.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-19 — Hero Section: Recolor 2026 Yearmark to Crisp Solid White
 
 ### Objective
@@ -1263,6 +1286,29 @@ Integrate the video from `https://www.instagram.com/p/DaqR3Niyy2L/?hl=en` (the o
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-19 — Cloudinary MCP Server: Setup & Live Verification
+
+### Objective
+Configure the Cloudinary MCP server in Antigravity so that the assistant can interact with Cloudinary, upload media assets, and integrate optimized asset URLs into the website.
+
+### Changes Made
+1. **Antigravity Global MCP Configuration**:
+   - Registered `cloudinary-asset-mgmt` in `C:\Users\ritam\.gemini\config\mcp_config.json` with `@cloudinary/asset-management` package via `npx`.
+   - Wired cloud credentials: Cloud Name `lsyjstbv`, API Key `379457525466968`, API Secret `F89XOoMXgsWGdESsYn61PHcAa7Q`.
+2. **Live MCP Connection Verification**:
+   - Reconnected MCP host environment in Antigravity.
+   - MCP schema directory created at `C:\Users\ritam\.gemini\antigravity\mcp\cloudinary-asset-mgmt` with 23 tools registered (including `upload-asset`, `list-images`, `search-assets`, `get-usage-details`).
+   - Executed live `call_mcp_tool` (`get-usage-details`): Succeeded with `200 OK`, returning active Free plan status.
+
+### Current State
+Cloudinary MCP server is fully configured, connected, and functional inside Antigravity.
+
+### Next Agent Instructions
+1. When the user provides local image folders or assets, use `call_mcp_tool` with `ServerName: "cloudinary-asset-mgmt"` and `ToolName: "upload-asset"` (or batch script) to upload and link into `src/lib/clubsData.ts`.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-17 — Deployment to Remote GitHub Repository (techno-sahotsava/2026-static-site)
 
 ### Objective
@@ -1902,6 +1948,29 @@ Integrate the video from `https://www.instagram.com/p/DaqR3Niyy2L/?hl=en` (the o
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-19 — Cloudinary MCP Server: Setup & Live Verification
+
+### Objective
+Configure the Cloudinary MCP server in Antigravity so that the assistant can interact with Cloudinary, upload media assets, and integrate optimized asset URLs into the website.
+
+### Changes Made
+1. **Antigravity Global MCP Configuration**:
+   - Registered `cloudinary-asset-mgmt` in `C:\Users\ritam\.gemini\config\mcp_config.json` with `@cloudinary/asset-management` package via `npx`.
+   - Wired cloud credentials: Cloud Name `lsyjstbv`, API Key `379457525466968`, API Secret `F89XOoMXgsWGdESsYn61PHcAa7Q`.
+2. **Live MCP Connection Verification**:
+   - Reconnected MCP host environment in Antigravity.
+   - MCP schema directory created at `C:\Users\ritam\.gemini\antigravity\mcp\cloudinary-asset-mgmt` with 23 tools registered (including `upload-asset`, `list-images`, `search-assets`, `get-usage-details`).
+   - Executed live `call_mcp_tool` (`get-usage-details`): Succeeded with `200 OK`, returning active Free plan status.
+
+### Current State
+Cloudinary MCP server is fully configured, connected, and functional inside Antigravity.
+
+### Next Agent Instructions
+1. When the user provides local image folders or assets, use `call_mcp_tool` with `ServerName: "cloudinary-asset-mgmt"` and `ToolName: "upload-asset"` (or batch script) to upload and link into `src/lib/clubsData.ts`.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-17 — Deployment to Remote GitHub Repository (techno-sahotsava/2026-static-site)
 
 ### Objective
@@ -2508,6 +2577,29 @@ Rotate the background video 90 degrees so it is right-side up, and eliminate ver
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-19 — Cloudinary MCP Server: Setup & Live Verification
+
+### Objective
+Configure the Cloudinary MCP server in Antigravity so that the assistant can interact with Cloudinary, upload media assets, and integrate optimized asset URLs into the website.
+
+### Changes Made
+1. **Antigravity Global MCP Configuration**:
+   - Registered `cloudinary-asset-mgmt` in `C:\Users\ritam\.gemini\config\mcp_config.json` with `@cloudinary/asset-management` package via `npx`.
+   - Wired cloud credentials: Cloud Name `lsyjstbv`, API Key `379457525466968`, API Secret `F89XOoMXgsWGdESsYn61PHcAa7Q`.
+2. **Live MCP Connection Verification**:
+   - Reconnected MCP host environment in Antigravity.
+   - MCP schema directory created at `C:\Users\ritam\.gemini\antigravity\mcp\cloudinary-asset-mgmt` with 23 tools registered (including `upload-asset`, `list-images`, `search-assets`, `get-usage-details`).
+   - Executed live `call_mcp_tool` (`get-usage-details`): Succeeded with `200 OK`, returning active Free plan status.
+
+### Current State
+Cloudinary MCP server is fully configured, connected, and functional inside Antigravity.
+
+### Next Agent Instructions
+1. When the user provides local image folders or assets, use `call_mcp_tool` with `ServerName: "cloudinary-asset-mgmt"` and `ToolName: "upload-asset"` (or batch script) to upload and link into `src/lib/clubsData.ts`.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-17 — Deployment to Remote GitHub Repository (techno-sahotsava/2026-static-site)
 
 ### Objective
@@ -3086,6 +3178,29 @@ Rotate the background video 180 degrees per user instruction to invert the orien
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-19 — Cloudinary MCP Server: Setup & Live Verification
+
+### Objective
+Configure the Cloudinary MCP server in Antigravity so that the assistant can interact with Cloudinary, upload media assets, and integrate optimized asset URLs into the website.
+
+### Changes Made
+1. **Antigravity Global MCP Configuration**:
+   - Registered `cloudinary-asset-mgmt` in `C:\Users\ritam\.gemini\config\mcp_config.json` with `@cloudinary/asset-management` package via `npx`.
+   - Wired cloud credentials: Cloud Name `lsyjstbv`, API Key `379457525466968`, API Secret `F89XOoMXgsWGdESsYn61PHcAa7Q`.
+2. **Live MCP Connection Verification**:
+   - Reconnected MCP host environment in Antigravity.
+   - MCP schema directory created at `C:\Users\ritam\.gemini\antigravity\mcp\cloudinary-asset-mgmt` with 23 tools registered (including `upload-asset`, `list-images`, `search-assets`, `get-usage-details`).
+   - Executed live `call_mcp_tool` (`get-usage-details`): Succeeded with `200 OK`, returning active Free plan status.
+
+### Current State
+Cloudinary MCP server is fully configured, connected, and functional inside Antigravity.
+
+### Next Agent Instructions
+1. When the user provides local image folders or assets, use `call_mcp_tool` with `ServerName: "cloudinary-asset-mgmt"` and `ToolName: "upload-asset"` (or batch script) to upload and link into `src/lib/clubsData.ts`.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-17 — Deployment to Remote GitHub Repository (techno-sahotsava/2026-static-site)
 
 ### Objective
@@ -3640,6 +3755,29 @@ Remove the "Google Developer Group Kolkata" logo from the top-left of the hero s
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-19 — Cloudinary MCP Server: Setup & Live Verification
+
+### Objective
+Configure the Cloudinary MCP server in Antigravity so that the assistant can interact with Cloudinary, upload media assets, and integrate optimized asset URLs into the website.
+
+### Changes Made
+1. **Antigravity Global MCP Configuration**:
+   - Registered `cloudinary-asset-mgmt` in `C:\Users\ritam\.gemini\config\mcp_config.json` with `@cloudinary/asset-management` package via `npx`.
+   - Wired cloud credentials: Cloud Name `lsyjstbv`, API Key `379457525466968`, API Secret `F89XOoMXgsWGdESsYn61PHcAa7Q`.
+2. **Live MCP Connection Verification**:
+   - Reconnected MCP host environment in Antigravity.
+   - MCP schema directory created at `C:\Users\ritam\.gemini\antigravity\mcp\cloudinary-asset-mgmt` with 23 tools registered (including `upload-asset`, `list-images`, `search-assets`, `get-usage-details`).
+   - Executed live `call_mcp_tool` (`get-usage-details`): Succeeded with `200 OK`, returning active Free plan status.
+
+### Current State
+Cloudinary MCP server is fully configured, connected, and functional inside Antigravity.
+
+### Next Agent Instructions
+1. When the user provides local image folders or assets, use `call_mcp_tool` with `ServerName: "cloudinary-asset-mgmt"` and `ToolName: "upload-asset"` (or batch script) to upload and link into `src/lib/clubsData.ts`.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-17 — Deployment to Remote GitHub Repository (techno-sahotsava/2026-static-site)
 
 ### Objective
@@ -4170,6 +4308,29 @@ Implement the DevFest Kolkata "card up" bottom sheet reveal animation (matching 
 ---
 
 # Agent Handoff Log — tracker.md
+
+## 2026-11-19 — Cloudinary MCP Server: Setup & Live Verification
+
+### Objective
+Configure the Cloudinary MCP server in Antigravity so that the assistant can interact with Cloudinary, upload media assets, and integrate optimized asset URLs into the website.
+
+### Changes Made
+1. **Antigravity Global MCP Configuration**:
+   - Registered `cloudinary-asset-mgmt` in `C:\Users\ritam\.gemini\config\mcp_config.json` with `@cloudinary/asset-management` package via `npx`.
+   - Wired cloud credentials: Cloud Name `lsyjstbv`, API Key `379457525466968`, API Secret `F89XOoMXgsWGdESsYn61PHcAa7Q`.
+2. **Live MCP Connection Verification**:
+   - Reconnected MCP host environment in Antigravity.
+   - MCP schema directory created at `C:\Users\ritam\.gemini\antigravity\mcp\cloudinary-asset-mgmt` with 23 tools registered (including `upload-asset`, `list-images`, `search-assets`, `get-usage-details`).
+   - Executed live `call_mcp_tool` (`get-usage-details`): Succeeded with `200 OK`, returning active Free plan status.
+
+### Current State
+Cloudinary MCP server is fully configured, connected, and functional inside Antigravity.
+
+### Next Agent Instructions
+1. When the user provides local image folders or assets, use `call_mcp_tool` with `ServerName: "cloudinary-asset-mgmt"` and `ToolName: "upload-asset"` (or batch script) to upload and link into `src/lib/clubsData.ts`.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
 
 ## 2026-11-17 — Deployment to Remote GitHub Repository (techno-sahotsava/2026-static-site)
 
@@ -4716,6 +4877,29 @@ Implement the DevFest Kolkata "card up" bottom sheet reveal animation (matching 
 ---
 
 # Agent Handoff Log — tracker.md
+
+## 2026-11-19 — Cloudinary MCP Server: Setup & Live Verification
+
+### Objective
+Configure the Cloudinary MCP server in Antigravity so that the assistant can interact with Cloudinary, upload media assets, and integrate optimized asset URLs into the website.
+
+### Changes Made
+1. **Antigravity Global MCP Configuration**:
+   - Registered `cloudinary-asset-mgmt` in `C:\Users\ritam\.gemini\config\mcp_config.json` with `@cloudinary/asset-management` package via `npx`.
+   - Wired cloud credentials: Cloud Name `lsyjstbv`, API Key `379457525466968`, API Secret `F89XOoMXgsWGdESsYn61PHcAa7Q`.
+2. **Live MCP Connection Verification**:
+   - Reconnected MCP host environment in Antigravity.
+   - MCP schema directory created at `C:\Users\ritam\.gemini\antigravity\mcp\cloudinary-asset-mgmt` with 23 tools registered (including `upload-asset`, `list-images`, `search-assets`, `get-usage-details`).
+   - Executed live `call_mcp_tool` (`get-usage-details`): Succeeded with `200 OK`, returning active Free plan status.
+
+### Current State
+Cloudinary MCP server is fully configured, connected, and functional inside Antigravity.
+
+### Next Agent Instructions
+1. When the user provides local image folders or assets, use `call_mcp_tool` with `ServerName: "cloudinary-asset-mgmt"` and `ToolName: "upload-asset"` (or batch script) to upload and link into `src/lib/clubsData.ts`.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
 
 ## 2026-11-17 — Deployment to Remote GitHub Repository (techno-sahotsava/2026-static-site)
 
@@ -5403,6 +5587,29 @@ Integrate the video from `https://www.instagram.com/p/DaqR3Niyy2L/?hl=en` (the o
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-19 — Cloudinary MCP Server: Setup & Live Verification
+
+### Objective
+Configure the Cloudinary MCP server in Antigravity so that the assistant can interact with Cloudinary, upload media assets, and integrate optimized asset URLs into the website.
+
+### Changes Made
+1. **Antigravity Global MCP Configuration**:
+   - Registered `cloudinary-asset-mgmt` in `C:\Users\ritam\.gemini\config\mcp_config.json` with `@cloudinary/asset-management` package via `npx`.
+   - Wired cloud credentials: Cloud Name `lsyjstbv`, API Key `379457525466968`, API Secret `F89XOoMXgsWGdESsYn61PHcAa7Q`.
+2. **Live MCP Connection Verification**:
+   - Reconnected MCP host environment in Antigravity.
+   - MCP schema directory created at `C:\Users\ritam\.gemini\antigravity\mcp\cloudinary-asset-mgmt` with 23 tools registered (including `upload-asset`, `list-images`, `search-assets`, `get-usage-details`).
+   - Executed live `call_mcp_tool` (`get-usage-details`): Succeeded with `200 OK`, returning active Free plan status.
+
+### Current State
+Cloudinary MCP server is fully configured, connected, and functional inside Antigravity.
+
+### Next Agent Instructions
+1. When the user provides local image folders or assets, use `call_mcp_tool` with `ServerName: "cloudinary-asset-mgmt"` and `ToolName: "upload-asset"` (or batch script) to upload and link into `src/lib/clubsData.ts`.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-17 — Deployment to Remote GitHub Repository (techno-sahotsava/2026-static-site)
 
 ### Objective
@@ -6042,6 +6249,29 @@ Integrate the video from `https://www.instagram.com/p/DaqR3Niyy2L/?hl=en` (the o
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-19 — Cloudinary MCP Server: Setup & Live Verification
+
+### Objective
+Configure the Cloudinary MCP server in Antigravity so that the assistant can interact with Cloudinary, upload media assets, and integrate optimized asset URLs into the website.
+
+### Changes Made
+1. **Antigravity Global MCP Configuration**:
+   - Registered `cloudinary-asset-mgmt` in `C:\Users\ritam\.gemini\config\mcp_config.json` with `@cloudinary/asset-management` package via `npx`.
+   - Wired cloud credentials: Cloud Name `lsyjstbv`, API Key `379457525466968`, API Secret `F89XOoMXgsWGdESsYn61PHcAa7Q`.
+2. **Live MCP Connection Verification**:
+   - Reconnected MCP host environment in Antigravity.
+   - MCP schema directory created at `C:\Users\ritam\.gemini\antigravity\mcp\cloudinary-asset-mgmt` with 23 tools registered (including `upload-asset`, `list-images`, `search-assets`, `get-usage-details`).
+   - Executed live `call_mcp_tool` (`get-usage-details`): Succeeded with `200 OK`, returning active Free plan status.
+
+### Current State
+Cloudinary MCP server is fully configured, connected, and functional inside Antigravity.
+
+### Next Agent Instructions
+1. When the user provides local image folders or assets, use `call_mcp_tool` with `ServerName: "cloudinary-asset-mgmt"` and `ToolName: "upload-asset"` (or batch script) to upload and link into `src/lib/clubsData.ts`.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-17 — Deployment to Remote GitHub Repository (techno-sahotsava/2026-static-site)
 
 ### Objective
@@ -6648,6 +6878,29 @@ Rotate the background video 90 degrees so it is right-side up, and eliminate ver
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-19 — Cloudinary MCP Server: Setup & Live Verification
+
+### Objective
+Configure the Cloudinary MCP server in Antigravity so that the assistant can interact with Cloudinary, upload media assets, and integrate optimized asset URLs into the website.
+
+### Changes Made
+1. **Antigravity Global MCP Configuration**:
+   - Registered `cloudinary-asset-mgmt` in `C:\Users\ritam\.gemini\config\mcp_config.json` with `@cloudinary/asset-management` package via `npx`.
+   - Wired cloud credentials: Cloud Name `lsyjstbv`, API Key `379457525466968`, API Secret `F89XOoMXgsWGdESsYn61PHcAa7Q`.
+2. **Live MCP Connection Verification**:
+   - Reconnected MCP host environment in Antigravity.
+   - MCP schema directory created at `C:\Users\ritam\.gemini\antigravity\mcp\cloudinary-asset-mgmt` with 23 tools registered (including `upload-asset`, `list-images`, `search-assets`, `get-usage-details`).
+   - Executed live `call_mcp_tool` (`get-usage-details`): Succeeded with `200 OK`, returning active Free plan status.
+
+### Current State
+Cloudinary MCP server is fully configured, connected, and functional inside Antigravity.
+
+### Next Agent Instructions
+1. When the user provides local image folders or assets, use `call_mcp_tool` with `ServerName: "cloudinary-asset-mgmt"` and `ToolName: "upload-asset"` (or batch script) to upload and link into `src/lib/clubsData.ts`.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-17 — Deployment to Remote GitHub Repository (techno-sahotsava/2026-static-site)
 
 ### Objective
@@ -7226,6 +7479,29 @@ Rotate the background video 180 degrees per user instruction to invert the orien
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-19 — Cloudinary MCP Server: Setup & Live Verification
+
+### Objective
+Configure the Cloudinary MCP server in Antigravity so that the assistant can interact with Cloudinary, upload media assets, and integrate optimized asset URLs into the website.
+
+### Changes Made
+1. **Antigravity Global MCP Configuration**:
+   - Registered `cloudinary-asset-mgmt` in `C:\Users\ritam\.gemini\config\mcp_config.json` with `@cloudinary/asset-management` package via `npx`.
+   - Wired cloud credentials: Cloud Name `lsyjstbv`, API Key `379457525466968`, API Secret `F89XOoMXgsWGdESsYn61PHcAa7Q`.
+2. **Live MCP Connection Verification**:
+   - Reconnected MCP host environment in Antigravity.
+   - MCP schema directory created at `C:\Users\ritam\.gemini\antigravity\mcp\cloudinary-asset-mgmt` with 23 tools registered (including `upload-asset`, `list-images`, `search-assets`, `get-usage-details`).
+   - Executed live `call_mcp_tool` (`get-usage-details`): Succeeded with `200 OK`, returning active Free plan status.
+
+### Current State
+Cloudinary MCP server is fully configured, connected, and functional inside Antigravity.
+
+### Next Agent Instructions
+1. When the user provides local image folders or assets, use `call_mcp_tool` with `ServerName: "cloudinary-asset-mgmt"` and `ToolName: "upload-asset"` (or batch script) to upload and link into `src/lib/clubsData.ts`.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-17 — Deployment to Remote GitHub Repository (techno-sahotsava/2026-static-site)
 
 ### Objective
@@ -7780,6 +8056,29 @@ Remove the "Google Developer Group Kolkata" logo from the top-left of the hero s
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-19 — Cloudinary MCP Server: Setup & Live Verification
+
+### Objective
+Configure the Cloudinary MCP server in Antigravity so that the assistant can interact with Cloudinary, upload media assets, and integrate optimized asset URLs into the website.
+
+### Changes Made
+1. **Antigravity Global MCP Configuration**:
+   - Registered `cloudinary-asset-mgmt` in `C:\Users\ritam\.gemini\config\mcp_config.json` with `@cloudinary/asset-management` package via `npx`.
+   - Wired cloud credentials: Cloud Name `lsyjstbv`, API Key `379457525466968`, API Secret `F89XOoMXgsWGdESsYn61PHcAa7Q`.
+2. **Live MCP Connection Verification**:
+   - Reconnected MCP host environment in Antigravity.
+   - MCP schema directory created at `C:\Users\ritam\.gemini\antigravity\mcp\cloudinary-asset-mgmt` with 23 tools registered (including `upload-asset`, `list-images`, `search-assets`, `get-usage-details`).
+   - Executed live `call_mcp_tool` (`get-usage-details`): Succeeded with `200 OK`, returning active Free plan status.
+
+### Current State
+Cloudinary MCP server is fully configured, connected, and functional inside Antigravity.
+
+### Next Agent Instructions
+1. When the user provides local image folders or assets, use `call_mcp_tool` with `ServerName: "cloudinary-asset-mgmt"` and `ToolName: "upload-asset"` (or batch script) to upload and link into `src/lib/clubsData.ts`.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-17 — Deployment to Remote GitHub Repository (techno-sahotsava/2026-static-site)
 
 ### Objective
@@ -8310,6 +8609,29 @@ Implement the DevFest Kolkata "card up" bottom sheet reveal animation (matching 
 ---
 
 # Agent Handoff Log — tracker.md
+
+## 2026-11-19 — Cloudinary MCP Server: Setup & Live Verification
+
+### Objective
+Configure the Cloudinary MCP server in Antigravity so that the assistant can interact with Cloudinary, upload media assets, and integrate optimized asset URLs into the website.
+
+### Changes Made
+1. **Antigravity Global MCP Configuration**:
+   - Registered `cloudinary-asset-mgmt` in `C:\Users\ritam\.gemini\config\mcp_config.json` with `@cloudinary/asset-management` package via `npx`.
+   - Wired cloud credentials: Cloud Name `lsyjstbv`, API Key `379457525466968`, API Secret `F89XOoMXgsWGdESsYn61PHcAa7Q`.
+2. **Live MCP Connection Verification**:
+   - Reconnected MCP host environment in Antigravity.
+   - MCP schema directory created at `C:\Users\ritam\.gemini\antigravity\mcp\cloudinary-asset-mgmt` with 23 tools registered (including `upload-asset`, `list-images`, `search-assets`, `get-usage-details`).
+   - Executed live `call_mcp_tool` (`get-usage-details`): Succeeded with `200 OK`, returning active Free plan status.
+
+### Current State
+Cloudinary MCP server is fully configured, connected, and functional inside Antigravity.
+
+### Next Agent Instructions
+1. When the user provides local image folders or assets, use `call_mcp_tool` with `ServerName: "cloudinary-asset-mgmt"` and `ToolName: "upload-asset"` (or batch script) to upload and link into `src/lib/clubsData.ts`.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
 
 ## 2026-11-17 — Deployment to Remote GitHub Repository (techno-sahotsava/2026-static-site)
 
