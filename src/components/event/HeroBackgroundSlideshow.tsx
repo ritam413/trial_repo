@@ -1,279 +1,199 @@
 "use client";
 
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
-import { HERO_SLIDES, HeroSlide } from "@/lib/heroSlideshowData";
+import { HERO_SLIDES } from "@/lib/heroSlideshowData";
 
 /* ==========================================================================
    SLIDESHOW TIMING & ANIMATION CONFIGURATION
-   (Constant timer for all images & constant zoom animation speed)
    ========================================================================== */
 export const SLIDESHOW_CONFIG = {
   // ⏱️ CONSTANT TIMER FOR ALL IMAGES ON SCREEN (in milliseconds)
-  // Every single image stays on screen for this exact constant duration:
-  SLIDE_DURATION_MS: 1500, // 👈 CONSTANT TIMER: 1.5s (Change to 1000 for 1s, 2000 for 2s, etc.)
-  FIXED_DURATION_MS: 1500 as number | null,
-  MIN_DURATION_MS: 1200,
-  MAX_DURATION_MS: 1800,
-  TRANSITION_DURATION_S: 0.8, // 👈 Constant transition duration for fluid cross-fade
+  SLIDE_DURATION_MS: 1500, // 👈 Exact constant duration every image remains on screen (1.5s)
+  TRANSITION_DURATION_S: 0.85, // 👈 Constant smooth cross-fade duration
 
-  // 🌓 GRADUAL OPACITY TRANSITION PARAMETERS (Current decreases, Next: 30% -> 100%)
-  INCOMING_INITIAL_OPACITY: 0.3, // 👈 Starts gradually from 30% (0.3)
-  INCOMING_TARGET_OPACITY: 1.0,  // 👈 Ramps up smoothly to 100% (1.0)
+  // 🌓 GRADUAL OPACITY (Current decreases, Next: 30% -> 100%)
+  INCOMING_INITIAL_OPACITY: 0.3,
+  INCOMING_TARGET_OPACITY: 1.0,
 
-  // 🔍 ZOOM CONFIGURATION (Zero shift, pure forward zoom-in, never zooms out)
-  ZOOM_BASE_SCALE: 1.0,   // Base scale when image appears
-  ZOOM_MAX_SCALE: 1.10,   // Maximum scale reached during its constant screen time
-  PARALLAX_MAX_PX: 20,    // Max pixel shift following cursor movement
+  // 🔍 PURE ZOOM-IN ONLY (Zero shifting, never zooms out)
+  ZOOM_BASE_SCALE: 1.0,
+  ZOOM_MAX_SCALE: 1.10,
+  PARALLAX_MAX_PX: 20,
 };
-
-export type TransitionType = "dissolve" | "burn" | "fade" | "zoom-dissolve";
-const TRANSITIONS: TransitionType[] = ["dissolve", "burn", "fade", "zoom-dissolve"];
-
-interface SlideState {
-  currentIdx: number;
-  nextIdx: number;
-}
 
 export default function HeroBackgroundSlideshow({ isVisible = true }: { isVisible?: boolean }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const parallaxRef = useRef<HTMLDivElement>(null);
   const layerARef = useRef<HTMLDivElement>(null);
   const layerBRef = useRef<HTMLDivElement>(null);
+  const imgARef = useRef<HTMLImageElement>(null);
+  const imgBRef = useRef<HTMLImageElement>(null);
   const burnOverlayRef = useRef<HTMLDivElement>(null);
 
-  // Active layer tracker: 0 = Layer A is front, 1 = Layer B is front
-  const activeLayerRef = useRef<0 | 1>(0);
-  const isTransitioningRef = useRef(false);
+  // Strictly ref-based state machine (prevents React re-renders from restarting timers/tweens)
+  const activeLayerRef = useRef<0 | 1>(0); // 0 = Layer A is active, 1 = Layer B is active
+  const slideIdxRef = useRef<number>(0);
+  const isTransitioningRef = useRef<boolean>(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-  const [slideState, setSlideState] = useState<SlideState>({
-    currentIdx: 0,
-    nextIdx: 1,
-  });
-
-  // Preload upcoming slides into memory
-  const preloadSlide = useCallback((idx: number) => {
-    if (typeof window === "undefined" || !HERO_SLIDES.length) return;
-    const targetIdx = (idx + HERO_SLIDES.length) % HERO_SLIDES.length;
-    const img = new Image();
-    img.src = HERO_SLIDES[targetIdx].url;
-  }, []);
-
-  // Pick a random transition effect
-  const getRandomTransition = useCallback((): TransitionType => {
-    const r = Math.floor(Math.random() * TRANSITIONS.length);
-    return TRANSITIONS[r];
-  }, []);
-
-  // Execute pure monotonic forward zoom on active image (Constant speed, Zero shifting, Never zooms out)
-  const startKenBurnsZoom = useCallback((element: HTMLDivElement | null) => {
-    if (!element) return;
-    const img = element.querySelector("img");
-    if (!img) return;
-
-    const startScale = SLIDESHOW_CONFIG.ZOOM_BASE_SCALE; // 1.0
-    const targetScale = SLIDESHOW_CONFIG.ZOOM_MAX_SCALE;  // 1.10
-    // Constant animation duration matching the exact constant slide duration
-    const constantAnimDuration =
-      SLIDESHOW_CONFIG.SLIDE_DURATION_MS / 1000 + SLIDESHOW_CONFIG.TRANSITION_DURATION_S;
-
-    gsap.killTweensOf(img);
-    gsap.fromTo(
-      img,
-      { scale: startScale, x: "0%", y: "0%", transformOrigin: "center center" },
-      {
-        scale: targetScale,
-        x: "0%",
-        y: "0%",
-        duration: constantAnimDuration,
-        ease: "sine.out",
-      }
-    );
-  }, []);
-
-  // Execute transition from active layer to incoming layer
-  const executeTransition = useCallback(() => {
-    if (isTransitioningRef.current || !isVisible) return;
-    isTransitioningRef.current = true;
-
-    const currentLayer = activeLayerRef.current === 0 ? layerARef.current : layerBRef.current;
-    const incomingLayer = activeLayerRef.current === 0 ? layerBRef.current : layerARef.current;
-    const burnOverlay = burnOverlayRef.current;
-
-    if (!currentLayer || !incomingLayer) {
-      isTransitioningRef.current = false;
-      return;
-    }
-
-    const nextSlideIdx = (slideState.currentIdx + 1) % HERO_SLIDES.length;
-    preloadSlide(nextSlideIdx + 1);
-
-    const transition = getRandomTransition();
-
-    const prefersReducedMotion =
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    // Bring incoming layer on top
-    incomingLayer.style.zIndex = "2";
-    currentLayer.style.zIndex = "1";
-
-    const onCompleteTransition = () => {
-      // Swap layer pointer
-      activeLayerRef.current = activeLayerRef.current === 0 ? 1 : 0;
-      isTransitioningRef.current = false;
-
-      // Update state for next cycle
-      setSlideState({
-        currentIdx: nextSlideIdx,
-        nextIdx: (nextSlideIdx + 1) % HERO_SLIDES.length,
-      });
-
-      // ⏱️ CONSTANT TIMER FOR ALL IMAGES: schedule next image after exact constant duration
-      timerRef.current = setTimeout(executeTransition, SLIDESHOW_CONFIG.SLIDE_DURATION_MS);
-    };
-
-    // Trigger pure monotonic zoom-in on incoming layer with constant animation speed (never zooms out)
-    if (!prefersReducedMotion) {
-      startKenBurnsZoom(incomingLayer);
-    }
-
-    if (prefersReducedMotion) {
-      // Accessible crossfade: current fades to 0, incoming ramps 30% -> 100%
-      gsap.fromTo(
-        incomingLayer,
-        { autoAlpha: SLIDESHOW_CONFIG.INCOMING_INITIAL_OPACITY },
-        { autoAlpha: SLIDESHOW_CONFIG.INCOMING_TARGET_OPACITY, duration: 1.2, ease: "power1.inOut" }
-      );
-      gsap.to(currentLayer, {
-        autoAlpha: 0,
-        duration: 1.2,
-        ease: "power1.inOut",
-        onComplete: onCompleteTransition,
-      });
-      return;
-    }
-
-    switch (transition) {
-      case "burn": {
-        // Film Burn / Light Leak Exposure Bloom with 30% -> 100% incoming sweep
-        const tl = gsap.timeline({ onComplete: onCompleteTransition });
-
-        if (burnOverlay) {
-          tl.to(burnOverlay, {
-            autoAlpha: 0.92,
-            duration: 0.35,
-            ease: "power2.in",
-          });
-        }
-
-        // Mid-flare switch: current layer decreases, incoming starts at 30% and blooms to 100%
-        tl.fromTo(
-          incomingLayer,
-          { autoAlpha: SLIDESHOW_CONFIG.INCOMING_INITIAL_OPACITY },
-          { autoAlpha: SLIDESHOW_CONFIG.INCOMING_TARGET_OPACITY, duration: 0.65, ease: "power2.out" },
-          "-=0.12"
-        ).to(currentLayer, { autoAlpha: 0, duration: 0.35, ease: "power2.out" }, "<");
-
-        if (burnOverlay) {
-          tl.to(burnOverlay, {
-            autoAlpha: 0,
-            duration: 0.65,
-            ease: "power3.out",
-          });
-        }
-        break;
-      }
-
-      case "fade": {
-        // Dark Shutter Cinematic Dip: Current fades out, incoming rises from 30% -> 100%
-        const tl = gsap.timeline({ onComplete: onCompleteTransition });
-        tl.to(currentLayer, {
-          autoAlpha: 0,
-          duration: 0.75,
-          ease: "power2.in",
-        });
-        tl.fromTo(
-          incomingLayer,
-          { autoAlpha: SLIDESHOW_CONFIG.INCOMING_INITIAL_OPACITY },
-          { autoAlpha: SLIDESHOW_CONFIG.INCOMING_TARGET_OPACITY, duration: SLIDESHOW_CONFIG.TRANSITION_DURATION_S, ease: "power2.out" },
-          "-=0.2"
-        );
-        break;
-      }
-
-      case "zoom-dissolve": {
-        // Optical Zoom Rack Push with 30% -> 100% incoming ramp
-        const tl = gsap.timeline({ onComplete: onCompleteTransition });
-        tl.to(currentLayer, {
-          autoAlpha: 0,
-          duration: SLIDESHOW_CONFIG.TRANSITION_DURATION_S,
-          ease: "power2.inOut",
-        });
-        tl.fromTo(
-          incomingLayer,
-          { autoAlpha: SLIDESHOW_CONFIG.INCOMING_INITIAL_OPACITY },
-          { autoAlpha: SLIDESHOW_CONFIG.INCOMING_TARGET_OPACITY, duration: SLIDESHOW_CONFIG.TRANSITION_DURATION_S, ease: "power2.out" },
-          "<"
-        );
-        break;
-      }
-
-      case "dissolve":
-      default: {
-        // Velvety Soft Cross-Dissolve: Current decreases, incoming ramps from 30% to 100%
-        const tl = gsap.timeline({ onComplete: onCompleteTransition });
-        tl.to(currentLayer, {
-          autoAlpha: 0,
-          duration: SLIDESHOW_CONFIG.TRANSITION_DURATION_S,
-          ease: "power2.inOut",
-        });
-        tl.fromTo(
-          incomingLayer,
-          { autoAlpha: SLIDESHOW_CONFIG.INCOMING_INITIAL_OPACITY },
-          { autoAlpha: SLIDESHOW_CONFIG.INCOMING_TARGET_OPACITY, duration: SLIDESHOW_CONFIG.TRANSITION_DURATION_S, ease: "power2.out" },
-          "<"
-        );
-        break;
-      }
-    }
-  }, [getRandomTransition, isVisible, preloadSlide, slideState.currentIdx, startKenBurnsZoom]);
-
-  // Initial mount & kick-off
   useEffect(() => {
     if (!isVisible || !HERO_SLIDES.length) return;
 
-    if (layerARef.current) {
-      gsap.set(layerARef.current, { autoAlpha: 1, zIndex: 1 });
-      startKenBurnsZoom(layerARef.current);
-    }
-    if (layerBRef.current) {
-      gsap.set(layerBRef.current, { autoAlpha: 0, zIndex: 0 });
-    }
-    if (burnOverlayRef.current) {
-      gsap.set(burnOverlayRef.current, { autoAlpha: 0 });
-    }
+    const layerA = layerARef.current;
+    const layerB = layerBRef.current;
+    const imgA = imgARef.current;
+    const imgB = imgBRef.current;
+    const burnOverlay = burnOverlayRef.current;
 
-    preloadSlide(1);
-    preloadSlide(2);
+    if (!layerA || !layerB || !imgA || !imgB) return;
 
-    // Initial delay before first transition (strictly constant timer for every image)
-    timerRef.current = setTimeout(executeTransition, SLIDESHOW_CONFIG.SLIDE_DURATION_MS);
+    // Preload helper
+    const preload = (idx: number) => {
+      const target = (idx + HERO_SLIDES.length) % HERO_SLIDES.length;
+      const pre = new Image();
+      pre.src = HERO_SLIDES[target].url;
+    };
+
+    // Calculate total animation duration for constant forward zoom
+    const totalZoomDuration =
+      SLIDESHOW_CONFIG.SLIDE_DURATION_MS / 1000 + SLIDESHOW_CONFIG.TRANSITION_DURATION_S;
+
+    // Helper: start continuous forward zoom on an image (NEVER ZOOMS OUT)
+    const startForwardZoom = (img: HTMLImageElement) => {
+      gsap.killTweensOf(img);
+      gsap.fromTo(
+        img,
+        { scale: SLIDESHOW_CONFIG.ZOOM_BASE_SCALE, x: 0, y: 0, transformOrigin: "center center" },
+        {
+          scale: SLIDESHOW_CONFIG.ZOOM_MAX_SCALE,
+          x: 0,
+          y: 0,
+          duration: totalZoomDuration,
+          ease: "linear",
+        }
+      );
+    };
+
+    // Initial setup: Layer A active with slide 0, Layer B hidden with slide 1
+    activeLayerRef.current = 0;
+    slideIdxRef.current = 0;
+    isTransitioningRef.current = false;
+
+    imgA.src = HERO_SLIDES[0].url;
+    imgB.src = HERO_SLIDES[1 % HERO_SLIDES.length].url;
+
+    gsap.set(layerA, { autoAlpha: 1, zIndex: 1 });
+    gsap.set(layerB, { autoAlpha: 0, zIndex: 0 });
+    if (burnOverlay) gsap.set(burnOverlay, { autoAlpha: 0 });
+
+    startForwardZoom(imgA);
+    preload(1);
+    preload(2);
+
+    // Step Transition: swaps between Layer A and Layer B without DOM rebuilds
+    const stepTransition = () => {
+      if (isTransitioningRef.current) return;
+      isTransitioningRef.current = true;
+
+      const isAActive = activeLayerRef.current === 0;
+      const outgoingLayer = isAActive ? layerA : layerB;
+      const incomingLayer = isAActive ? layerB : layerA;
+      const outgoingImg = isAActive ? imgA : imgB;
+      const incomingImg = isAActive ? imgB : imgA;
+
+      const nextSlideIdx = (slideIdxRef.current + 1) % HERO_SLIDES.length;
+      incomingImg.src = HERO_SLIDES[nextSlideIdx].url;
+      preload((nextSlideIdx + 1) % HERO_SLIDES.length);
+
+      // Layer stacking: incoming is on top so outgoing is visible underneath during fade
+      incomingLayer.style.zIndex = "2";
+      outgoingLayer.style.zIndex = "1";
+
+      // Start incoming image zoom immediately from base scale 1.00 (monotonically zooming forward)
+      startForwardZoom(incomingImg);
+
+      const prefersReducedMotion =
+        typeof window !== "undefined" &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      const onTransitionComplete = () => {
+        // Toggle active layer pointer
+        activeLayerRef.current = isAActive ? 1 : 0;
+        slideIdxRef.current = nextSlideIdx;
+        isTransitioningRef.current = false;
+
+        // Reset outgoing layer
+        gsap.set(outgoingLayer, { autoAlpha: 0, zIndex: 0 });
+        gsap.killTweensOf(outgoingImg);
+
+        // Schedule next image after the constant slide duration
+        timerRef.current = setTimeout(stepTransition, SLIDESHOW_CONFIG.SLIDE_DURATION_MS);
+      };
+
+      if (prefersReducedMotion) {
+        gsap.to(outgoingLayer, { autoAlpha: 0, duration: 0.8, ease: "power1.inOut" });
+        gsap.fromTo(
+          incomingLayer,
+          { autoAlpha: SLIDESHOW_CONFIG.INCOMING_INITIAL_OPACITY },
+          {
+            autoAlpha: SLIDESHOW_CONFIG.INCOMING_TARGET_OPACITY,
+            duration: 0.8,
+            ease: "power1.inOut",
+            onComplete: onTransitionComplete,
+          }
+        );
+        return;
+      }
+
+      // Synchronized Cross-Dissolve: Outgoing fades down, incoming rises 30% -> 100%
+      const tl = gsap.timeline({ onComplete: onTransitionComplete });
+
+      // Outgoing layer fades down smoothly
+      tl.to(
+        outgoingLayer,
+        {
+          autoAlpha: 0,
+          duration: SLIDESHOW_CONFIG.TRANSITION_DURATION_S,
+          ease: "power2.inOut",
+        },
+        0
+      );
+
+      // Incoming layer rises from 30% to 100% (No blackout: incoming is already at 30% when outgoing fades)
+      tl.fromTo(
+        incomingLayer,
+        { autoAlpha: SLIDESHOW_CONFIG.INCOMING_INITIAL_OPACITY },
+        {
+          autoAlpha: SLIDESHOW_CONFIG.INCOMING_TARGET_OPACITY,
+          duration: SLIDESHOW_CONFIG.TRANSITION_DURATION_S,
+          ease: "power2.out",
+        },
+        0
+      );
+    };
+
+    // Schedule first transition
+    timerRef.current = setTimeout(stepTransition, SLIDESHOW_CONFIG.SLIDE_DURATION_MS);
 
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current);
+      gsap.killTweensOf(layerA);
+      gsap.killTweensOf(layerB);
+      gsap.killTweensOf(imgA);
+      gsap.killTweensOf(imgB);
+      if (burnOverlay) gsap.killTweensOf(burnOverlay);
     };
-  }, [executeTransition, isVisible, preloadSlide, startKenBurnsZoom]);
+  }, [isVisible]);
 
-  // Mouse Parallax Interaction
+  // Mouse Parallax Interaction (Translates subtly with cursor)
   useEffect(() => {
     if (typeof window === "undefined") return;
 
     const handlePointerMove = (e: PointerEvent) => {
       if (!parallaxRef.current) return;
-      const nx = (e.clientX / window.innerWidth - 0.5) * 2; // -1 to 1
-      const ny = (e.clientY / window.innerHeight - 0.5) * 2; // -1 to 1
+      const nx = (e.clientX / window.innerWidth - 0.5) * 2;
+      const ny = (e.clientY / window.innerHeight - 0.5) * 2;
 
       gsap.to(parallaxRef.current, {
         x: nx * SLIDESHOW_CONFIG.PARALLAX_MAX_PX,
@@ -292,9 +212,6 @@ export default function HeroBackgroundSlideshow({ isVisible = true }: { isVisibl
 
   if (!HERO_SLIDES.length) return null;
 
-  const currentSlide = HERO_SLIDES[slideState.currentIdx];
-  const nextSlide = HERO_SLIDES[slideState.nextIdx];
-
   return (
     <div
       ref={containerRef}
@@ -312,7 +229,8 @@ export default function HeroBackgroundSlideshow({ isVisible = true }: { isVisibl
           className="absolute inset-0 w-full h-full will-change-transform will-change-opacity overflow-hidden"
         >
           <img
-            src={activeLayerRef.current === 0 ? currentSlide.url : nextSlide.url}
+            ref={imgARef}
+            src={HERO_SLIDES[0]?.url || ""}
             alt=""
             loading="eager"
             decoding="async"
@@ -326,7 +244,8 @@ export default function HeroBackgroundSlideshow({ isVisible = true }: { isVisibl
           className="absolute inset-0 w-full h-full will-change-transform will-change-opacity overflow-hidden"
         >
           <img
-            src={activeLayerRef.current === 1 ? currentSlide.url : nextSlide.url}
+            ref={imgBRef}
+            src={HERO_SLIDES[1]?.url || ""}
             alt=""
             loading="eager"
             decoding="async"

@@ -1,5 +1,36 @@
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Hero Slideshow: Zero-Rerender GSAP Engine (Fix Blackout & Out-of-Sync Zoom)
+
+### Objective
+Diagnose and permanently resolve the out-of-sync fade-in, blacking-out after transitions, and images repeatedly zooming in and out.
+
+### Root Cause Analysis
+1. **React State Cascade & Re-renders**: `HeroBackgroundSlideshow.tsx` was using React `useState` (`slideState`) to manage slide indices during transitions.
+2. **Spurious Effect Restarts**: Calling `setSlideState` in `onCompleteTransition` triggered a component re-render. Because `executeTransition` had `slideState.currentIdx` in its dependencies, it was re-instantiated, which in turn caused the mount `useEffect` (which had `executeTransition` in its dependency array) to fire on EVERY slide transition.
+3. **Timer Avalanche & Zoom Interruption**: Every time the effect re-fired, it force-reset Layer A to `autoAlpha: 1`, killed and restarted the Ken Burns zoom tween (causing images to snap back and zoom in/out multiple times), and created duplicate concurrent `setTimeout` threads. This caused the layers to cross-fade out of sync and reveal the underlying black background.
+
+### Changes Made
+1. **Architected Pure Ref-Based State Machine**:
+   - Replaced `useState` with refs: `activeLayerRef`, `slideIdxRef`, `isTransitioningRef`, and `timerRef`.
+   - Wired `imgARef` and `imgBRef` directly to the DOM elements.
+2. **Stable Mount-Only Lifecycle**:
+   - The main animation engine in `useEffect` now depends strictly on `[isVisible]` and NEVER restarts or re-renders during slide transitions.
+3. **Flawless Synchronized Cross-Dissolve**:
+   - Incoming layer is positioned on top (`zIndex: 2`) and begins ramping from `autoAlpha: 0.3` to `1.0`.
+   - Outgoing layer beneath (`zIndex: 1`) fades smoothly to `0`.
+   - Total opacity is strictly $\ge 1.0$ at every millisecond of the transition, permanently eliminating blackouts.
+4. **Monotonic Forward Zoom (No Snapping/Reversing)**:
+   - When an incoming image enters, it starts zooming forward from `scale: 1.00` to `1.10` with linear ease over the entire constant slide duration. It never zooms out or snaps back.
+5. **Verification**:
+   - `npm run build` passed with exit code 0; all static pages prerendered.
+
+### Files Changed
+- `src/components/event/HeroBackgroundSlideshow.tsx`
+- `tracker.md`
+
+---
+
 ## 2026-11-20 — Hero Slideshow: Constant Timer for All Images & Fixed Speed Animation
 
 ### Objective
