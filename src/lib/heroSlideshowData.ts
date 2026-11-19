@@ -23,3 +23,4 @@ export const HERO_SLIDES: HeroSlide[] = (heroAssets as Array<{
   width: asset.width,
   height: asset.height,
 }));
+

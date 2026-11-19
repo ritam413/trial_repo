@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Bebas_Neue, Cormorant_Garamond, Space_Grotesk, Syne, Anton } from "next/font/google";
+import "lenis/dist/lenis.css";
 import "./globals.css";
+import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
 
 const bebasNeue = Bebas_Neue({
   weight: "400",
@@ -57,7 +59,7 @@ export default function RootLayout({
       className={`${bebasNeue.variable} ${syne.variable} ${anton.variable} ${cormorant.variable} ${spaceGrotesk.variable} h-full antialiased dark`}
     >
       <body className="min-h-full flex flex-col bg-[#000000] text-[#EDE8FF] selection:bg-[#B9ACF0] selection:text-[#07060D]">
-        {children}
+        <SmoothScrollProvider>{children}</SmoothScrollProvider>
       </body>
     </html>
   );

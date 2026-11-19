@@ -18,6 +18,7 @@ export interface DignitaryProfile {
   monogram: string;
   imageUrl: string;
   thumbnailUrl?: string;
+  imageClassName?: string;
   objectPosition?: string;
 }
 
@@ -30,7 +31,7 @@ export const DIGNITARIES: DignitaryProfile[] = [
     monogram: "SB",
     imageUrl: "https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_800,c_limit/sanskaran_2026/dignitaries/sujoy-c0m-3gq8",
     thumbnailUrl: "https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:low,w_40,e_blur:1000/sanskaran_2026/dignitaries/sujoy-c0m-3gq8",
-    objectPosition: "object-center",
+    imageClassName: "object-center",
   },
   {
     id: "dig-02",
@@ -40,7 +41,7 @@ export const DIGNITARIES: DignitaryProfile[] = [
     monogram: "RP",
     imageUrl: "https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_800,c_limit/sanskaran_2026/dignitaries/prof__dr__rina_paladhi",
     thumbnailUrl: "https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:low,w_40,e_blur:1000/sanskaran_2026/dignitaries/prof__dr__rina_paladhi",
-    objectPosition: "object-center",
+    imageClassName: "object-center",
   },
   {
     id: "dig-03",
@@ -50,7 +51,10 @@ export const DIGNITARIES: DignitaryProfile[] = [
     monogram: "IG",
     imageUrl: "https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_800,c_limit/sanskaran_2026/dignitaries/prof__ishan_ghosh",
     thumbnailUrl: "https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:low,w_40,e_blur:1000/sanskaran_2026/dignitaries/prof__ishan_ghosh",
-    objectPosition: "object-bottom",
+    /* 👈 EXACT CODE CONTROLLING ALIGNMENT FOR PROF. ISHAN GHOSH:
+       Use 'object-bottom' to bring his face fully into view,
+       or custom percentage like 'object-[50%_80%]' / 'object-[50%_90%]' */
+    imageClassName: "object-bottom",
   },
 ];
 
@@ -168,7 +172,8 @@ export default function DignitariesSection() {
                       alt={person.name}
                       loading="lazy"
                       decoding="async"
-                      className={`w-full h-full object-cover ${person.objectPosition || "object-center"} transition-transform duration-500 group-hover:scale-105`}
+                      style={person.objectPosition ? { objectPosition: person.objectPosition } : undefined}
+                      className={`w-full h-full object-cover ${person.imageClassName || "object-center"} transition-transform duration-500 group-hover:scale-105`}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#141416] via-transparent to-transparent opacity-60 pointer-events-none" />
                   </div>

@@ -5,120 +5,30 @@ import gsap from "gsap";
 import { HERO_SLIDES, HeroSlide } from "@/lib/heroSlideshowData";
 
 /* ==========================================================================
-   1. SEQUENCE CHOREOGRAPHY & TIMING CONFIGURATION
+   SLIDESHOW TIMING & ANIMATION CONFIGURATION
+   (Constant timer for all images & constant zoom animation speed)
    ========================================================================== */
-export interface SequenceStep {
-  name: string;
-  shiftX: number;       // Horizontal displacement delta (%)
-  shiftY: number;       // Vertical displacement delta (%)
-  zoomDirection: "in" | "out";
-  zoomDelta: number;    // Scale delta (e.g. +0.06 or -0.06)
-  initialOpacity: number; // Starting fade-in opacity (e.g. 0.10 for 10%, 0.20 for 20%)
-}
-
 export const SLIDESHOW_CONFIG = {
-  // ⏱️ EXACT TIME PER IMAGE (in milliseconds)
-  STEP_DURATION_MS: 1000,      // 👈 1 second per image as requested
-  TRANSITION_DURATION_S: 0.95, // 👈 0.95s continuous fluid transition
+  // ⏱️ CONSTANT TIMER FOR ALL IMAGES ON SCREEN (in milliseconds)
+  // Every single image stays on screen for this exact constant duration:
+  SLIDE_DURATION_MS: 1500, // 👈 CONSTANT TIMER: 1.5s (Change to 1000 for 1s, 2000 for 2s, etc.)
+  FIXED_DURATION_MS: 1500 as number | null,
+  MIN_DURATION_MS: 1200,
+  MAX_DURATION_MS: 1800,
+  TRANSITION_DURATION_S: 0.8, // 👈 Constant transition duration for fluid cross-fade
 
-  // Safe bounds for continuous zoom and shift tracking
-  MIN_SCALE: 1.0,
-  MAX_SCALE: 1.24,
-  MAX_SHIFT_X: 6.0,  // Max horizontal shift clamp (%)
-  MAX_SHIFT_Y: 6.0,  // Max vertical shift clamp (%)
+  // 🌓 GRADUAL OPACITY TRANSITION PARAMETERS (Current decreases, Next: 30% -> 100%)
+  INCOMING_INITIAL_OPACITY: 0.3, // 👈 Starts gradually from 30% (0.3)
+  INCOMING_TARGET_OPACITY: 1.0,  // 👈 Ramps up smoothly to 100% (1.0)
 
-  // Cursor Parallax displacement
-  PARALLAX_MAX_PX: 20,
+  // 🔍 ZOOM CONFIGURATION (Zero shift, pure forward zoom-in, never zooms out)
+  ZOOM_BASE_SCALE: 1.0,   // Base scale when image appears
+  ZOOM_MAX_SCALE: 1.10,   // Maximum scale reached during its constant screen time
+  PARALLAX_MAX_PX: 20,    // Max pixel shift following cursor movement
 };
 
-// 🎬 The exact sequence requested by the user:
-// 1-2: right shift + fade in (opacity 10%) + zoom in
-// 2-3: right shift + fade in (opacity 20%) + zoom out
-// 3-4: down shift + fade in (opacity 10%) + zoom in
-// 4-5: down shift + fade in (opacity 20%) + zoom out
-// 5-6: left shift + fade in (opacity 10%) + zoom in
-// 6-7: left shift + fade in (opacity 20%) + zoom out
-// 7-8: up shift + fade in (opacity 10%) + zoom in
-// 8-9: up shift + fade in (opacity 20%) + zoom out
-export const CHOREOGRAPHY_SEQUENCE: SequenceStep[] = [
-  {
-    name: "1-2: Right Shift + FadeIn (10%) + Zoom In",
-    shiftX: 3.5,
-    shiftY: 0,
-    zoomDirection: "in",
-    zoomDelta: 0.06,
-    initialOpacity: 0.10, // 👈 Opacity 10%
-  },
-  {
-    name: "2-3: Right Shift + FadeIn (20%) + Zoom Out",
-    shiftX: 3.5,
-    shiftY: 0,
-    zoomDirection: "out",
-    zoomDelta: -0.06,
-    initialOpacity: 0.20, // 👈 Opacity 20%
-  },
-  {
-    name: "3-4: Down Shift + FadeIn (10%) + Zoom In",
-    shiftX: 0,
-    shiftY: 3.5,
-    zoomDirection: "in",
-    zoomDelta: 0.06,
-    initialOpacity: 0.10, // 👈 Opacity 10%
-  },
-  {
-    name: "4-5: Down Shift + FadeIn (20%) + Zoom Out",
-    shiftX: 0,
-    shiftY: 3.5,
-    zoomDirection: "out",
-    zoomDelta: -0.06,
-    initialOpacity: 0.20, // 👈 Opacity 20%
-  },
-  {
-    name: "5-6: Left Shift + FadeIn (10%) + Zoom In",
-    shiftX: -3.5,
-    shiftY: 0,
-    zoomDirection: "in",
-    zoomDelta: 0.06,
-    initialOpacity: 0.10, // 👈 Opacity 10%
-  },
-  {
-    name: "6-7: Left Shift + FadeIn (20%) + Zoom Out",
-    shiftX: -3.5,
-    shiftY: 0,
-    zoomDirection: "out",
-    zoomDelta: -0.06,
-    initialOpacity: 0.20, // 👈 Opacity 20%
-  },
-  {
-    name: "7-8: Up Shift + FadeIn (10%) + Zoom In",
-    shiftX: 0,
-    shiftY: -3.5,
-    zoomDirection: "in",
-    zoomDelta: 0.06,
-    initialOpacity: 0.10, // 👈 Opacity 10%
-  },
-  {
-    name: "8-9: Up Shift + FadeIn (20%) + Zoom Out",
-    shiftX: 0,
-    shiftY: -3.5,
-    zoomDirection: "out",
-    zoomDelta: -0.06,
-    initialOpacity: 0.20, // 👈 Opacity 20%
-  },
-];
-
-/* ==========================================================================
-   2. OBSERVER STATE DATA STRUCTURE
-   ========================================================================== */
-export interface TransformObserver {
-  imageIndex: number;
-  imageFile: string;
-  currentScale: number;
-  currentX: number;
-  currentY: number;
-  activeAction: string;
-  stepIndex: number;
-}
+export type TransitionType = "dissolve" | "burn" | "fade" | "zoom-dissolve";
+const TRANSITIONS: TransitionType[] = ["dissolve", "burn", "fade", "zoom-dissolve"];
 
 interface SlideState {
   currentIdx: number;
@@ -130,29 +40,19 @@ export default function HeroBackgroundSlideshow({ isVisible = true }: { isVisibl
   const parallaxRef = useRef<HTMLDivElement>(null);
   const layerARef = useRef<HTMLDivElement>(null);
   const layerBRef = useRef<HTMLDivElement>(null);
+  const burnOverlayRef = useRef<HTMLDivElement>(null);
 
-  // Active layer pointer: 0 = Layer A is front, 1 = Layer B is front
+  // Active layer tracker: 0 = Layer A is front, 1 = Layer B is front
   const activeLayerRef = useRef<0 | 1>(0);
   const isTransitioningRef = useRef(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
-
-  // 👁️ OBSERVER: Tracks the EXACT live pixel transform and active action
-  const observerRef = useRef<TransformObserver>({
-    imageIndex: 0,
-    imageFile: HERO_SLIDES[0]?.url || "",
-    currentScale: 1.0,
-    currentX: 0,
-    currentY: 0,
-    activeAction: "Initializing",
-    stepIndex: 0,
-  });
 
   const [slideState, setSlideState] = useState<SlideState>({
     currentIdx: 0,
     nextIdx: 1,
   });
 
-  // Preload upcoming slides
+  // Preload upcoming slides into memory
   const preloadSlide = useCallback((idx: number) => {
     if (typeof window === "undefined" || !HERO_SLIDES.length) return;
     const targetIdx = (idx + HERO_SLIDES.length) % HERO_SLIDES.length;
@@ -160,171 +60,220 @@ export default function HeroBackgroundSlideshow({ isVisible = true }: { isVisibl
     img.src = HERO_SLIDES[targetIdx].url;
   }, []);
 
-  /* ========================================================================
-     🎬 OBSERVER & CONTINUOUS MOMENTUM SEQUENCE CONTROLLER
-     ======================================================================== */
-  const executeSequenceStep = useCallback(() => {
+  // Pick a random transition effect
+  const getRandomTransition = useCallback((): TransitionType => {
+    const r = Math.floor(Math.random() * TRANSITIONS.length);
+    return TRANSITIONS[r];
+  }, []);
+
+  // Execute pure monotonic forward zoom on active image (Constant speed, Zero shifting, Never zooms out)
+  const startKenBurnsZoom = useCallback((element: HTMLDivElement | null) => {
+    if (!element) return;
+    const img = element.querySelector("img");
+    if (!img) return;
+
+    const startScale = SLIDESHOW_CONFIG.ZOOM_BASE_SCALE; // 1.0
+    const targetScale = SLIDESHOW_CONFIG.ZOOM_MAX_SCALE;  // 1.10
+    // Constant animation duration matching the exact constant slide duration
+    const constantAnimDuration =
+      SLIDESHOW_CONFIG.SLIDE_DURATION_MS / 1000 + SLIDESHOW_CONFIG.TRANSITION_DURATION_S;
+
+    gsap.killTweensOf(img);
+    gsap.fromTo(
+      img,
+      { scale: startScale, x: "0%", y: "0%", transformOrigin: "center center" },
+      {
+        scale: targetScale,
+        x: "0%",
+        y: "0%",
+        duration: constantAnimDuration,
+        ease: "sine.out",
+      }
+    );
+  }, []);
+
+  // Execute transition from active layer to incoming layer
+  const executeTransition = useCallback(() => {
     if (isTransitioningRef.current || !isVisible) return;
     isTransitioningRef.current = true;
 
     const currentLayer = activeLayerRef.current === 0 ? layerARef.current : layerBRef.current;
     const incomingLayer = activeLayerRef.current === 0 ? layerBRef.current : layerARef.current;
+    const burnOverlay = burnOverlayRef.current;
 
     if (!currentLayer || !incomingLayer) {
       isTransitioningRef.current = false;
       return;
     }
 
-    const currentImg = currentLayer.querySelector("img");
-    const incomingImg = incomingLayer.querySelector("img");
-
-    if (!currentImg || !incomingImg) {
-      isTransitioningRef.current = false;
-      return;
-    }
-
-    // 👁️ OBSERVE EXACT LIVE TRANSFORM VALUES OF THE OUTGOING IMAGE
-    const exactScale = (gsap.getProperty(currentImg, "scale") as number) || observerRef.current.currentScale || 1.0;
-    const exactX = (gsap.getProperty(currentImg, "x") as number) || observerRef.current.currentX || 0;
-    const exactY = (gsap.getProperty(currentImg, "y") as number) || observerRef.current.currentY || 0;
-
-    // Get current choreographed step in sequence
-    const step = CHOREOGRAPHY_SEQUENCE[observerRef.current.stepIndex % CHOREOGRAPHY_SEQUENCE.length];
     const nextSlideIdx = (slideState.currentIdx + 1) % HERO_SLIDES.length;
     preloadSlide(nextSlideIdx + 1);
 
-    // Calculate CONTINUOUS target values from the EXACT pixel coordinates observed
-    let targetScale = exactScale + step.zoomDelta;
-    if (targetScale > SLIDESHOW_CONFIG.MAX_SCALE) targetScale = SLIDESHOW_CONFIG.MAX_SCALE;
-    if (targetScale < SLIDESHOW_CONFIG.MIN_SCALE) targetScale = SLIDESHOW_CONFIG.MIN_SCALE;
+    const transition = getRandomTransition();
 
-    let targetX = exactX + step.shiftX;
-    if (Math.abs(targetX) > SLIDESHOW_CONFIG.MAX_SHIFT_X) {
-      targetX = -targetX * 0.4; // Soft rebound when boundary reached
-    }
-
-    let targetY = exactY + step.shiftY;
-    if (Math.abs(targetY) > SLIDESHOW_CONFIG.MAX_SHIFT_Y) {
-      targetY = -targetY * 0.4; // Soft rebound when boundary reached
-    }
-
-    // 👁️ UPDATE OBSERVER RECORD
-    observerRef.current = {
-      imageIndex: nextSlideIdx,
-      imageFile: HERO_SLIDES[nextSlideIdx]?.url || "",
-      currentScale: targetScale,
-      currentX: targetX,
-      currentY: targetY,
-      activeAction: step.name,
-      stepIndex: observerRef.current.stepIndex + 1,
-    };
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     // Bring incoming layer on top
     incomingLayer.style.zIndex = "2";
     currentLayer.style.zIndex = "1";
 
-    // 🎯 INITIALIZE INCOMING IMAGE AT THE EXACT SCALE & PIXEL OF CURRENT IMAGE
-    // (Resumes zooming and shifting from that EXACT pixel rather than resetting)
-    gsap.set(incomingImg, {
-      scale: exactScale,
-      x: `${exactX}%`,
-      y: `${exactY}%`,
-      transformOrigin: "center center",
-    });
+    const onCompleteTransition = () => {
+      // Swap layer pointer
+      activeLayerRef.current = activeLayerRef.current === 0 ? 1 : 0;
+      isTransitioningRef.current = false;
 
-    const duration = SLIDESHOW_CONFIG.TRANSITION_DURATION_S;
+      // Update state for next cycle
+      setSlideState({
+        currentIdx: nextSlideIdx,
+        nextIdx: (nextSlideIdx + 1) % HERO_SLIDES.length,
+      });
 
-    const tl = gsap.timeline({
-      onComplete: () => {
-        // Swap active layer pointer
-        activeLayerRef.current = activeLayerRef.current === 0 ? 1 : 0;
-        isTransitioningRef.current = false;
+      // ⏱️ CONSTANT TIMER FOR ALL IMAGES: schedule next image after exact constant duration
+      timerRef.current = setTimeout(executeTransition, SLIDESHOW_CONFIG.SLIDE_DURATION_MS);
+    };
 
-        // Advance state for next cycle
-        setSlideState({
-          currentIdx: nextSlideIdx,
-          nextIdx: (nextSlideIdx + 1) % HERO_SLIDES.length,
+    // Trigger pure monotonic zoom-in on incoming layer with constant animation speed (never zooms out)
+    if (!prefersReducedMotion) {
+      startKenBurnsZoom(incomingLayer);
+    }
+
+    if (prefersReducedMotion) {
+      // Accessible crossfade: current fades to 0, incoming ramps 30% -> 100%
+      gsap.fromTo(
+        incomingLayer,
+        { autoAlpha: SLIDESHOW_CONFIG.INCOMING_INITIAL_OPACITY },
+        { autoAlpha: SLIDESHOW_CONFIG.INCOMING_TARGET_OPACITY, duration: 1.2, ease: "power1.inOut" }
+      );
+      gsap.to(currentLayer, {
+        autoAlpha: 0,
+        duration: 1.2,
+        ease: "power1.inOut",
+        onComplete: onCompleteTransition,
+      });
+      return;
+    }
+
+    switch (transition) {
+      case "burn": {
+        // Film Burn / Light Leak Exposure Bloom with 30% -> 100% incoming sweep
+        const tl = gsap.timeline({ onComplete: onCompleteTransition });
+
+        if (burnOverlay) {
+          tl.to(burnOverlay, {
+            autoAlpha: 0.92,
+            duration: 0.35,
+            ease: "power2.in",
+          });
+        }
+
+        // Mid-flare switch: current layer decreases, incoming starts at 30% and blooms to 100%
+        tl.fromTo(
+          incomingLayer,
+          { autoAlpha: SLIDESHOW_CONFIG.INCOMING_INITIAL_OPACITY },
+          { autoAlpha: SLIDESHOW_CONFIG.INCOMING_TARGET_OPACITY, duration: 0.65, ease: "power2.out" },
+          "-=0.12"
+        ).to(currentLayer, { autoAlpha: 0, duration: 0.35, ease: "power2.out" }, "<");
+
+        if (burnOverlay) {
+          tl.to(burnOverlay, {
+            autoAlpha: 0,
+            duration: 0.65,
+            ease: "power3.out",
+          });
+        }
+        break;
+      }
+
+      case "fade": {
+        // Dark Shutter Cinematic Dip: Current fades out, incoming rises from 30% -> 100%
+        const tl = gsap.timeline({ onComplete: onCompleteTransition });
+        tl.to(currentLayer, {
+          autoAlpha: 0,
+          duration: 0.75,
+          ease: "power2.in",
         });
+        tl.fromTo(
+          incomingLayer,
+          { autoAlpha: SLIDESHOW_CONFIG.INCOMING_INITIAL_OPACITY },
+          { autoAlpha: SLIDESHOW_CONFIG.INCOMING_TARGET_OPACITY, duration: SLIDESHOW_CONFIG.TRANSITION_DURATION_S, ease: "power2.out" },
+          "-=0.2"
+        );
+        break;
+      }
 
-        // ⏱️ EXACT 1-SECOND CADENCE TO NEXT IMAGE
-        timerRef.current = setTimeout(executeSequenceStep, SLIDESHOW_CONFIG.STEP_DURATION_MS);
-      },
-    });
+      case "zoom-dissolve": {
+        // Optical Zoom Rack Push with 30% -> 100% incoming ramp
+        const tl = gsap.timeline({ onComplete: onCompleteTransition });
+        tl.to(currentLayer, {
+          autoAlpha: 0,
+          duration: SLIDESHOW_CONFIG.TRANSITION_DURATION_S,
+          ease: "power2.inOut",
+        });
+        tl.fromTo(
+          incomingLayer,
+          { autoAlpha: SLIDESHOW_CONFIG.INCOMING_INITIAL_OPACITY },
+          { autoAlpha: SLIDESHOW_CONFIG.INCOMING_TARGET_OPACITY, duration: SLIDESHOW_CONFIG.TRANSITION_DURATION_S, ease: "power2.out" },
+          "<"
+        );
+        break;
+      }
 
-    // 1. Current Image decreases opacity to 0 while continuing its motion
-    tl.to(currentLayer, {
-      autoAlpha: 0,
-      duration: duration,
-      ease: "power1.inOut",
-    }, 0);
+      case "dissolve":
+      default: {
+        // Velvety Soft Cross-Dissolve: Current decreases, incoming ramps from 30% to 100%
+        const tl = gsap.timeline({ onComplete: onCompleteTransition });
+        tl.to(currentLayer, {
+          autoAlpha: 0,
+          duration: SLIDESHOW_CONFIG.TRANSITION_DURATION_S,
+          ease: "power2.inOut",
+        });
+        tl.fromTo(
+          incomingLayer,
+          { autoAlpha: SLIDESHOW_CONFIG.INCOMING_INITIAL_OPACITY },
+          { autoAlpha: SLIDESHOW_CONFIG.INCOMING_TARGET_OPACITY, duration: SLIDESHOW_CONFIG.TRANSITION_DURATION_S, ease: "power2.out" },
+          "<"
+        );
+        break;
+      }
+    }
+  }, [getRandomTransition, isVisible, preloadSlide, slideState.currentIdx, startKenBurnsZoom]);
 
-    tl.to(currentImg, {
-      scale: targetScale,
-      x: `${targetX}%`,
-      y: `${targetY}%`,
-      duration: duration,
-      ease: "power1.out",
-    }, 0);
-
-    // 2. Incoming Image starts from specified sequence opacity (e.g. 10% or 20%) and ramps to 100%
-    tl.fromTo(
-      incomingLayer,
-      { autoAlpha: step.initialOpacity }, // 👈 Starts at 10% or 20% as defined in step
-      { autoAlpha: 1.0, duration: duration, ease: "power2.out" },
-      0
-    );
-
-    // 3. Incoming Image continues zooming & shifting from the EXACT pixel coordinate
-    tl.to(incomingImg, {
-      scale: targetScale,
-      x: `${targetX}%`,
-      y: `${targetY}%`,
-      duration: duration,
-      ease: "power1.out",
-    }, 0);
-
-  }, [isVisible, preloadSlide, slideState.currentIdx]);
-
-  // Initial Mount: Start Sequence
+  // Initial mount & kick-off
   useEffect(() => {
     if (!isVisible || !HERO_SLIDES.length) return;
 
     if (layerARef.current) {
       gsap.set(layerARef.current, { autoAlpha: 1, zIndex: 1 });
-      const firstImg = layerARef.current.querySelector("img");
-      if (firstImg) {
-        gsap.set(firstImg, { scale: 1.0, x: "0%", y: "0%" });
-        gsap.to(firstImg, {
-          scale: 1.06,
-          x: "2%",
-          duration: SLIDESHOW_CONFIG.TRANSITION_DURATION_S,
-          ease: "power1.out",
-        });
-      }
+      startKenBurnsZoom(layerARef.current);
     }
     if (layerBRef.current) {
       gsap.set(layerBRef.current, { autoAlpha: 0, zIndex: 0 });
+    }
+    if (burnOverlayRef.current) {
+      gsap.set(burnOverlayRef.current, { autoAlpha: 0 });
     }
 
     preloadSlide(1);
     preloadSlide(2);
 
-    // ⏱️ Schedule first sequence transition after 1 second
-    timerRef.current = setTimeout(executeSequenceStep, SLIDESHOW_CONFIG.STEP_DURATION_MS);
+    // Initial delay before first transition (strictly constant timer for every image)
+    timerRef.current = setTimeout(executeTransition, SLIDESHOW_CONFIG.SLIDE_DURATION_MS);
 
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current);
     };
-  }, [executeSequenceStep, isVisible, preloadSlide]);
+  }, [executeTransition, isVisible, preloadSlide, startKenBurnsZoom]);
 
-  // 🌌 Mouse Parallax Interaction (Translates subtly with cursor)
+  // Mouse Parallax Interaction
   useEffect(() => {
     if (typeof window === "undefined") return;
 
     const handlePointerMove = (e: PointerEvent) => {
       if (!parallaxRef.current) return;
-      const nx = (e.clientX / window.innerWidth - 0.5) * 2;
-      const ny = (e.clientY / window.innerHeight - 0.5) * 2;
+      const nx = (e.clientX / window.innerWidth - 0.5) * 2; // -1 to 1
+      const ny = (e.clientY / window.innerHeight - 0.5) * 2; // -1 to 1
 
       gsap.to(parallaxRef.current, {
         x: nx * SLIDESHOW_CONFIG.PARALLAX_MAX_PX,
@@ -352,7 +301,7 @@ export default function HeroBackgroundSlideshow({ isVisible = true }: { isVisibl
       className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none select-none bg-black"
       aria-hidden="true"
     >
-      {/* PARALLAX CONTAINER WRAPPER (Translates with cursor) */}
+      {/* PARALLAX CONTAINER WRAPPER (Translates subtly with cursor) */}
       <div
         ref={parallaxRef}
         className="absolute -inset-[32px] w-[calc(100%+64px)] h-[calc(100%+64px)] will-change-transform"
@@ -385,6 +334,16 @@ export default function HeroBackgroundSlideshow({ isVisible = true }: { isVisibl
           />
         </div>
       </div>
+
+      {/* FILM BURN / LIGHT LEAK OVERLAY */}
+      <div
+        ref={burnOverlayRef}
+        className="absolute inset-0 z-10 pointer-events-none opacity-0 mix-blend-screen"
+        style={{
+          background:
+            "radial-gradient(circle at 75% 30%, rgba(255, 185, 80, 0.95) 0%, rgba(255, 90, 20, 0.7) 35%, rgba(180, 20, 40, 0.4) 60%, transparent 80%), radial-gradient(circle at 20% 80%, rgba(255, 220, 140, 0.8) 0%, rgba(255, 120, 40, 0.5) 40%, transparent 75%)",
+        }}
+      />
 
       {/* AUTHENTIC 35MM ANALOG FILM GRAIN OVERLAY */}
       <div

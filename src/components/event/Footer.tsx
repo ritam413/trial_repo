@@ -2,10 +2,11 @@
 
 import React from "react";
 import { ArrowUp } from "lucide-react";
+import { gsapScrollTo } from "./Navbar";
 
 export default function Footer() {
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    gsapScrollTo("#hero", 1.2, 0);
   };
 
   return (

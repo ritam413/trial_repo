@@ -1,5 +1,93 @@
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Hero Slideshow: Constant Timer for All Images & Fixed Speed Animation
+
+### Objective
+Remove variable speed animations and randomized display times across hero slideshow images, applying a strictly constant timer so that all images remain on screen for the exact same duration, and ensure Prof. Ishan Ghosh's photo alignment in Dignitaries is properly configured.
+
+### Changes Made
+1. **Removed Variable Speed & Random Timing in Hero Slideshow**:
+   - Replaced randomized duration ranges (`MIN_DURATION_MS`, `MAX_DURATION_MS`, and `getNextSlideDuration`) with a strictly constant timer: `SLIDE_DURATION_MS: 1500` (1.5 seconds per image) in `SLIDESHOW_CONFIG`.
+   - Both `executeTransition` and initial mount use the identical constant timer (`SLIDE_DURATION_MS`).
+2. **Constant Speed Monotonic Forward Zoom**:
+   - Removed variable duration calculations from `startKenBurnsZoom`.
+   - Every active image zooms forward at the exact same constant rate (`constantAnimDuration = SLIDE_DURATION_MS / 1000 + TRANSITION_DURATION_S`) with zero horizontal or vertical position shifting and strictly monotonic forward zoom.
+3. **Dignitaries Section Photo Alignment**:
+   - Set `imageClassName: "object-bottom"` on `dig-03` (Prof. Ishan Ghosh) in `DignitariesSection.tsx`, aligning the bottom edge of his 407x753 photo so his face, eyes, and suit are centered and completely visible.
+4. **Verification**:
+   - `npm run build` passed with exit code 0; all 4 routes statically prerendered with Turbopack.
+
+### Files Changed
+- `src/components/event/HeroBackgroundSlideshow.tsx`
+- `src/components/event/DignitariesSection.tsx`
+- `tracker.md`
+
+### Next Agent Instructions
+- To adjust the constant timer, change `SLIDESHOW_CONFIG.SLIDE_DURATION_MS` in `src/components/event/HeroBackgroundSlideshow.tsx` line 16.
+- To tweak Prof. Ishan Ghosh's vertical alignment, edit line 57 of `src/components/event/DignitariesSection.tsx`.
+
+---
+
+## 2026-11-20 — 60 FPS Buttery-Smooth Inertia Scroll Engine & GSAP ScrollTrigger Integration
+
+### Objective
+Implement an always-smooth 60 FPS inertia scroll engine across the entire festival portal using `/gsap-animation` guardrails and `/context7-mcp` documentation on GSAP ScrollTrigger and smooth scroll synchronization.
+
+### Changes Made
+1. **Context7 Documentation Lookup**:
+   - Resolved documentation for GSAP and Lenis via Context7 MCP (`/greensock/gsap-skills`, `/websites/gsap`, `/darkroomengineering/lenis`).
+   - Retrieved official synchronization patterns: `lenis.on('scroll', ScrollTrigger.update)`, binding Lenis `raf` to `gsap.ticker.add((time) => lenis.raf(time * 1000))`, and disabling GSAP lag smoothing (`gsap.ticker.lagSmoothing(0)`).
+2. **Installed `lenis` Package**:
+   - Added `"lenis": "^1.3.27"` and verified `node_modules/lenis/dist/lenis.css`.
+3. **Engineered `SmoothScrollProvider` (`src/components/providers/SmoothScrollProvider.tsx`)**:
+   - Initialized Lenis with 60 FPS inertia momentum configuration:
+     - `duration: 1.2`
+     - `easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))`
+     - `orientation: "vertical"`
+     - `smoothWheel: true`
+     - `wheelMultiplier: 1.0`
+     - `touchMultiplier: 1.8`
+   - Bound Lenis directly to `gsap.ticker` so scroll inertia updates in 1:1 lockstep with GSAP's master clock at 60 FPS.
+   - Wired `lenis.on('scroll', ScrollTrigger.update)` to eliminate trigger jitter and position drift.
+   - Disabled lag smoothing via `gsap.ticker.lagSmoothing(0)`.
+   - Exported global `lenisScrollTo` and `getLenis()` programmatic functions.
+4. **Global Root Layout Integration (`src/app/layout.tsx`)**:
+   - Imported `lenis/dist/lenis.css` to configure standard overscroll behavior and prevent layout jitter.
+   - Wrapped page children with `<SmoothScrollProvider>`.
+5. **Unified Navigation & Footer Scroll Handling**:
+   - Updated `gsapScrollTo` in `src/components/event/Navbar.tsx` to automatically route through `lenisScrollTo` with seamless fallback.
+   - Updated `Footer.tsx` "Back to Top" button to trigger `gsapScrollTo("#hero", 1.2, 0)` which dispatches the `hero:restart-loop` event.
+6. **Verification**:
+   - Executed `npm run build`: Compiled cleanly in 5.7s with 0 TypeScript/Turbopack errors; 4/4 static pages generated successfully.
+
+### Current State
+The entire application scrolls with continuous, buttery-smooth 60 FPS inertia motion. All GSAP ScrollTrigger animations remain locked to scroll velocity without stutter.
+
+### Next Agent Instructions
+1. Inspect `src/components/providers/SmoothScrollProvider.tsx` to adjust inertia duration or easing parameters if needed.
+2. Synchronize `origin` and `trial` remotes.
+
+---
+
+## 2026-11-20 — Dignitaries Alignment Fix & Hero Slideshow Zoom-Only Refinement
+
+### Objective
+1. Provide exact alignment control and fix portrait framing for Prof. Ishan Ghosh in DignitariesSection.tsx, whose head was cut off at the bottom due to a tall aspect ratio (407x753) under object-center.
+2. In HeroBackgroundSlideshow.tsx, eliminate all position shifting (x, y translation drift), keep only zoom, and ensure that for any single image, it strictly zooms in and never zooms out during its display.
+
+### Changes Made
+1. **Dignitary Image Alignment Control**:
+   - Updated DignitaryProfile interface in `src/components/event/DignitariesSection.tsx` with `imageClassName?: string` and `objectPosition?: string`.
+   - Set `imageClassName: "object-bottom"` for Prof. Ishan Ghosh (`dig-03`), pinning the bottom of his 407x753 photo so his face, glasses, and suit are properly framed inside the card plinth.
+   - Dynamic binding on `<img>`: `className={... ${person.imageClassName || "object-center"} ...}` and `style={person.objectPosition ? { objectPosition: person.objectPosition } : undefined}`.
+2. **Hero Slideshow Pure Monotonic Forward Zoom**:
+   - Stripped out all horizontal/vertical translation shifts (`driftX`, `driftY`, `x`, `y`).
+   - Removed zoom-out logic; each slide executes pure forward zoom (`1.0` -> `1.12`) with `transformOrigin: "center center"`. A single image never reverses direction or zooms out while active.
+3. **Verification**:
+   - `npm run build`: Compiled with 0 errors in 3.3s, static pages generated.
+
+---
+
 ## 2026-11-20 — Dignitaries Section: Object Position Control for Prof. Ishan Ghosh
 
 ### Objective
@@ -1449,6 +1537,47 @@ Integrate the video from `https://www.instagram.com/p/DaqR3Niyy2L/?hl=en` (the o
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — 60 FPS Buttery-Smooth Inertia Scroll Engine & GSAP ScrollTrigger Integration
+
+### Objective
+Implement an always-smooth 60 FPS inertia scroll engine across the entire festival portal using `/gsap-animation` guardrails and `/context7-mcp` documentation on GSAP ScrollTrigger and smooth scroll synchronization.
+
+### Changes Made
+1. **Context7 Documentation Lookup**:
+   - Resolved documentation for GSAP and Lenis via Context7 MCP (`/greensock/gsap-skills`, `/websites/gsap`, `/darkroomengineering/lenis`).
+   - Retrieved official synchronization patterns: `lenis.on('scroll', ScrollTrigger.update)`, binding Lenis `raf` to `gsap.ticker.add((time) => lenis.raf(time * 1000))`, and disabling GSAP lag smoothing (`gsap.ticker.lagSmoothing(0)`).
+2. **Installed `lenis` Package**:
+   - Added `"lenis": "^1.3.27"` and verified `node_modules/lenis/dist/lenis.css`.
+3. **Engineered `SmoothScrollProvider` (`src/components/providers/SmoothScrollProvider.tsx`)**:
+   - Initialized Lenis with 60 FPS inertia momentum configuration:
+     - `duration: 1.2`
+     - `easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))`
+     - `orientation: "vertical"`
+     - `smoothWheel: true`
+     - `wheelMultiplier: 1.0`
+     - `touchMultiplier: 1.8`
+   - Bound Lenis directly to `gsap.ticker` so scroll inertia updates in 1:1 lockstep with GSAP's master clock at 60 FPS.
+   - Wired `lenis.on('scroll', ScrollTrigger.update)` to eliminate trigger jitter and position drift.
+   - Disabled lag smoothing via `gsap.ticker.lagSmoothing(0)`.
+   - Exported global `lenisScrollTo` and `getLenis()` programmatic functions.
+4. **Global Root Layout Integration (`src/app/layout.tsx`)**:
+   - Imported `lenis/dist/lenis.css` to configure standard overscroll behavior and prevent layout jitter.
+   - Wrapped page children with `<SmoothScrollProvider>`.
+5. **Unified Navigation & Footer Scroll Handling**:
+   - Updated `gsapScrollTo` in `src/components/event/Navbar.tsx` to automatically route through `lenisScrollTo` with seamless fallback.
+   - Updated `Footer.tsx` "Back to Top" button to trigger `gsapScrollTo("#hero", 1.2, 0)` which dispatches the `hero:restart-loop` event.
+6. **Verification**:
+   - Executed `npm run build`: Compiled cleanly in 5.7s with 0 TypeScript/Turbopack errors; 4/4 static pages generated successfully.
+
+### Current State
+The entire application scrolls with continuous, buttery-smooth 60 FPS inertia motion. All GSAP ScrollTrigger animations remain locked to scroll velocity without stutter.
+
+### Next Agent Instructions
+1. Inspect `src/components/providers/SmoothScrollProvider.tsx` to adjust inertia duration or easing parameters if needed.
+2. Synchronize `origin` and `trial` remotes.
+
+---
+
 ## 2026-11-20 — Dignitaries Section: Object Position Control for Prof. Ishan Ghosh
 
 ### Objective
@@ -2274,6 +2403,47 @@ Integrate the video from `https://www.instagram.com/p/DaqR3Niyy2L/?hl=en` (the o
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — 60 FPS Buttery-Smooth Inertia Scroll Engine & GSAP ScrollTrigger Integration
+
+### Objective
+Implement an always-smooth 60 FPS inertia scroll engine across the entire festival portal using `/gsap-animation` guardrails and `/context7-mcp` documentation on GSAP ScrollTrigger and smooth scroll synchronization.
+
+### Changes Made
+1. **Context7 Documentation Lookup**:
+   - Resolved documentation for GSAP and Lenis via Context7 MCP (`/greensock/gsap-skills`, `/websites/gsap`, `/darkroomengineering/lenis`).
+   - Retrieved official synchronization patterns: `lenis.on('scroll', ScrollTrigger.update)`, binding Lenis `raf` to `gsap.ticker.add((time) => lenis.raf(time * 1000))`, and disabling GSAP lag smoothing (`gsap.ticker.lagSmoothing(0)`).
+2. **Installed `lenis` Package**:
+   - Added `"lenis": "^1.3.27"` and verified `node_modules/lenis/dist/lenis.css`.
+3. **Engineered `SmoothScrollProvider` (`src/components/providers/SmoothScrollProvider.tsx`)**:
+   - Initialized Lenis with 60 FPS inertia momentum configuration:
+     - `duration: 1.2`
+     - `easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))`
+     - `orientation: "vertical"`
+     - `smoothWheel: true`
+     - `wheelMultiplier: 1.0`
+     - `touchMultiplier: 1.8`
+   - Bound Lenis directly to `gsap.ticker` so scroll inertia updates in 1:1 lockstep with GSAP's master clock at 60 FPS.
+   - Wired `lenis.on('scroll', ScrollTrigger.update)` to eliminate trigger jitter and position drift.
+   - Disabled lag smoothing via `gsap.ticker.lagSmoothing(0)`.
+   - Exported global `lenisScrollTo` and `getLenis()` programmatic functions.
+4. **Global Root Layout Integration (`src/app/layout.tsx`)**:
+   - Imported `lenis/dist/lenis.css` to configure standard overscroll behavior and prevent layout jitter.
+   - Wrapped page children with `<SmoothScrollProvider>`.
+5. **Unified Navigation & Footer Scroll Handling**:
+   - Updated `gsapScrollTo` in `src/components/event/Navbar.tsx` to automatically route through `lenisScrollTo` with seamless fallback.
+   - Updated `Footer.tsx` "Back to Top" button to trigger `gsapScrollTo("#hero", 1.2, 0)` which dispatches the `hero:restart-loop` event.
+6. **Verification**:
+   - Executed `npm run build`: Compiled cleanly in 5.7s with 0 TypeScript/Turbopack errors; 4/4 static pages generated successfully.
+
+### Current State
+The entire application scrolls with continuous, buttery-smooth 60 FPS inertia motion. All GSAP ScrollTrigger animations remain locked to scroll velocity without stutter.
+
+### Next Agent Instructions
+1. Inspect `src/components/providers/SmoothScrollProvider.tsx` to adjust inertia duration or easing parameters if needed.
+2. Synchronize `origin` and `trial` remotes.
+
+---
+
 ## 2026-11-20 — Dignitaries Section: Object Position Control for Prof. Ishan Ghosh
 
 ### Objective
@@ -3066,6 +3236,47 @@ Rotate the background video 90 degrees so it is right-side up, and eliminate ver
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — 60 FPS Buttery-Smooth Inertia Scroll Engine & GSAP ScrollTrigger Integration
+
+### Objective
+Implement an always-smooth 60 FPS inertia scroll engine across the entire festival portal using `/gsap-animation` guardrails and `/context7-mcp` documentation on GSAP ScrollTrigger and smooth scroll synchronization.
+
+### Changes Made
+1. **Context7 Documentation Lookup**:
+   - Resolved documentation for GSAP and Lenis via Context7 MCP (`/greensock/gsap-skills`, `/websites/gsap`, `/darkroomengineering/lenis`).
+   - Retrieved official synchronization patterns: `lenis.on('scroll', ScrollTrigger.update)`, binding Lenis `raf` to `gsap.ticker.add((time) => lenis.raf(time * 1000))`, and disabling GSAP lag smoothing (`gsap.ticker.lagSmoothing(0)`).
+2. **Installed `lenis` Package**:
+   - Added `"lenis": "^1.3.27"` and verified `node_modules/lenis/dist/lenis.css`.
+3. **Engineered `SmoothScrollProvider` (`src/components/providers/SmoothScrollProvider.tsx`)**:
+   - Initialized Lenis with 60 FPS inertia momentum configuration:
+     - `duration: 1.2`
+     - `easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))`
+     - `orientation: "vertical"`
+     - `smoothWheel: true`
+     - `wheelMultiplier: 1.0`
+     - `touchMultiplier: 1.8`
+   - Bound Lenis directly to `gsap.ticker` so scroll inertia updates in 1:1 lockstep with GSAP's master clock at 60 FPS.
+   - Wired `lenis.on('scroll', ScrollTrigger.update)` to eliminate trigger jitter and position drift.
+   - Disabled lag smoothing via `gsap.ticker.lagSmoothing(0)`.
+   - Exported global `lenisScrollTo` and `getLenis()` programmatic functions.
+4. **Global Root Layout Integration (`src/app/layout.tsx`)**:
+   - Imported `lenis/dist/lenis.css` to configure standard overscroll behavior and prevent layout jitter.
+   - Wrapped page children with `<SmoothScrollProvider>`.
+5. **Unified Navigation & Footer Scroll Handling**:
+   - Updated `gsapScrollTo` in `src/components/event/Navbar.tsx` to automatically route through `lenisScrollTo` with seamless fallback.
+   - Updated `Footer.tsx` "Back to Top" button to trigger `gsapScrollTo("#hero", 1.2, 0)` which dispatches the `hero:restart-loop` event.
+6. **Verification**:
+   - Executed `npm run build`: Compiled cleanly in 5.7s with 0 TypeScript/Turbopack errors; 4/4 static pages generated successfully.
+
+### Current State
+The entire application scrolls with continuous, buttery-smooth 60 FPS inertia motion. All GSAP ScrollTrigger animations remain locked to scroll velocity without stutter.
+
+### Next Agent Instructions
+1. Inspect `src/components/providers/SmoothScrollProvider.tsx` to adjust inertia duration or easing parameters if needed.
+2. Synchronize `origin` and `trial` remotes.
+
+---
+
 ## 2026-11-20 — Dignitaries Section: Object Position Control for Prof. Ishan Ghosh
 
 ### Objective
@@ -3830,6 +4041,47 @@ Rotate the background video 180 degrees per user instruction to invert the orien
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — 60 FPS Buttery-Smooth Inertia Scroll Engine & GSAP ScrollTrigger Integration
+
+### Objective
+Implement an always-smooth 60 FPS inertia scroll engine across the entire festival portal using `/gsap-animation` guardrails and `/context7-mcp` documentation on GSAP ScrollTrigger and smooth scroll synchronization.
+
+### Changes Made
+1. **Context7 Documentation Lookup**:
+   - Resolved documentation for GSAP and Lenis via Context7 MCP (`/greensock/gsap-skills`, `/websites/gsap`, `/darkroomengineering/lenis`).
+   - Retrieved official synchronization patterns: `lenis.on('scroll', ScrollTrigger.update)`, binding Lenis `raf` to `gsap.ticker.add((time) => lenis.raf(time * 1000))`, and disabling GSAP lag smoothing (`gsap.ticker.lagSmoothing(0)`).
+2. **Installed `lenis` Package**:
+   - Added `"lenis": "^1.3.27"` and verified `node_modules/lenis/dist/lenis.css`.
+3. **Engineered `SmoothScrollProvider` (`src/components/providers/SmoothScrollProvider.tsx`)**:
+   - Initialized Lenis with 60 FPS inertia momentum configuration:
+     - `duration: 1.2`
+     - `easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))`
+     - `orientation: "vertical"`
+     - `smoothWheel: true`
+     - `wheelMultiplier: 1.0`
+     - `touchMultiplier: 1.8`
+   - Bound Lenis directly to `gsap.ticker` so scroll inertia updates in 1:1 lockstep with GSAP's master clock at 60 FPS.
+   - Wired `lenis.on('scroll', ScrollTrigger.update)` to eliminate trigger jitter and position drift.
+   - Disabled lag smoothing via `gsap.ticker.lagSmoothing(0)`.
+   - Exported global `lenisScrollTo` and `getLenis()` programmatic functions.
+4. **Global Root Layout Integration (`src/app/layout.tsx`)**:
+   - Imported `lenis/dist/lenis.css` to configure standard overscroll behavior and prevent layout jitter.
+   - Wrapped page children with `<SmoothScrollProvider>`.
+5. **Unified Navigation & Footer Scroll Handling**:
+   - Updated `gsapScrollTo` in `src/components/event/Navbar.tsx` to automatically route through `lenisScrollTo` with seamless fallback.
+   - Updated `Footer.tsx` "Back to Top" button to trigger `gsapScrollTo("#hero", 1.2, 0)` which dispatches the `hero:restart-loop` event.
+6. **Verification**:
+   - Executed `npm run build`: Compiled cleanly in 5.7s with 0 TypeScript/Turbopack errors; 4/4 static pages generated successfully.
+
+### Current State
+The entire application scrolls with continuous, buttery-smooth 60 FPS inertia motion. All GSAP ScrollTrigger animations remain locked to scroll velocity without stutter.
+
+### Next Agent Instructions
+1. Inspect `src/components/providers/SmoothScrollProvider.tsx` to adjust inertia duration or easing parameters if needed.
+2. Synchronize `origin` and `trial` remotes.
+
+---
+
 ## 2026-11-20 — Dignitaries Section: Object Position Control for Prof. Ishan Ghosh
 
 ### Objective
@@ -4570,6 +4822,47 @@ Remove the "Google Developer Group Kolkata" logo from the top-left of the hero s
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — 60 FPS Buttery-Smooth Inertia Scroll Engine & GSAP ScrollTrigger Integration
+
+### Objective
+Implement an always-smooth 60 FPS inertia scroll engine across the entire festival portal using `/gsap-animation` guardrails and `/context7-mcp` documentation on GSAP ScrollTrigger and smooth scroll synchronization.
+
+### Changes Made
+1. **Context7 Documentation Lookup**:
+   - Resolved documentation for GSAP and Lenis via Context7 MCP (`/greensock/gsap-skills`, `/websites/gsap`, `/darkroomengineering/lenis`).
+   - Retrieved official synchronization patterns: `lenis.on('scroll', ScrollTrigger.update)`, binding Lenis `raf` to `gsap.ticker.add((time) => lenis.raf(time * 1000))`, and disabling GSAP lag smoothing (`gsap.ticker.lagSmoothing(0)`).
+2. **Installed `lenis` Package**:
+   - Added `"lenis": "^1.3.27"` and verified `node_modules/lenis/dist/lenis.css`.
+3. **Engineered `SmoothScrollProvider` (`src/components/providers/SmoothScrollProvider.tsx`)**:
+   - Initialized Lenis with 60 FPS inertia momentum configuration:
+     - `duration: 1.2`
+     - `easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))`
+     - `orientation: "vertical"`
+     - `smoothWheel: true`
+     - `wheelMultiplier: 1.0`
+     - `touchMultiplier: 1.8`
+   - Bound Lenis directly to `gsap.ticker` so scroll inertia updates in 1:1 lockstep with GSAP's master clock at 60 FPS.
+   - Wired `lenis.on('scroll', ScrollTrigger.update)` to eliminate trigger jitter and position drift.
+   - Disabled lag smoothing via `gsap.ticker.lagSmoothing(0)`.
+   - Exported global `lenisScrollTo` and `getLenis()` programmatic functions.
+4. **Global Root Layout Integration (`src/app/layout.tsx`)**:
+   - Imported `lenis/dist/lenis.css` to configure standard overscroll behavior and prevent layout jitter.
+   - Wrapped page children with `<SmoothScrollProvider>`.
+5. **Unified Navigation & Footer Scroll Handling**:
+   - Updated `gsapScrollTo` in `src/components/event/Navbar.tsx` to automatically route through `lenisScrollTo` with seamless fallback.
+   - Updated `Footer.tsx` "Back to Top" button to trigger `gsapScrollTo("#hero", 1.2, 0)` which dispatches the `hero:restart-loop` event.
+6. **Verification**:
+   - Executed `npm run build`: Compiled cleanly in 5.7s with 0 TypeScript/Turbopack errors; 4/4 static pages generated successfully.
+
+### Current State
+The entire application scrolls with continuous, buttery-smooth 60 FPS inertia motion. All GSAP ScrollTrigger animations remain locked to scroll velocity without stutter.
+
+### Next Agent Instructions
+1. Inspect `src/components/providers/SmoothScrollProvider.tsx` to adjust inertia duration or easing parameters if needed.
+2. Synchronize `origin` and `trial` remotes.
+
+---
+
 ## 2026-11-20 — Dignitaries Section: Object Position Control for Prof. Ishan Ghosh
 
 ### Objective
@@ -5286,6 +5579,47 @@ Implement the DevFest Kolkata "card up" bottom sheet reveal animation (matching 
 ---
 
 # Agent Handoff Log — tracker.md
+
+## 2026-11-20 — 60 FPS Buttery-Smooth Inertia Scroll Engine & GSAP ScrollTrigger Integration
+
+### Objective
+Implement an always-smooth 60 FPS inertia scroll engine across the entire festival portal using `/gsap-animation` guardrails and `/context7-mcp` documentation on GSAP ScrollTrigger and smooth scroll synchronization.
+
+### Changes Made
+1. **Context7 Documentation Lookup**:
+   - Resolved documentation for GSAP and Lenis via Context7 MCP (`/greensock/gsap-skills`, `/websites/gsap`, `/darkroomengineering/lenis`).
+   - Retrieved official synchronization patterns: `lenis.on('scroll', ScrollTrigger.update)`, binding Lenis `raf` to `gsap.ticker.add((time) => lenis.raf(time * 1000))`, and disabling GSAP lag smoothing (`gsap.ticker.lagSmoothing(0)`).
+2. **Installed `lenis` Package**:
+   - Added `"lenis": "^1.3.27"` and verified `node_modules/lenis/dist/lenis.css`.
+3. **Engineered `SmoothScrollProvider` (`src/components/providers/SmoothScrollProvider.tsx`)**:
+   - Initialized Lenis with 60 FPS inertia momentum configuration:
+     - `duration: 1.2`
+     - `easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))`
+     - `orientation: "vertical"`
+     - `smoothWheel: true`
+     - `wheelMultiplier: 1.0`
+     - `touchMultiplier: 1.8`
+   - Bound Lenis directly to `gsap.ticker` so scroll inertia updates in 1:1 lockstep with GSAP's master clock at 60 FPS.
+   - Wired `lenis.on('scroll', ScrollTrigger.update)` to eliminate trigger jitter and position drift.
+   - Disabled lag smoothing via `gsap.ticker.lagSmoothing(0)`.
+   - Exported global `lenisScrollTo` and `getLenis()` programmatic functions.
+4. **Global Root Layout Integration (`src/app/layout.tsx`)**:
+   - Imported `lenis/dist/lenis.css` to configure standard overscroll behavior and prevent layout jitter.
+   - Wrapped page children with `<SmoothScrollProvider>`.
+5. **Unified Navigation & Footer Scroll Handling**:
+   - Updated `gsapScrollTo` in `src/components/event/Navbar.tsx` to automatically route through `lenisScrollTo` with seamless fallback.
+   - Updated `Footer.tsx` "Back to Top" button to trigger `gsapScrollTo("#hero", 1.2, 0)` which dispatches the `hero:restart-loop` event.
+6. **Verification**:
+   - Executed `npm run build`: Compiled cleanly in 5.7s with 0 TypeScript/Turbopack errors; 4/4 static pages generated successfully.
+
+### Current State
+The entire application scrolls with continuous, buttery-smooth 60 FPS inertia motion. All GSAP ScrollTrigger animations remain locked to scroll velocity without stutter.
+
+### Next Agent Instructions
+1. Inspect `src/components/providers/SmoothScrollProvider.tsx` to adjust inertia duration or easing parameters if needed.
+2. Synchronize `origin` and `trial` remotes.
+
+---
 
 ## 2026-11-20 — Dignitaries Section: Object Position Control for Prof. Ishan Ghosh
 
@@ -6018,6 +6352,47 @@ Implement the DevFest Kolkata "card up" bottom sheet reveal animation (matching 
 ---
 
 # Agent Handoff Log — tracker.md
+
+## 2026-11-20 — 60 FPS Buttery-Smooth Inertia Scroll Engine & GSAP ScrollTrigger Integration
+
+### Objective
+Implement an always-smooth 60 FPS inertia scroll engine across the entire festival portal using `/gsap-animation` guardrails and `/context7-mcp` documentation on GSAP ScrollTrigger and smooth scroll synchronization.
+
+### Changes Made
+1. **Context7 Documentation Lookup**:
+   - Resolved documentation for GSAP and Lenis via Context7 MCP (`/greensock/gsap-skills`, `/websites/gsap`, `/darkroomengineering/lenis`).
+   - Retrieved official synchronization patterns: `lenis.on('scroll', ScrollTrigger.update)`, binding Lenis `raf` to `gsap.ticker.add((time) => lenis.raf(time * 1000))`, and disabling GSAP lag smoothing (`gsap.ticker.lagSmoothing(0)`).
+2. **Installed `lenis` Package**:
+   - Added `"lenis": "^1.3.27"` and verified `node_modules/lenis/dist/lenis.css`.
+3. **Engineered `SmoothScrollProvider` (`src/components/providers/SmoothScrollProvider.tsx`)**:
+   - Initialized Lenis with 60 FPS inertia momentum configuration:
+     - `duration: 1.2`
+     - `easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))`
+     - `orientation: "vertical"`
+     - `smoothWheel: true`
+     - `wheelMultiplier: 1.0`
+     - `touchMultiplier: 1.8`
+   - Bound Lenis directly to `gsap.ticker` so scroll inertia updates in 1:1 lockstep with GSAP's master clock at 60 FPS.
+   - Wired `lenis.on('scroll', ScrollTrigger.update)` to eliminate trigger jitter and position drift.
+   - Disabled lag smoothing via `gsap.ticker.lagSmoothing(0)`.
+   - Exported global `lenisScrollTo` and `getLenis()` programmatic functions.
+4. **Global Root Layout Integration (`src/app/layout.tsx`)**:
+   - Imported `lenis/dist/lenis.css` to configure standard overscroll behavior and prevent layout jitter.
+   - Wrapped page children with `<SmoothScrollProvider>`.
+5. **Unified Navigation & Footer Scroll Handling**:
+   - Updated `gsapScrollTo` in `src/components/event/Navbar.tsx` to automatically route through `lenisScrollTo` with seamless fallback.
+   - Updated `Footer.tsx` "Back to Top" button to trigger `gsapScrollTo("#hero", 1.2, 0)` which dispatches the `hero:restart-loop` event.
+6. **Verification**:
+   - Executed `npm run build`: Compiled cleanly in 5.7s with 0 TypeScript/Turbopack errors; 4/4 static pages generated successfully.
+
+### Current State
+The entire application scrolls with continuous, buttery-smooth 60 FPS inertia motion. All GSAP ScrollTrigger animations remain locked to scroll velocity without stutter.
+
+### Next Agent Instructions
+1. Inspect `src/components/providers/SmoothScrollProvider.tsx` to adjust inertia duration or easing parameters if needed.
+2. Synchronize `origin` and `trial` remotes.
+
+---
 
 ## 2026-11-20 — Dignitaries Section: Object Position Control for Prof. Ishan Ghosh
 
@@ -6891,6 +7266,47 @@ Integrate the video from `https://www.instagram.com/p/DaqR3Niyy2L/?hl=en` (the o
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — 60 FPS Buttery-Smooth Inertia Scroll Engine & GSAP ScrollTrigger Integration
+
+### Objective
+Implement an always-smooth 60 FPS inertia scroll engine across the entire festival portal using `/gsap-animation` guardrails and `/context7-mcp` documentation on GSAP ScrollTrigger and smooth scroll synchronization.
+
+### Changes Made
+1. **Context7 Documentation Lookup**:
+   - Resolved documentation for GSAP and Lenis via Context7 MCP (`/greensock/gsap-skills`, `/websites/gsap`, `/darkroomengineering/lenis`).
+   - Retrieved official synchronization patterns: `lenis.on('scroll', ScrollTrigger.update)`, binding Lenis `raf` to `gsap.ticker.add((time) => lenis.raf(time * 1000))`, and disabling GSAP lag smoothing (`gsap.ticker.lagSmoothing(0)`).
+2. **Installed `lenis` Package**:
+   - Added `"lenis": "^1.3.27"` and verified `node_modules/lenis/dist/lenis.css`.
+3. **Engineered `SmoothScrollProvider` (`src/components/providers/SmoothScrollProvider.tsx`)**:
+   - Initialized Lenis with 60 FPS inertia momentum configuration:
+     - `duration: 1.2`
+     - `easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))`
+     - `orientation: "vertical"`
+     - `smoothWheel: true`
+     - `wheelMultiplier: 1.0`
+     - `touchMultiplier: 1.8`
+   - Bound Lenis directly to `gsap.ticker` so scroll inertia updates in 1:1 lockstep with GSAP's master clock at 60 FPS.
+   - Wired `lenis.on('scroll', ScrollTrigger.update)` to eliminate trigger jitter and position drift.
+   - Disabled lag smoothing via `gsap.ticker.lagSmoothing(0)`.
+   - Exported global `lenisScrollTo` and `getLenis()` programmatic functions.
+4. **Global Root Layout Integration (`src/app/layout.tsx`)**:
+   - Imported `lenis/dist/lenis.css` to configure standard overscroll behavior and prevent layout jitter.
+   - Wrapped page children with `<SmoothScrollProvider>`.
+5. **Unified Navigation & Footer Scroll Handling**:
+   - Updated `gsapScrollTo` in `src/components/event/Navbar.tsx` to automatically route through `lenisScrollTo` with seamless fallback.
+   - Updated `Footer.tsx` "Back to Top" button to trigger `gsapScrollTo("#hero", 1.2, 0)` which dispatches the `hero:restart-loop` event.
+6. **Verification**:
+   - Executed `npm run build`: Compiled cleanly in 5.7s with 0 TypeScript/Turbopack errors; 4/4 static pages generated successfully.
+
+### Current State
+The entire application scrolls with continuous, buttery-smooth 60 FPS inertia motion. All GSAP ScrollTrigger animations remain locked to scroll velocity without stutter.
+
+### Next Agent Instructions
+1. Inspect `src/components/providers/SmoothScrollProvider.tsx` to adjust inertia duration or easing parameters if needed.
+2. Synchronize `origin` and `trial` remotes.
+
+---
+
 ## 2026-11-20 — Dignitaries Section: Object Position Control for Prof. Ishan Ghosh
 
 ### Objective
@@ -7716,6 +8132,47 @@ Integrate the video from `https://www.instagram.com/p/DaqR3Niyy2L/?hl=en` (the o
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — 60 FPS Buttery-Smooth Inertia Scroll Engine & GSAP ScrollTrigger Integration
+
+### Objective
+Implement an always-smooth 60 FPS inertia scroll engine across the entire festival portal using `/gsap-animation` guardrails and `/context7-mcp` documentation on GSAP ScrollTrigger and smooth scroll synchronization.
+
+### Changes Made
+1. **Context7 Documentation Lookup**:
+   - Resolved documentation for GSAP and Lenis via Context7 MCP (`/greensock/gsap-skills`, `/websites/gsap`, `/darkroomengineering/lenis`).
+   - Retrieved official synchronization patterns: `lenis.on('scroll', ScrollTrigger.update)`, binding Lenis `raf` to `gsap.ticker.add((time) => lenis.raf(time * 1000))`, and disabling GSAP lag smoothing (`gsap.ticker.lagSmoothing(0)`).
+2. **Installed `lenis` Package**:
+   - Added `"lenis": "^1.3.27"` and verified `node_modules/lenis/dist/lenis.css`.
+3. **Engineered `SmoothScrollProvider` (`src/components/providers/SmoothScrollProvider.tsx`)**:
+   - Initialized Lenis with 60 FPS inertia momentum configuration:
+     - `duration: 1.2`
+     - `easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))`
+     - `orientation: "vertical"`
+     - `smoothWheel: true`
+     - `wheelMultiplier: 1.0`
+     - `touchMultiplier: 1.8`
+   - Bound Lenis directly to `gsap.ticker` so scroll inertia updates in 1:1 lockstep with GSAP's master clock at 60 FPS.
+   - Wired `lenis.on('scroll', ScrollTrigger.update)` to eliminate trigger jitter and position drift.
+   - Disabled lag smoothing via `gsap.ticker.lagSmoothing(0)`.
+   - Exported global `lenisScrollTo` and `getLenis()` programmatic functions.
+4. **Global Root Layout Integration (`src/app/layout.tsx`)**:
+   - Imported `lenis/dist/lenis.css` to configure standard overscroll behavior and prevent layout jitter.
+   - Wrapped page children with `<SmoothScrollProvider>`.
+5. **Unified Navigation & Footer Scroll Handling**:
+   - Updated `gsapScrollTo` in `src/components/event/Navbar.tsx` to automatically route through `lenisScrollTo` with seamless fallback.
+   - Updated `Footer.tsx` "Back to Top" button to trigger `gsapScrollTo("#hero", 1.2, 0)` which dispatches the `hero:restart-loop` event.
+6. **Verification**:
+   - Executed `npm run build`: Compiled cleanly in 5.7s with 0 TypeScript/Turbopack errors; 4/4 static pages generated successfully.
+
+### Current State
+The entire application scrolls with continuous, buttery-smooth 60 FPS inertia motion. All GSAP ScrollTrigger animations remain locked to scroll velocity without stutter.
+
+### Next Agent Instructions
+1. Inspect `src/components/providers/SmoothScrollProvider.tsx` to adjust inertia duration or easing parameters if needed.
+2. Synchronize `origin` and `trial` remotes.
+
+---
+
 ## 2026-11-20 — Dignitaries Section: Object Position Control for Prof. Ishan Ghosh
 
 ### Objective
@@ -8508,6 +8965,47 @@ Rotate the background video 90 degrees so it is right-side up, and eliminate ver
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — 60 FPS Buttery-Smooth Inertia Scroll Engine & GSAP ScrollTrigger Integration
+
+### Objective
+Implement an always-smooth 60 FPS inertia scroll engine across the entire festival portal using `/gsap-animation` guardrails and `/context7-mcp` documentation on GSAP ScrollTrigger and smooth scroll synchronization.
+
+### Changes Made
+1. **Context7 Documentation Lookup**:
+   - Resolved documentation for GSAP and Lenis via Context7 MCP (`/greensock/gsap-skills`, `/websites/gsap`, `/darkroomengineering/lenis`).
+   - Retrieved official synchronization patterns: `lenis.on('scroll', ScrollTrigger.update)`, binding Lenis `raf` to `gsap.ticker.add((time) => lenis.raf(time * 1000))`, and disabling GSAP lag smoothing (`gsap.ticker.lagSmoothing(0)`).
+2. **Installed `lenis` Package**:
+   - Added `"lenis": "^1.3.27"` and verified `node_modules/lenis/dist/lenis.css`.
+3. **Engineered `SmoothScrollProvider` (`src/components/providers/SmoothScrollProvider.tsx`)**:
+   - Initialized Lenis with 60 FPS inertia momentum configuration:
+     - `duration: 1.2`
+     - `easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))`
+     - `orientation: "vertical"`
+     - `smoothWheel: true`
+     - `wheelMultiplier: 1.0`
+     - `touchMultiplier: 1.8`
+   - Bound Lenis directly to `gsap.ticker` so scroll inertia updates in 1:1 lockstep with GSAP's master clock at 60 FPS.
+   - Wired `lenis.on('scroll', ScrollTrigger.update)` to eliminate trigger jitter and position drift.
+   - Disabled lag smoothing via `gsap.ticker.lagSmoothing(0)`.
+   - Exported global `lenisScrollTo` and `getLenis()` programmatic functions.
+4. **Global Root Layout Integration (`src/app/layout.tsx`)**:
+   - Imported `lenis/dist/lenis.css` to configure standard overscroll behavior and prevent layout jitter.
+   - Wrapped page children with `<SmoothScrollProvider>`.
+5. **Unified Navigation & Footer Scroll Handling**:
+   - Updated `gsapScrollTo` in `src/components/event/Navbar.tsx` to automatically route through `lenisScrollTo` with seamless fallback.
+   - Updated `Footer.tsx` "Back to Top" button to trigger `gsapScrollTo("#hero", 1.2, 0)` which dispatches the `hero:restart-loop` event.
+6. **Verification**:
+   - Executed `npm run build`: Compiled cleanly in 5.7s with 0 TypeScript/Turbopack errors; 4/4 static pages generated successfully.
+
+### Current State
+The entire application scrolls with continuous, buttery-smooth 60 FPS inertia motion. All GSAP ScrollTrigger animations remain locked to scroll velocity without stutter.
+
+### Next Agent Instructions
+1. Inspect `src/components/providers/SmoothScrollProvider.tsx` to adjust inertia duration or easing parameters if needed.
+2. Synchronize `origin` and `trial` remotes.
+
+---
+
 ## 2026-11-20 — Dignitaries Section: Object Position Control for Prof. Ishan Ghosh
 
 ### Objective
@@ -9272,6 +9770,47 @@ Rotate the background video 180 degrees per user instruction to invert the orien
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — 60 FPS Buttery-Smooth Inertia Scroll Engine & GSAP ScrollTrigger Integration
+
+### Objective
+Implement an always-smooth 60 FPS inertia scroll engine across the entire festival portal using `/gsap-animation` guardrails and `/context7-mcp` documentation on GSAP ScrollTrigger and smooth scroll synchronization.
+
+### Changes Made
+1. **Context7 Documentation Lookup**:
+   - Resolved documentation for GSAP and Lenis via Context7 MCP (`/greensock/gsap-skills`, `/websites/gsap`, `/darkroomengineering/lenis`).
+   - Retrieved official synchronization patterns: `lenis.on('scroll', ScrollTrigger.update)`, binding Lenis `raf` to `gsap.ticker.add((time) => lenis.raf(time * 1000))`, and disabling GSAP lag smoothing (`gsap.ticker.lagSmoothing(0)`).
+2. **Installed `lenis` Package**:
+   - Added `"lenis": "^1.3.27"` and verified `node_modules/lenis/dist/lenis.css`.
+3. **Engineered `SmoothScrollProvider` (`src/components/providers/SmoothScrollProvider.tsx`)**:
+   - Initialized Lenis with 60 FPS inertia momentum configuration:
+     - `duration: 1.2`
+     - `easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))`
+     - `orientation: "vertical"`
+     - `smoothWheel: true`
+     - `wheelMultiplier: 1.0`
+     - `touchMultiplier: 1.8`
+   - Bound Lenis directly to `gsap.ticker` so scroll inertia updates in 1:1 lockstep with GSAP's master clock at 60 FPS.
+   - Wired `lenis.on('scroll', ScrollTrigger.update)` to eliminate trigger jitter and position drift.
+   - Disabled lag smoothing via `gsap.ticker.lagSmoothing(0)`.
+   - Exported global `lenisScrollTo` and `getLenis()` programmatic functions.
+4. **Global Root Layout Integration (`src/app/layout.tsx`)**:
+   - Imported `lenis/dist/lenis.css` to configure standard overscroll behavior and prevent layout jitter.
+   - Wrapped page children with `<SmoothScrollProvider>`.
+5. **Unified Navigation & Footer Scroll Handling**:
+   - Updated `gsapScrollTo` in `src/components/event/Navbar.tsx` to automatically route through `lenisScrollTo` with seamless fallback.
+   - Updated `Footer.tsx` "Back to Top" button to trigger `gsapScrollTo("#hero", 1.2, 0)` which dispatches the `hero:restart-loop` event.
+6. **Verification**:
+   - Executed `npm run build`: Compiled cleanly in 5.7s with 0 TypeScript/Turbopack errors; 4/4 static pages generated successfully.
+
+### Current State
+The entire application scrolls with continuous, buttery-smooth 60 FPS inertia motion. All GSAP ScrollTrigger animations remain locked to scroll velocity without stutter.
+
+### Next Agent Instructions
+1. Inspect `src/components/providers/SmoothScrollProvider.tsx` to adjust inertia duration or easing parameters if needed.
+2. Synchronize `origin` and `trial` remotes.
+
+---
+
 ## 2026-11-20 — Dignitaries Section: Object Position Control for Prof. Ishan Ghosh
 
 ### Objective
@@ -10012,6 +10551,47 @@ Remove the "Google Developer Group Kolkata" logo from the top-left of the hero s
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — 60 FPS Buttery-Smooth Inertia Scroll Engine & GSAP ScrollTrigger Integration
+
+### Objective
+Implement an always-smooth 60 FPS inertia scroll engine across the entire festival portal using `/gsap-animation` guardrails and `/context7-mcp` documentation on GSAP ScrollTrigger and smooth scroll synchronization.
+
+### Changes Made
+1. **Context7 Documentation Lookup**:
+   - Resolved documentation for GSAP and Lenis via Context7 MCP (`/greensock/gsap-skills`, `/websites/gsap`, `/darkroomengineering/lenis`).
+   - Retrieved official synchronization patterns: `lenis.on('scroll', ScrollTrigger.update)`, binding Lenis `raf` to `gsap.ticker.add((time) => lenis.raf(time * 1000))`, and disabling GSAP lag smoothing (`gsap.ticker.lagSmoothing(0)`).
+2. **Installed `lenis` Package**:
+   - Added `"lenis": "^1.3.27"` and verified `node_modules/lenis/dist/lenis.css`.
+3. **Engineered `SmoothScrollProvider` (`src/components/providers/SmoothScrollProvider.tsx`)**:
+   - Initialized Lenis with 60 FPS inertia momentum configuration:
+     - `duration: 1.2`
+     - `easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))`
+     - `orientation: "vertical"`
+     - `smoothWheel: true`
+     - `wheelMultiplier: 1.0`
+     - `touchMultiplier: 1.8`
+   - Bound Lenis directly to `gsap.ticker` so scroll inertia updates in 1:1 lockstep with GSAP's master clock at 60 FPS.
+   - Wired `lenis.on('scroll', ScrollTrigger.update)` to eliminate trigger jitter and position drift.
+   - Disabled lag smoothing via `gsap.ticker.lagSmoothing(0)`.
+   - Exported global `lenisScrollTo` and `getLenis()` programmatic functions.
+4. **Global Root Layout Integration (`src/app/layout.tsx`)**:
+   - Imported `lenis/dist/lenis.css` to configure standard overscroll behavior and prevent layout jitter.
+   - Wrapped page children with `<SmoothScrollProvider>`.
+5. **Unified Navigation & Footer Scroll Handling**:
+   - Updated `gsapScrollTo` in `src/components/event/Navbar.tsx` to automatically route through `lenisScrollTo` with seamless fallback.
+   - Updated `Footer.tsx` "Back to Top" button to trigger `gsapScrollTo("#hero", 1.2, 0)` which dispatches the `hero:restart-loop` event.
+6. **Verification**:
+   - Executed `npm run build`: Compiled cleanly in 5.7s with 0 TypeScript/Turbopack errors; 4/4 static pages generated successfully.
+
+### Current State
+The entire application scrolls with continuous, buttery-smooth 60 FPS inertia motion. All GSAP ScrollTrigger animations remain locked to scroll velocity without stutter.
+
+### Next Agent Instructions
+1. Inspect `src/components/providers/SmoothScrollProvider.tsx` to adjust inertia duration or easing parameters if needed.
+2. Synchronize `origin` and `trial` remotes.
+
+---
+
 ## 2026-11-20 — Dignitaries Section: Object Position Control for Prof. Ishan Ghosh
 
 ### Objective
@@ -10728,6 +11308,47 @@ Implement the DevFest Kolkata "card up" bottom sheet reveal animation (matching 
 ---
 
 # Agent Handoff Log — tracker.md
+
+## 2026-11-20 — 60 FPS Buttery-Smooth Inertia Scroll Engine & GSAP ScrollTrigger Integration
+
+### Objective
+Implement an always-smooth 60 FPS inertia scroll engine across the entire festival portal using `/gsap-animation` guardrails and `/context7-mcp` documentation on GSAP ScrollTrigger and smooth scroll synchronization.
+
+### Changes Made
+1. **Context7 Documentation Lookup**:
+   - Resolved documentation for GSAP and Lenis via Context7 MCP (`/greensock/gsap-skills`, `/websites/gsap`, `/darkroomengineering/lenis`).
+   - Retrieved official synchronization patterns: `lenis.on('scroll', ScrollTrigger.update)`, binding Lenis `raf` to `gsap.ticker.add((time) => lenis.raf(time * 1000))`, and disabling GSAP lag smoothing (`gsap.ticker.lagSmoothing(0)`).
+2. **Installed `lenis` Package**:
+   - Added `"lenis": "^1.3.27"` and verified `node_modules/lenis/dist/lenis.css`.
+3. **Engineered `SmoothScrollProvider` (`src/components/providers/SmoothScrollProvider.tsx`)**:
+   - Initialized Lenis with 60 FPS inertia momentum configuration:
+     - `duration: 1.2`
+     - `easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))`
+     - `orientation: "vertical"`
+     - `smoothWheel: true`
+     - `wheelMultiplier: 1.0`
+     - `touchMultiplier: 1.8`
+   - Bound Lenis directly to `gsap.ticker` so scroll inertia updates in 1:1 lockstep with GSAP's master clock at 60 FPS.
+   - Wired `lenis.on('scroll', ScrollTrigger.update)` to eliminate trigger jitter and position drift.
+   - Disabled lag smoothing via `gsap.ticker.lagSmoothing(0)`.
+   - Exported global `lenisScrollTo` and `getLenis()` programmatic functions.
+4. **Global Root Layout Integration (`src/app/layout.tsx`)**:
+   - Imported `lenis/dist/lenis.css` to configure standard overscroll behavior and prevent layout jitter.
+   - Wrapped page children with `<SmoothScrollProvider>`.
+5. **Unified Navigation & Footer Scroll Handling**:
+   - Updated `gsapScrollTo` in `src/components/event/Navbar.tsx` to automatically route through `lenisScrollTo` with seamless fallback.
+   - Updated `Footer.tsx` "Back to Top" button to trigger `gsapScrollTo("#hero", 1.2, 0)` which dispatches the `hero:restart-loop` event.
+6. **Verification**:
+   - Executed `npm run build`: Compiled cleanly in 5.7s with 0 TypeScript/Turbopack errors; 4/4 static pages generated successfully.
+
+### Current State
+The entire application scrolls with continuous, buttery-smooth 60 FPS inertia motion. All GSAP ScrollTrigger animations remain locked to scroll velocity without stutter.
+
+### Next Agent Instructions
+1. Inspect `src/components/providers/SmoothScrollProvider.tsx` to adjust inertia duration or easing parameters if needed.
+2. Synchronize `origin` and `trial` remotes.
+
+---
 
 ## 2026-11-20 — Dignitaries Section: Object Position Control for Prof. Ishan Ghosh
 

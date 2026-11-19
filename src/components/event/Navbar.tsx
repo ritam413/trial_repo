@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState, useRef } from "react";
 import gsap from "gsap";
+import { lenisScrollTo, getLenis } from "@/components/providers/SmoothScrollProvider";
 
 /* ==========================================================================
    SMOOTH SCROLL CONFIGURATION
@@ -27,6 +28,12 @@ export function gsapScrollTo(
   offset = SMOOTH_SCROLL_CONFIG.offset
 ) {
   if (typeof window === "undefined") return;
+
+  // Use Lenis 60fps smooth scroll if provider is active
+  if (getLenis()) {
+    lenisScrollTo(target, { duration, offset });
+    return;
+  }
 
   let targetY = 0;
   if (typeof target === "number") {

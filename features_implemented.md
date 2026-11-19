@@ -357,6 +357,22 @@ All foundational libraries, responsive layout engines, and the streamlined **Dev
       - Subtle 35mm film grain overlay and seamless dark vignette ensuring headline readability.
       - Full `prefers-reduced-motion` compliance.
 
+### 12. 60 FPS Buttery-Smooth Inertia Scroll Engine & GSAP ScrollTrigger Integration (`/gsap-animation`, `/context7-mcp`)
+- **Status**: Implemented
+- **Description**:
+  - Integrated official GSAP & Lenis smooth scrolling engine based on live Context7 documentation:
+    - **60 FPS Inertia Momentum**: Configured with `duration: 1.2`, exponential easing curve `(t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))`, `smoothWheel: true`, `wheelMultiplier: 1.0`, and `touchMultiplier: 1.8`.
+    - **GSAP Ticker Master Lock**: Added `lenis.raf(time * 1000)` into `gsap.ticker.add(...)`, locking all scroll movement to GSAP's internal 60 FPS clock cycle.
+    - **Zero-Latency ScrollTrigger Sync**: Connected `lenis.on('scroll', ScrollTrigger.update)` and disabled lag smoothing via `gsap.ticker.lagSmoothing(0)`, completely eliminating trigger desync and position drift.
+    - **Global Root Provider**: Packaged in `<SmoothScrollProvider>` in `src/app/layout.tsx` with `lenis/dist/lenis.css`.
+    - **Unified Navigation & Back-to-Top**: Programmatic `lenisScrollTo` wired into `Navbar.tsx`'s `gsapScrollTo` and `Footer.tsx`'s "Back to Top" button with automatic `#hero` restart event dispatching.
+- **Key Files**:
+  - `src/components/providers/SmoothScrollProvider.tsx`
+  - `src/app/layout.tsx`
+  - `src/components/event/Navbar.tsx`
+  - `src/components/event/Footer.tsx`
+- **Verification**: Verified via `npm run build` compilation (0 errors, code 0) and static page generation.
+
 ### 6. Framework & Core Architecture
 - **Status**: Implemented
 - **Description**: Next.js 16 App Router with React 19, TypeScript, Turbopack, Tailwind CSS v4, Bebas Neue, Cormorant Garamond, and Space Grotesk fonts.
