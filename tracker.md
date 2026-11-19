@@ -1,5 +1,37 @@
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Hero Slideshow: Observer Transform Continuity & Choreographed Movement Sequence
+
+### Objective
+Implement an active GSAP transform observer in [HeroBackgroundSlideshow.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroBackgroundSlideshow.tsx) that tracks live pixel scale/position so that when a transition occurs midway, the incoming image resumes from that exact scale and pixel coordinates, configure a strict 1-second cadence, and execute the user's choreographed 8-phase movement sequence.
+
+### Changes Made
+1. **Live GSAP Transform Observer (`observerRef`)**:
+   - Queries `gsap.getProperty(currentImg, "scale" | "x" | "y")` at the exact instant of transition.
+   - Incoming image is initialized at that exact scale and coordinate without snapping back to 1.0.
+2. **Strict 1-Second Cadence**:
+   - Configured `STEP_DURATION_MS: 1000` (1 second per image).
+3. **Choreographed Movement Sequence (`CHOREOGRAPHY_SEQUENCE`)**:
+   - Step 1-2: Right shift + Fade-in (10% opacity) + Zoom in.
+   - Step 2-3: Right shift + Fade-in (20% opacity) + Zoom out.
+   - Step 3-4: Down shift + Fade-in (10% opacity) + Zoom in.
+   - Step 4-5: Down shift + Fade-in (20% opacity) + Zoom out.
+   - Step 5-6: Left shift + Fade-in (10% opacity) + Zoom in.
+   - Step 6-7: Left shift + Fade-in (20% opacity) + Zoom out.
+   - Step 7-8: Up shift + Fade-in (10% opacity) + Zoom in.
+   - Step 8-9: Up shift + Fade-in (20% opacity) + Zoom out.
+4. **Verification**:
+   - `next build`: Compiled with 0 errors in 2.5s; static page generation verified.
+
+### Current State
+Hero slideshow transitions continuously at 1s intervals, resuming live zoom/shift coordinates seamlessly.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/HeroBackgroundSlideshow.tsx` lines 42-120 to customize sequence steps.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-20 — Hero Slideshow: 30% -> 100% Gradual Opacity Ramp & Cross-Exposure Transition
 
 ### Objective
@@ -1393,6 +1425,38 @@ Integrate the video from `https://www.instagram.com/p/DaqR3Niyy2L/?hl=en` (the o
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Hero Slideshow: Observer Transform Continuity & Choreographed Movement Sequence
+
+### Objective
+Implement an active GSAP transform observer in [HeroBackgroundSlideshow.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroBackgroundSlideshow.tsx) that tracks live pixel scale/position so that when a transition occurs midway, the incoming image resumes from that exact scale and pixel coordinates, configure a strict 1-second cadence, and execute the user's choreographed 8-phase movement sequence.
+
+### Changes Made
+1. **Live GSAP Transform Observer (`observerRef`)**:
+   - Queries `gsap.getProperty(currentImg, "scale" | "x" | "y")` at the exact instant of transition.
+   - Incoming image is initialized at that exact scale and coordinate without snapping back to 1.0.
+2. **Strict 1-Second Cadence**:
+   - Configured `STEP_DURATION_MS: 1000` (1 second per image).
+3. **Choreographed Movement Sequence (`CHOREOGRAPHY_SEQUENCE`)**:
+   - Step 1-2: Right shift + Fade-in (10% opacity) + Zoom in.
+   - Step 2-3: Right shift + Fade-in (20% opacity) + Zoom out.
+   - Step 3-4: Down shift + Fade-in (10% opacity) + Zoom in.
+   - Step 4-5: Down shift + Fade-in (20% opacity) + Zoom out.
+   - Step 5-6: Left shift + Fade-in (10% opacity) + Zoom in.
+   - Step 6-7: Left shift + Fade-in (20% opacity) + Zoom out.
+   - Step 7-8: Up shift + Fade-in (10% opacity) + Zoom in.
+   - Step 8-9: Up shift + Fade-in (20% opacity) + Zoom out.
+4. **Verification**:
+   - `next build`: Compiled with 0 errors in 2.5s; static page generation verified.
+
+### Current State
+Hero slideshow transitions continuously at 1s intervals, resuming live zoom/shift coordinates seamlessly.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/HeroBackgroundSlideshow.tsx` lines 42-120 to customize sequence steps.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-20 — Hero Slideshow: 30% -> 100% Gradual Opacity Ramp & Cross-Exposure Transition
 
 ### Objective
@@ -2162,6 +2226,38 @@ Integrate the video from `https://www.instagram.com/p/DaqR3Niyy2L/?hl=en` (the o
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Hero Slideshow: Observer Transform Continuity & Choreographed Movement Sequence
+
+### Objective
+Implement an active GSAP transform observer in [HeroBackgroundSlideshow.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroBackgroundSlideshow.tsx) that tracks live pixel scale/position so that when a transition occurs midway, the incoming image resumes from that exact scale and pixel coordinates, configure a strict 1-second cadence, and execute the user's choreographed 8-phase movement sequence.
+
+### Changes Made
+1. **Live GSAP Transform Observer (`observerRef`)**:
+   - Queries `gsap.getProperty(currentImg, "scale" | "x" | "y")` at the exact instant of transition.
+   - Incoming image is initialized at that exact scale and coordinate without snapping back to 1.0.
+2. **Strict 1-Second Cadence**:
+   - Configured `STEP_DURATION_MS: 1000` (1 second per image).
+3. **Choreographed Movement Sequence (`CHOREOGRAPHY_SEQUENCE`)**:
+   - Step 1-2: Right shift + Fade-in (10% opacity) + Zoom in.
+   - Step 2-3: Right shift + Fade-in (20% opacity) + Zoom out.
+   - Step 3-4: Down shift + Fade-in (10% opacity) + Zoom in.
+   - Step 4-5: Down shift + Fade-in (20% opacity) + Zoom out.
+   - Step 5-6: Left shift + Fade-in (10% opacity) + Zoom in.
+   - Step 6-7: Left shift + Fade-in (20% opacity) + Zoom out.
+   - Step 7-8: Up shift + Fade-in (10% opacity) + Zoom in.
+   - Step 8-9: Up shift + Fade-in (20% opacity) + Zoom out.
+4. **Verification**:
+   - `next build`: Compiled with 0 errors in 2.5s; static page generation verified.
+
+### Current State
+Hero slideshow transitions continuously at 1s intervals, resuming live zoom/shift coordinates seamlessly.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/HeroBackgroundSlideshow.tsx` lines 42-120 to customize sequence steps.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-20 — Hero Slideshow: 30% -> 100% Gradual Opacity Ramp & Cross-Exposure Transition
 
 ### Objective
@@ -2898,6 +2994,38 @@ Rotate the background video 90 degrees so it is right-side up, and eliminate ver
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Hero Slideshow: Observer Transform Continuity & Choreographed Movement Sequence
+
+### Objective
+Implement an active GSAP transform observer in [HeroBackgroundSlideshow.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroBackgroundSlideshow.tsx) that tracks live pixel scale/position so that when a transition occurs midway, the incoming image resumes from that exact scale and pixel coordinates, configure a strict 1-second cadence, and execute the user's choreographed 8-phase movement sequence.
+
+### Changes Made
+1. **Live GSAP Transform Observer (`observerRef`)**:
+   - Queries `gsap.getProperty(currentImg, "scale" | "x" | "y")` at the exact instant of transition.
+   - Incoming image is initialized at that exact scale and coordinate without snapping back to 1.0.
+2. **Strict 1-Second Cadence**:
+   - Configured `STEP_DURATION_MS: 1000` (1 second per image).
+3. **Choreographed Movement Sequence (`CHOREOGRAPHY_SEQUENCE`)**:
+   - Step 1-2: Right shift + Fade-in (10% opacity) + Zoom in.
+   - Step 2-3: Right shift + Fade-in (20% opacity) + Zoom out.
+   - Step 3-4: Down shift + Fade-in (10% opacity) + Zoom in.
+   - Step 4-5: Down shift + Fade-in (20% opacity) + Zoom out.
+   - Step 5-6: Left shift + Fade-in (10% opacity) + Zoom in.
+   - Step 6-7: Left shift + Fade-in (20% opacity) + Zoom out.
+   - Step 7-8: Up shift + Fade-in (10% opacity) + Zoom in.
+   - Step 8-9: Up shift + Fade-in (20% opacity) + Zoom out.
+4. **Verification**:
+   - `next build`: Compiled with 0 errors in 2.5s; static page generation verified.
+
+### Current State
+Hero slideshow transitions continuously at 1s intervals, resuming live zoom/shift coordinates seamlessly.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/HeroBackgroundSlideshow.tsx` lines 42-120 to customize sequence steps.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-20 — Hero Slideshow: 30% -> 100% Gradual Opacity Ramp & Cross-Exposure Transition
 
 ### Objective
@@ -3606,6 +3734,38 @@ Rotate the background video 180 degrees per user instruction to invert the orien
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Hero Slideshow: Observer Transform Continuity & Choreographed Movement Sequence
+
+### Objective
+Implement an active GSAP transform observer in [HeroBackgroundSlideshow.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroBackgroundSlideshow.tsx) that tracks live pixel scale/position so that when a transition occurs midway, the incoming image resumes from that exact scale and pixel coordinates, configure a strict 1-second cadence, and execute the user's choreographed 8-phase movement sequence.
+
+### Changes Made
+1. **Live GSAP Transform Observer (`observerRef`)**:
+   - Queries `gsap.getProperty(currentImg, "scale" | "x" | "y")` at the exact instant of transition.
+   - Incoming image is initialized at that exact scale and coordinate without snapping back to 1.0.
+2. **Strict 1-Second Cadence**:
+   - Configured `STEP_DURATION_MS: 1000` (1 second per image).
+3. **Choreographed Movement Sequence (`CHOREOGRAPHY_SEQUENCE`)**:
+   - Step 1-2: Right shift + Fade-in (10% opacity) + Zoom in.
+   - Step 2-3: Right shift + Fade-in (20% opacity) + Zoom out.
+   - Step 3-4: Down shift + Fade-in (10% opacity) + Zoom in.
+   - Step 4-5: Down shift + Fade-in (20% opacity) + Zoom out.
+   - Step 5-6: Left shift + Fade-in (10% opacity) + Zoom in.
+   - Step 6-7: Left shift + Fade-in (20% opacity) + Zoom out.
+   - Step 7-8: Up shift + Fade-in (10% opacity) + Zoom in.
+   - Step 8-9: Up shift + Fade-in (20% opacity) + Zoom out.
+4. **Verification**:
+   - `next build`: Compiled with 0 errors in 2.5s; static page generation verified.
+
+### Current State
+Hero slideshow transitions continuously at 1s intervals, resuming live zoom/shift coordinates seamlessly.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/HeroBackgroundSlideshow.tsx` lines 42-120 to customize sequence steps.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-20 — Hero Slideshow: 30% -> 100% Gradual Opacity Ramp & Cross-Exposure Transition
 
 ### Objective
@@ -4290,6 +4450,38 @@ Remove the "Google Developer Group Kolkata" logo from the top-left of the hero s
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Hero Slideshow: Observer Transform Continuity & Choreographed Movement Sequence
+
+### Objective
+Implement an active GSAP transform observer in [HeroBackgroundSlideshow.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroBackgroundSlideshow.tsx) that tracks live pixel scale/position so that when a transition occurs midway, the incoming image resumes from that exact scale and pixel coordinates, configure a strict 1-second cadence, and execute the user's choreographed 8-phase movement sequence.
+
+### Changes Made
+1. **Live GSAP Transform Observer (`observerRef`)**:
+   - Queries `gsap.getProperty(currentImg, "scale" | "x" | "y")` at the exact instant of transition.
+   - Incoming image is initialized at that exact scale and coordinate without snapping back to 1.0.
+2. **Strict 1-Second Cadence**:
+   - Configured `STEP_DURATION_MS: 1000` (1 second per image).
+3. **Choreographed Movement Sequence (`CHOREOGRAPHY_SEQUENCE`)**:
+   - Step 1-2: Right shift + Fade-in (10% opacity) + Zoom in.
+   - Step 2-3: Right shift + Fade-in (20% opacity) + Zoom out.
+   - Step 3-4: Down shift + Fade-in (10% opacity) + Zoom in.
+   - Step 4-5: Down shift + Fade-in (20% opacity) + Zoom out.
+   - Step 5-6: Left shift + Fade-in (10% opacity) + Zoom in.
+   - Step 6-7: Left shift + Fade-in (20% opacity) + Zoom out.
+   - Step 7-8: Up shift + Fade-in (10% opacity) + Zoom in.
+   - Step 8-9: Up shift + Fade-in (20% opacity) + Zoom out.
+4. **Verification**:
+   - `next build`: Compiled with 0 errors in 2.5s; static page generation verified.
+
+### Current State
+Hero slideshow transitions continuously at 1s intervals, resuming live zoom/shift coordinates seamlessly.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/HeroBackgroundSlideshow.tsx` lines 42-120 to customize sequence steps.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-20 — Hero Slideshow: 30% -> 100% Gradual Opacity Ramp & Cross-Exposure Transition
 
 ### Objective
@@ -4950,6 +5142,38 @@ Implement the DevFest Kolkata "card up" bottom sheet reveal animation (matching 
 ---
 
 # Agent Handoff Log — tracker.md
+
+## 2026-11-20 — Hero Slideshow: Observer Transform Continuity & Choreographed Movement Sequence
+
+### Objective
+Implement an active GSAP transform observer in [HeroBackgroundSlideshow.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroBackgroundSlideshow.tsx) that tracks live pixel scale/position so that when a transition occurs midway, the incoming image resumes from that exact scale and pixel coordinates, configure a strict 1-second cadence, and execute the user's choreographed 8-phase movement sequence.
+
+### Changes Made
+1. **Live GSAP Transform Observer (`observerRef`)**:
+   - Queries `gsap.getProperty(currentImg, "scale" | "x" | "y")` at the exact instant of transition.
+   - Incoming image is initialized at that exact scale and coordinate without snapping back to 1.0.
+2. **Strict 1-Second Cadence**:
+   - Configured `STEP_DURATION_MS: 1000` (1 second per image).
+3. **Choreographed Movement Sequence (`CHOREOGRAPHY_SEQUENCE`)**:
+   - Step 1-2: Right shift + Fade-in (10% opacity) + Zoom in.
+   - Step 2-3: Right shift + Fade-in (20% opacity) + Zoom out.
+   - Step 3-4: Down shift + Fade-in (10% opacity) + Zoom in.
+   - Step 4-5: Down shift + Fade-in (20% opacity) + Zoom out.
+   - Step 5-6: Left shift + Fade-in (10% opacity) + Zoom in.
+   - Step 6-7: Left shift + Fade-in (20% opacity) + Zoom out.
+   - Step 7-8: Up shift + Fade-in (10% opacity) + Zoom in.
+   - Step 8-9: Up shift + Fade-in (20% opacity) + Zoom out.
+4. **Verification**:
+   - `next build`: Compiled with 0 errors in 2.5s; static page generation verified.
+
+### Current State
+Hero slideshow transitions continuously at 1s intervals, resuming live zoom/shift coordinates seamlessly.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/HeroBackgroundSlideshow.tsx` lines 42-120 to customize sequence steps.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
 
 ## 2026-11-20 — Hero Slideshow: 30% -> 100% Gradual Opacity Ramp & Cross-Exposure Transition
 
@@ -5626,6 +5850,38 @@ Implement the DevFest Kolkata "card up" bottom sheet reveal animation (matching 
 ---
 
 # Agent Handoff Log — tracker.md
+
+## 2026-11-20 — Hero Slideshow: Observer Transform Continuity & Choreographed Movement Sequence
+
+### Objective
+Implement an active GSAP transform observer in [HeroBackgroundSlideshow.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroBackgroundSlideshow.tsx) that tracks live pixel scale/position so that when a transition occurs midway, the incoming image resumes from that exact scale and pixel coordinates, configure a strict 1-second cadence, and execute the user's choreographed 8-phase movement sequence.
+
+### Changes Made
+1. **Live GSAP Transform Observer (`observerRef`)**:
+   - Queries `gsap.getProperty(currentImg, "scale" | "x" | "y")` at the exact instant of transition.
+   - Incoming image is initialized at that exact scale and coordinate without snapping back to 1.0.
+2. **Strict 1-Second Cadence**:
+   - Configured `STEP_DURATION_MS: 1000` (1 second per image).
+3. **Choreographed Movement Sequence (`CHOREOGRAPHY_SEQUENCE`)**:
+   - Step 1-2: Right shift + Fade-in (10% opacity) + Zoom in.
+   - Step 2-3: Right shift + Fade-in (20% opacity) + Zoom out.
+   - Step 3-4: Down shift + Fade-in (10% opacity) + Zoom in.
+   - Step 4-5: Down shift + Fade-in (20% opacity) + Zoom out.
+   - Step 5-6: Left shift + Fade-in (10% opacity) + Zoom in.
+   - Step 6-7: Left shift + Fade-in (20% opacity) + Zoom out.
+   - Step 7-8: Up shift + Fade-in (10% opacity) + Zoom in.
+   - Step 8-9: Up shift + Fade-in (20% opacity) + Zoom out.
+4. **Verification**:
+   - `next build`: Compiled with 0 errors in 2.5s; static page generation verified.
+
+### Current State
+Hero slideshow transitions continuously at 1s intervals, resuming live zoom/shift coordinates seamlessly.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/HeroBackgroundSlideshow.tsx` lines 42-120 to customize sequence steps.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
 
 ## 2026-11-20 — Hero Slideshow: 30% -> 100% Gradual Opacity Ramp & Cross-Exposure Transition
 
@@ -6443,6 +6699,38 @@ Integrate the video from `https://www.instagram.com/p/DaqR3Niyy2L/?hl=en` (the o
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Hero Slideshow: Observer Transform Continuity & Choreographed Movement Sequence
+
+### Objective
+Implement an active GSAP transform observer in [HeroBackgroundSlideshow.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroBackgroundSlideshow.tsx) that tracks live pixel scale/position so that when a transition occurs midway, the incoming image resumes from that exact scale and pixel coordinates, configure a strict 1-second cadence, and execute the user's choreographed 8-phase movement sequence.
+
+### Changes Made
+1. **Live GSAP Transform Observer (`observerRef`)**:
+   - Queries `gsap.getProperty(currentImg, "scale" | "x" | "y")` at the exact instant of transition.
+   - Incoming image is initialized at that exact scale and coordinate without snapping back to 1.0.
+2. **Strict 1-Second Cadence**:
+   - Configured `STEP_DURATION_MS: 1000` (1 second per image).
+3. **Choreographed Movement Sequence (`CHOREOGRAPHY_SEQUENCE`)**:
+   - Step 1-2: Right shift + Fade-in (10% opacity) + Zoom in.
+   - Step 2-3: Right shift + Fade-in (20% opacity) + Zoom out.
+   - Step 3-4: Down shift + Fade-in (10% opacity) + Zoom in.
+   - Step 4-5: Down shift + Fade-in (20% opacity) + Zoom out.
+   - Step 5-6: Left shift + Fade-in (10% opacity) + Zoom in.
+   - Step 6-7: Left shift + Fade-in (20% opacity) + Zoom out.
+   - Step 7-8: Up shift + Fade-in (10% opacity) + Zoom in.
+   - Step 8-9: Up shift + Fade-in (20% opacity) + Zoom out.
+4. **Verification**:
+   - `next build`: Compiled with 0 errors in 2.5s; static page generation verified.
+
+### Current State
+Hero slideshow transitions continuously at 1s intervals, resuming live zoom/shift coordinates seamlessly.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/HeroBackgroundSlideshow.tsx` lines 42-120 to customize sequence steps.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-20 — Hero Slideshow: 30% -> 100% Gradual Opacity Ramp & Cross-Exposure Transition
 
 ### Objective
@@ -7212,6 +7500,38 @@ Integrate the video from `https://www.instagram.com/p/DaqR3Niyy2L/?hl=en` (the o
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Hero Slideshow: Observer Transform Continuity & Choreographed Movement Sequence
+
+### Objective
+Implement an active GSAP transform observer in [HeroBackgroundSlideshow.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroBackgroundSlideshow.tsx) that tracks live pixel scale/position so that when a transition occurs midway, the incoming image resumes from that exact scale and pixel coordinates, configure a strict 1-second cadence, and execute the user's choreographed 8-phase movement sequence.
+
+### Changes Made
+1. **Live GSAP Transform Observer (`observerRef`)**:
+   - Queries `gsap.getProperty(currentImg, "scale" | "x" | "y")` at the exact instant of transition.
+   - Incoming image is initialized at that exact scale and coordinate without snapping back to 1.0.
+2. **Strict 1-Second Cadence**:
+   - Configured `STEP_DURATION_MS: 1000` (1 second per image).
+3. **Choreographed Movement Sequence (`CHOREOGRAPHY_SEQUENCE`)**:
+   - Step 1-2: Right shift + Fade-in (10% opacity) + Zoom in.
+   - Step 2-3: Right shift + Fade-in (20% opacity) + Zoom out.
+   - Step 3-4: Down shift + Fade-in (10% opacity) + Zoom in.
+   - Step 4-5: Down shift + Fade-in (20% opacity) + Zoom out.
+   - Step 5-6: Left shift + Fade-in (10% opacity) + Zoom in.
+   - Step 6-7: Left shift + Fade-in (20% opacity) + Zoom out.
+   - Step 7-8: Up shift + Fade-in (10% opacity) + Zoom in.
+   - Step 8-9: Up shift + Fade-in (20% opacity) + Zoom out.
+4. **Verification**:
+   - `next build`: Compiled with 0 errors in 2.5s; static page generation verified.
+
+### Current State
+Hero slideshow transitions continuously at 1s intervals, resuming live zoom/shift coordinates seamlessly.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/HeroBackgroundSlideshow.tsx` lines 42-120 to customize sequence steps.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-20 — Hero Slideshow: 30% -> 100% Gradual Opacity Ramp & Cross-Exposure Transition
 
 ### Objective
@@ -7948,6 +8268,38 @@ Rotate the background video 90 degrees so it is right-side up, and eliminate ver
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Hero Slideshow: Observer Transform Continuity & Choreographed Movement Sequence
+
+### Objective
+Implement an active GSAP transform observer in [HeroBackgroundSlideshow.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroBackgroundSlideshow.tsx) that tracks live pixel scale/position so that when a transition occurs midway, the incoming image resumes from that exact scale and pixel coordinates, configure a strict 1-second cadence, and execute the user's choreographed 8-phase movement sequence.
+
+### Changes Made
+1. **Live GSAP Transform Observer (`observerRef`)**:
+   - Queries `gsap.getProperty(currentImg, "scale" | "x" | "y")` at the exact instant of transition.
+   - Incoming image is initialized at that exact scale and coordinate without snapping back to 1.0.
+2. **Strict 1-Second Cadence**:
+   - Configured `STEP_DURATION_MS: 1000` (1 second per image).
+3. **Choreographed Movement Sequence (`CHOREOGRAPHY_SEQUENCE`)**:
+   - Step 1-2: Right shift + Fade-in (10% opacity) + Zoom in.
+   - Step 2-3: Right shift + Fade-in (20% opacity) + Zoom out.
+   - Step 3-4: Down shift + Fade-in (10% opacity) + Zoom in.
+   - Step 4-5: Down shift + Fade-in (20% opacity) + Zoom out.
+   - Step 5-6: Left shift + Fade-in (10% opacity) + Zoom in.
+   - Step 6-7: Left shift + Fade-in (20% opacity) + Zoom out.
+   - Step 7-8: Up shift + Fade-in (10% opacity) + Zoom in.
+   - Step 8-9: Up shift + Fade-in (20% opacity) + Zoom out.
+4. **Verification**:
+   - `next build`: Compiled with 0 errors in 2.5s; static page generation verified.
+
+### Current State
+Hero slideshow transitions continuously at 1s intervals, resuming live zoom/shift coordinates seamlessly.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/HeroBackgroundSlideshow.tsx` lines 42-120 to customize sequence steps.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-20 — Hero Slideshow: 30% -> 100% Gradual Opacity Ramp & Cross-Exposure Transition
 
 ### Objective
@@ -8656,6 +9008,38 @@ Rotate the background video 180 degrees per user instruction to invert the orien
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Hero Slideshow: Observer Transform Continuity & Choreographed Movement Sequence
+
+### Objective
+Implement an active GSAP transform observer in [HeroBackgroundSlideshow.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroBackgroundSlideshow.tsx) that tracks live pixel scale/position so that when a transition occurs midway, the incoming image resumes from that exact scale and pixel coordinates, configure a strict 1-second cadence, and execute the user's choreographed 8-phase movement sequence.
+
+### Changes Made
+1. **Live GSAP Transform Observer (`observerRef`)**:
+   - Queries `gsap.getProperty(currentImg, "scale" | "x" | "y")` at the exact instant of transition.
+   - Incoming image is initialized at that exact scale and coordinate without snapping back to 1.0.
+2. **Strict 1-Second Cadence**:
+   - Configured `STEP_DURATION_MS: 1000` (1 second per image).
+3. **Choreographed Movement Sequence (`CHOREOGRAPHY_SEQUENCE`)**:
+   - Step 1-2: Right shift + Fade-in (10% opacity) + Zoom in.
+   - Step 2-3: Right shift + Fade-in (20% opacity) + Zoom out.
+   - Step 3-4: Down shift + Fade-in (10% opacity) + Zoom in.
+   - Step 4-5: Down shift + Fade-in (20% opacity) + Zoom out.
+   - Step 5-6: Left shift + Fade-in (10% opacity) + Zoom in.
+   - Step 6-7: Left shift + Fade-in (20% opacity) + Zoom out.
+   - Step 7-8: Up shift + Fade-in (10% opacity) + Zoom in.
+   - Step 8-9: Up shift + Fade-in (20% opacity) + Zoom out.
+4. **Verification**:
+   - `next build`: Compiled with 0 errors in 2.5s; static page generation verified.
+
+### Current State
+Hero slideshow transitions continuously at 1s intervals, resuming live zoom/shift coordinates seamlessly.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/HeroBackgroundSlideshow.tsx` lines 42-120 to customize sequence steps.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-20 — Hero Slideshow: 30% -> 100% Gradual Opacity Ramp & Cross-Exposure Transition
 
 ### Objective
@@ -9340,6 +9724,38 @@ Remove the "Google Developer Group Kolkata" logo from the top-left of the hero s
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Hero Slideshow: Observer Transform Continuity & Choreographed Movement Sequence
+
+### Objective
+Implement an active GSAP transform observer in [HeroBackgroundSlideshow.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroBackgroundSlideshow.tsx) that tracks live pixel scale/position so that when a transition occurs midway, the incoming image resumes from that exact scale and pixel coordinates, configure a strict 1-second cadence, and execute the user's choreographed 8-phase movement sequence.
+
+### Changes Made
+1. **Live GSAP Transform Observer (`observerRef`)**:
+   - Queries `gsap.getProperty(currentImg, "scale" | "x" | "y")` at the exact instant of transition.
+   - Incoming image is initialized at that exact scale and coordinate without snapping back to 1.0.
+2. **Strict 1-Second Cadence**:
+   - Configured `STEP_DURATION_MS: 1000` (1 second per image).
+3. **Choreographed Movement Sequence (`CHOREOGRAPHY_SEQUENCE`)**:
+   - Step 1-2: Right shift + Fade-in (10% opacity) + Zoom in.
+   - Step 2-3: Right shift + Fade-in (20% opacity) + Zoom out.
+   - Step 3-4: Down shift + Fade-in (10% opacity) + Zoom in.
+   - Step 4-5: Down shift + Fade-in (20% opacity) + Zoom out.
+   - Step 5-6: Left shift + Fade-in (10% opacity) + Zoom in.
+   - Step 6-7: Left shift + Fade-in (20% opacity) + Zoom out.
+   - Step 7-8: Up shift + Fade-in (10% opacity) + Zoom in.
+   - Step 8-9: Up shift + Fade-in (20% opacity) + Zoom out.
+4. **Verification**:
+   - `next build`: Compiled with 0 errors in 2.5s; static page generation verified.
+
+### Current State
+Hero slideshow transitions continuously at 1s intervals, resuming live zoom/shift coordinates seamlessly.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/HeroBackgroundSlideshow.tsx` lines 42-120 to customize sequence steps.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-20 — Hero Slideshow: 30% -> 100% Gradual Opacity Ramp & Cross-Exposure Transition
 
 ### Objective
@@ -10000,6 +10416,38 @@ Implement the DevFest Kolkata "card up" bottom sheet reveal animation (matching 
 ---
 
 # Agent Handoff Log — tracker.md
+
+## 2026-11-20 — Hero Slideshow: Observer Transform Continuity & Choreographed Movement Sequence
+
+### Objective
+Implement an active GSAP transform observer in [HeroBackgroundSlideshow.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroBackgroundSlideshow.tsx) that tracks live pixel scale/position so that when a transition occurs midway, the incoming image resumes from that exact scale and pixel coordinates, configure a strict 1-second cadence, and execute the user's choreographed 8-phase movement sequence.
+
+### Changes Made
+1. **Live GSAP Transform Observer (`observerRef`)**:
+   - Queries `gsap.getProperty(currentImg, "scale" | "x" | "y")` at the exact instant of transition.
+   - Incoming image is initialized at that exact scale and coordinate without snapping back to 1.0.
+2. **Strict 1-Second Cadence**:
+   - Configured `STEP_DURATION_MS: 1000` (1 second per image).
+3. **Choreographed Movement Sequence (`CHOREOGRAPHY_SEQUENCE`)**:
+   - Step 1-2: Right shift + Fade-in (10% opacity) + Zoom in.
+   - Step 2-3: Right shift + Fade-in (20% opacity) + Zoom out.
+   - Step 3-4: Down shift + Fade-in (10% opacity) + Zoom in.
+   - Step 4-5: Down shift + Fade-in (20% opacity) + Zoom out.
+   - Step 5-6: Left shift + Fade-in (10% opacity) + Zoom in.
+   - Step 6-7: Left shift + Fade-in (20% opacity) + Zoom out.
+   - Step 7-8: Up shift + Fade-in (10% opacity) + Zoom in.
+   - Step 8-9: Up shift + Fade-in (20% opacity) + Zoom out.
+4. **Verification**:
+   - `next build`: Compiled with 0 errors in 2.5s; static page generation verified.
+
+### Current State
+Hero slideshow transitions continuously at 1s intervals, resuming live zoom/shift coordinates seamlessly.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/HeroBackgroundSlideshow.tsx` lines 42-120 to customize sequence steps.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
 
 ## 2026-11-20 — Hero Slideshow: 30% -> 100% Gradual Opacity Ramp & Cross-Exposure Transition
 
