@@ -1,5 +1,29 @@
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Dignitaries Section: Object Position Control for Prof. Ishan Ghosh
+
+### Objective
+Expose and configure exact image framing and alignment control for dignitaries cards in [DignitariesSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/DignitariesSection.tsx), fixing portrait crop on Prof. Ishan Ghosh whose head/face was cut off due to tall aspect ratio (407x753) under default `object-center`.
+
+### Changes Made
+1. **Added `objectPosition` to `DignitaryProfile` interface**:
+   - Enabled granular control per dignitary profile in `DIGNITARIES` dataset.
+2. **Configured `object-bottom` for Prof. Ishan Ghosh**:
+   - Positioned Prof. Ishan Ghosh with `objectPosition: "object-bottom"`, shifting the image upwards so his face and upper body are fully visible inside the card plinth.
+3. **Dynamic Object Position Binding**:
+   - Updated `<img>` tag in `DignitariesSection.tsx` from static `object-center` to `${person.objectPosition || "object-center"}`.
+4. **Verification**:
+   - `npm run build` compiled cleanly with 0 TypeScript/Turbopack errors in 9.8s.
+
+### Current State
+Prof. Ishan Ghosh is now framed using `object-bottom` (or custom values like `object-[center_85%]`), displaying his full face within the card frame.
+
+### Next Agent Instructions
+1. Inspect [DignitariesSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/DignitariesSection.tsx) lines 43-52 and line 168 to adjust `objectPosition`.
+2. Sync remotes `origin` and `trial`.
+
+---
+
 ## 2026-11-20 — Hero Slideshow: Observer Transform Continuity & Choreographed Movement Sequence
 
 ### Objective
@@ -1425,6 +1449,30 @@ Integrate the video from `https://www.instagram.com/p/DaqR3Niyy2L/?hl=en` (the o
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Dignitaries Section: Object Position Control for Prof. Ishan Ghosh
+
+### Objective
+Expose and configure exact image framing and alignment control for dignitaries cards in [DignitariesSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/DignitariesSection.tsx), fixing portrait crop on Prof. Ishan Ghosh whose head/face was cut off due to tall aspect ratio (407x753) under default `object-center`.
+
+### Changes Made
+1. **Added `objectPosition` to `DignitaryProfile` interface**:
+   - Enabled granular control per dignitary profile in `DIGNITARIES` dataset.
+2. **Configured `object-bottom` for Prof. Ishan Ghosh**:
+   - Positioned Prof. Ishan Ghosh with `objectPosition: "object-bottom"`, shifting the image upwards so his face and upper body are fully visible inside the card plinth.
+3. **Dynamic Object Position Binding**:
+   - Updated `<img>` tag in `DignitariesSection.tsx` from static `object-center` to `${person.objectPosition || "object-center"}`.
+4. **Verification**:
+   - `npm run build` compiled cleanly with 0 TypeScript/Turbopack errors in 9.8s.
+
+### Current State
+Prof. Ishan Ghosh is now framed using `object-bottom` (or custom values like `object-[center_85%]`), displaying his full face within the card frame.
+
+### Next Agent Instructions
+1. Inspect [DignitariesSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/DignitariesSection.tsx) lines 43-52 and line 168 to adjust `objectPosition`.
+2. Sync remotes `origin` and `trial`.
+
+---
+
 ## 2026-11-20 — Hero Slideshow: Observer Transform Continuity & Choreographed Movement Sequence
 
 ### Objective
@@ -2226,6 +2274,30 @@ Integrate the video from `https://www.instagram.com/p/DaqR3Niyy2L/?hl=en` (the o
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Dignitaries Section: Object Position Control for Prof. Ishan Ghosh
+
+### Objective
+Expose and configure exact image framing and alignment control for dignitaries cards in [DignitariesSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/DignitariesSection.tsx), fixing portrait crop on Prof. Ishan Ghosh whose head/face was cut off due to tall aspect ratio (407x753) under default `object-center`.
+
+### Changes Made
+1. **Added `objectPosition` to `DignitaryProfile` interface**:
+   - Enabled granular control per dignitary profile in `DIGNITARIES` dataset.
+2. **Configured `object-bottom` for Prof. Ishan Ghosh**:
+   - Positioned Prof. Ishan Ghosh with `objectPosition: "object-bottom"`, shifting the image upwards so his face and upper body are fully visible inside the card plinth.
+3. **Dynamic Object Position Binding**:
+   - Updated `<img>` tag in `DignitariesSection.tsx` from static `object-center` to `${person.objectPosition || "object-center"}`.
+4. **Verification**:
+   - `npm run build` compiled cleanly with 0 TypeScript/Turbopack errors in 9.8s.
+
+### Current State
+Prof. Ishan Ghosh is now framed using `object-bottom` (or custom values like `object-[center_85%]`), displaying his full face within the card frame.
+
+### Next Agent Instructions
+1. Inspect [DignitariesSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/DignitariesSection.tsx) lines 43-52 and line 168 to adjust `objectPosition`.
+2. Sync remotes `origin` and `trial`.
+
+---
+
 ## 2026-11-20 — Hero Slideshow: Observer Transform Continuity & Choreographed Movement Sequence
 
 ### Objective
@@ -2994,6 +3066,30 @@ Rotate the background video 90 degrees so it is right-side up, and eliminate ver
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Dignitaries Section: Object Position Control for Prof. Ishan Ghosh
+
+### Objective
+Expose and configure exact image framing and alignment control for dignitaries cards in [DignitariesSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/DignitariesSection.tsx), fixing portrait crop on Prof. Ishan Ghosh whose head/face was cut off due to tall aspect ratio (407x753) under default `object-center`.
+
+### Changes Made
+1. **Added `objectPosition` to `DignitaryProfile` interface**:
+   - Enabled granular control per dignitary profile in `DIGNITARIES` dataset.
+2. **Configured `object-bottom` for Prof. Ishan Ghosh**:
+   - Positioned Prof. Ishan Ghosh with `objectPosition: "object-bottom"`, shifting the image upwards so his face and upper body are fully visible inside the card plinth.
+3. **Dynamic Object Position Binding**:
+   - Updated `<img>` tag in `DignitariesSection.tsx` from static `object-center` to `${person.objectPosition || "object-center"}`.
+4. **Verification**:
+   - `npm run build` compiled cleanly with 0 TypeScript/Turbopack errors in 9.8s.
+
+### Current State
+Prof. Ishan Ghosh is now framed using `object-bottom` (or custom values like `object-[center_85%]`), displaying his full face within the card frame.
+
+### Next Agent Instructions
+1. Inspect [DignitariesSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/DignitariesSection.tsx) lines 43-52 and line 168 to adjust `objectPosition`.
+2. Sync remotes `origin` and `trial`.
+
+---
+
 ## 2026-11-20 — Hero Slideshow: Observer Transform Continuity & Choreographed Movement Sequence
 
 ### Objective
@@ -3734,6 +3830,30 @@ Rotate the background video 180 degrees per user instruction to invert the orien
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Dignitaries Section: Object Position Control for Prof. Ishan Ghosh
+
+### Objective
+Expose and configure exact image framing and alignment control for dignitaries cards in [DignitariesSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/DignitariesSection.tsx), fixing portrait crop on Prof. Ishan Ghosh whose head/face was cut off due to tall aspect ratio (407x753) under default `object-center`.
+
+### Changes Made
+1. **Added `objectPosition` to `DignitaryProfile` interface**:
+   - Enabled granular control per dignitary profile in `DIGNITARIES` dataset.
+2. **Configured `object-bottom` for Prof. Ishan Ghosh**:
+   - Positioned Prof. Ishan Ghosh with `objectPosition: "object-bottom"`, shifting the image upwards so his face and upper body are fully visible inside the card plinth.
+3. **Dynamic Object Position Binding**:
+   - Updated `<img>` tag in `DignitariesSection.tsx` from static `object-center` to `${person.objectPosition || "object-center"}`.
+4. **Verification**:
+   - `npm run build` compiled cleanly with 0 TypeScript/Turbopack errors in 9.8s.
+
+### Current State
+Prof. Ishan Ghosh is now framed using `object-bottom` (or custom values like `object-[center_85%]`), displaying his full face within the card frame.
+
+### Next Agent Instructions
+1. Inspect [DignitariesSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/DignitariesSection.tsx) lines 43-52 and line 168 to adjust `objectPosition`.
+2. Sync remotes `origin` and `trial`.
+
+---
+
 ## 2026-11-20 — Hero Slideshow: Observer Transform Continuity & Choreographed Movement Sequence
 
 ### Objective
@@ -4450,6 +4570,30 @@ Remove the "Google Developer Group Kolkata" logo from the top-left of the hero s
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Dignitaries Section: Object Position Control for Prof. Ishan Ghosh
+
+### Objective
+Expose and configure exact image framing and alignment control for dignitaries cards in [DignitariesSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/DignitariesSection.tsx), fixing portrait crop on Prof. Ishan Ghosh whose head/face was cut off due to tall aspect ratio (407x753) under default `object-center`.
+
+### Changes Made
+1. **Added `objectPosition` to `DignitaryProfile` interface**:
+   - Enabled granular control per dignitary profile in `DIGNITARIES` dataset.
+2. **Configured `object-bottom` for Prof. Ishan Ghosh**:
+   - Positioned Prof. Ishan Ghosh with `objectPosition: "object-bottom"`, shifting the image upwards so his face and upper body are fully visible inside the card plinth.
+3. **Dynamic Object Position Binding**:
+   - Updated `<img>` tag in `DignitariesSection.tsx` from static `object-center` to `${person.objectPosition || "object-center"}`.
+4. **Verification**:
+   - `npm run build` compiled cleanly with 0 TypeScript/Turbopack errors in 9.8s.
+
+### Current State
+Prof. Ishan Ghosh is now framed using `object-bottom` (or custom values like `object-[center_85%]`), displaying his full face within the card frame.
+
+### Next Agent Instructions
+1. Inspect [DignitariesSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/DignitariesSection.tsx) lines 43-52 and line 168 to adjust `objectPosition`.
+2. Sync remotes `origin` and `trial`.
+
+---
+
 ## 2026-11-20 — Hero Slideshow: Observer Transform Continuity & Choreographed Movement Sequence
 
 ### Objective
@@ -5142,6 +5286,30 @@ Implement the DevFest Kolkata "card up" bottom sheet reveal animation (matching 
 ---
 
 # Agent Handoff Log — tracker.md
+
+## 2026-11-20 — Dignitaries Section: Object Position Control for Prof. Ishan Ghosh
+
+### Objective
+Expose and configure exact image framing and alignment control for dignitaries cards in [DignitariesSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/DignitariesSection.tsx), fixing portrait crop on Prof. Ishan Ghosh whose head/face was cut off due to tall aspect ratio (407x753) under default `object-center`.
+
+### Changes Made
+1. **Added `objectPosition` to `DignitaryProfile` interface**:
+   - Enabled granular control per dignitary profile in `DIGNITARIES` dataset.
+2. **Configured `object-bottom` for Prof. Ishan Ghosh**:
+   - Positioned Prof. Ishan Ghosh with `objectPosition: "object-bottom"`, shifting the image upwards so his face and upper body are fully visible inside the card plinth.
+3. **Dynamic Object Position Binding**:
+   - Updated `<img>` tag in `DignitariesSection.tsx` from static `object-center` to `${person.objectPosition || "object-center"}`.
+4. **Verification**:
+   - `npm run build` compiled cleanly with 0 TypeScript/Turbopack errors in 9.8s.
+
+### Current State
+Prof. Ishan Ghosh is now framed using `object-bottom` (or custom values like `object-[center_85%]`), displaying his full face within the card frame.
+
+### Next Agent Instructions
+1. Inspect [DignitariesSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/DignitariesSection.tsx) lines 43-52 and line 168 to adjust `objectPosition`.
+2. Sync remotes `origin` and `trial`.
+
+---
 
 ## 2026-11-20 — Hero Slideshow: Observer Transform Continuity & Choreographed Movement Sequence
 
@@ -5850,6 +6018,30 @@ Implement the DevFest Kolkata "card up" bottom sheet reveal animation (matching 
 ---
 
 # Agent Handoff Log — tracker.md
+
+## 2026-11-20 — Dignitaries Section: Object Position Control for Prof. Ishan Ghosh
+
+### Objective
+Expose and configure exact image framing and alignment control for dignitaries cards in [DignitariesSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/DignitariesSection.tsx), fixing portrait crop on Prof. Ishan Ghosh whose head/face was cut off due to tall aspect ratio (407x753) under default `object-center`.
+
+### Changes Made
+1. **Added `objectPosition` to `DignitaryProfile` interface**:
+   - Enabled granular control per dignitary profile in `DIGNITARIES` dataset.
+2. **Configured `object-bottom` for Prof. Ishan Ghosh**:
+   - Positioned Prof. Ishan Ghosh with `objectPosition: "object-bottom"`, shifting the image upwards so his face and upper body are fully visible inside the card plinth.
+3. **Dynamic Object Position Binding**:
+   - Updated `<img>` tag in `DignitariesSection.tsx` from static `object-center` to `${person.objectPosition || "object-center"}`.
+4. **Verification**:
+   - `npm run build` compiled cleanly with 0 TypeScript/Turbopack errors in 9.8s.
+
+### Current State
+Prof. Ishan Ghosh is now framed using `object-bottom` (or custom values like `object-[center_85%]`), displaying his full face within the card frame.
+
+### Next Agent Instructions
+1. Inspect [DignitariesSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/DignitariesSection.tsx) lines 43-52 and line 168 to adjust `objectPosition`.
+2. Sync remotes `origin` and `trial`.
+
+---
 
 ## 2026-11-20 — Hero Slideshow: Observer Transform Continuity & Choreographed Movement Sequence
 
@@ -6699,6 +6891,30 @@ Integrate the video from `https://www.instagram.com/p/DaqR3Niyy2L/?hl=en` (the o
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Dignitaries Section: Object Position Control for Prof. Ishan Ghosh
+
+### Objective
+Expose and configure exact image framing and alignment control for dignitaries cards in [DignitariesSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/DignitariesSection.tsx), fixing portrait crop on Prof. Ishan Ghosh whose head/face was cut off due to tall aspect ratio (407x753) under default `object-center`.
+
+### Changes Made
+1. **Added `objectPosition` to `DignitaryProfile` interface**:
+   - Enabled granular control per dignitary profile in `DIGNITARIES` dataset.
+2. **Configured `object-bottom` for Prof. Ishan Ghosh**:
+   - Positioned Prof. Ishan Ghosh with `objectPosition: "object-bottom"`, shifting the image upwards so his face and upper body are fully visible inside the card plinth.
+3. **Dynamic Object Position Binding**:
+   - Updated `<img>` tag in `DignitariesSection.tsx` from static `object-center` to `${person.objectPosition || "object-center"}`.
+4. **Verification**:
+   - `npm run build` compiled cleanly with 0 TypeScript/Turbopack errors in 9.8s.
+
+### Current State
+Prof. Ishan Ghosh is now framed using `object-bottom` (or custom values like `object-[center_85%]`), displaying his full face within the card frame.
+
+### Next Agent Instructions
+1. Inspect [DignitariesSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/DignitariesSection.tsx) lines 43-52 and line 168 to adjust `objectPosition`.
+2. Sync remotes `origin` and `trial`.
+
+---
+
 ## 2026-11-20 — Hero Slideshow: Observer Transform Continuity & Choreographed Movement Sequence
 
 ### Objective
@@ -7500,6 +7716,30 @@ Integrate the video from `https://www.instagram.com/p/DaqR3Niyy2L/?hl=en` (the o
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Dignitaries Section: Object Position Control for Prof. Ishan Ghosh
+
+### Objective
+Expose and configure exact image framing and alignment control for dignitaries cards in [DignitariesSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/DignitariesSection.tsx), fixing portrait crop on Prof. Ishan Ghosh whose head/face was cut off due to tall aspect ratio (407x753) under default `object-center`.
+
+### Changes Made
+1. **Added `objectPosition` to `DignitaryProfile` interface**:
+   - Enabled granular control per dignitary profile in `DIGNITARIES` dataset.
+2. **Configured `object-bottom` for Prof. Ishan Ghosh**:
+   - Positioned Prof. Ishan Ghosh with `objectPosition: "object-bottom"`, shifting the image upwards so his face and upper body are fully visible inside the card plinth.
+3. **Dynamic Object Position Binding**:
+   - Updated `<img>` tag in `DignitariesSection.tsx` from static `object-center` to `${person.objectPosition || "object-center"}`.
+4. **Verification**:
+   - `npm run build` compiled cleanly with 0 TypeScript/Turbopack errors in 9.8s.
+
+### Current State
+Prof. Ishan Ghosh is now framed using `object-bottom` (or custom values like `object-[center_85%]`), displaying his full face within the card frame.
+
+### Next Agent Instructions
+1. Inspect [DignitariesSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/DignitariesSection.tsx) lines 43-52 and line 168 to adjust `objectPosition`.
+2. Sync remotes `origin` and `trial`.
+
+---
+
 ## 2026-11-20 — Hero Slideshow: Observer Transform Continuity & Choreographed Movement Sequence
 
 ### Objective
@@ -8268,6 +8508,30 @@ Rotate the background video 90 degrees so it is right-side up, and eliminate ver
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Dignitaries Section: Object Position Control for Prof. Ishan Ghosh
+
+### Objective
+Expose and configure exact image framing and alignment control for dignitaries cards in [DignitariesSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/DignitariesSection.tsx), fixing portrait crop on Prof. Ishan Ghosh whose head/face was cut off due to tall aspect ratio (407x753) under default `object-center`.
+
+### Changes Made
+1. **Added `objectPosition` to `DignitaryProfile` interface**:
+   - Enabled granular control per dignitary profile in `DIGNITARIES` dataset.
+2. **Configured `object-bottom` for Prof. Ishan Ghosh**:
+   - Positioned Prof. Ishan Ghosh with `objectPosition: "object-bottom"`, shifting the image upwards so his face and upper body are fully visible inside the card plinth.
+3. **Dynamic Object Position Binding**:
+   - Updated `<img>` tag in `DignitariesSection.tsx` from static `object-center` to `${person.objectPosition || "object-center"}`.
+4. **Verification**:
+   - `npm run build` compiled cleanly with 0 TypeScript/Turbopack errors in 9.8s.
+
+### Current State
+Prof. Ishan Ghosh is now framed using `object-bottom` (or custom values like `object-[center_85%]`), displaying his full face within the card frame.
+
+### Next Agent Instructions
+1. Inspect [DignitariesSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/DignitariesSection.tsx) lines 43-52 and line 168 to adjust `objectPosition`.
+2. Sync remotes `origin` and `trial`.
+
+---
+
 ## 2026-11-20 — Hero Slideshow: Observer Transform Continuity & Choreographed Movement Sequence
 
 ### Objective
@@ -9008,6 +9272,30 @@ Rotate the background video 180 degrees per user instruction to invert the orien
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Dignitaries Section: Object Position Control for Prof. Ishan Ghosh
+
+### Objective
+Expose and configure exact image framing and alignment control for dignitaries cards in [DignitariesSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/DignitariesSection.tsx), fixing portrait crop on Prof. Ishan Ghosh whose head/face was cut off due to tall aspect ratio (407x753) under default `object-center`.
+
+### Changes Made
+1. **Added `objectPosition` to `DignitaryProfile` interface**:
+   - Enabled granular control per dignitary profile in `DIGNITARIES` dataset.
+2. **Configured `object-bottom` for Prof. Ishan Ghosh**:
+   - Positioned Prof. Ishan Ghosh with `objectPosition: "object-bottom"`, shifting the image upwards so his face and upper body are fully visible inside the card plinth.
+3. **Dynamic Object Position Binding**:
+   - Updated `<img>` tag in `DignitariesSection.tsx` from static `object-center` to `${person.objectPosition || "object-center"}`.
+4. **Verification**:
+   - `npm run build` compiled cleanly with 0 TypeScript/Turbopack errors in 9.8s.
+
+### Current State
+Prof. Ishan Ghosh is now framed using `object-bottom` (or custom values like `object-[center_85%]`), displaying his full face within the card frame.
+
+### Next Agent Instructions
+1. Inspect [DignitariesSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/DignitariesSection.tsx) lines 43-52 and line 168 to adjust `objectPosition`.
+2. Sync remotes `origin` and `trial`.
+
+---
+
 ## 2026-11-20 — Hero Slideshow: Observer Transform Continuity & Choreographed Movement Sequence
 
 ### Objective
@@ -9724,6 +10012,30 @@ Remove the "Google Developer Group Kolkata" logo from the top-left of the hero s
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Dignitaries Section: Object Position Control for Prof. Ishan Ghosh
+
+### Objective
+Expose and configure exact image framing and alignment control for dignitaries cards in [DignitariesSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/DignitariesSection.tsx), fixing portrait crop on Prof. Ishan Ghosh whose head/face was cut off due to tall aspect ratio (407x753) under default `object-center`.
+
+### Changes Made
+1. **Added `objectPosition` to `DignitaryProfile` interface**:
+   - Enabled granular control per dignitary profile in `DIGNITARIES` dataset.
+2. **Configured `object-bottom` for Prof. Ishan Ghosh**:
+   - Positioned Prof. Ishan Ghosh with `objectPosition: "object-bottom"`, shifting the image upwards so his face and upper body are fully visible inside the card plinth.
+3. **Dynamic Object Position Binding**:
+   - Updated `<img>` tag in `DignitariesSection.tsx` from static `object-center` to `${person.objectPosition || "object-center"}`.
+4. **Verification**:
+   - `npm run build` compiled cleanly with 0 TypeScript/Turbopack errors in 9.8s.
+
+### Current State
+Prof. Ishan Ghosh is now framed using `object-bottom` (or custom values like `object-[center_85%]`), displaying his full face within the card frame.
+
+### Next Agent Instructions
+1. Inspect [DignitariesSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/DignitariesSection.tsx) lines 43-52 and line 168 to adjust `objectPosition`.
+2. Sync remotes `origin` and `trial`.
+
+---
+
 ## 2026-11-20 — Hero Slideshow: Observer Transform Continuity & Choreographed Movement Sequence
 
 ### Objective
@@ -10416,6 +10728,30 @@ Implement the DevFest Kolkata "card up" bottom sheet reveal animation (matching 
 ---
 
 # Agent Handoff Log — tracker.md
+
+## 2026-11-20 — Dignitaries Section: Object Position Control for Prof. Ishan Ghosh
+
+### Objective
+Expose and configure exact image framing and alignment control for dignitaries cards in [DignitariesSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/DignitariesSection.tsx), fixing portrait crop on Prof. Ishan Ghosh whose head/face was cut off due to tall aspect ratio (407x753) under default `object-center`.
+
+### Changes Made
+1. **Added `objectPosition` to `DignitaryProfile` interface**:
+   - Enabled granular control per dignitary profile in `DIGNITARIES` dataset.
+2. **Configured `object-bottom` for Prof. Ishan Ghosh**:
+   - Positioned Prof. Ishan Ghosh with `objectPosition: "object-bottom"`, shifting the image upwards so his face and upper body are fully visible inside the card plinth.
+3. **Dynamic Object Position Binding**:
+   - Updated `<img>` tag in `DignitariesSection.tsx` from static `object-center` to `${person.objectPosition || "object-center"}`.
+4. **Verification**:
+   - `npm run build` compiled cleanly with 0 TypeScript/Turbopack errors in 9.8s.
+
+### Current State
+Prof. Ishan Ghosh is now framed using `object-bottom` (or custom values like `object-[center_85%]`), displaying his full face within the card frame.
+
+### Next Agent Instructions
+1. Inspect [DignitariesSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/DignitariesSection.tsx) lines 43-52 and line 168 to adjust `objectPosition`.
+2. Sync remotes `origin` and `trial`.
+
+---
 
 ## 2026-11-20 — Hero Slideshow: Observer Transform Continuity & Choreographed Movement Sequence
 
