@@ -311,35 +311,40 @@ All foundational libraries, responsive layout engines, and the streamlined **Dev
 - **Key Files**: [AboutFestivalSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/AboutFestivalSection.tsx), [HeroSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroSection.tsx), [EventScene.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/3d/EventScene.tsx)
 - **Verification**: Verified via `npm run build` (0 TypeScript errors, code 0).
 
-### 8. Dignitaries Section ("DIGNITARIES & COUNCIL") (`/anti-ai-slop`, `/impeccable`, `/design-system`)
+### 8. Dignitaries Section ("DIGNITARIES & COUNCIL")
 - **Status**: Implemented
-- **Description**: Independent, dedicated section for the institution's leadership council:
+- **Description**: Independent, dedicated section for the institution's leadership council powered by Cloudinary edge CDN:
   - **Patrons**:
-    - Dr. Raghavendra Kulkarni (Principal & Institutional Head, Academic Patron, Monogram RK, Ace of Spades ♠)
-    - Prof. Meenakshi Deshmukh (Dean of Student Affairs & Convenor, Faculty Mentor, Monogram MD, King of Diamonds ♦)
-  - **Clean Header**: Removed vertical yellow accent line and `04 // INSTITUTIONAL PATRONS` badge pill for clean, uncluttered visual symmetry with other sections.
+    - Prof. Dr. Sujoy Biswas (Director & CEO, Techno India Group, Chief Patron, Monogram SB)
+    - Prof. Dr. Rina Paladhi (Director – Academics, Techno India, Patron & Academic Head, Monogram RP)
+    - Prof. Ishan Ghosh (Head of Administration & Convenor, Faculty Convenor, Monogram IG)
   - **Card Architecture**:
-    - Sized with large hero playing-card portrait plinth (`aspect-[4/5] sm:h-72`), metallic monogram, luminous amber halo backlight, and corner pips.
-    - Prominently highlighted name (`font-display text-2xl sm:text-3xl text-[#FFF4E0] tracking-wide`) with concise designation badge.
-    - Zero quote/message clutter.
-    - Aceternity UI `CardSpotlight` with Solar Flare Gold (`#FFAA24`) mouse-following sheen and ambient dot grid.
-    - Independent GSAP ScrollTrigger entrance.
-- **Key Files**: [DignitariesSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/DignitariesSection.tsx), [page.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/app/page.tsx), [Navbar.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/Navbar.tsx)
+    - High-resolution real portrait imagery served via Cloudinary edge CDN (`f_auto,q_auto:good,w_800,c_limit`) with native `loading="lazy"` and `decoding="async"`.
+    - Responsive 3-column card grid (`grid-cols-1 md:grid-cols-3 max-w-6xl`) with Aceternity UI `CardSpotlight` hover luminescence and ambient dot grid.
+    - Prominently highlighted name and clean role typography.
+- **Key Files**: [DignitariesSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/DignitariesSection.tsx), [cloudinaryAssets.json](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/lib/cloudinaryAssets.json)
 
-### 9. Founders Section ("FOUNDERS OF SANSKARAN") (`/anti-ai-slop`, `/impeccable`, `/design-system`)
+### 9. Founders Section ("FOUNDERS OF SANSKARAN")
 - **Status**: Implemented
-- **Description**: Independent, dedicated section for the festival's founding student leaders:
+- **Description**: Independent, dedicated section for the festival's founding student stewards powered by Cloudinary edge CDN:
   - **Founders**:
-    - Aarav Joshi (Founding President, Sanskaran, Alumni Steward, Monogram AJ, Jack of Clubs ♣)
-    - Ananya Iyer (Founding Creative Director, Sahotsava Co-Creator, Monogram AI, Queen of Hearts ♥)
-  - **Clean Header**: Removed vertical crimson accent line and `05 // THE FIRST ARCHITECTS` badge pill for clean, uncluttered visual symmetry.
+    - Partha Sarathi Pal (Founding Steward, Sanskaran, Monogram PP)
+    - Sayan Chakraborty (Founding Steward, Sanskaran, Monogram SC)
   - **Card Architecture**:
-    - Sized with large hero playing-card portrait plinth (`aspect-[4/5] sm:h-72`), metallic monogram, luminous crimson halo backlight, and corner pips.
-    - Prominently highlighted name (`font-display text-2xl sm:text-3xl text-[#FFF4E0] tracking-wide`) with concise designation badge.
-    - Zero quote/message clutter.
-    - Aceternity UI `CardSpotlight` with Ignited Amber (`#E65C19`) and Crimson Wire (`#8B1E24`) mouse-following sheen.
-    - Independent GSAP ScrollTrigger entrance.
-- **Key Files**: [FoundersSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/FoundersSection.tsx), [page.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/app/page.tsx), [Navbar.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/Navbar.tsx)
+    - High-resolution real portrait imagery served via Cloudinary edge CDN (`f_auto,q_auto:good,w_800,c_limit`) with native `loading="lazy"` and `decoding="async"`.
+    - Aceternity UI `CardSpotlight` with glowing emerald card plinths and ambient dot grid.
+- **Key Files**: [FoundersSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/FoundersSection.tsx), [cloudinaryAssets.json](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/lib/cloudinaryAssets.json)
+
+### 10. Core Members Section ("CORE MEMBERS")
+- **Status**: Implemented
+- **Description**: All 12 real core team members configured with interactive 3D playing cards and Cloudinary CDN optimization:
+  - **12 Core Members**: Archisha, Arnab, Ayan, Bhumi, Chadni, Debarun, Jagrit, Nayan, Preetisha, Sagnik, Shoaib, and Sukanta.
+  - **Interactive 3D Playing Cards**:
+    - Front face displays real high-resolution portrait with smooth hover zoom, subtle gradient vignette, corner index tags, and flip badge.
+    - Back face retains tactile 3D card flip physics revealing role, year, vertical, and student vision quote.
+    - Native `loading="lazy"` and `decoding="async"` ensuring sub-5ms cached CDN delivery and 0 layout shifts.
+    - Balanced 3-column responsive grid (`grid-cols-1 sm:grid-cols-2 lg:grid-cols-3`).
+- **Key Files**: [CoreMembersSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/CoreMembersSection.tsx), [cloudinaryAssets.json](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/lib/cloudinaryAssets.json)
 
 ### 6. Framework & Core Architecture
 - **Status**: Implemented

@@ -16,22 +16,37 @@ export interface DignitaryProfile {
   name: string;
   designation: string;
   monogram: string;
+  imageUrl: string;
+  thumbnailUrl?: string;
 }
 
 export const DIGNITARIES: DignitaryProfile[] = [
   {
     id: "dig-01",
     badge: "CHIEF PATRON",
-    name: "DR. RAGHAVENDRA KULKARNI",
-    designation: "PRINCIPAL & INSTITUTIONAL HEAD",
-    monogram: "RK",
+    name: "PROF. DR. SUJOY BISWAS",
+    designation: "DIRECTOR & CEO, TECHNO INDIA GROUP",
+    monogram: "SB",
+    imageUrl: "https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_800,c_limit/sanskaran_2026/dignitaries/sujoy-c0m-3gq8",
+    thumbnailUrl: "https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:low,w_40,e_blur:1000/sanskaran_2026/dignitaries/sujoy-c0m-3gq8",
   },
   {
     id: "dig-02",
+    badge: "PATRON & ACADEMIC HEAD",
+    name: "PROF. DR. RINA PALADHI",
+    designation: "DIRECTOR – ACADEMICS",
+    monogram: "RP",
+    imageUrl: "https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_800,c_limit/sanskaran_2026/dignitaries/prof__dr__rina_paladhi",
+    thumbnailUrl: "https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:low,w_40,e_blur:1000/sanskaran_2026/dignitaries/prof__dr__rina_paladhi",
+  },
+  {
+    id: "dig-03",
     badge: "FACULTY CONVENOR",
-    name: "PROF. MEENAKSHI DESHMUKH",
-    designation: "DEAN OF STUDENT AFFAIRS",
-    monogram: "MD",
+    name: "PROF. ISHAN GHOSH",
+    designation: "HEAD OF ADMINISTRATION & CONVENOR",
+    monogram: "IG",
+    imageUrl: "https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_800,c_limit/sanskaran_2026/dignitaries/prof__ishan_ghosh",
+    thumbnailUrl: "https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:low,w_40,e_blur:1000/sanskaran_2026/dignitaries/prof__ishan_ghosh",
   },
 ];
 
@@ -113,7 +128,7 @@ export default function DignitariesSection() {
         </div>
 
         {/* Highlighted Dignitaries Portrait Cards */}
-        <div className="dignitaries-grid grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-4xl mx-auto items-stretch">
+        <div className="dignitaries-grid grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto items-stretch">
           {DIGNITARIES.map((person) => (
             <div key={person.id} className="dignitary-card-reveal flex">
               <CardSpotlight
@@ -151,17 +166,15 @@ export default function DignitariesSection() {
                   </div>
 
                   {/* HERO PORTRAIT / PHOTO CARD PLINTH */}
-                  <div className="relative w-full aspect-[4/5] sm:h-72 rounded-xl sm:rounded-2xl border border-white/10 bg-gradient-to-b from-[#18181b] to-[#0d0d0e] overflow-hidden flex flex-col justify-center items-center p-3.5 shadow-inner transition-transform duration-300 group-hover:scale-[1.02]">
-                    {/* Center Monogram / Portrait Artwork */}
-                    <div className="relative flex items-center justify-center my-auto">
-                      <div className="absolute w-28 h-28 sm:w-36 sm:h-36 rounded-full bg-[#714cb6]/25 blur-2xl pointer-events-none transition-all duration-300 group-hover:scale-125" />
-                      <div className="absolute w-24 h-24 sm:w-32 sm:h-32 rounded-full border border-white/10 pointer-events-none" />
-                      <div className="absolute w-28 h-28 sm:w-36 sm:h-36 rounded-full border border-dashed border-white/15 pointer-events-none" />
-
-                      <span className="font-display text-6xl sm:text-7xl lg:text-8xl font-black tracking-wider leading-none select-none relative z-10 drop-shadow-[0_10px_20px_rgba(0,0,0,0.6)] text-transparent bg-clip-text bg-gradient-to-b from-[#ffffff] via-[#d4c7ff] to-[#714cb6]">
-                        {person.monogram}
-                      </span>
-                    </div>
+                  <div className="relative w-full aspect-[4/5] sm:h-72 rounded-xl sm:rounded-2xl border border-white/10 bg-gradient-to-b from-[#18181b] to-[#0d0d0e] overflow-hidden flex flex-col justify-center items-center shadow-inner transition-transform duration-300 group-hover:scale-[1.02]">
+                    <img
+                      src={person.imageUrl}
+                      alt={person.name}
+                      loading="lazy"
+                      decoding="async"
+                      className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#141416] via-transparent to-transparent opacity-60 pointer-events-none" />
                   </div>
 
                   {/* HIGHLIGHTED NAME & CLEAN ROLE */}

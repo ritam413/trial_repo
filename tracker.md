@@ -1,5 +1,39 @@
 # Agent Handoff Log — tracker.md
 
+## 2026-11-19 — Core Members, Dignitaries & Founders: Cloudinary Upload & Edge Integration
+
+### Objective
+Process all member images from `C:\Users\ritam\Downloads\Core Mem` (Depth 1 Core Members, Dignitaries, Founders), upload them to Cloudinary (`lsyjstbv`), generate modern ultra-optimized edge URLs (`f_auto,q_auto:good,w_800`), configure browser-native lazy loading, and wire them cleanly into `CoreMembersSection`, `DignitariesSection`, and `FoundersSection`.
+
+### Changes Made
+1. **Cloudinary Asset Upload Pipeline**:
+   - Processed all 17 images across 3 folders:
+     - 12 Core Members: `Archisha`, `Arnab`, `Ayan`, `Bhumi`, `Chadni`, `Debarun`, `Jagrit`, `Nayan`, `Preetisha`, `Sagnik`, `Shoaib`, `Sukanta`.
+     - 3 Dignitaries: `Prof. Dr. Sujoy Biswas`, `Prof. Dr. Rina Paladhi`, `Prof. Ishan Ghosh`.
+     - 2 Founders: `Partha Sarathi Pal`, `Sayan Chakraborty`.
+   - Stored structured mappings with public IDs and optimized URLs in `src/lib/cloudinaryAssets.json`.
+2. **Next.js Image Configuration (`next.config.ts`)**:
+   - Added `res.cloudinary.com` and `images.unsplash.com` to `images.remotePatterns`.
+3. **Core Members Section (`src/components/event/CoreMembersSection.tsx`)**:
+   - Replaced placeholder 6 members with the 12 real core members in a balanced 3-column responsive grid (`grid-cols-1 sm:grid-cols-2 lg:grid-cols-3`).
+   - Integrated real portraits with `loading="lazy"`, `decoding="async"`, smooth hover zoom, subtle gradient vignette, and preserved the 3D card tilt & flip physics.
+4. **Dignitaries Section (`src/components/event/DignitariesSection.tsx`)**:
+   - Added `Prof. Dr. Sujoy Biswas` alongside `Prof. Dr. Rina Paladhi` and `Prof. Ishan Ghosh`.
+   - Updated layout to a 3-column responsive grid (`grid-cols-1 md:grid-cols-3 max-w-6xl`) with real Cloudinary edge portraits and `loading="lazy"`.
+5. **Founders Section (`src/components/event/FoundersSection.tsx`)**:
+   - Replaced placeholder names with real founders `Partha Sarathi Pal` and `Sayan Chakraborty` with real portraits and emerald spotlight card plinths.
+6. **Verification**:
+   - Executed `npm run build`: Turbopack compiled with 0 TypeScript/ESLint errors and generated all 4 static pages in 424ms.
+
+### Current State
+All 17 images are live on Cloudinary Akamai/Fastly CDN and seamlessly integrated across Core Members, Dignitaries, and Founders sections with lazy loading and edge caching.
+
+### Next Agent Instructions
+1. Inspect `src/lib/cloudinaryAssets.json` for any additional asset transformations.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-19 — Cloudinary MCP Server: Setup & Live Verification
 
 ### Objective
@@ -1286,6 +1320,40 @@ Integrate the video from `https://www.instagram.com/p/DaqR3Niyy2L/?hl=en` (the o
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-19 — Core Members, Dignitaries & Founders: Cloudinary Upload & Edge Integration
+
+### Objective
+Process all member images from `C:\Users\ritam\Downloads\Core Mem` (Depth 1 Core Members, Dignitaries, Founders), upload them to Cloudinary (`lsyjstbv`), generate modern ultra-optimized edge URLs (`f_auto,q_auto:good,w_800`), configure browser-native lazy loading, and wire them cleanly into `CoreMembersSection`, `DignitariesSection`, and `FoundersSection`.
+
+### Changes Made
+1. **Cloudinary Asset Upload Pipeline**:
+   - Processed all 17 images across 3 folders:
+     - 12 Core Members: `Archisha`, `Arnab`, `Ayan`, `Bhumi`, `Chadni`, `Debarun`, `Jagrit`, `Nayan`, `Preetisha`, `Sagnik`, `Shoaib`, `Sukanta`.
+     - 3 Dignitaries: `Prof. Dr. Sujoy Biswas`, `Prof. Dr. Rina Paladhi`, `Prof. Ishan Ghosh`.
+     - 2 Founders: `Partha Sarathi Pal`, `Sayan Chakraborty`.
+   - Stored structured mappings with public IDs and optimized URLs in `src/lib/cloudinaryAssets.json`.
+2. **Next.js Image Configuration (`next.config.ts`)**:
+   - Added `res.cloudinary.com` and `images.unsplash.com` to `images.remotePatterns`.
+3. **Core Members Section (`src/components/event/CoreMembersSection.tsx`)**:
+   - Replaced placeholder 6 members with the 12 real core members in a balanced 3-column responsive grid (`grid-cols-1 sm:grid-cols-2 lg:grid-cols-3`).
+   - Integrated real portraits with `loading="lazy"`, `decoding="async"`, smooth hover zoom, subtle gradient vignette, and preserved the 3D card tilt & flip physics.
+4. **Dignitaries Section (`src/components/event/DignitariesSection.tsx`)**:
+   - Added `Prof. Dr. Sujoy Biswas` alongside `Prof. Dr. Rina Paladhi` and `Prof. Ishan Ghosh`.
+   - Updated layout to a 3-column responsive grid (`grid-cols-1 md:grid-cols-3 max-w-6xl`) with real Cloudinary edge portraits and `loading="lazy"`.
+5. **Founders Section (`src/components/event/FoundersSection.tsx`)**:
+   - Replaced placeholder names with real founders `Partha Sarathi Pal` and `Sayan Chakraborty` with real portraits and emerald spotlight card plinths.
+6. **Verification**:
+   - Executed `npm run build`: Turbopack compiled with 0 TypeScript/ESLint errors and generated all 4 static pages in 424ms.
+
+### Current State
+All 17 images are live on Cloudinary Akamai/Fastly CDN and seamlessly integrated across Core Members, Dignitaries, and Founders sections with lazy loading and edge caching.
+
+### Next Agent Instructions
+1. Inspect `src/lib/cloudinaryAssets.json` for any additional asset transformations.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-19 — Cloudinary MCP Server: Setup & Live Verification
 
 ### Objective
@@ -1948,6 +2016,40 @@ Integrate the video from `https://www.instagram.com/p/DaqR3Niyy2L/?hl=en` (the o
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-19 — Core Members, Dignitaries & Founders: Cloudinary Upload & Edge Integration
+
+### Objective
+Process all member images from `C:\Users\ritam\Downloads\Core Mem` (Depth 1 Core Members, Dignitaries, Founders), upload them to Cloudinary (`lsyjstbv`), generate modern ultra-optimized edge URLs (`f_auto,q_auto:good,w_800`), configure browser-native lazy loading, and wire them cleanly into `CoreMembersSection`, `DignitariesSection`, and `FoundersSection`.
+
+### Changes Made
+1. **Cloudinary Asset Upload Pipeline**:
+   - Processed all 17 images across 3 folders:
+     - 12 Core Members: `Archisha`, `Arnab`, `Ayan`, `Bhumi`, `Chadni`, `Debarun`, `Jagrit`, `Nayan`, `Preetisha`, `Sagnik`, `Shoaib`, `Sukanta`.
+     - 3 Dignitaries: `Prof. Dr. Sujoy Biswas`, `Prof. Dr. Rina Paladhi`, `Prof. Ishan Ghosh`.
+     - 2 Founders: `Partha Sarathi Pal`, `Sayan Chakraborty`.
+   - Stored structured mappings with public IDs and optimized URLs in `src/lib/cloudinaryAssets.json`.
+2. **Next.js Image Configuration (`next.config.ts`)**:
+   - Added `res.cloudinary.com` and `images.unsplash.com` to `images.remotePatterns`.
+3. **Core Members Section (`src/components/event/CoreMembersSection.tsx`)**:
+   - Replaced placeholder 6 members with the 12 real core members in a balanced 3-column responsive grid (`grid-cols-1 sm:grid-cols-2 lg:grid-cols-3`).
+   - Integrated real portraits with `loading="lazy"`, `decoding="async"`, smooth hover zoom, subtle gradient vignette, and preserved the 3D card tilt & flip physics.
+4. **Dignitaries Section (`src/components/event/DignitariesSection.tsx`)**:
+   - Added `Prof. Dr. Sujoy Biswas` alongside `Prof. Dr. Rina Paladhi` and `Prof. Ishan Ghosh`.
+   - Updated layout to a 3-column responsive grid (`grid-cols-1 md:grid-cols-3 max-w-6xl`) with real Cloudinary edge portraits and `loading="lazy"`.
+5. **Founders Section (`src/components/event/FoundersSection.tsx`)**:
+   - Replaced placeholder names with real founders `Partha Sarathi Pal` and `Sayan Chakraborty` with real portraits and emerald spotlight card plinths.
+6. **Verification**:
+   - Executed `npm run build`: Turbopack compiled with 0 TypeScript/ESLint errors and generated all 4 static pages in 424ms.
+
+### Current State
+All 17 images are live on Cloudinary Akamai/Fastly CDN and seamlessly integrated across Core Members, Dignitaries, and Founders sections with lazy loading and edge caching.
+
+### Next Agent Instructions
+1. Inspect `src/lib/cloudinaryAssets.json` for any additional asset transformations.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-19 — Cloudinary MCP Server: Setup & Live Verification
 
 ### Objective
@@ -2577,6 +2679,40 @@ Rotate the background video 90 degrees so it is right-side up, and eliminate ver
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-19 — Core Members, Dignitaries & Founders: Cloudinary Upload & Edge Integration
+
+### Objective
+Process all member images from `C:\Users\ritam\Downloads\Core Mem` (Depth 1 Core Members, Dignitaries, Founders), upload them to Cloudinary (`lsyjstbv`), generate modern ultra-optimized edge URLs (`f_auto,q_auto:good,w_800`), configure browser-native lazy loading, and wire them cleanly into `CoreMembersSection`, `DignitariesSection`, and `FoundersSection`.
+
+### Changes Made
+1. **Cloudinary Asset Upload Pipeline**:
+   - Processed all 17 images across 3 folders:
+     - 12 Core Members: `Archisha`, `Arnab`, `Ayan`, `Bhumi`, `Chadni`, `Debarun`, `Jagrit`, `Nayan`, `Preetisha`, `Sagnik`, `Shoaib`, `Sukanta`.
+     - 3 Dignitaries: `Prof. Dr. Sujoy Biswas`, `Prof. Dr. Rina Paladhi`, `Prof. Ishan Ghosh`.
+     - 2 Founders: `Partha Sarathi Pal`, `Sayan Chakraborty`.
+   - Stored structured mappings with public IDs and optimized URLs in `src/lib/cloudinaryAssets.json`.
+2. **Next.js Image Configuration (`next.config.ts`)**:
+   - Added `res.cloudinary.com` and `images.unsplash.com` to `images.remotePatterns`.
+3. **Core Members Section (`src/components/event/CoreMembersSection.tsx`)**:
+   - Replaced placeholder 6 members with the 12 real core members in a balanced 3-column responsive grid (`grid-cols-1 sm:grid-cols-2 lg:grid-cols-3`).
+   - Integrated real portraits with `loading="lazy"`, `decoding="async"`, smooth hover zoom, subtle gradient vignette, and preserved the 3D card tilt & flip physics.
+4. **Dignitaries Section (`src/components/event/DignitariesSection.tsx`)**:
+   - Added `Prof. Dr. Sujoy Biswas` alongside `Prof. Dr. Rina Paladhi` and `Prof. Ishan Ghosh`.
+   - Updated layout to a 3-column responsive grid (`grid-cols-1 md:grid-cols-3 max-w-6xl`) with real Cloudinary edge portraits and `loading="lazy"`.
+5. **Founders Section (`src/components/event/FoundersSection.tsx`)**:
+   - Replaced placeholder names with real founders `Partha Sarathi Pal` and `Sayan Chakraborty` with real portraits and emerald spotlight card plinths.
+6. **Verification**:
+   - Executed `npm run build`: Turbopack compiled with 0 TypeScript/ESLint errors and generated all 4 static pages in 424ms.
+
+### Current State
+All 17 images are live on Cloudinary Akamai/Fastly CDN and seamlessly integrated across Core Members, Dignitaries, and Founders sections with lazy loading and edge caching.
+
+### Next Agent Instructions
+1. Inspect `src/lib/cloudinaryAssets.json` for any additional asset transformations.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-19 — Cloudinary MCP Server: Setup & Live Verification
 
 ### Objective
@@ -3178,6 +3314,40 @@ Rotate the background video 180 degrees per user instruction to invert the orien
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-19 — Core Members, Dignitaries & Founders: Cloudinary Upload & Edge Integration
+
+### Objective
+Process all member images from `C:\Users\ritam\Downloads\Core Mem` (Depth 1 Core Members, Dignitaries, Founders), upload them to Cloudinary (`lsyjstbv`), generate modern ultra-optimized edge URLs (`f_auto,q_auto:good,w_800`), configure browser-native lazy loading, and wire them cleanly into `CoreMembersSection`, `DignitariesSection`, and `FoundersSection`.
+
+### Changes Made
+1. **Cloudinary Asset Upload Pipeline**:
+   - Processed all 17 images across 3 folders:
+     - 12 Core Members: `Archisha`, `Arnab`, `Ayan`, `Bhumi`, `Chadni`, `Debarun`, `Jagrit`, `Nayan`, `Preetisha`, `Sagnik`, `Shoaib`, `Sukanta`.
+     - 3 Dignitaries: `Prof. Dr. Sujoy Biswas`, `Prof. Dr. Rina Paladhi`, `Prof. Ishan Ghosh`.
+     - 2 Founders: `Partha Sarathi Pal`, `Sayan Chakraborty`.
+   - Stored structured mappings with public IDs and optimized URLs in `src/lib/cloudinaryAssets.json`.
+2. **Next.js Image Configuration (`next.config.ts`)**:
+   - Added `res.cloudinary.com` and `images.unsplash.com` to `images.remotePatterns`.
+3. **Core Members Section (`src/components/event/CoreMembersSection.tsx`)**:
+   - Replaced placeholder 6 members with the 12 real core members in a balanced 3-column responsive grid (`grid-cols-1 sm:grid-cols-2 lg:grid-cols-3`).
+   - Integrated real portraits with `loading="lazy"`, `decoding="async"`, smooth hover zoom, subtle gradient vignette, and preserved the 3D card tilt & flip physics.
+4. **Dignitaries Section (`src/components/event/DignitariesSection.tsx`)**:
+   - Added `Prof. Dr. Sujoy Biswas` alongside `Prof. Dr. Rina Paladhi` and `Prof. Ishan Ghosh`.
+   - Updated layout to a 3-column responsive grid (`grid-cols-1 md:grid-cols-3 max-w-6xl`) with real Cloudinary edge portraits and `loading="lazy"`.
+5. **Founders Section (`src/components/event/FoundersSection.tsx`)**:
+   - Replaced placeholder names with real founders `Partha Sarathi Pal` and `Sayan Chakraborty` with real portraits and emerald spotlight card plinths.
+6. **Verification**:
+   - Executed `npm run build`: Turbopack compiled with 0 TypeScript/ESLint errors and generated all 4 static pages in 424ms.
+
+### Current State
+All 17 images are live on Cloudinary Akamai/Fastly CDN and seamlessly integrated across Core Members, Dignitaries, and Founders sections with lazy loading and edge caching.
+
+### Next Agent Instructions
+1. Inspect `src/lib/cloudinaryAssets.json` for any additional asset transformations.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-19 — Cloudinary MCP Server: Setup & Live Verification
 
 ### Objective
@@ -3755,6 +3925,40 @@ Remove the "Google Developer Group Kolkata" logo from the top-left of the hero s
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-19 — Core Members, Dignitaries & Founders: Cloudinary Upload & Edge Integration
+
+### Objective
+Process all member images from `C:\Users\ritam\Downloads\Core Mem` (Depth 1 Core Members, Dignitaries, Founders), upload them to Cloudinary (`lsyjstbv`), generate modern ultra-optimized edge URLs (`f_auto,q_auto:good,w_800`), configure browser-native lazy loading, and wire them cleanly into `CoreMembersSection`, `DignitariesSection`, and `FoundersSection`.
+
+### Changes Made
+1. **Cloudinary Asset Upload Pipeline**:
+   - Processed all 17 images across 3 folders:
+     - 12 Core Members: `Archisha`, `Arnab`, `Ayan`, `Bhumi`, `Chadni`, `Debarun`, `Jagrit`, `Nayan`, `Preetisha`, `Sagnik`, `Shoaib`, `Sukanta`.
+     - 3 Dignitaries: `Prof. Dr. Sujoy Biswas`, `Prof. Dr. Rina Paladhi`, `Prof. Ishan Ghosh`.
+     - 2 Founders: `Partha Sarathi Pal`, `Sayan Chakraborty`.
+   - Stored structured mappings with public IDs and optimized URLs in `src/lib/cloudinaryAssets.json`.
+2. **Next.js Image Configuration (`next.config.ts`)**:
+   - Added `res.cloudinary.com` and `images.unsplash.com` to `images.remotePatterns`.
+3. **Core Members Section (`src/components/event/CoreMembersSection.tsx`)**:
+   - Replaced placeholder 6 members with the 12 real core members in a balanced 3-column responsive grid (`grid-cols-1 sm:grid-cols-2 lg:grid-cols-3`).
+   - Integrated real portraits with `loading="lazy"`, `decoding="async"`, smooth hover zoom, subtle gradient vignette, and preserved the 3D card tilt & flip physics.
+4. **Dignitaries Section (`src/components/event/DignitariesSection.tsx`)**:
+   - Added `Prof. Dr. Sujoy Biswas` alongside `Prof. Dr. Rina Paladhi` and `Prof. Ishan Ghosh`.
+   - Updated layout to a 3-column responsive grid (`grid-cols-1 md:grid-cols-3 max-w-6xl`) with real Cloudinary edge portraits and `loading="lazy"`.
+5. **Founders Section (`src/components/event/FoundersSection.tsx`)**:
+   - Replaced placeholder names with real founders `Partha Sarathi Pal` and `Sayan Chakraborty` with real portraits and emerald spotlight card plinths.
+6. **Verification**:
+   - Executed `npm run build`: Turbopack compiled with 0 TypeScript/ESLint errors and generated all 4 static pages in 424ms.
+
+### Current State
+All 17 images are live on Cloudinary Akamai/Fastly CDN and seamlessly integrated across Core Members, Dignitaries, and Founders sections with lazy loading and edge caching.
+
+### Next Agent Instructions
+1. Inspect `src/lib/cloudinaryAssets.json` for any additional asset transformations.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-19 — Cloudinary MCP Server: Setup & Live Verification
 
 ### Objective
@@ -4308,6 +4512,40 @@ Implement the DevFest Kolkata "card up" bottom sheet reveal animation (matching 
 ---
 
 # Agent Handoff Log — tracker.md
+
+## 2026-11-19 — Core Members, Dignitaries & Founders: Cloudinary Upload & Edge Integration
+
+### Objective
+Process all member images from `C:\Users\ritam\Downloads\Core Mem` (Depth 1 Core Members, Dignitaries, Founders), upload them to Cloudinary (`lsyjstbv`), generate modern ultra-optimized edge URLs (`f_auto,q_auto:good,w_800`), configure browser-native lazy loading, and wire them cleanly into `CoreMembersSection`, `DignitariesSection`, and `FoundersSection`.
+
+### Changes Made
+1. **Cloudinary Asset Upload Pipeline**:
+   - Processed all 17 images across 3 folders:
+     - 12 Core Members: `Archisha`, `Arnab`, `Ayan`, `Bhumi`, `Chadni`, `Debarun`, `Jagrit`, `Nayan`, `Preetisha`, `Sagnik`, `Shoaib`, `Sukanta`.
+     - 3 Dignitaries: `Prof. Dr. Sujoy Biswas`, `Prof. Dr. Rina Paladhi`, `Prof. Ishan Ghosh`.
+     - 2 Founders: `Partha Sarathi Pal`, `Sayan Chakraborty`.
+   - Stored structured mappings with public IDs and optimized URLs in `src/lib/cloudinaryAssets.json`.
+2. **Next.js Image Configuration (`next.config.ts`)**:
+   - Added `res.cloudinary.com` and `images.unsplash.com` to `images.remotePatterns`.
+3. **Core Members Section (`src/components/event/CoreMembersSection.tsx`)**:
+   - Replaced placeholder 6 members with the 12 real core members in a balanced 3-column responsive grid (`grid-cols-1 sm:grid-cols-2 lg:grid-cols-3`).
+   - Integrated real portraits with `loading="lazy"`, `decoding="async"`, smooth hover zoom, subtle gradient vignette, and preserved the 3D card tilt & flip physics.
+4. **Dignitaries Section (`src/components/event/DignitariesSection.tsx`)**:
+   - Added `Prof. Dr. Sujoy Biswas` alongside `Prof. Dr. Rina Paladhi` and `Prof. Ishan Ghosh`.
+   - Updated layout to a 3-column responsive grid (`grid-cols-1 md:grid-cols-3 max-w-6xl`) with real Cloudinary edge portraits and `loading="lazy"`.
+5. **Founders Section (`src/components/event/FoundersSection.tsx`)**:
+   - Replaced placeholder names with real founders `Partha Sarathi Pal` and `Sayan Chakraborty` with real portraits and emerald spotlight card plinths.
+6. **Verification**:
+   - Executed `npm run build`: Turbopack compiled with 0 TypeScript/ESLint errors and generated all 4 static pages in 424ms.
+
+### Current State
+All 17 images are live on Cloudinary Akamai/Fastly CDN and seamlessly integrated across Core Members, Dignitaries, and Founders sections with lazy loading and edge caching.
+
+### Next Agent Instructions
+1. Inspect `src/lib/cloudinaryAssets.json` for any additional asset transformations.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
 
 ## 2026-11-19 — Cloudinary MCP Server: Setup & Live Verification
 
@@ -4877,6 +5115,40 @@ Implement the DevFest Kolkata "card up" bottom sheet reveal animation (matching 
 ---
 
 # Agent Handoff Log — tracker.md
+
+## 2026-11-19 — Core Members, Dignitaries & Founders: Cloudinary Upload & Edge Integration
+
+### Objective
+Process all member images from `C:\Users\ritam\Downloads\Core Mem` (Depth 1 Core Members, Dignitaries, Founders), upload them to Cloudinary (`lsyjstbv`), generate modern ultra-optimized edge URLs (`f_auto,q_auto:good,w_800`), configure browser-native lazy loading, and wire them cleanly into `CoreMembersSection`, `DignitariesSection`, and `FoundersSection`.
+
+### Changes Made
+1. **Cloudinary Asset Upload Pipeline**:
+   - Processed all 17 images across 3 folders:
+     - 12 Core Members: `Archisha`, `Arnab`, `Ayan`, `Bhumi`, `Chadni`, `Debarun`, `Jagrit`, `Nayan`, `Preetisha`, `Sagnik`, `Shoaib`, `Sukanta`.
+     - 3 Dignitaries: `Prof. Dr. Sujoy Biswas`, `Prof. Dr. Rina Paladhi`, `Prof. Ishan Ghosh`.
+     - 2 Founders: `Partha Sarathi Pal`, `Sayan Chakraborty`.
+   - Stored structured mappings with public IDs and optimized URLs in `src/lib/cloudinaryAssets.json`.
+2. **Next.js Image Configuration (`next.config.ts`)**:
+   - Added `res.cloudinary.com` and `images.unsplash.com` to `images.remotePatterns`.
+3. **Core Members Section (`src/components/event/CoreMembersSection.tsx`)**:
+   - Replaced placeholder 6 members with the 12 real core members in a balanced 3-column responsive grid (`grid-cols-1 sm:grid-cols-2 lg:grid-cols-3`).
+   - Integrated real portraits with `loading="lazy"`, `decoding="async"`, smooth hover zoom, subtle gradient vignette, and preserved the 3D card tilt & flip physics.
+4. **Dignitaries Section (`src/components/event/DignitariesSection.tsx`)**:
+   - Added `Prof. Dr. Sujoy Biswas` alongside `Prof. Dr. Rina Paladhi` and `Prof. Ishan Ghosh`.
+   - Updated layout to a 3-column responsive grid (`grid-cols-1 md:grid-cols-3 max-w-6xl`) with real Cloudinary edge portraits and `loading="lazy"`.
+5. **Founders Section (`src/components/event/FoundersSection.tsx`)**:
+   - Replaced placeholder names with real founders `Partha Sarathi Pal` and `Sayan Chakraborty` with real portraits and emerald spotlight card plinths.
+6. **Verification**:
+   - Executed `npm run build`: Turbopack compiled with 0 TypeScript/ESLint errors and generated all 4 static pages in 424ms.
+
+### Current State
+All 17 images are live on Cloudinary Akamai/Fastly CDN and seamlessly integrated across Core Members, Dignitaries, and Founders sections with lazy loading and edge caching.
+
+### Next Agent Instructions
+1. Inspect `src/lib/cloudinaryAssets.json` for any additional asset transformations.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
 
 ## 2026-11-19 — Cloudinary MCP Server: Setup & Live Verification
 
@@ -5587,6 +5859,40 @@ Integrate the video from `https://www.instagram.com/p/DaqR3Niyy2L/?hl=en` (the o
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-19 — Core Members, Dignitaries & Founders: Cloudinary Upload & Edge Integration
+
+### Objective
+Process all member images from `C:\Users\ritam\Downloads\Core Mem` (Depth 1 Core Members, Dignitaries, Founders), upload them to Cloudinary (`lsyjstbv`), generate modern ultra-optimized edge URLs (`f_auto,q_auto:good,w_800`), configure browser-native lazy loading, and wire them cleanly into `CoreMembersSection`, `DignitariesSection`, and `FoundersSection`.
+
+### Changes Made
+1. **Cloudinary Asset Upload Pipeline**:
+   - Processed all 17 images across 3 folders:
+     - 12 Core Members: `Archisha`, `Arnab`, `Ayan`, `Bhumi`, `Chadni`, `Debarun`, `Jagrit`, `Nayan`, `Preetisha`, `Sagnik`, `Shoaib`, `Sukanta`.
+     - 3 Dignitaries: `Prof. Dr. Sujoy Biswas`, `Prof. Dr. Rina Paladhi`, `Prof. Ishan Ghosh`.
+     - 2 Founders: `Partha Sarathi Pal`, `Sayan Chakraborty`.
+   - Stored structured mappings with public IDs and optimized URLs in `src/lib/cloudinaryAssets.json`.
+2. **Next.js Image Configuration (`next.config.ts`)**:
+   - Added `res.cloudinary.com` and `images.unsplash.com` to `images.remotePatterns`.
+3. **Core Members Section (`src/components/event/CoreMembersSection.tsx`)**:
+   - Replaced placeholder 6 members with the 12 real core members in a balanced 3-column responsive grid (`grid-cols-1 sm:grid-cols-2 lg:grid-cols-3`).
+   - Integrated real portraits with `loading="lazy"`, `decoding="async"`, smooth hover zoom, subtle gradient vignette, and preserved the 3D card tilt & flip physics.
+4. **Dignitaries Section (`src/components/event/DignitariesSection.tsx`)**:
+   - Added `Prof. Dr. Sujoy Biswas` alongside `Prof. Dr. Rina Paladhi` and `Prof. Ishan Ghosh`.
+   - Updated layout to a 3-column responsive grid (`grid-cols-1 md:grid-cols-3 max-w-6xl`) with real Cloudinary edge portraits and `loading="lazy"`.
+5. **Founders Section (`src/components/event/FoundersSection.tsx`)**:
+   - Replaced placeholder names with real founders `Partha Sarathi Pal` and `Sayan Chakraborty` with real portraits and emerald spotlight card plinths.
+6. **Verification**:
+   - Executed `npm run build`: Turbopack compiled with 0 TypeScript/ESLint errors and generated all 4 static pages in 424ms.
+
+### Current State
+All 17 images are live on Cloudinary Akamai/Fastly CDN and seamlessly integrated across Core Members, Dignitaries, and Founders sections with lazy loading and edge caching.
+
+### Next Agent Instructions
+1. Inspect `src/lib/cloudinaryAssets.json` for any additional asset transformations.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-19 — Cloudinary MCP Server: Setup & Live Verification
 
 ### Objective
@@ -6249,6 +6555,40 @@ Integrate the video from `https://www.instagram.com/p/DaqR3Niyy2L/?hl=en` (the o
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-19 — Core Members, Dignitaries & Founders: Cloudinary Upload & Edge Integration
+
+### Objective
+Process all member images from `C:\Users\ritam\Downloads\Core Mem` (Depth 1 Core Members, Dignitaries, Founders), upload them to Cloudinary (`lsyjstbv`), generate modern ultra-optimized edge URLs (`f_auto,q_auto:good,w_800`), configure browser-native lazy loading, and wire them cleanly into `CoreMembersSection`, `DignitariesSection`, and `FoundersSection`.
+
+### Changes Made
+1. **Cloudinary Asset Upload Pipeline**:
+   - Processed all 17 images across 3 folders:
+     - 12 Core Members: `Archisha`, `Arnab`, `Ayan`, `Bhumi`, `Chadni`, `Debarun`, `Jagrit`, `Nayan`, `Preetisha`, `Sagnik`, `Shoaib`, `Sukanta`.
+     - 3 Dignitaries: `Prof. Dr. Sujoy Biswas`, `Prof. Dr. Rina Paladhi`, `Prof. Ishan Ghosh`.
+     - 2 Founders: `Partha Sarathi Pal`, `Sayan Chakraborty`.
+   - Stored structured mappings with public IDs and optimized URLs in `src/lib/cloudinaryAssets.json`.
+2. **Next.js Image Configuration (`next.config.ts`)**:
+   - Added `res.cloudinary.com` and `images.unsplash.com` to `images.remotePatterns`.
+3. **Core Members Section (`src/components/event/CoreMembersSection.tsx`)**:
+   - Replaced placeholder 6 members with the 12 real core members in a balanced 3-column responsive grid (`grid-cols-1 sm:grid-cols-2 lg:grid-cols-3`).
+   - Integrated real portraits with `loading="lazy"`, `decoding="async"`, smooth hover zoom, subtle gradient vignette, and preserved the 3D card tilt & flip physics.
+4. **Dignitaries Section (`src/components/event/DignitariesSection.tsx`)**:
+   - Added `Prof. Dr. Sujoy Biswas` alongside `Prof. Dr. Rina Paladhi` and `Prof. Ishan Ghosh`.
+   - Updated layout to a 3-column responsive grid (`grid-cols-1 md:grid-cols-3 max-w-6xl`) with real Cloudinary edge portraits and `loading="lazy"`.
+5. **Founders Section (`src/components/event/FoundersSection.tsx`)**:
+   - Replaced placeholder names with real founders `Partha Sarathi Pal` and `Sayan Chakraborty` with real portraits and emerald spotlight card plinths.
+6. **Verification**:
+   - Executed `npm run build`: Turbopack compiled with 0 TypeScript/ESLint errors and generated all 4 static pages in 424ms.
+
+### Current State
+All 17 images are live on Cloudinary Akamai/Fastly CDN and seamlessly integrated across Core Members, Dignitaries, and Founders sections with lazy loading and edge caching.
+
+### Next Agent Instructions
+1. Inspect `src/lib/cloudinaryAssets.json` for any additional asset transformations.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-19 — Cloudinary MCP Server: Setup & Live Verification
 
 ### Objective
@@ -6878,6 +7218,40 @@ Rotate the background video 90 degrees so it is right-side up, and eliminate ver
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-19 — Core Members, Dignitaries & Founders: Cloudinary Upload & Edge Integration
+
+### Objective
+Process all member images from `C:\Users\ritam\Downloads\Core Mem` (Depth 1 Core Members, Dignitaries, Founders), upload them to Cloudinary (`lsyjstbv`), generate modern ultra-optimized edge URLs (`f_auto,q_auto:good,w_800`), configure browser-native lazy loading, and wire them cleanly into `CoreMembersSection`, `DignitariesSection`, and `FoundersSection`.
+
+### Changes Made
+1. **Cloudinary Asset Upload Pipeline**:
+   - Processed all 17 images across 3 folders:
+     - 12 Core Members: `Archisha`, `Arnab`, `Ayan`, `Bhumi`, `Chadni`, `Debarun`, `Jagrit`, `Nayan`, `Preetisha`, `Sagnik`, `Shoaib`, `Sukanta`.
+     - 3 Dignitaries: `Prof. Dr. Sujoy Biswas`, `Prof. Dr. Rina Paladhi`, `Prof. Ishan Ghosh`.
+     - 2 Founders: `Partha Sarathi Pal`, `Sayan Chakraborty`.
+   - Stored structured mappings with public IDs and optimized URLs in `src/lib/cloudinaryAssets.json`.
+2. **Next.js Image Configuration (`next.config.ts`)**:
+   - Added `res.cloudinary.com` and `images.unsplash.com` to `images.remotePatterns`.
+3. **Core Members Section (`src/components/event/CoreMembersSection.tsx`)**:
+   - Replaced placeholder 6 members with the 12 real core members in a balanced 3-column responsive grid (`grid-cols-1 sm:grid-cols-2 lg:grid-cols-3`).
+   - Integrated real portraits with `loading="lazy"`, `decoding="async"`, smooth hover zoom, subtle gradient vignette, and preserved the 3D card tilt & flip physics.
+4. **Dignitaries Section (`src/components/event/DignitariesSection.tsx`)**:
+   - Added `Prof. Dr. Sujoy Biswas` alongside `Prof. Dr. Rina Paladhi` and `Prof. Ishan Ghosh`.
+   - Updated layout to a 3-column responsive grid (`grid-cols-1 md:grid-cols-3 max-w-6xl`) with real Cloudinary edge portraits and `loading="lazy"`.
+5. **Founders Section (`src/components/event/FoundersSection.tsx`)**:
+   - Replaced placeholder names with real founders `Partha Sarathi Pal` and `Sayan Chakraborty` with real portraits and emerald spotlight card plinths.
+6. **Verification**:
+   - Executed `npm run build`: Turbopack compiled with 0 TypeScript/ESLint errors and generated all 4 static pages in 424ms.
+
+### Current State
+All 17 images are live on Cloudinary Akamai/Fastly CDN and seamlessly integrated across Core Members, Dignitaries, and Founders sections with lazy loading and edge caching.
+
+### Next Agent Instructions
+1. Inspect `src/lib/cloudinaryAssets.json` for any additional asset transformations.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-19 — Cloudinary MCP Server: Setup & Live Verification
 
 ### Objective
@@ -7479,6 +7853,40 @@ Rotate the background video 180 degrees per user instruction to invert the orien
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-19 — Core Members, Dignitaries & Founders: Cloudinary Upload & Edge Integration
+
+### Objective
+Process all member images from `C:\Users\ritam\Downloads\Core Mem` (Depth 1 Core Members, Dignitaries, Founders), upload them to Cloudinary (`lsyjstbv`), generate modern ultra-optimized edge URLs (`f_auto,q_auto:good,w_800`), configure browser-native lazy loading, and wire them cleanly into `CoreMembersSection`, `DignitariesSection`, and `FoundersSection`.
+
+### Changes Made
+1. **Cloudinary Asset Upload Pipeline**:
+   - Processed all 17 images across 3 folders:
+     - 12 Core Members: `Archisha`, `Arnab`, `Ayan`, `Bhumi`, `Chadni`, `Debarun`, `Jagrit`, `Nayan`, `Preetisha`, `Sagnik`, `Shoaib`, `Sukanta`.
+     - 3 Dignitaries: `Prof. Dr. Sujoy Biswas`, `Prof. Dr. Rina Paladhi`, `Prof. Ishan Ghosh`.
+     - 2 Founders: `Partha Sarathi Pal`, `Sayan Chakraborty`.
+   - Stored structured mappings with public IDs and optimized URLs in `src/lib/cloudinaryAssets.json`.
+2. **Next.js Image Configuration (`next.config.ts`)**:
+   - Added `res.cloudinary.com` and `images.unsplash.com` to `images.remotePatterns`.
+3. **Core Members Section (`src/components/event/CoreMembersSection.tsx`)**:
+   - Replaced placeholder 6 members with the 12 real core members in a balanced 3-column responsive grid (`grid-cols-1 sm:grid-cols-2 lg:grid-cols-3`).
+   - Integrated real portraits with `loading="lazy"`, `decoding="async"`, smooth hover zoom, subtle gradient vignette, and preserved the 3D card tilt & flip physics.
+4. **Dignitaries Section (`src/components/event/DignitariesSection.tsx`)**:
+   - Added `Prof. Dr. Sujoy Biswas` alongside `Prof. Dr. Rina Paladhi` and `Prof. Ishan Ghosh`.
+   - Updated layout to a 3-column responsive grid (`grid-cols-1 md:grid-cols-3 max-w-6xl`) with real Cloudinary edge portraits and `loading="lazy"`.
+5. **Founders Section (`src/components/event/FoundersSection.tsx`)**:
+   - Replaced placeholder names with real founders `Partha Sarathi Pal` and `Sayan Chakraborty` with real portraits and emerald spotlight card plinths.
+6. **Verification**:
+   - Executed `npm run build`: Turbopack compiled with 0 TypeScript/ESLint errors and generated all 4 static pages in 424ms.
+
+### Current State
+All 17 images are live on Cloudinary Akamai/Fastly CDN and seamlessly integrated across Core Members, Dignitaries, and Founders sections with lazy loading and edge caching.
+
+### Next Agent Instructions
+1. Inspect `src/lib/cloudinaryAssets.json` for any additional asset transformations.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-19 — Cloudinary MCP Server: Setup & Live Verification
 
 ### Objective
@@ -8056,6 +8464,40 @@ Remove the "Google Developer Group Kolkata" logo from the top-left of the hero s
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-19 — Core Members, Dignitaries & Founders: Cloudinary Upload & Edge Integration
+
+### Objective
+Process all member images from `C:\Users\ritam\Downloads\Core Mem` (Depth 1 Core Members, Dignitaries, Founders), upload them to Cloudinary (`lsyjstbv`), generate modern ultra-optimized edge URLs (`f_auto,q_auto:good,w_800`), configure browser-native lazy loading, and wire them cleanly into `CoreMembersSection`, `DignitariesSection`, and `FoundersSection`.
+
+### Changes Made
+1. **Cloudinary Asset Upload Pipeline**:
+   - Processed all 17 images across 3 folders:
+     - 12 Core Members: `Archisha`, `Arnab`, `Ayan`, `Bhumi`, `Chadni`, `Debarun`, `Jagrit`, `Nayan`, `Preetisha`, `Sagnik`, `Shoaib`, `Sukanta`.
+     - 3 Dignitaries: `Prof. Dr. Sujoy Biswas`, `Prof. Dr. Rina Paladhi`, `Prof. Ishan Ghosh`.
+     - 2 Founders: `Partha Sarathi Pal`, `Sayan Chakraborty`.
+   - Stored structured mappings with public IDs and optimized URLs in `src/lib/cloudinaryAssets.json`.
+2. **Next.js Image Configuration (`next.config.ts`)**:
+   - Added `res.cloudinary.com` and `images.unsplash.com` to `images.remotePatterns`.
+3. **Core Members Section (`src/components/event/CoreMembersSection.tsx`)**:
+   - Replaced placeholder 6 members with the 12 real core members in a balanced 3-column responsive grid (`grid-cols-1 sm:grid-cols-2 lg:grid-cols-3`).
+   - Integrated real portraits with `loading="lazy"`, `decoding="async"`, smooth hover zoom, subtle gradient vignette, and preserved the 3D card tilt & flip physics.
+4. **Dignitaries Section (`src/components/event/DignitariesSection.tsx`)**:
+   - Added `Prof. Dr. Sujoy Biswas` alongside `Prof. Dr. Rina Paladhi` and `Prof. Ishan Ghosh`.
+   - Updated layout to a 3-column responsive grid (`grid-cols-1 md:grid-cols-3 max-w-6xl`) with real Cloudinary edge portraits and `loading="lazy"`.
+5. **Founders Section (`src/components/event/FoundersSection.tsx`)**:
+   - Replaced placeholder names with real founders `Partha Sarathi Pal` and `Sayan Chakraborty` with real portraits and emerald spotlight card plinths.
+6. **Verification**:
+   - Executed `npm run build`: Turbopack compiled with 0 TypeScript/ESLint errors and generated all 4 static pages in 424ms.
+
+### Current State
+All 17 images are live on Cloudinary Akamai/Fastly CDN and seamlessly integrated across Core Members, Dignitaries, and Founders sections with lazy loading and edge caching.
+
+### Next Agent Instructions
+1. Inspect `src/lib/cloudinaryAssets.json` for any additional asset transformations.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-19 — Cloudinary MCP Server: Setup & Live Verification
 
 ### Objective
@@ -8609,6 +9051,40 @@ Implement the DevFest Kolkata "card up" bottom sheet reveal animation (matching 
 ---
 
 # Agent Handoff Log — tracker.md
+
+## 2026-11-19 — Core Members, Dignitaries & Founders: Cloudinary Upload & Edge Integration
+
+### Objective
+Process all member images from `C:\Users\ritam\Downloads\Core Mem` (Depth 1 Core Members, Dignitaries, Founders), upload them to Cloudinary (`lsyjstbv`), generate modern ultra-optimized edge URLs (`f_auto,q_auto:good,w_800`), configure browser-native lazy loading, and wire them cleanly into `CoreMembersSection`, `DignitariesSection`, and `FoundersSection`.
+
+### Changes Made
+1. **Cloudinary Asset Upload Pipeline**:
+   - Processed all 17 images across 3 folders:
+     - 12 Core Members: `Archisha`, `Arnab`, `Ayan`, `Bhumi`, `Chadni`, `Debarun`, `Jagrit`, `Nayan`, `Preetisha`, `Sagnik`, `Shoaib`, `Sukanta`.
+     - 3 Dignitaries: `Prof. Dr. Sujoy Biswas`, `Prof. Dr. Rina Paladhi`, `Prof. Ishan Ghosh`.
+     - 2 Founders: `Partha Sarathi Pal`, `Sayan Chakraborty`.
+   - Stored structured mappings with public IDs and optimized URLs in `src/lib/cloudinaryAssets.json`.
+2. **Next.js Image Configuration (`next.config.ts`)**:
+   - Added `res.cloudinary.com` and `images.unsplash.com` to `images.remotePatterns`.
+3. **Core Members Section (`src/components/event/CoreMembersSection.tsx`)**:
+   - Replaced placeholder 6 members with the 12 real core members in a balanced 3-column responsive grid (`grid-cols-1 sm:grid-cols-2 lg:grid-cols-3`).
+   - Integrated real portraits with `loading="lazy"`, `decoding="async"`, smooth hover zoom, subtle gradient vignette, and preserved the 3D card tilt & flip physics.
+4. **Dignitaries Section (`src/components/event/DignitariesSection.tsx`)**:
+   - Added `Prof. Dr. Sujoy Biswas` alongside `Prof. Dr. Rina Paladhi` and `Prof. Ishan Ghosh`.
+   - Updated layout to a 3-column responsive grid (`grid-cols-1 md:grid-cols-3 max-w-6xl`) with real Cloudinary edge portraits and `loading="lazy"`.
+5. **Founders Section (`src/components/event/FoundersSection.tsx`)**:
+   - Replaced placeholder names with real founders `Partha Sarathi Pal` and `Sayan Chakraborty` with real portraits and emerald spotlight card plinths.
+6. **Verification**:
+   - Executed `npm run build`: Turbopack compiled with 0 TypeScript/ESLint errors and generated all 4 static pages in 424ms.
+
+### Current State
+All 17 images are live on Cloudinary Akamai/Fastly CDN and seamlessly integrated across Core Members, Dignitaries, and Founders sections with lazy loading and edge caching.
+
+### Next Agent Instructions
+1. Inspect `src/lib/cloudinaryAssets.json` for any additional asset transformations.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
 
 ## 2026-11-19 — Cloudinary MCP Server: Setup & Live Verification
 

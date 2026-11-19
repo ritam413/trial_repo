@@ -16,22 +16,28 @@ export interface FounderProfile {
   name: string;
   designation: string;
   monogram: string;
+  imageUrl: string;
+  thumbnailUrl?: string;
 }
 
 export const FOUNDERS: FounderProfile[] = [
   {
     id: "fnd-01",
-    badge: "CO-FOUNDER",
-    name: "AARAV JOSHI",
-    designation: "FOUNDING PRESIDENT, SANSKARAN",
-    monogram: "AJ",
+    badge: "FOUNDER",
+    name: "PARTHA SARATHI PAL",
+    designation: "FOUNDING STEWARD, SANSKARAN",
+    monogram: "PP",
+    imageUrl: "https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_800,c_limit/sanskaran_2026/founders/partha_sarathi_pal",
+    thumbnailUrl: "https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:low,w_40,e_blur:1000/sanskaran_2026/founders/partha_sarathi_pal",
   },
   {
     id: "fnd-02",
-    badge: "CO-FOUNDER",
-    name: "ANANYA IYER",
-    designation: "FOUNDING CREATIVE DIRECTOR",
-    monogram: "AI",
+    badge: "FOUNDER",
+    name: "SAYAN CHAKRABORTY",
+    designation: "FOUNDING STEWARD, SANSKARAN",
+    monogram: "SC",
+    imageUrl: "https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_800,c_limit/sanskaran_2026/founders/sayan_chakraborty",
+    thumbnailUrl: "https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:low,w_40,e_blur:1000/sanskaran_2026/founders/sayan_chakraborty",
   },
 ];
 
@@ -151,17 +157,15 @@ export default function FoundersSection() {
                   </div>
 
                   {/* HERO PORTRAIT / PHOTO CARD PLINTH */}
-                  <div className="relative w-full aspect-[4/5] sm:h-72 rounded-xl sm:rounded-2xl border border-white/15 bg-gradient-to-b from-[#082b2c] to-[#041c1d] overflow-hidden flex flex-col justify-center items-center p-3.5 shadow-inner transition-transform duration-300 group-hover:scale-[1.02]">
-                    {/* Center Monogram / Portrait Artwork */}
-                    <div className="relative flex items-center justify-center my-auto">
-                      <div className="absolute w-28 h-28 sm:w-36 sm:h-36 rounded-full bg-[#d4c7ff]/20 blur-2xl pointer-events-none transition-all duration-300 group-hover:scale-125" />
-                      <div className="absolute w-24 h-24 sm:w-32 sm:h-32 rounded-full border border-white/10 pointer-events-none" />
-                      <div className="absolute w-28 h-28 sm:w-36 sm:h-36 rounded-full border border-dashed border-white/10 pointer-events-none" />
-
-                      <span className="font-display text-6xl sm:text-7xl lg:text-8xl font-black tracking-wider leading-none select-none relative z-10 drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)] text-transparent bg-clip-text bg-gradient-to-b from-[#ffffff] via-[#d4c7ff] to-[#714cb6]">
-                        {person.monogram}
-                      </span>
-                    </div>
+                  <div className="relative w-full aspect-[4/5] sm:h-72 rounded-xl sm:rounded-2xl border border-white/15 bg-gradient-to-b from-[#082b2c] to-[#041c1d] overflow-hidden flex flex-col justify-center items-center shadow-inner transition-transform duration-300 group-hover:scale-[1.02]">
+                    <img
+                      src={person.imageUrl}
+                      alt={person.name}
+                      loading="lazy"
+                      decoding="async"
+                      className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#082b2c] via-transparent to-transparent opacity-60 pointer-events-none" />
                   </div>
 
                   {/* HIGHLIGHTED NAME & CLEAN ROLE */}

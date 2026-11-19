@@ -61,68 +61,141 @@ export interface CoreMember {
   archetype: string;
   quote: string;
   year: string;
+  imageUrl?: string;
 }
 
 export const CORE_MEMBERS: CoreMember[] = [
   {
     id: "cm-01",
-    name: "KABIR VERMA",
-    role: "FESTIVAL SECRETARY",
+    name: "ARCHISHA",
+    role: "CURATION & HERITAGE",
     vertical: "EXECUTIVE COUNCIL",
     designVariant: "crimson-vanguard",
     archetype: "THE CRIMSON VANGUARD",
     quote: "Every initiative we spearhead represents an unfiltered student voice ready to ignite the campus.",
-    year: "FINAL YEAR // B.TECH",
+    year: "FINAL YEAR",
+    imageUrl: "https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_800,c_limit/sanskaran_2026/core_members/archisha",
   },
   {
     id: "cm-02",
-    name: "MEERA SHARMA",
-    role: "HEAD OF CURATION",
-    vertical: "SANSKARAN CONCLAVE",
-    designVariant: "checkered-sovereign",
-    archetype: "SOVEREIGN OF CULTURE",
-    quote: "Heritage is not static—it is a living court of ideas, art, and intellectual dialogue.",
-    year: "THIRD YEAR // DESIGN",
-  },
-  {
-    id: "cm-03",
-    name: "ROHAN KAPOOR",
-    role: "TECHNICAL & 3D LEAD",
+    name: "ARNAB",
+    role: "TECHNICAL & SYSTEMS LEAD",
     vertical: "DIGITAL ARCHITECTURE",
     designVariant: "cyber-horizon",
     archetype: "ARCHITECT OF THE HORIZON",
-    quote: "Where Swiss typographic discipline collides with obsidian-and-amber spectacle.",
-    year: "FINAL YEAR // CSE",
+    quote: "Where modern web craftsmanship meets high-impact festival spectacle.",
+    year: "FINAL YEAR",
+    imageUrl: "https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_800,c_limit/sanskaran_2026/core_members/arnab",
+  },
+  {
+    id: "cm-03",
+    name: "AYAN",
+    role: "FESTIVAL SECRETARY",
+    vertical: "STUDENT GOVERNANCE",
+    designVariant: "checkered-sovereign",
+    archetype: "SOVEREIGN OF CULTURE",
+    quote: "Heritage is not static—it is a living court of ideas, art, and intellectual dialogue.",
+    year: "FINAL YEAR",
+    imageUrl: "https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_800,c_limit/sanskaran_2026/core_members/ayan",
   },
   {
     id: "cm-04",
-    name: "TARA MENON",
-    role: "CREATIVE DIRECTOR",
-    vertical: "SCENOGRAPHY & PRINT",
+    name: "BHUMI",
+    role: "CREATIVE & SCENOGRAPHY LEAD",
+    vertical: "VISUAL IDENTITY",
     designVariant: "crimson-vanguard",
     archetype: "KEEPER OF THE EMBERS",
-    quote: "We transform open-air plazas into a surreal corridor of monumental installations and light.",
-    year: "THIRD YEAR // ARCH",
+    quote: "Transforming every open-air arena into an immersive celebration of light and shadow.",
+    year: "THIRD YEAR",
+    imageUrl: "https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_800,c_limit/sanskaran_2026/core_members/bhumi",
   },
   {
     id: "cm-05",
-    name: "DEVANSH NAIR",
-    role: "EVENTS & PRODUCTION",
-    vertical: "SAHOTSAVA ARENA",
+    name: "CHADNI",
+    role: "CULTURAL CONCLAVE LEAD",
+    vertical: "PERFORMING ARTS",
     designVariant: "checkered-sovereign",
-    archetype: "MASTER OF CEREMONIES",
-    quote: "Forty-five events, seventy-two hours, one shared heartbeat across the entire university.",
-    year: "FINAL YEAR // MECH",
+    archetype: "VOICE OF THE SOVEREIGN",
+    quote: "Art is the universal language that unites our campus across all disciplines.",
+    year: "THIRD YEAR",
+    imageUrl: "https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_800,c_limit/sanskaran_2026/core_members/chadni",
   },
   {
     id: "cm-06",
-    name: "ZOYA SIDDIQUI",
-    role: "ALLIANCES & OUTREACH",
+    name: "DEBARUN",
+    role: "LOGISTICS & OPERATIONS",
+    vertical: "CENTRAL COMMAND",
+    designVariant: "cyber-horizon",
+    archetype: "STEWARD OF THE GRID",
+    quote: "Precision behind the curtains powers the pure magic experienced on stage.",
+    year: "FINAL YEAR",
+    imageUrl: "https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_800,c_limit/sanskaran_2026/core_members/debarun",
+  },
+  {
+    id: "cm-07",
+    name: "JAGRIT",
+    role: "MEDIA & BROADCAST HEAD",
+    vertical: "PUBLIC ENGAGEMENT",
+    designVariant: "crimson-vanguard",
+    archetype: "CHRONICLER OF MOMENTS",
+    quote: "Capturing the raw energy, laughter, and camaraderie that define Sanskaran.",
+    year: "THIRD YEAR",
+    imageUrl: "https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_800,c_limit/sanskaran_2026/core_members/jagrit",
+  },
+  {
+    id: "cm-08",
+    name: "NAYAN",
+    role: "EVENTS & PRODUCTION DIRECTOR",
+    vertical: "SAHOTSAVA ARENA",
+    designVariant: "checkered-sovereign",
+    archetype: "MASTER OF CEREMONIES",
+    quote: "Forty-five events, seventy-two hours, one shared heartbeat across the university.",
+    year: "FINAL YEAR",
+    imageUrl: "https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_800,c_limit/sanskaran_2026/core_members/nayan",
+  },
+  {
+    id: "cm-09",
+    name: "PREETISHA",
+    role: "PUBLIC RELATIONS & ALLIANCES",
     vertical: "EXTERNAL RELATIONS",
     designVariant: "cyber-horizon",
     archetype: "CATALYST OF SYNERGY",
-    quote: "Connecting student visionaries with artists, thinkers, and patrons across the country.",
-    year: "THIRD YEAR // MGMT",
+    quote: "Connecting student visionaries with artists, thinkers, and patrons across the nation.",
+    year: "THIRD YEAR",
+    imageUrl: "https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_800,c_limit/sanskaran_2026/core_members/preetisha",
+  },
+  {
+    id: "cm-10",
+    name: "SAGNIK",
+    role: "FINANCE & SPONSORSHIPS",
+    vertical: "TREASURY & CORPORATE",
+    designVariant: "crimson-vanguard",
+    archetype: "THE PRUDENT STRATEGIST",
+    quote: "Building sustainable partnerships that elevate our festival year after year.",
+    year: "FINAL YEAR",
+    imageUrl: "https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_800,c_limit/sanskaran_2026/core_members/sagnik",
+  },
+  {
+    id: "cm-11",
+    name: "SHOAIB",
+    role: "HOSPITALITY & DELEGATIONS",
+    vertical: "CAMPUS WELFARE",
+    designVariant: "checkered-sovereign",
+    archetype: "GUARDIAN OF EXPERIENCE",
+    quote: "Ensuring every participant and guest feels the warmth of our collective family.",
+    year: "THIRD YEAR",
+    imageUrl: "https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_800,c_limit/sanskaran_2026/core_members/shoaib",
+  },
+  {
+    id: "cm-12",
+    name: "SUKANTA",
+    role: "STRATEGIC ADVISOR",
+    vertical: "ALUMNI & ADVISORY",
+    designVariant: "cyber-horizon",
+    archetype: "BEACON OF CONTINUITY",
+    quote: "Upholding the founding ethos while giving the next generation the stage to shine.",
+    year: "FINAL YEAR",
+    imageUrl: "https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_800,c_limit/sanskaran_2026/core_members/sukanta",
   },
 ];
 
@@ -342,29 +415,42 @@ function CoreMemberCard({ member, index }: CardProps) {
         />
 
         {/* ==============================================================
-            FRONT FACE (IVORY FINE-CARDSTOCK WITH REFERENCE ARTWORK)
+            FRONT FACE (FINE PLAYING CARD WITH REAL MEMBER PORTRAIT)
             ============================================================== */}
-        <div className="absolute inset-0 [backface-visibility:hidden] rounded-[24px] overflow-hidden border-[2px] border-[#e3e3e2] group-hover:border-[#714cb6] transition-colors bg-[#ffffff]">
-          {/* Reference Card Artwork SVG */}
-          <div className="absolute inset-0">
-            <ReferenceCardArtwork variant={member.designVariant} />
-          </div>
+        <div className="absolute inset-0 [backface-visibility:hidden] rounded-[24px] overflow-hidden border-[2px] border-[#e3e3e2]/40 group-hover:border-[#714cb6] transition-colors bg-[#111113]">
+          {/* Member Photo or Fallback Artwork */}
+          {member.imageUrl ? (
+            <div className="absolute inset-0 overflow-hidden">
+              <img
+                src={member.imageUrl}
+                alt={member.name}
+                loading="lazy"
+                decoding="async"
+                className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#141416] via-[#141416]/20 to-black/35 pointer-events-none" />
+            </div>
+          ) : (
+            <div className="absolute inset-0">
+              <ReferenceCardArtwork variant={member.designVariant} />
+            </div>
+          )}
 
           {/* Top-Left Profile Index */}
           <div className="absolute top-4 left-4 z-10 flex flex-col items-start leading-none">
-            <span className="font-mono text-xs font-bold text-[#ffffff] bg-[#421d24] px-2 py-0.5 rounded border border-[#421d24] shadow-sm">
+            <span className="font-mono text-xs font-bold text-[#ffffff] bg-[#421d24]/90 backdrop-blur-sm px-2 py-0.5 rounded border border-[#714cb6]/40 shadow-sm">
               #{index + 1 < 10 ? `0${index + 1}` : index + 1}
             </span>
           </div>
 
           {/* Top-Right Flip Button Indicator */}
-          <div className="absolute top-4 right-4 z-10 inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#ffffff] text-[#714cb6] font-tech text-[10px] font-bold tracking-wider uppercase border border-[#e3e3e2] shadow-md">
-            <Icon.RotateCw className="w-3 h-3 text-[#714cb6] group-hover:rotate-180 transition-transform duration-500" />
+          <div className="absolute top-4 right-4 z-10 inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-[#d4c7ff] font-tech text-[10px] font-bold tracking-wider uppercase border border-white/20 shadow-md">
+            <Icon.RotateCw className="w-3 h-3 text-[#d4c7ff] group-hover:rotate-180 transition-transform duration-500" />
             <span>FLIP</span>
           </div>
 
           {/* Bottom Information Plinth with Ink Charcoal Gradient */}
-          <div className="absolute inset-x-0 bottom-0 z-10 p-4 bg-gradient-to-t from-[#292827] via-[#292827]/95 to-transparent text-[#ffffff]">
+          <div className="absolute inset-x-0 bottom-0 z-10 p-4 bg-gradient-to-t from-[#141416] via-[#141416]/90 to-transparent text-[#ffffff]">
             <p className="font-tech text-[10px] font-bold tracking-[0.18em] text-[#d4c7ff] uppercase">
               {member.role}
             </p>
