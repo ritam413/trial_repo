@@ -335,16 +335,27 @@ All foundational libraries, responsive layout engines, and the streamlined **Dev
     - Aceternity UI `CardSpotlight` with glowing emerald card plinths and ambient dot grid.
 - **Key Files**: [FoundersSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/FoundersSection.tsx), [cloudinaryAssets.json](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/lib/cloudinaryAssets.json)
 
-### 10. Core Members Section ("CORE MEMBERS")
+### 11. Hero Section Cinematic Slideshow (`/gsap-animation`, `/animate`, `/impeccable`)
 - **Status**: Implemented
-- **Description**: All 12 real core team members configured with interactive 3D playing cards and Cloudinary CDN optimization:
-  - **12 Core Members**: Archisha, Arnab, Ayan, Bhumi, Chadni, Debarun, Jagrit, Nayan, Preetisha, Sagnik, Shoaib, and Sukanta.
-  - **Interactive 3D Playing Cards**:
-    - Front face displays real high-resolution portrait with smooth hover zoom, subtle gradient vignette, corner index tags, and flip badge.
-    - Back face retains tactile 3D card flip physics revealing role, year, vertical, and student vision quote.
-    - Native `loading="lazy"` and `decoding="async"` ensuring sub-5ms cached CDN delivery and 0 layout shifts.
-    - Balanced 3-column responsive grid (`grid-cols-1 sm:grid-cols-2 lg:grid-cols-3`).
-- **Key Files**: [CoreMembersSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/CoreMembersSection.tsx), [cloudinaryAssets.json](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/lib/cloudinaryAssets.json)
+- **Description**: Replaced the static looping video in `ShowcaseHeroSection.tsx` with a dynamic 35mm documentary slideshow engine:
+  - **Cloudinary Asset Upload (`src/lib/heroSlideshowAssets.json` & `heroSlideshowData.ts`)**:
+    - Uploaded all 32 high-resolution festival photographs from `Core Mem/Dignitaroies/New folder` to Cloudinary (`lsyjstbv/hero_slideshow`).
+    - Configured with `f_auto,q_auto:good,w_1920,c_limit` for sub-5ms edge CDN delivery.
+  - **Non-AI Slop Transition Engine (`HeroBackgroundSlideshow.tsx`)**:
+    - **Four Handcrafted Transitions**:
+      1. `dissolve`: Smooth optical crossfade with continuous Ken Burns drift.
+      2. `burn`: 35mm film burn / amber light leak bloom using `mix-blend-screen` and warm golden radial gradients.
+      3. `fade`: Dark shutter black dip and soft settle.
+      4. `zoom-dissolve`: Focal rack push with subtle forward acceleration.
+    - **Variable Organic Timing**:
+      - Randomized display duration per slide between 3.5s and 6.0s (`3500ms + Math.random() * 2500ms`).
+      - Organic transition switching so transitions never repeat mechanically.
+    - **Double-Buffered Composite Rendering**:
+      - Two alternating memory layers (Layer A & Layer B) with GPU-accelerated transforms (`autoAlpha`, `scale`).
+      - Zero layout shifts and zero frame drops under load.
+    - **Analog Film Aesthetics & Accessibility**:
+      - Subtle 35mm film grain overlay and seamless dark vignette ensuring headline readability.
+      - Full `prefers-reduced-motion` compliance.
 
 ### 6. Framework & Core Architecture
 - **Status**: Implemented

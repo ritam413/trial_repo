@@ -1,5 +1,30 @@
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Hero Section Slideshow: Continuous Zoom-In / Zoom-Out & Mouse Parallax
+
+### Objective
+Implement continuous, alternating Ken Burns Zoom-In and Zoom-Out motion on all slideshow images, wire cursor-following 3D mouse parallax, and expose transparent configuration controls for slide display durations in [HeroBackgroundSlideshow.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroBackgroundSlideshow.tsx).
+
+### Changes Made
+1. **Interactive Mouse Parallax**:
+   - Added `parallaxRef` over an extended viewport canvas (`w-[calc(100%+64px)] h-[calc(100%+64px)]`).
+   - Bound passive `pointermove` listener lerping `x` and `y` displacement up to `PARALLAX_MAX_PX` via GSAP composite transforms.
+2. **Continuous Zoom-In / Zoom-Out (Ken Burns)**:
+   - Added `startKenBurnsZoom` function that alternates between Zoom-In (`scale: 1.0 -> 1.12`) and Zoom-Out (`scale: 1.12 -> 1.0`) across consecutive slides during their active display window.
+3. **Explicit Timing Controls (`SLIDESHOW_CONFIG`)**:
+   - Centralized duration configuration at the top of `HeroBackgroundSlideshow.tsx` with `FIXED_DURATION_MS`, `MIN_DURATION_MS`, and `MAX_DURATION_MS`.
+4. **Verification**:
+   - Next.js 16 (Turbopack) & React 19: compiled with 0 errors in 2.8s; all 4 static pages prerendered.
+
+### Current State
+Hero Section features continuous Ken Burns zooming and mouse parallax with modular duration settings.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/HeroBackgroundSlideshow.tsx` lines 10-25 for duration customization.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-19 — Founders & Dignitaries: Alignment Control & Object-Center Optimization
 
 ### Objective
@@ -1344,6 +1369,31 @@ Integrate the video from `https://www.instagram.com/p/DaqR3Niyy2L/?hl=en` (the o
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Hero Section Slideshow: Continuous Zoom-In / Zoom-Out & Mouse Parallax
+
+### Objective
+Implement continuous, alternating Ken Burns Zoom-In and Zoom-Out motion on all slideshow images, wire cursor-following 3D mouse parallax, and expose transparent configuration controls for slide display durations in [HeroBackgroundSlideshow.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroBackgroundSlideshow.tsx).
+
+### Changes Made
+1. **Interactive Mouse Parallax**:
+   - Added `parallaxRef` over an extended viewport canvas (`w-[calc(100%+64px)] h-[calc(100%+64px)]`).
+   - Bound passive `pointermove` listener lerping `x` and `y` displacement up to `PARALLAX_MAX_PX` via GSAP composite transforms.
+2. **Continuous Zoom-In / Zoom-Out (Ken Burns)**:
+   - Added `startKenBurnsZoom` function that alternates between Zoom-In (`scale: 1.0 -> 1.12`) and Zoom-Out (`scale: 1.12 -> 1.0`) across consecutive slides during their active display window.
+3. **Explicit Timing Controls (`SLIDESHOW_CONFIG`)**:
+   - Centralized duration configuration at the top of `HeroBackgroundSlideshow.tsx` with `FIXED_DURATION_MS`, `MIN_DURATION_MS`, and `MAX_DURATION_MS`.
+4. **Verification**:
+   - Next.js 16 (Turbopack) & React 19: compiled with 0 errors in 2.8s; all 4 static pages prerendered.
+
+### Current State
+Hero Section features continuous Ken Burns zooming and mouse parallax with modular duration settings.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/HeroBackgroundSlideshow.tsx` lines 10-25 for duration customization.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-19 — Founders & Dignitaries: Alignment Control & Object-Center Optimization
 
 ### Objective
@@ -2064,6 +2114,31 @@ Integrate the video from `https://www.instagram.com/p/DaqR3Niyy2L/?hl=en` (the o
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Hero Section Slideshow: Continuous Zoom-In / Zoom-Out & Mouse Parallax
+
+### Objective
+Implement continuous, alternating Ken Burns Zoom-In and Zoom-Out motion on all slideshow images, wire cursor-following 3D mouse parallax, and expose transparent configuration controls for slide display durations in [HeroBackgroundSlideshow.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroBackgroundSlideshow.tsx).
+
+### Changes Made
+1. **Interactive Mouse Parallax**:
+   - Added `parallaxRef` over an extended viewport canvas (`w-[calc(100%+64px)] h-[calc(100%+64px)]`).
+   - Bound passive `pointermove` listener lerping `x` and `y` displacement up to `PARALLAX_MAX_PX` via GSAP composite transforms.
+2. **Continuous Zoom-In / Zoom-Out (Ken Burns)**:
+   - Added `startKenBurnsZoom` function that alternates between Zoom-In (`scale: 1.0 -> 1.12`) and Zoom-Out (`scale: 1.12 -> 1.0`) across consecutive slides during their active display window.
+3. **Explicit Timing Controls (`SLIDESHOW_CONFIG`)**:
+   - Centralized duration configuration at the top of `HeroBackgroundSlideshow.tsx` with `FIXED_DURATION_MS`, `MIN_DURATION_MS`, and `MAX_DURATION_MS`.
+4. **Verification**:
+   - Next.js 16 (Turbopack) & React 19: compiled with 0 errors in 2.8s; all 4 static pages prerendered.
+
+### Current State
+Hero Section features continuous Ken Burns zooming and mouse parallax with modular duration settings.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/HeroBackgroundSlideshow.tsx` lines 10-25 for duration customization.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-19 — Founders & Dignitaries: Alignment Control & Object-Center Optimization
 
 ### Objective
@@ -2751,6 +2826,31 @@ Rotate the background video 90 degrees so it is right-side up, and eliminate ver
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Hero Section Slideshow: Continuous Zoom-In / Zoom-Out & Mouse Parallax
+
+### Objective
+Implement continuous, alternating Ken Burns Zoom-In and Zoom-Out motion on all slideshow images, wire cursor-following 3D mouse parallax, and expose transparent configuration controls for slide display durations in [HeroBackgroundSlideshow.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroBackgroundSlideshow.tsx).
+
+### Changes Made
+1. **Interactive Mouse Parallax**:
+   - Added `parallaxRef` over an extended viewport canvas (`w-[calc(100%+64px)] h-[calc(100%+64px)]`).
+   - Bound passive `pointermove` listener lerping `x` and `y` displacement up to `PARALLAX_MAX_PX` via GSAP composite transforms.
+2. **Continuous Zoom-In / Zoom-Out (Ken Burns)**:
+   - Added `startKenBurnsZoom` function that alternates between Zoom-In (`scale: 1.0 -> 1.12`) and Zoom-Out (`scale: 1.12 -> 1.0`) across consecutive slides during their active display window.
+3. **Explicit Timing Controls (`SLIDESHOW_CONFIG`)**:
+   - Centralized duration configuration at the top of `HeroBackgroundSlideshow.tsx` with `FIXED_DURATION_MS`, `MIN_DURATION_MS`, and `MAX_DURATION_MS`.
+4. **Verification**:
+   - Next.js 16 (Turbopack) & React 19: compiled with 0 errors in 2.8s; all 4 static pages prerendered.
+
+### Current State
+Hero Section features continuous Ken Burns zooming and mouse parallax with modular duration settings.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/HeroBackgroundSlideshow.tsx` lines 10-25 for duration customization.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-19 — Founders & Dignitaries: Alignment Control & Object-Center Optimization
 
 ### Objective
@@ -3410,6 +3510,31 @@ Rotate the background video 180 degrees per user instruction to invert the orien
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Hero Section Slideshow: Continuous Zoom-In / Zoom-Out & Mouse Parallax
+
+### Objective
+Implement continuous, alternating Ken Burns Zoom-In and Zoom-Out motion on all slideshow images, wire cursor-following 3D mouse parallax, and expose transparent configuration controls for slide display durations in [HeroBackgroundSlideshow.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroBackgroundSlideshow.tsx).
+
+### Changes Made
+1. **Interactive Mouse Parallax**:
+   - Added `parallaxRef` over an extended viewport canvas (`w-[calc(100%+64px)] h-[calc(100%+64px)]`).
+   - Bound passive `pointermove` listener lerping `x` and `y` displacement up to `PARALLAX_MAX_PX` via GSAP composite transforms.
+2. **Continuous Zoom-In / Zoom-Out (Ken Burns)**:
+   - Added `startKenBurnsZoom` function that alternates between Zoom-In (`scale: 1.0 -> 1.12`) and Zoom-Out (`scale: 1.12 -> 1.0`) across consecutive slides during their active display window.
+3. **Explicit Timing Controls (`SLIDESHOW_CONFIG`)**:
+   - Centralized duration configuration at the top of `HeroBackgroundSlideshow.tsx` with `FIXED_DURATION_MS`, `MIN_DURATION_MS`, and `MAX_DURATION_MS`.
+4. **Verification**:
+   - Next.js 16 (Turbopack) & React 19: compiled with 0 errors in 2.8s; all 4 static pages prerendered.
+
+### Current State
+Hero Section features continuous Ken Burns zooming and mouse parallax with modular duration settings.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/HeroBackgroundSlideshow.tsx` lines 10-25 for duration customization.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-19 — Founders & Dignitaries: Alignment Control & Object-Center Optimization
 
 ### Objective
@@ -4045,6 +4170,31 @@ Remove the "Google Developer Group Kolkata" logo from the top-left of the hero s
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Hero Section Slideshow: Continuous Zoom-In / Zoom-Out & Mouse Parallax
+
+### Objective
+Implement continuous, alternating Ken Burns Zoom-In and Zoom-Out motion on all slideshow images, wire cursor-following 3D mouse parallax, and expose transparent configuration controls for slide display durations in [HeroBackgroundSlideshow.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroBackgroundSlideshow.tsx).
+
+### Changes Made
+1. **Interactive Mouse Parallax**:
+   - Added `parallaxRef` over an extended viewport canvas (`w-[calc(100%+64px)] h-[calc(100%+64px)]`).
+   - Bound passive `pointermove` listener lerping `x` and `y` displacement up to `PARALLAX_MAX_PX` via GSAP composite transforms.
+2. **Continuous Zoom-In / Zoom-Out (Ken Burns)**:
+   - Added `startKenBurnsZoom` function that alternates between Zoom-In (`scale: 1.0 -> 1.12`) and Zoom-Out (`scale: 1.12 -> 1.0`) across consecutive slides during their active display window.
+3. **Explicit Timing Controls (`SLIDESHOW_CONFIG`)**:
+   - Centralized duration configuration at the top of `HeroBackgroundSlideshow.tsx` with `FIXED_DURATION_MS`, `MIN_DURATION_MS`, and `MAX_DURATION_MS`.
+4. **Verification**:
+   - Next.js 16 (Turbopack) & React 19: compiled with 0 errors in 2.8s; all 4 static pages prerendered.
+
+### Current State
+Hero Section features continuous Ken Burns zooming and mouse parallax with modular duration settings.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/HeroBackgroundSlideshow.tsx` lines 10-25 for duration customization.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-19 — Founders & Dignitaries: Alignment Control & Object-Center Optimization
 
 ### Objective
@@ -4656,6 +4806,31 @@ Implement the DevFest Kolkata "card up" bottom sheet reveal animation (matching 
 ---
 
 # Agent Handoff Log — tracker.md
+
+## 2026-11-20 — Hero Section Slideshow: Continuous Zoom-In / Zoom-Out & Mouse Parallax
+
+### Objective
+Implement continuous, alternating Ken Burns Zoom-In and Zoom-Out motion on all slideshow images, wire cursor-following 3D mouse parallax, and expose transparent configuration controls for slide display durations in [HeroBackgroundSlideshow.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroBackgroundSlideshow.tsx).
+
+### Changes Made
+1. **Interactive Mouse Parallax**:
+   - Added `parallaxRef` over an extended viewport canvas (`w-[calc(100%+64px)] h-[calc(100%+64px)]`).
+   - Bound passive `pointermove` listener lerping `x` and `y` displacement up to `PARALLAX_MAX_PX` via GSAP composite transforms.
+2. **Continuous Zoom-In / Zoom-Out (Ken Burns)**:
+   - Added `startKenBurnsZoom` function that alternates between Zoom-In (`scale: 1.0 -> 1.12`) and Zoom-Out (`scale: 1.12 -> 1.0`) across consecutive slides during their active display window.
+3. **Explicit Timing Controls (`SLIDESHOW_CONFIG`)**:
+   - Centralized duration configuration at the top of `HeroBackgroundSlideshow.tsx` with `FIXED_DURATION_MS`, `MIN_DURATION_MS`, and `MAX_DURATION_MS`.
+4. **Verification**:
+   - Next.js 16 (Turbopack) & React 19: compiled with 0 errors in 2.8s; all 4 static pages prerendered.
+
+### Current State
+Hero Section features continuous Ken Burns zooming and mouse parallax with modular duration settings.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/HeroBackgroundSlideshow.tsx` lines 10-25 for duration customization.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
 
 ## 2026-11-19 — Founders & Dignitaries: Alignment Control & Object-Center Optimization
 
@@ -5283,6 +5458,31 @@ Implement the DevFest Kolkata "card up" bottom sheet reveal animation (matching 
 ---
 
 # Agent Handoff Log — tracker.md
+
+## 2026-11-20 — Hero Section Slideshow: Continuous Zoom-In / Zoom-Out & Mouse Parallax
+
+### Objective
+Implement continuous, alternating Ken Burns Zoom-In and Zoom-Out motion on all slideshow images, wire cursor-following 3D mouse parallax, and expose transparent configuration controls for slide display durations in [HeroBackgroundSlideshow.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroBackgroundSlideshow.tsx).
+
+### Changes Made
+1. **Interactive Mouse Parallax**:
+   - Added `parallaxRef` over an extended viewport canvas (`w-[calc(100%+64px)] h-[calc(100%+64px)]`).
+   - Bound passive `pointermove` listener lerping `x` and `y` displacement up to `PARALLAX_MAX_PX` via GSAP composite transforms.
+2. **Continuous Zoom-In / Zoom-Out (Ken Burns)**:
+   - Added `startKenBurnsZoom` function that alternates between Zoom-In (`scale: 1.0 -> 1.12`) and Zoom-Out (`scale: 1.12 -> 1.0`) across consecutive slides during their active display window.
+3. **Explicit Timing Controls (`SLIDESHOW_CONFIG`)**:
+   - Centralized duration configuration at the top of `HeroBackgroundSlideshow.tsx` with `FIXED_DURATION_MS`, `MIN_DURATION_MS`, and `MAX_DURATION_MS`.
+4. **Verification**:
+   - Next.js 16 (Turbopack) & React 19: compiled with 0 errors in 2.8s; all 4 static pages prerendered.
+
+### Current State
+Hero Section features continuous Ken Burns zooming and mouse parallax with modular duration settings.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/HeroBackgroundSlideshow.tsx` lines 10-25 for duration customization.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
 
 ## 2026-11-19 — Founders & Dignitaries: Alignment Control & Object-Center Optimization
 
@@ -6051,6 +6251,31 @@ Integrate the video from `https://www.instagram.com/p/DaqR3Niyy2L/?hl=en` (the o
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Hero Section Slideshow: Continuous Zoom-In / Zoom-Out & Mouse Parallax
+
+### Objective
+Implement continuous, alternating Ken Burns Zoom-In and Zoom-Out motion on all slideshow images, wire cursor-following 3D mouse parallax, and expose transparent configuration controls for slide display durations in [HeroBackgroundSlideshow.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroBackgroundSlideshow.tsx).
+
+### Changes Made
+1. **Interactive Mouse Parallax**:
+   - Added `parallaxRef` over an extended viewport canvas (`w-[calc(100%+64px)] h-[calc(100%+64px)]`).
+   - Bound passive `pointermove` listener lerping `x` and `y` displacement up to `PARALLAX_MAX_PX` via GSAP composite transforms.
+2. **Continuous Zoom-In / Zoom-Out (Ken Burns)**:
+   - Added `startKenBurnsZoom` function that alternates between Zoom-In (`scale: 1.0 -> 1.12`) and Zoom-Out (`scale: 1.12 -> 1.0`) across consecutive slides during their active display window.
+3. **Explicit Timing Controls (`SLIDESHOW_CONFIG`)**:
+   - Centralized duration configuration at the top of `HeroBackgroundSlideshow.tsx` with `FIXED_DURATION_MS`, `MIN_DURATION_MS`, and `MAX_DURATION_MS`.
+4. **Verification**:
+   - Next.js 16 (Turbopack) & React 19: compiled with 0 errors in 2.8s; all 4 static pages prerendered.
+
+### Current State
+Hero Section features continuous Ken Burns zooming and mouse parallax with modular duration settings.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/HeroBackgroundSlideshow.tsx` lines 10-25 for duration customization.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-19 — Founders & Dignitaries: Alignment Control & Object-Center Optimization
 
 ### Objective
@@ -6771,6 +6996,31 @@ Integrate the video from `https://www.instagram.com/p/DaqR3Niyy2L/?hl=en` (the o
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Hero Section Slideshow: Continuous Zoom-In / Zoom-Out & Mouse Parallax
+
+### Objective
+Implement continuous, alternating Ken Burns Zoom-In and Zoom-Out motion on all slideshow images, wire cursor-following 3D mouse parallax, and expose transparent configuration controls for slide display durations in [HeroBackgroundSlideshow.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroBackgroundSlideshow.tsx).
+
+### Changes Made
+1. **Interactive Mouse Parallax**:
+   - Added `parallaxRef` over an extended viewport canvas (`w-[calc(100%+64px)] h-[calc(100%+64px)]`).
+   - Bound passive `pointermove` listener lerping `x` and `y` displacement up to `PARALLAX_MAX_PX` via GSAP composite transforms.
+2. **Continuous Zoom-In / Zoom-Out (Ken Burns)**:
+   - Added `startKenBurnsZoom` function that alternates between Zoom-In (`scale: 1.0 -> 1.12`) and Zoom-Out (`scale: 1.12 -> 1.0`) across consecutive slides during their active display window.
+3. **Explicit Timing Controls (`SLIDESHOW_CONFIG`)**:
+   - Centralized duration configuration at the top of `HeroBackgroundSlideshow.tsx` with `FIXED_DURATION_MS`, `MIN_DURATION_MS`, and `MAX_DURATION_MS`.
+4. **Verification**:
+   - Next.js 16 (Turbopack) & React 19: compiled with 0 errors in 2.8s; all 4 static pages prerendered.
+
+### Current State
+Hero Section features continuous Ken Burns zooming and mouse parallax with modular duration settings.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/HeroBackgroundSlideshow.tsx` lines 10-25 for duration customization.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-19 — Founders & Dignitaries: Alignment Control & Object-Center Optimization
 
 ### Objective
@@ -7458,6 +7708,31 @@ Rotate the background video 90 degrees so it is right-side up, and eliminate ver
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Hero Section Slideshow: Continuous Zoom-In / Zoom-Out & Mouse Parallax
+
+### Objective
+Implement continuous, alternating Ken Burns Zoom-In and Zoom-Out motion on all slideshow images, wire cursor-following 3D mouse parallax, and expose transparent configuration controls for slide display durations in [HeroBackgroundSlideshow.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroBackgroundSlideshow.tsx).
+
+### Changes Made
+1. **Interactive Mouse Parallax**:
+   - Added `parallaxRef` over an extended viewport canvas (`w-[calc(100%+64px)] h-[calc(100%+64px)]`).
+   - Bound passive `pointermove` listener lerping `x` and `y` displacement up to `PARALLAX_MAX_PX` via GSAP composite transforms.
+2. **Continuous Zoom-In / Zoom-Out (Ken Burns)**:
+   - Added `startKenBurnsZoom` function that alternates between Zoom-In (`scale: 1.0 -> 1.12`) and Zoom-Out (`scale: 1.12 -> 1.0`) across consecutive slides during their active display window.
+3. **Explicit Timing Controls (`SLIDESHOW_CONFIG`)**:
+   - Centralized duration configuration at the top of `HeroBackgroundSlideshow.tsx` with `FIXED_DURATION_MS`, `MIN_DURATION_MS`, and `MAX_DURATION_MS`.
+4. **Verification**:
+   - Next.js 16 (Turbopack) & React 19: compiled with 0 errors in 2.8s; all 4 static pages prerendered.
+
+### Current State
+Hero Section features continuous Ken Burns zooming and mouse parallax with modular duration settings.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/HeroBackgroundSlideshow.tsx` lines 10-25 for duration customization.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-19 — Founders & Dignitaries: Alignment Control & Object-Center Optimization
 
 ### Objective
@@ -8117,6 +8392,31 @@ Rotate the background video 180 degrees per user instruction to invert the orien
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Hero Section Slideshow: Continuous Zoom-In / Zoom-Out & Mouse Parallax
+
+### Objective
+Implement continuous, alternating Ken Burns Zoom-In and Zoom-Out motion on all slideshow images, wire cursor-following 3D mouse parallax, and expose transparent configuration controls for slide display durations in [HeroBackgroundSlideshow.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroBackgroundSlideshow.tsx).
+
+### Changes Made
+1. **Interactive Mouse Parallax**:
+   - Added `parallaxRef` over an extended viewport canvas (`w-[calc(100%+64px)] h-[calc(100%+64px)]`).
+   - Bound passive `pointermove` listener lerping `x` and `y` displacement up to `PARALLAX_MAX_PX` via GSAP composite transforms.
+2. **Continuous Zoom-In / Zoom-Out (Ken Burns)**:
+   - Added `startKenBurnsZoom` function that alternates between Zoom-In (`scale: 1.0 -> 1.12`) and Zoom-Out (`scale: 1.12 -> 1.0`) across consecutive slides during their active display window.
+3. **Explicit Timing Controls (`SLIDESHOW_CONFIG`)**:
+   - Centralized duration configuration at the top of `HeroBackgroundSlideshow.tsx` with `FIXED_DURATION_MS`, `MIN_DURATION_MS`, and `MAX_DURATION_MS`.
+4. **Verification**:
+   - Next.js 16 (Turbopack) & React 19: compiled with 0 errors in 2.8s; all 4 static pages prerendered.
+
+### Current State
+Hero Section features continuous Ken Burns zooming and mouse parallax with modular duration settings.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/HeroBackgroundSlideshow.tsx` lines 10-25 for duration customization.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-19 — Founders & Dignitaries: Alignment Control & Object-Center Optimization
 
 ### Objective
@@ -8752,6 +9052,31 @@ Remove the "Google Developer Group Kolkata" logo from the top-left of the hero s
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Hero Section Slideshow: Continuous Zoom-In / Zoom-Out & Mouse Parallax
+
+### Objective
+Implement continuous, alternating Ken Burns Zoom-In and Zoom-Out motion on all slideshow images, wire cursor-following 3D mouse parallax, and expose transparent configuration controls for slide display durations in [HeroBackgroundSlideshow.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroBackgroundSlideshow.tsx).
+
+### Changes Made
+1. **Interactive Mouse Parallax**:
+   - Added `parallaxRef` over an extended viewport canvas (`w-[calc(100%+64px)] h-[calc(100%+64px)]`).
+   - Bound passive `pointermove` listener lerping `x` and `y` displacement up to `PARALLAX_MAX_PX` via GSAP composite transforms.
+2. **Continuous Zoom-In / Zoom-Out (Ken Burns)**:
+   - Added `startKenBurnsZoom` function that alternates between Zoom-In (`scale: 1.0 -> 1.12`) and Zoom-Out (`scale: 1.12 -> 1.0`) across consecutive slides during their active display window.
+3. **Explicit Timing Controls (`SLIDESHOW_CONFIG`)**:
+   - Centralized duration configuration at the top of `HeroBackgroundSlideshow.tsx` with `FIXED_DURATION_MS`, `MIN_DURATION_MS`, and `MAX_DURATION_MS`.
+4. **Verification**:
+   - Next.js 16 (Turbopack) & React 19: compiled with 0 errors in 2.8s; all 4 static pages prerendered.
+
+### Current State
+Hero Section features continuous Ken Burns zooming and mouse parallax with modular duration settings.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/HeroBackgroundSlideshow.tsx` lines 10-25 for duration customization.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-19 — Founders & Dignitaries: Alignment Control & Object-Center Optimization
 
 ### Objective
@@ -9363,6 +9688,31 @@ Implement the DevFest Kolkata "card up" bottom sheet reveal animation (matching 
 ---
 
 # Agent Handoff Log — tracker.md
+
+## 2026-11-20 — Hero Section Slideshow: Continuous Zoom-In / Zoom-Out & Mouse Parallax
+
+### Objective
+Implement continuous, alternating Ken Burns Zoom-In and Zoom-Out motion on all slideshow images, wire cursor-following 3D mouse parallax, and expose transparent configuration controls for slide display durations in [HeroBackgroundSlideshow.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroBackgroundSlideshow.tsx).
+
+### Changes Made
+1. **Interactive Mouse Parallax**:
+   - Added `parallaxRef` over an extended viewport canvas (`w-[calc(100%+64px)] h-[calc(100%+64px)]`).
+   - Bound passive `pointermove` listener lerping `x` and `y` displacement up to `PARALLAX_MAX_PX` via GSAP composite transforms.
+2. **Continuous Zoom-In / Zoom-Out (Ken Burns)**:
+   - Added `startKenBurnsZoom` function that alternates between Zoom-In (`scale: 1.0 -> 1.12`) and Zoom-Out (`scale: 1.12 -> 1.0`) across consecutive slides during their active display window.
+3. **Explicit Timing Controls (`SLIDESHOW_CONFIG`)**:
+   - Centralized duration configuration at the top of `HeroBackgroundSlideshow.tsx` with `FIXED_DURATION_MS`, `MIN_DURATION_MS`, and `MAX_DURATION_MS`.
+4. **Verification**:
+   - Next.js 16 (Turbopack) & React 19: compiled with 0 errors in 2.8s; all 4 static pages prerendered.
+
+### Current State
+Hero Section features continuous Ken Burns zooming and mouse parallax with modular duration settings.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/HeroBackgroundSlideshow.tsx` lines 10-25 for duration customization.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
 
 ## 2026-11-19 — Founders & Dignitaries: Alignment Control & Object-Center Optimization
 

@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { gsapScrollTo, SMOOTH_SCROLL_CONFIG } from "@/components/event/Navbar";
+import HeroBackgroundSlideshow from "@/components/event/HeroBackgroundSlideshow";
 
 export interface ShowcaseItem {
   id: string;
@@ -272,8 +273,6 @@ export default function ShowcaseHeroSection({
   onExplore,
   speedMode = "1s",
 }: ShowcaseHeroSectionProps) {
-  const videoRef = useRef<HTMLVideoElement>(null);
-
   // Animation state machine mirrors DevFest Kolkata sequence
   const [initialReady, setInitialReady] = useState(false);
   const [experienceActive, setExperienceActive] = useState(false);
@@ -283,12 +282,6 @@ export default function ShowcaseHeroSection({
   const [heroContentRevealed, setHeroContentRevealed] = useState(false);
   const [animationDuration, setAnimationDuration] = useState<"1s" | "2s">(speedMode);
   const [fontMode, setFontMode] = useState<"bebas" | "syne" | "anton" | "googlesans" | "londrina" | "bungee">("bebas");
-
-  useEffect(() => {
-    if (isDarkWebsite && videoRef.current) {
-      videoRef.current.play().catch(() => {});
-    }
-  }, [isDarkWebsite]);
 
   // Time multipliers:
   // 1s mode: stagger delay 110ms * 9 = ~1.0s entrance, hold 600ms, scatter 850ms
@@ -481,32 +474,8 @@ export default function ShowcaseHeroSection({
               zIndex: 1,
             }}
           >
-            {/* Background Video from Instagram aftermovie (Techno Chitraka / Sanskaran & Sahotsava) */}
-            <video
-              ref={videoRef}
-              autoPlay
-              loop
-              muted
-              playsInline
-              preload="auto"
-              className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none will-change-transform"
-              style={{
-                filter: "contrast(115%) brightness(88%)",
-                transform: `scale(${VIDEO_ZOOM_SCALE})`,
-                transformOrigin: "center center",
-              }}
-            >
-              <source src="/videos/hero-background.mp4" type="video/mp4" />
-            </video>
-
-            {/* Seamless Dark Vignette Layer */}
-            <div
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                background:
-                  "linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.25) 45%, rgba(0,0,0,0.7) 100%)",
-              }}
-            />
+            {/* Cinematic Hero Image Slideshow (Cloudinary Edge CDN + GSAP Transitions) */}
+            <HeroBackgroundSlideshow isVisible={heroContentRevealed || isDarkWebsite} />
           </div>
         )}
 
