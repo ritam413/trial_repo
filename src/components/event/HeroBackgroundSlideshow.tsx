@@ -13,8 +13,13 @@ export const SLIDESHOW_CONFIG = {
   // Set FIXED_DURATION_MS to a number (e.g. 5000 for 5s) to force exact timing,
   // or set to null to use randomized organic timing between MIN and MAX.
   FIXED_DURATION_MS: null as number | null,
-  MIN_DURATION_MS: 3800, // 3.8 seconds minimum per slide
-  MAX_DURATION_MS: 6200, // 6.2 seconds maximum per slide
+  MIN_DURATION_MS: 1000, // 3.8 seconds minimum per slide
+  MAX_DURATION_MS: 1600, // 6.2 seconds maximum per slide
+
+  // 🌓 GRADUAL OPACITY TRANSITION PARAMETERS (Current decreases, Next: 30% -> 100%)
+  INCOMING_INITIAL_OPACITY: 0.3, // 👈 Starts gradually from 30% (0.3)
+  INCOMING_TARGET_OPACITY: 1.0,  // 👈 Ramps up smoothly to 100% (1.0)
+  TRANSITION_DURATION_S: 1.6,    // 👈 Cross-fade transition time (seconds)
 
   // 🔍 PARALLAX & ZOOM-IN / ZOOM-OUT CONFIGURATION
   ZOOM_BASE_SCALE: 1.0,   // Base scale for zoom-out target
@@ -148,11 +153,15 @@ export default function HeroBackgroundSlideshow({ isVisible = true }: { isVisibl
     }
 
     if (prefersReducedMotion) {
-      // Accessible crossfade
-      gsap.to(incomingLayer, { autoAlpha: 1, duration: 1.0, ease: "power1.inOut" });
+      // Accessible crossfade: current fades to 0, incoming ramps 30% -> 100%
+      gsap.fromTo(
+        incomingLayer,
+        { autoAlpha: SLIDESHOW_CONFIG.INCOMING_INITIAL_OPACITY },
+        { autoAlpha: SLIDESHOW_CONFIG.INCOMING_TARGET_OPACITY, duration: 1.2, ease: "power1.inOut" }
+      );
       gsap.to(currentLayer, {
         autoAlpha: 0,
-        duration: 1.0,
+        duration: 1.2,
         ease: "power1.inOut",
         onComplete: onCompleteTransition,
       });
@@ -161,7 +170,7 @@ export default function HeroBackgroundSlideshow({ isVisible = true }: { isVisibl
 
     switch (transition) {
       case "burn": {
-        // Film Burn / Light Leak Exposure Bloom
+        // Film Burn / Light Leak Exposure Bloom with 30% -> 100% incoming sweep
         const tl = gsap.timeline({ onComplete: onCompleteTransition });
 
         if (burnOverlay) {
@@ -172,9 +181,13 @@ export default function HeroBackgroundSlideshow({ isVisible = true }: { isVisibl
           });
         }
 
-        // Mid-flare snap
-        tl.set(incomingLayer, { autoAlpha: 1 }, "-=0.12")
-          .to(currentLayer, { autoAlpha: 0, duration: 0.28, ease: "power2.out" }, "<");
+        // Mid-flare switch: current layer decreases, incoming starts at 30% and blooms to 100%
+        tl.fromTo(
+          incomingLayer,
+          { autoAlpha: SLIDESHOW_CONFIG.INCOMING_INITIAL_OPACITY },
+          { autoAlpha: SLIDESHOW_CONFIG.INCOMING_TARGET_OPACITY, duration: 0.65, ease: "power2.out" },
+          "-=0.12"
+        ).to(currentLayer, { autoAlpha: 0, duration: 0.35, ease: "power2.out" }, "<");
 
         if (burnOverlay) {
           tl.to(burnOverlay, {
@@ -187,7 +200,7 @@ export default function HeroBackgroundSlideshow({ isVisible = true }: { isVisibl
       }
 
       case "fade": {
-        // Dark Shutter Cinematic Dip
+        // Dark Shutter Cinematic Dip: Current fades out, incoming rises from 30% -> 100%
         const tl = gsap.timeline({ onComplete: onCompleteTransition });
         tl.to(currentLayer, {
           autoAlpha: 0,
@@ -196,25 +209,25 @@ export default function HeroBackgroundSlideshow({ isVisible = true }: { isVisibl
         });
         tl.fromTo(
           incomingLayer,
-          { autoAlpha: 0 },
-          { autoAlpha: 1, duration: 1.1, ease: "power2.out" },
+          { autoAlpha: SLIDESHOW_CONFIG.INCOMING_INITIAL_OPACITY },
+          { autoAlpha: SLIDESHOW_CONFIG.INCOMING_TARGET_OPACITY, duration: SLIDESHOW_CONFIG.TRANSITION_DURATION_S, ease: "power2.out" },
           "-=0.2"
         );
         break;
       }
 
       case "zoom-dissolve": {
-        // Optical Zoom Rack Push
+        // Optical Zoom Rack Push with 30% -> 100% incoming ramp
         const tl = gsap.timeline({ onComplete: onCompleteTransition });
         tl.to(currentLayer, {
           autoAlpha: 0,
-          duration: 1.4,
+          duration: SLIDESHOW_CONFIG.TRANSITION_DURATION_S,
           ease: "power2.inOut",
         });
         tl.fromTo(
           incomingLayer,
-          { autoAlpha: 0 },
-          { autoAlpha: 1, duration: 1.4, ease: "power2.inOut" },
+          { autoAlpha: SLIDESHOW_CONFIG.INCOMING_INITIAL_OPACITY },
+          { autoAlpha: SLIDESHOW_CONFIG.INCOMING_TARGET_OPACITY, duration: SLIDESHOW_CONFIG.TRANSITION_DURATION_S, ease: "power2.out" },
           "<"
         );
         break;
@@ -222,17 +235,17 @@ export default function HeroBackgroundSlideshow({ isVisible = true }: { isVisibl
 
       case "dissolve":
       default: {
-        // Velvety Soft Cross-Dissolve
+        // Velvety Soft Cross-Dissolve: Current decreases, incoming ramps from 30% to 100%
         const tl = gsap.timeline({ onComplete: onCompleteTransition });
         tl.to(currentLayer, {
           autoAlpha: 0,
-          duration: 1.5,
+          duration: SLIDESHOW_CONFIG.TRANSITION_DURATION_S,
           ease: "power2.inOut",
         });
         tl.fromTo(
           incomingLayer,
-          { autoAlpha: 0 },
-          { autoAlpha: 1, duration: 1.5, ease: "power2.inOut" },
+          { autoAlpha: SLIDESHOW_CONFIG.INCOMING_INITIAL_OPACITY },
+          { autoAlpha: SLIDESHOW_CONFIG.INCOMING_TARGET_OPACITY, duration: SLIDESHOW_CONFIG.TRANSITION_DURATION_S, ease: "power2.out" },
           "<"
         );
         break;

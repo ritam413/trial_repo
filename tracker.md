@@ -1,5 +1,29 @@
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Hero Slideshow: 30% -> 100% Gradual Opacity Ramp & Cross-Exposure Transition
+
+### Objective
+Implement a double-exposure transition where the outgoing image's opacity decreases while the incoming image starts at 30% (`autoAlpha: 0.3`) and gradually sweeps up to 100% (`autoAlpha: 1.0`) across all slide transitions in [HeroBackgroundSlideshow.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroBackgroundSlideshow.tsx).
+
+### Changes Made
+1. **Gradual Opacity Ramp Configuration**:
+   - Added `INCOMING_INITIAL_OPACITY: 0.3`, `INCOMING_TARGET_OPACITY: 1.0`, and `TRANSITION_DURATION_S: 1.6` to `SLIDESHOW_CONFIG`.
+2. **GSAP Transition Curves Updated**:
+   - Outgoing layer fades down to 0 smoothly with `power2.inOut`.
+   - Incoming layer initiates from 30% opacity (`autoAlpha: 0.3`) and ramps up to 100% opacity (`autoAlpha: 1.0`) with `power2.out`, creating an atmospheric cross-exposure.
+   - Updated across `dissolve`, `fade`, `burn`, and `zoom-dissolve` transitions.
+3. **Verification**:
+   - `npm run build`: Compiled with 0 errors in 13.0s; 4/4 static pages generated cleanly.
+
+### Current State
+Hero Section slideshow executes smooth 30% → 100% gradual opacity ramps during every image transition.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/HeroBackgroundSlideshow.tsx` lines 18-24 to tweak opacity values or transition duration.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-20 — Hero Section Slideshow: Continuous Zoom-In / Zoom-Out & Mouse Parallax
 
 ### Objective
@@ -1369,6 +1393,30 @@ Integrate the video from `https://www.instagram.com/p/DaqR3Niyy2L/?hl=en` (the o
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Hero Slideshow: 30% -> 100% Gradual Opacity Ramp & Cross-Exposure Transition
+
+### Objective
+Implement a double-exposure transition where the outgoing image's opacity decreases while the incoming image starts at 30% (`autoAlpha: 0.3`) and gradually sweeps up to 100% (`autoAlpha: 1.0`) across all slide transitions in [HeroBackgroundSlideshow.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroBackgroundSlideshow.tsx).
+
+### Changes Made
+1. **Gradual Opacity Ramp Configuration**:
+   - Added `INCOMING_INITIAL_OPACITY: 0.3`, `INCOMING_TARGET_OPACITY: 1.0`, and `TRANSITION_DURATION_S: 1.6` to `SLIDESHOW_CONFIG`.
+2. **GSAP Transition Curves Updated**:
+   - Outgoing layer fades down to 0 smoothly with `power2.inOut`.
+   - Incoming layer initiates from 30% opacity (`autoAlpha: 0.3`) and ramps up to 100% opacity (`autoAlpha: 1.0`) with `power2.out`, creating an atmospheric cross-exposure.
+   - Updated across `dissolve`, `fade`, `burn`, and `zoom-dissolve` transitions.
+3. **Verification**:
+   - `npm run build`: Compiled with 0 errors in 13.0s; 4/4 static pages generated cleanly.
+
+### Current State
+Hero Section slideshow executes smooth 30% → 100% gradual opacity ramps during every image transition.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/HeroBackgroundSlideshow.tsx` lines 18-24 to tweak opacity values or transition duration.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-20 — Hero Section Slideshow: Continuous Zoom-In / Zoom-Out & Mouse Parallax
 
 ### Objective
@@ -2114,6 +2162,30 @@ Integrate the video from `https://www.instagram.com/p/DaqR3Niyy2L/?hl=en` (the o
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Hero Slideshow: 30% -> 100% Gradual Opacity Ramp & Cross-Exposure Transition
+
+### Objective
+Implement a double-exposure transition where the outgoing image's opacity decreases while the incoming image starts at 30% (`autoAlpha: 0.3`) and gradually sweeps up to 100% (`autoAlpha: 1.0`) across all slide transitions in [HeroBackgroundSlideshow.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroBackgroundSlideshow.tsx).
+
+### Changes Made
+1. **Gradual Opacity Ramp Configuration**:
+   - Added `INCOMING_INITIAL_OPACITY: 0.3`, `INCOMING_TARGET_OPACITY: 1.0`, and `TRANSITION_DURATION_S: 1.6` to `SLIDESHOW_CONFIG`.
+2. **GSAP Transition Curves Updated**:
+   - Outgoing layer fades down to 0 smoothly with `power2.inOut`.
+   - Incoming layer initiates from 30% opacity (`autoAlpha: 0.3`) and ramps up to 100% opacity (`autoAlpha: 1.0`) with `power2.out`, creating an atmospheric cross-exposure.
+   - Updated across `dissolve`, `fade`, `burn`, and `zoom-dissolve` transitions.
+3. **Verification**:
+   - `npm run build`: Compiled with 0 errors in 13.0s; 4/4 static pages generated cleanly.
+
+### Current State
+Hero Section slideshow executes smooth 30% → 100% gradual opacity ramps during every image transition.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/HeroBackgroundSlideshow.tsx` lines 18-24 to tweak opacity values or transition duration.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-20 — Hero Section Slideshow: Continuous Zoom-In / Zoom-Out & Mouse Parallax
 
 ### Objective
@@ -2826,6 +2898,30 @@ Rotate the background video 90 degrees so it is right-side up, and eliminate ver
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Hero Slideshow: 30% -> 100% Gradual Opacity Ramp & Cross-Exposure Transition
+
+### Objective
+Implement a double-exposure transition where the outgoing image's opacity decreases while the incoming image starts at 30% (`autoAlpha: 0.3`) and gradually sweeps up to 100% (`autoAlpha: 1.0`) across all slide transitions in [HeroBackgroundSlideshow.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroBackgroundSlideshow.tsx).
+
+### Changes Made
+1. **Gradual Opacity Ramp Configuration**:
+   - Added `INCOMING_INITIAL_OPACITY: 0.3`, `INCOMING_TARGET_OPACITY: 1.0`, and `TRANSITION_DURATION_S: 1.6` to `SLIDESHOW_CONFIG`.
+2. **GSAP Transition Curves Updated**:
+   - Outgoing layer fades down to 0 smoothly with `power2.inOut`.
+   - Incoming layer initiates from 30% opacity (`autoAlpha: 0.3`) and ramps up to 100% opacity (`autoAlpha: 1.0`) with `power2.out`, creating an atmospheric cross-exposure.
+   - Updated across `dissolve`, `fade`, `burn`, and `zoom-dissolve` transitions.
+3. **Verification**:
+   - `npm run build`: Compiled with 0 errors in 13.0s; 4/4 static pages generated cleanly.
+
+### Current State
+Hero Section slideshow executes smooth 30% → 100% gradual opacity ramps during every image transition.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/HeroBackgroundSlideshow.tsx` lines 18-24 to tweak opacity values or transition duration.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-20 — Hero Section Slideshow: Continuous Zoom-In / Zoom-Out & Mouse Parallax
 
 ### Objective
@@ -3510,6 +3606,30 @@ Rotate the background video 180 degrees per user instruction to invert the orien
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Hero Slideshow: 30% -> 100% Gradual Opacity Ramp & Cross-Exposure Transition
+
+### Objective
+Implement a double-exposure transition where the outgoing image's opacity decreases while the incoming image starts at 30% (`autoAlpha: 0.3`) and gradually sweeps up to 100% (`autoAlpha: 1.0`) across all slide transitions in [HeroBackgroundSlideshow.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroBackgroundSlideshow.tsx).
+
+### Changes Made
+1. **Gradual Opacity Ramp Configuration**:
+   - Added `INCOMING_INITIAL_OPACITY: 0.3`, `INCOMING_TARGET_OPACITY: 1.0`, and `TRANSITION_DURATION_S: 1.6` to `SLIDESHOW_CONFIG`.
+2. **GSAP Transition Curves Updated**:
+   - Outgoing layer fades down to 0 smoothly with `power2.inOut`.
+   - Incoming layer initiates from 30% opacity (`autoAlpha: 0.3`) and ramps up to 100% opacity (`autoAlpha: 1.0`) with `power2.out`, creating an atmospheric cross-exposure.
+   - Updated across `dissolve`, `fade`, `burn`, and `zoom-dissolve` transitions.
+3. **Verification**:
+   - `npm run build`: Compiled with 0 errors in 13.0s; 4/4 static pages generated cleanly.
+
+### Current State
+Hero Section slideshow executes smooth 30% → 100% gradual opacity ramps during every image transition.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/HeroBackgroundSlideshow.tsx` lines 18-24 to tweak opacity values or transition duration.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-20 — Hero Section Slideshow: Continuous Zoom-In / Zoom-Out & Mouse Parallax
 
 ### Objective
@@ -4170,6 +4290,30 @@ Remove the "Google Developer Group Kolkata" logo from the top-left of the hero s
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Hero Slideshow: 30% -> 100% Gradual Opacity Ramp & Cross-Exposure Transition
+
+### Objective
+Implement a double-exposure transition where the outgoing image's opacity decreases while the incoming image starts at 30% (`autoAlpha: 0.3`) and gradually sweeps up to 100% (`autoAlpha: 1.0`) across all slide transitions in [HeroBackgroundSlideshow.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroBackgroundSlideshow.tsx).
+
+### Changes Made
+1. **Gradual Opacity Ramp Configuration**:
+   - Added `INCOMING_INITIAL_OPACITY: 0.3`, `INCOMING_TARGET_OPACITY: 1.0`, and `TRANSITION_DURATION_S: 1.6` to `SLIDESHOW_CONFIG`.
+2. **GSAP Transition Curves Updated**:
+   - Outgoing layer fades down to 0 smoothly with `power2.inOut`.
+   - Incoming layer initiates from 30% opacity (`autoAlpha: 0.3`) and ramps up to 100% opacity (`autoAlpha: 1.0`) with `power2.out`, creating an atmospheric cross-exposure.
+   - Updated across `dissolve`, `fade`, `burn`, and `zoom-dissolve` transitions.
+3. **Verification**:
+   - `npm run build`: Compiled with 0 errors in 13.0s; 4/4 static pages generated cleanly.
+
+### Current State
+Hero Section slideshow executes smooth 30% → 100% gradual opacity ramps during every image transition.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/HeroBackgroundSlideshow.tsx` lines 18-24 to tweak opacity values or transition duration.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-20 — Hero Section Slideshow: Continuous Zoom-In / Zoom-Out & Mouse Parallax
 
 ### Objective
@@ -4806,6 +4950,30 @@ Implement the DevFest Kolkata "card up" bottom sheet reveal animation (matching 
 ---
 
 # Agent Handoff Log — tracker.md
+
+## 2026-11-20 — Hero Slideshow: 30% -> 100% Gradual Opacity Ramp & Cross-Exposure Transition
+
+### Objective
+Implement a double-exposure transition where the outgoing image's opacity decreases while the incoming image starts at 30% (`autoAlpha: 0.3`) and gradually sweeps up to 100% (`autoAlpha: 1.0`) across all slide transitions in [HeroBackgroundSlideshow.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroBackgroundSlideshow.tsx).
+
+### Changes Made
+1. **Gradual Opacity Ramp Configuration**:
+   - Added `INCOMING_INITIAL_OPACITY: 0.3`, `INCOMING_TARGET_OPACITY: 1.0`, and `TRANSITION_DURATION_S: 1.6` to `SLIDESHOW_CONFIG`.
+2. **GSAP Transition Curves Updated**:
+   - Outgoing layer fades down to 0 smoothly with `power2.inOut`.
+   - Incoming layer initiates from 30% opacity (`autoAlpha: 0.3`) and ramps up to 100% opacity (`autoAlpha: 1.0`) with `power2.out`, creating an atmospheric cross-exposure.
+   - Updated across `dissolve`, `fade`, `burn`, and `zoom-dissolve` transitions.
+3. **Verification**:
+   - `npm run build`: Compiled with 0 errors in 13.0s; 4/4 static pages generated cleanly.
+
+### Current State
+Hero Section slideshow executes smooth 30% → 100% gradual opacity ramps during every image transition.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/HeroBackgroundSlideshow.tsx` lines 18-24 to tweak opacity values or transition duration.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
 
 ## 2026-11-20 — Hero Section Slideshow: Continuous Zoom-In / Zoom-Out & Mouse Parallax
 
@@ -5458,6 +5626,30 @@ Implement the DevFest Kolkata "card up" bottom sheet reveal animation (matching 
 ---
 
 # Agent Handoff Log — tracker.md
+
+## 2026-11-20 — Hero Slideshow: 30% -> 100% Gradual Opacity Ramp & Cross-Exposure Transition
+
+### Objective
+Implement a double-exposure transition where the outgoing image's opacity decreases while the incoming image starts at 30% (`autoAlpha: 0.3`) and gradually sweeps up to 100% (`autoAlpha: 1.0`) across all slide transitions in [HeroBackgroundSlideshow.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroBackgroundSlideshow.tsx).
+
+### Changes Made
+1. **Gradual Opacity Ramp Configuration**:
+   - Added `INCOMING_INITIAL_OPACITY: 0.3`, `INCOMING_TARGET_OPACITY: 1.0`, and `TRANSITION_DURATION_S: 1.6` to `SLIDESHOW_CONFIG`.
+2. **GSAP Transition Curves Updated**:
+   - Outgoing layer fades down to 0 smoothly with `power2.inOut`.
+   - Incoming layer initiates from 30% opacity (`autoAlpha: 0.3`) and ramps up to 100% opacity (`autoAlpha: 1.0`) with `power2.out`, creating an atmospheric cross-exposure.
+   - Updated across `dissolve`, `fade`, `burn`, and `zoom-dissolve` transitions.
+3. **Verification**:
+   - `npm run build`: Compiled with 0 errors in 13.0s; 4/4 static pages generated cleanly.
+
+### Current State
+Hero Section slideshow executes smooth 30% → 100% gradual opacity ramps during every image transition.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/HeroBackgroundSlideshow.tsx` lines 18-24 to tweak opacity values or transition duration.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
 
 ## 2026-11-20 — Hero Section Slideshow: Continuous Zoom-In / Zoom-Out & Mouse Parallax
 
@@ -6251,6 +6443,30 @@ Integrate the video from `https://www.instagram.com/p/DaqR3Niyy2L/?hl=en` (the o
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Hero Slideshow: 30% -> 100% Gradual Opacity Ramp & Cross-Exposure Transition
+
+### Objective
+Implement a double-exposure transition where the outgoing image's opacity decreases while the incoming image starts at 30% (`autoAlpha: 0.3`) and gradually sweeps up to 100% (`autoAlpha: 1.0`) across all slide transitions in [HeroBackgroundSlideshow.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroBackgroundSlideshow.tsx).
+
+### Changes Made
+1. **Gradual Opacity Ramp Configuration**:
+   - Added `INCOMING_INITIAL_OPACITY: 0.3`, `INCOMING_TARGET_OPACITY: 1.0`, and `TRANSITION_DURATION_S: 1.6` to `SLIDESHOW_CONFIG`.
+2. **GSAP Transition Curves Updated**:
+   - Outgoing layer fades down to 0 smoothly with `power2.inOut`.
+   - Incoming layer initiates from 30% opacity (`autoAlpha: 0.3`) and ramps up to 100% opacity (`autoAlpha: 1.0`) with `power2.out`, creating an atmospheric cross-exposure.
+   - Updated across `dissolve`, `fade`, `burn`, and `zoom-dissolve` transitions.
+3. **Verification**:
+   - `npm run build`: Compiled with 0 errors in 13.0s; 4/4 static pages generated cleanly.
+
+### Current State
+Hero Section slideshow executes smooth 30% → 100% gradual opacity ramps during every image transition.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/HeroBackgroundSlideshow.tsx` lines 18-24 to tweak opacity values or transition duration.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-20 — Hero Section Slideshow: Continuous Zoom-In / Zoom-Out & Mouse Parallax
 
 ### Objective
@@ -6996,6 +7212,30 @@ Integrate the video from `https://www.instagram.com/p/DaqR3Niyy2L/?hl=en` (the o
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Hero Slideshow: 30% -> 100% Gradual Opacity Ramp & Cross-Exposure Transition
+
+### Objective
+Implement a double-exposure transition where the outgoing image's opacity decreases while the incoming image starts at 30% (`autoAlpha: 0.3`) and gradually sweeps up to 100% (`autoAlpha: 1.0`) across all slide transitions in [HeroBackgroundSlideshow.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroBackgroundSlideshow.tsx).
+
+### Changes Made
+1. **Gradual Opacity Ramp Configuration**:
+   - Added `INCOMING_INITIAL_OPACITY: 0.3`, `INCOMING_TARGET_OPACITY: 1.0`, and `TRANSITION_DURATION_S: 1.6` to `SLIDESHOW_CONFIG`.
+2. **GSAP Transition Curves Updated**:
+   - Outgoing layer fades down to 0 smoothly with `power2.inOut`.
+   - Incoming layer initiates from 30% opacity (`autoAlpha: 0.3`) and ramps up to 100% opacity (`autoAlpha: 1.0`) with `power2.out`, creating an atmospheric cross-exposure.
+   - Updated across `dissolve`, `fade`, `burn`, and `zoom-dissolve` transitions.
+3. **Verification**:
+   - `npm run build`: Compiled with 0 errors in 13.0s; 4/4 static pages generated cleanly.
+
+### Current State
+Hero Section slideshow executes smooth 30% → 100% gradual opacity ramps during every image transition.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/HeroBackgroundSlideshow.tsx` lines 18-24 to tweak opacity values or transition duration.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-20 — Hero Section Slideshow: Continuous Zoom-In / Zoom-Out & Mouse Parallax
 
 ### Objective
@@ -7708,6 +7948,30 @@ Rotate the background video 90 degrees so it is right-side up, and eliminate ver
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Hero Slideshow: 30% -> 100% Gradual Opacity Ramp & Cross-Exposure Transition
+
+### Objective
+Implement a double-exposure transition where the outgoing image's opacity decreases while the incoming image starts at 30% (`autoAlpha: 0.3`) and gradually sweeps up to 100% (`autoAlpha: 1.0`) across all slide transitions in [HeroBackgroundSlideshow.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroBackgroundSlideshow.tsx).
+
+### Changes Made
+1. **Gradual Opacity Ramp Configuration**:
+   - Added `INCOMING_INITIAL_OPACITY: 0.3`, `INCOMING_TARGET_OPACITY: 1.0`, and `TRANSITION_DURATION_S: 1.6` to `SLIDESHOW_CONFIG`.
+2. **GSAP Transition Curves Updated**:
+   - Outgoing layer fades down to 0 smoothly with `power2.inOut`.
+   - Incoming layer initiates from 30% opacity (`autoAlpha: 0.3`) and ramps up to 100% opacity (`autoAlpha: 1.0`) with `power2.out`, creating an atmospheric cross-exposure.
+   - Updated across `dissolve`, `fade`, `burn`, and `zoom-dissolve` transitions.
+3. **Verification**:
+   - `npm run build`: Compiled with 0 errors in 13.0s; 4/4 static pages generated cleanly.
+
+### Current State
+Hero Section slideshow executes smooth 30% → 100% gradual opacity ramps during every image transition.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/HeroBackgroundSlideshow.tsx` lines 18-24 to tweak opacity values or transition duration.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-20 — Hero Section Slideshow: Continuous Zoom-In / Zoom-Out & Mouse Parallax
 
 ### Objective
@@ -8392,6 +8656,30 @@ Rotate the background video 180 degrees per user instruction to invert the orien
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Hero Slideshow: 30% -> 100% Gradual Opacity Ramp & Cross-Exposure Transition
+
+### Objective
+Implement a double-exposure transition where the outgoing image's opacity decreases while the incoming image starts at 30% (`autoAlpha: 0.3`) and gradually sweeps up to 100% (`autoAlpha: 1.0`) across all slide transitions in [HeroBackgroundSlideshow.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroBackgroundSlideshow.tsx).
+
+### Changes Made
+1. **Gradual Opacity Ramp Configuration**:
+   - Added `INCOMING_INITIAL_OPACITY: 0.3`, `INCOMING_TARGET_OPACITY: 1.0`, and `TRANSITION_DURATION_S: 1.6` to `SLIDESHOW_CONFIG`.
+2. **GSAP Transition Curves Updated**:
+   - Outgoing layer fades down to 0 smoothly with `power2.inOut`.
+   - Incoming layer initiates from 30% opacity (`autoAlpha: 0.3`) and ramps up to 100% opacity (`autoAlpha: 1.0`) with `power2.out`, creating an atmospheric cross-exposure.
+   - Updated across `dissolve`, `fade`, `burn`, and `zoom-dissolve` transitions.
+3. **Verification**:
+   - `npm run build`: Compiled with 0 errors in 13.0s; 4/4 static pages generated cleanly.
+
+### Current State
+Hero Section slideshow executes smooth 30% → 100% gradual opacity ramps during every image transition.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/HeroBackgroundSlideshow.tsx` lines 18-24 to tweak opacity values or transition duration.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-20 — Hero Section Slideshow: Continuous Zoom-In / Zoom-Out & Mouse Parallax
 
 ### Objective
@@ -9052,6 +9340,30 @@ Remove the "Google Developer Group Kolkata" logo from the top-left of the hero s
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Hero Slideshow: 30% -> 100% Gradual Opacity Ramp & Cross-Exposure Transition
+
+### Objective
+Implement a double-exposure transition where the outgoing image's opacity decreases while the incoming image starts at 30% (`autoAlpha: 0.3`) and gradually sweeps up to 100% (`autoAlpha: 1.0`) across all slide transitions in [HeroBackgroundSlideshow.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroBackgroundSlideshow.tsx).
+
+### Changes Made
+1. **Gradual Opacity Ramp Configuration**:
+   - Added `INCOMING_INITIAL_OPACITY: 0.3`, `INCOMING_TARGET_OPACITY: 1.0`, and `TRANSITION_DURATION_S: 1.6` to `SLIDESHOW_CONFIG`.
+2. **GSAP Transition Curves Updated**:
+   - Outgoing layer fades down to 0 smoothly with `power2.inOut`.
+   - Incoming layer initiates from 30% opacity (`autoAlpha: 0.3`) and ramps up to 100% opacity (`autoAlpha: 1.0`) with `power2.out`, creating an atmospheric cross-exposure.
+   - Updated across `dissolve`, `fade`, `burn`, and `zoom-dissolve` transitions.
+3. **Verification**:
+   - `npm run build`: Compiled with 0 errors in 13.0s; 4/4 static pages generated cleanly.
+
+### Current State
+Hero Section slideshow executes smooth 30% → 100% gradual opacity ramps during every image transition.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/HeroBackgroundSlideshow.tsx` lines 18-24 to tweak opacity values or transition duration.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-20 — Hero Section Slideshow: Continuous Zoom-In / Zoom-Out & Mouse Parallax
 
 ### Objective
@@ -9688,6 +10000,30 @@ Implement the DevFest Kolkata "card up" bottom sheet reveal animation (matching 
 ---
 
 # Agent Handoff Log — tracker.md
+
+## 2026-11-20 — Hero Slideshow: 30% -> 100% Gradual Opacity Ramp & Cross-Exposure Transition
+
+### Objective
+Implement a double-exposure transition where the outgoing image's opacity decreases while the incoming image starts at 30% (`autoAlpha: 0.3`) and gradually sweeps up to 100% (`autoAlpha: 1.0`) across all slide transitions in [HeroBackgroundSlideshow.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroBackgroundSlideshow.tsx).
+
+### Changes Made
+1. **Gradual Opacity Ramp Configuration**:
+   - Added `INCOMING_INITIAL_OPACITY: 0.3`, `INCOMING_TARGET_OPACITY: 1.0`, and `TRANSITION_DURATION_S: 1.6` to `SLIDESHOW_CONFIG`.
+2. **GSAP Transition Curves Updated**:
+   - Outgoing layer fades down to 0 smoothly with `power2.inOut`.
+   - Incoming layer initiates from 30% opacity (`autoAlpha: 0.3`) and ramps up to 100% opacity (`autoAlpha: 1.0`) with `power2.out`, creating an atmospheric cross-exposure.
+   - Updated across `dissolve`, `fade`, `burn`, and `zoom-dissolve` transitions.
+3. **Verification**:
+   - `npm run build`: Compiled with 0 errors in 13.0s; 4/4 static pages generated cleanly.
+
+### Current State
+Hero Section slideshow executes smooth 30% → 100% gradual opacity ramps during every image transition.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/HeroBackgroundSlideshow.tsx` lines 18-24 to tweak opacity values or transition duration.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
 
 ## 2026-11-20 — Hero Section Slideshow: Continuous Zoom-In / Zoom-Out & Mouse Parallax
 
