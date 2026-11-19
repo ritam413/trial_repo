@@ -18,6 +18,7 @@ export interface FounderProfile {
   monogram: string;
   imageUrl: string;
   thumbnailUrl?: string;
+  imageClassName?: string;
 }
 
 export const FOUNDERS: FounderProfile[] = [
@@ -25,16 +26,17 @@ export const FOUNDERS: FounderProfile[] = [
     id: "fnd-01",
     badge: "FOUNDER",
     name: "PARTHA SARATHI PAL",
-    designation: "FOUNDING STEWARD, SANSKARAN",
+    designation: "FOUNDING , SANSKARAN",
     monogram: "PP",
     imageUrl: "https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_800,c_limit/sanskaran_2026/founders/partha_sarathi_pal",
     thumbnailUrl: "https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:low,w_40,e_blur:1000/sanskaran_2026/founders/partha_sarathi_pal",
+    imageClassName: "object-center",
   },
   {
     id: "fnd-02",
     badge: "FOUNDER",
     name: "SAYAN CHAKRABORTY",
-    designation: "FOUNDING STEWARD, SANSKARAN",
+    designation: "FOUNDING , SANSKARAN",
     monogram: "SC",
     imageUrl: "https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_800,c_limit/sanskaran_2026/founders/sayan_chakraborty",
     thumbnailUrl: "https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:low,w_40,e_blur:1000/sanskaran_2026/founders/sayan_chakraborty",
@@ -151,9 +153,7 @@ export default function FoundersSection() {
                     <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-tech font-bold tracking-widest uppercase bg-[#ffffff]/15 border border-[#d4c7ff]/40 text-[#d4c7ff]">
                       {person.badge}
                     </span>
-                    <span className="text-[#d4c7ff] font-tech text-xs">
-                      ✦ FOUNDING STEWARD
-                    </span>
+                 
                   </div>
 
                   {/* HERO PORTRAIT / PHOTO CARD PLINTH */}
@@ -163,7 +163,7 @@ export default function FoundersSection() {
                       alt={person.name}
                       loading="lazy"
                       decoding="async"
-                      className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                      className={`w-full h-full object-cover ${person.imageClassName || "object-top"} transition-transform duration-500 group-hover:scale-105`}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#082b2c] via-transparent to-transparent opacity-60 pointer-events-none" />
                   </div>

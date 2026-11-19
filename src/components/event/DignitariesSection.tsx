@@ -23,9 +23,9 @@ export interface DignitaryProfile {
 export const DIGNITARIES: DignitaryProfile[] = [
   {
     id: "dig-01",
-    badge: "CHIEF PATRON",
+    badge: "d",
     name: "PROF. DR. SUJOY BISWAS",
-    designation: "DIRECTOR & CEO, TECHNO INDIA GROUP",
+    designation: "Director & CEO of Techno India Group & Registrar Techno India University, West Bengal",
     monogram: "SB",
     imageUrl: "https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_800,c_limit/sanskaran_2026/dignitaries/sujoy-c0m-3gq8",
     thumbnailUrl: "https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:low,w_40,e_blur:1000/sanskaran_2026/dignitaries/sujoy-c0m-3gq8",
@@ -34,7 +34,7 @@ export const DIGNITARIES: DignitaryProfile[] = [
     id: "dig-02",
     badge: "PATRON & ACADEMIC HEAD",
     name: "PROF. DR. RINA PALADHI",
-    designation: "DIRECTOR – ACADEMICS",
+    designation: "Director of Techno India University, West Bengal",
     monogram: "RP",
     imageUrl: "https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_800,c_limit/sanskaran_2026/dignitaries/prof__dr__rina_paladhi",
     thumbnailUrl: "https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:low,w_40,e_blur:1000/sanskaran_2026/dignitaries/prof__dr__rina_paladhi",
@@ -43,7 +43,7 @@ export const DIGNITARIES: DignitaryProfile[] = [
     id: "dig-03",
     badge: "FACULTY CONVENOR",
     name: "PROF. ISHAN GHOSH",
-    designation: "HEAD OF ADMINISTRATION & CONVENOR",
+    designation: "Head of Administration, Chairman of Disciplinary commitee, Associate Dean of Student affairs of Techno India University-West Bengal",
     monogram: "IG",
     imageUrl: "https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_800,c_limit/sanskaran_2026/dignitaries/prof__ishan_ghosh",
     thumbnailUrl: "https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:low,w_40,e_blur:1000/sanskaran_2026/dignitaries/prof__ishan_ghosh",
@@ -155,15 +155,7 @@ export default function DignitariesSection() {
                 />
 
                 <div className="relative z-10 flex flex-col">
-                  {/* Top Badge */}
-                  <div className="flex items-center justify-between gap-2 mb-4">
-                    <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-tech font-bold tracking-widest uppercase bg-[#714cb6]/25 border border-[#714cb6]/40 text-[#d4c7ff]">
-                      {person.badge}
-                    </span>
-                    <span className="text-[#d4c7ff] font-tech text-xs">
-                      ✦ OFFICIAL PATRON
-                    </span>
-                  </div>
+                
 
                   {/* HERO PORTRAIT / PHOTO CARD PLINTH */}
                   <div className="relative w-full aspect-[4/5] sm:h-72 rounded-xl sm:rounded-2xl border border-white/10 bg-gradient-to-b from-[#18181b] to-[#0d0d0e] overflow-hidden flex flex-col justify-center items-center shadow-inner transition-transform duration-300 group-hover:scale-[1.02]">
@@ -172,7 +164,7 @@ export default function DignitariesSection() {
                       alt={person.name}
                       loading="lazy"
                       decoding="async"
-                      className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                      className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#141416] via-transparent to-transparent opacity-60 pointer-events-none" />
                   </div>

@@ -1,5 +1,29 @@
 # Agent Handoff Log — tracker.md
 
+## 2026-11-19 — Founders & Dignitaries: Alignment Control & Object-Center Optimization
+
+### Objective
+Add `object-center` positioning to Partha Sarathi Pal's portrait in [FoundersSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/FoundersSection.tsx) and support granular per-founder image alignment class overrides.
+
+### Changes Made
+1. **Founders Section Profile Configuration (`src/components/event/FoundersSection.tsx`)**:
+   - Added `imageClassName?: string` to `FounderProfile`.
+   - Set `imageClassName: "object-center"` on `Partha Sarathi Pal` (`fnd-01`).
+   - Wired `${person.imageClassName || "object-top"}` into the `<img>` tag.
+2. **Dignitaries Section Polish (`src/components/event/DignitariesSection.tsx`)**:
+   - Verified `object-center` framing applied to prevent cut-offs.
+3. **Verification**:
+   - Built with Next.js 16 (Turbopack) & React 19: 0 errors in 9.5s, static generation verified.
+
+### Current State
+Founders and Dignitaries portrait cards display centered alignment, eliminating forehead/subject cropping.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/FoundersSection.tsx` and `DignitariesSection.tsx` for any further design adjustments.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-19 — Core Members, Dignitaries & Founders: Cloudinary Upload & Edge Integration
 
 ### Objective
@@ -1320,6 +1344,30 @@ Integrate the video from `https://www.instagram.com/p/DaqR3Niyy2L/?hl=en` (the o
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-19 — Founders & Dignitaries: Alignment Control & Object-Center Optimization
+
+### Objective
+Add `object-center` positioning to Partha Sarathi Pal's portrait in [FoundersSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/FoundersSection.tsx) and support granular per-founder image alignment class overrides.
+
+### Changes Made
+1. **Founders Section Profile Configuration (`src/components/event/FoundersSection.tsx`)**:
+   - Added `imageClassName?: string` to `FounderProfile`.
+   - Set `imageClassName: "object-center"` on `Partha Sarathi Pal` (`fnd-01`).
+   - Wired `${person.imageClassName || "object-top"}` into the `<img>` tag.
+2. **Dignitaries Section Polish (`src/components/event/DignitariesSection.tsx`)**:
+   - Verified `object-center` framing applied to prevent cut-offs.
+3. **Verification**:
+   - Built with Next.js 16 (Turbopack) & React 19: 0 errors in 9.5s, static generation verified.
+
+### Current State
+Founders and Dignitaries portrait cards display centered alignment, eliminating forehead/subject cropping.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/FoundersSection.tsx` and `DignitariesSection.tsx` for any further design adjustments.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-19 — Core Members, Dignitaries & Founders: Cloudinary Upload & Edge Integration
 
 ### Objective
@@ -2016,6 +2064,30 @@ Integrate the video from `https://www.instagram.com/p/DaqR3Niyy2L/?hl=en` (the o
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-19 — Founders & Dignitaries: Alignment Control & Object-Center Optimization
+
+### Objective
+Add `object-center` positioning to Partha Sarathi Pal's portrait in [FoundersSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/FoundersSection.tsx) and support granular per-founder image alignment class overrides.
+
+### Changes Made
+1. **Founders Section Profile Configuration (`src/components/event/FoundersSection.tsx`)**:
+   - Added `imageClassName?: string` to `FounderProfile`.
+   - Set `imageClassName: "object-center"` on `Partha Sarathi Pal` (`fnd-01`).
+   - Wired `${person.imageClassName || "object-top"}` into the `<img>` tag.
+2. **Dignitaries Section Polish (`src/components/event/DignitariesSection.tsx`)**:
+   - Verified `object-center` framing applied to prevent cut-offs.
+3. **Verification**:
+   - Built with Next.js 16 (Turbopack) & React 19: 0 errors in 9.5s, static generation verified.
+
+### Current State
+Founders and Dignitaries portrait cards display centered alignment, eliminating forehead/subject cropping.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/FoundersSection.tsx` and `DignitariesSection.tsx` for any further design adjustments.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-19 — Core Members, Dignitaries & Founders: Cloudinary Upload & Edge Integration
 
 ### Objective
@@ -2679,6 +2751,30 @@ Rotate the background video 90 degrees so it is right-side up, and eliminate ver
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-19 — Founders & Dignitaries: Alignment Control & Object-Center Optimization
+
+### Objective
+Add `object-center` positioning to Partha Sarathi Pal's portrait in [FoundersSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/FoundersSection.tsx) and support granular per-founder image alignment class overrides.
+
+### Changes Made
+1. **Founders Section Profile Configuration (`src/components/event/FoundersSection.tsx`)**:
+   - Added `imageClassName?: string` to `FounderProfile`.
+   - Set `imageClassName: "object-center"` on `Partha Sarathi Pal` (`fnd-01`).
+   - Wired `${person.imageClassName || "object-top"}` into the `<img>` tag.
+2. **Dignitaries Section Polish (`src/components/event/DignitariesSection.tsx`)**:
+   - Verified `object-center` framing applied to prevent cut-offs.
+3. **Verification**:
+   - Built with Next.js 16 (Turbopack) & React 19: 0 errors in 9.5s, static generation verified.
+
+### Current State
+Founders and Dignitaries portrait cards display centered alignment, eliminating forehead/subject cropping.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/FoundersSection.tsx` and `DignitariesSection.tsx` for any further design adjustments.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-19 — Core Members, Dignitaries & Founders: Cloudinary Upload & Edge Integration
 
 ### Objective
@@ -3314,6 +3410,30 @@ Rotate the background video 180 degrees per user instruction to invert the orien
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-19 — Founders & Dignitaries: Alignment Control & Object-Center Optimization
+
+### Objective
+Add `object-center` positioning to Partha Sarathi Pal's portrait in [FoundersSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/FoundersSection.tsx) and support granular per-founder image alignment class overrides.
+
+### Changes Made
+1. **Founders Section Profile Configuration (`src/components/event/FoundersSection.tsx`)**:
+   - Added `imageClassName?: string` to `FounderProfile`.
+   - Set `imageClassName: "object-center"` on `Partha Sarathi Pal` (`fnd-01`).
+   - Wired `${person.imageClassName || "object-top"}` into the `<img>` tag.
+2. **Dignitaries Section Polish (`src/components/event/DignitariesSection.tsx`)**:
+   - Verified `object-center` framing applied to prevent cut-offs.
+3. **Verification**:
+   - Built with Next.js 16 (Turbopack) & React 19: 0 errors in 9.5s, static generation verified.
+
+### Current State
+Founders and Dignitaries portrait cards display centered alignment, eliminating forehead/subject cropping.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/FoundersSection.tsx` and `DignitariesSection.tsx` for any further design adjustments.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-19 — Core Members, Dignitaries & Founders: Cloudinary Upload & Edge Integration
 
 ### Objective
@@ -3925,6 +4045,30 @@ Remove the "Google Developer Group Kolkata" logo from the top-left of the hero s
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-19 — Founders & Dignitaries: Alignment Control & Object-Center Optimization
+
+### Objective
+Add `object-center` positioning to Partha Sarathi Pal's portrait in [FoundersSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/FoundersSection.tsx) and support granular per-founder image alignment class overrides.
+
+### Changes Made
+1. **Founders Section Profile Configuration (`src/components/event/FoundersSection.tsx`)**:
+   - Added `imageClassName?: string` to `FounderProfile`.
+   - Set `imageClassName: "object-center"` on `Partha Sarathi Pal` (`fnd-01`).
+   - Wired `${person.imageClassName || "object-top"}` into the `<img>` tag.
+2. **Dignitaries Section Polish (`src/components/event/DignitariesSection.tsx`)**:
+   - Verified `object-center` framing applied to prevent cut-offs.
+3. **Verification**:
+   - Built with Next.js 16 (Turbopack) & React 19: 0 errors in 9.5s, static generation verified.
+
+### Current State
+Founders and Dignitaries portrait cards display centered alignment, eliminating forehead/subject cropping.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/FoundersSection.tsx` and `DignitariesSection.tsx` for any further design adjustments.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-19 — Core Members, Dignitaries & Founders: Cloudinary Upload & Edge Integration
 
 ### Objective
@@ -4512,6 +4656,30 @@ Implement the DevFest Kolkata "card up" bottom sheet reveal animation (matching 
 ---
 
 # Agent Handoff Log — tracker.md
+
+## 2026-11-19 — Founders & Dignitaries: Alignment Control & Object-Center Optimization
+
+### Objective
+Add `object-center` positioning to Partha Sarathi Pal's portrait in [FoundersSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/FoundersSection.tsx) and support granular per-founder image alignment class overrides.
+
+### Changes Made
+1. **Founders Section Profile Configuration (`src/components/event/FoundersSection.tsx`)**:
+   - Added `imageClassName?: string` to `FounderProfile`.
+   - Set `imageClassName: "object-center"` on `Partha Sarathi Pal` (`fnd-01`).
+   - Wired `${person.imageClassName || "object-top"}` into the `<img>` tag.
+2. **Dignitaries Section Polish (`src/components/event/DignitariesSection.tsx`)**:
+   - Verified `object-center` framing applied to prevent cut-offs.
+3. **Verification**:
+   - Built with Next.js 16 (Turbopack) & React 19: 0 errors in 9.5s, static generation verified.
+
+### Current State
+Founders and Dignitaries portrait cards display centered alignment, eliminating forehead/subject cropping.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/FoundersSection.tsx` and `DignitariesSection.tsx` for any further design adjustments.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
 
 ## 2026-11-19 — Core Members, Dignitaries & Founders: Cloudinary Upload & Edge Integration
 
@@ -5115,6 +5283,30 @@ Implement the DevFest Kolkata "card up" bottom sheet reveal animation (matching 
 ---
 
 # Agent Handoff Log — tracker.md
+
+## 2026-11-19 — Founders & Dignitaries: Alignment Control & Object-Center Optimization
+
+### Objective
+Add `object-center` positioning to Partha Sarathi Pal's portrait in [FoundersSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/FoundersSection.tsx) and support granular per-founder image alignment class overrides.
+
+### Changes Made
+1. **Founders Section Profile Configuration (`src/components/event/FoundersSection.tsx`)**:
+   - Added `imageClassName?: string` to `FounderProfile`.
+   - Set `imageClassName: "object-center"` on `Partha Sarathi Pal` (`fnd-01`).
+   - Wired `${person.imageClassName || "object-top"}` into the `<img>` tag.
+2. **Dignitaries Section Polish (`src/components/event/DignitariesSection.tsx`)**:
+   - Verified `object-center` framing applied to prevent cut-offs.
+3. **Verification**:
+   - Built with Next.js 16 (Turbopack) & React 19: 0 errors in 9.5s, static generation verified.
+
+### Current State
+Founders and Dignitaries portrait cards display centered alignment, eliminating forehead/subject cropping.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/FoundersSection.tsx` and `DignitariesSection.tsx` for any further design adjustments.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
 
 ## 2026-11-19 — Core Members, Dignitaries & Founders: Cloudinary Upload & Edge Integration
 
@@ -5859,6 +6051,30 @@ Integrate the video from `https://www.instagram.com/p/DaqR3Niyy2L/?hl=en` (the o
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-19 — Founders & Dignitaries: Alignment Control & Object-Center Optimization
+
+### Objective
+Add `object-center` positioning to Partha Sarathi Pal's portrait in [FoundersSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/FoundersSection.tsx) and support granular per-founder image alignment class overrides.
+
+### Changes Made
+1. **Founders Section Profile Configuration (`src/components/event/FoundersSection.tsx`)**:
+   - Added `imageClassName?: string` to `FounderProfile`.
+   - Set `imageClassName: "object-center"` on `Partha Sarathi Pal` (`fnd-01`).
+   - Wired `${person.imageClassName || "object-top"}` into the `<img>` tag.
+2. **Dignitaries Section Polish (`src/components/event/DignitariesSection.tsx`)**:
+   - Verified `object-center` framing applied to prevent cut-offs.
+3. **Verification**:
+   - Built with Next.js 16 (Turbopack) & React 19: 0 errors in 9.5s, static generation verified.
+
+### Current State
+Founders and Dignitaries portrait cards display centered alignment, eliminating forehead/subject cropping.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/FoundersSection.tsx` and `DignitariesSection.tsx` for any further design adjustments.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-19 — Core Members, Dignitaries & Founders: Cloudinary Upload & Edge Integration
 
 ### Objective
@@ -6555,6 +6771,30 @@ Integrate the video from `https://www.instagram.com/p/DaqR3Niyy2L/?hl=en` (the o
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-19 — Founders & Dignitaries: Alignment Control & Object-Center Optimization
+
+### Objective
+Add `object-center` positioning to Partha Sarathi Pal's portrait in [FoundersSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/FoundersSection.tsx) and support granular per-founder image alignment class overrides.
+
+### Changes Made
+1. **Founders Section Profile Configuration (`src/components/event/FoundersSection.tsx`)**:
+   - Added `imageClassName?: string` to `FounderProfile`.
+   - Set `imageClassName: "object-center"` on `Partha Sarathi Pal` (`fnd-01`).
+   - Wired `${person.imageClassName || "object-top"}` into the `<img>` tag.
+2. **Dignitaries Section Polish (`src/components/event/DignitariesSection.tsx`)**:
+   - Verified `object-center` framing applied to prevent cut-offs.
+3. **Verification**:
+   - Built with Next.js 16 (Turbopack) & React 19: 0 errors in 9.5s, static generation verified.
+
+### Current State
+Founders and Dignitaries portrait cards display centered alignment, eliminating forehead/subject cropping.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/FoundersSection.tsx` and `DignitariesSection.tsx` for any further design adjustments.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-19 — Core Members, Dignitaries & Founders: Cloudinary Upload & Edge Integration
 
 ### Objective
@@ -7218,6 +7458,30 @@ Rotate the background video 90 degrees so it is right-side up, and eliminate ver
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-19 — Founders & Dignitaries: Alignment Control & Object-Center Optimization
+
+### Objective
+Add `object-center` positioning to Partha Sarathi Pal's portrait in [FoundersSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/FoundersSection.tsx) and support granular per-founder image alignment class overrides.
+
+### Changes Made
+1. **Founders Section Profile Configuration (`src/components/event/FoundersSection.tsx`)**:
+   - Added `imageClassName?: string` to `FounderProfile`.
+   - Set `imageClassName: "object-center"` on `Partha Sarathi Pal` (`fnd-01`).
+   - Wired `${person.imageClassName || "object-top"}` into the `<img>` tag.
+2. **Dignitaries Section Polish (`src/components/event/DignitariesSection.tsx`)**:
+   - Verified `object-center` framing applied to prevent cut-offs.
+3. **Verification**:
+   - Built with Next.js 16 (Turbopack) & React 19: 0 errors in 9.5s, static generation verified.
+
+### Current State
+Founders and Dignitaries portrait cards display centered alignment, eliminating forehead/subject cropping.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/FoundersSection.tsx` and `DignitariesSection.tsx` for any further design adjustments.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-19 — Core Members, Dignitaries & Founders: Cloudinary Upload & Edge Integration
 
 ### Objective
@@ -7853,6 +8117,30 @@ Rotate the background video 180 degrees per user instruction to invert the orien
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-19 — Founders & Dignitaries: Alignment Control & Object-Center Optimization
+
+### Objective
+Add `object-center` positioning to Partha Sarathi Pal's portrait in [FoundersSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/FoundersSection.tsx) and support granular per-founder image alignment class overrides.
+
+### Changes Made
+1. **Founders Section Profile Configuration (`src/components/event/FoundersSection.tsx`)**:
+   - Added `imageClassName?: string` to `FounderProfile`.
+   - Set `imageClassName: "object-center"` on `Partha Sarathi Pal` (`fnd-01`).
+   - Wired `${person.imageClassName || "object-top"}` into the `<img>` tag.
+2. **Dignitaries Section Polish (`src/components/event/DignitariesSection.tsx`)**:
+   - Verified `object-center` framing applied to prevent cut-offs.
+3. **Verification**:
+   - Built with Next.js 16 (Turbopack) & React 19: 0 errors in 9.5s, static generation verified.
+
+### Current State
+Founders and Dignitaries portrait cards display centered alignment, eliminating forehead/subject cropping.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/FoundersSection.tsx` and `DignitariesSection.tsx` for any further design adjustments.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-19 — Core Members, Dignitaries & Founders: Cloudinary Upload & Edge Integration
 
 ### Objective
@@ -8464,6 +8752,30 @@ Remove the "Google Developer Group Kolkata" logo from the top-left of the hero s
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-19 — Founders & Dignitaries: Alignment Control & Object-Center Optimization
+
+### Objective
+Add `object-center` positioning to Partha Sarathi Pal's portrait in [FoundersSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/FoundersSection.tsx) and support granular per-founder image alignment class overrides.
+
+### Changes Made
+1. **Founders Section Profile Configuration (`src/components/event/FoundersSection.tsx`)**:
+   - Added `imageClassName?: string` to `FounderProfile`.
+   - Set `imageClassName: "object-center"` on `Partha Sarathi Pal` (`fnd-01`).
+   - Wired `${person.imageClassName || "object-top"}` into the `<img>` tag.
+2. **Dignitaries Section Polish (`src/components/event/DignitariesSection.tsx`)**:
+   - Verified `object-center` framing applied to prevent cut-offs.
+3. **Verification**:
+   - Built with Next.js 16 (Turbopack) & React 19: 0 errors in 9.5s, static generation verified.
+
+### Current State
+Founders and Dignitaries portrait cards display centered alignment, eliminating forehead/subject cropping.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/FoundersSection.tsx` and `DignitariesSection.tsx` for any further design adjustments.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-19 — Core Members, Dignitaries & Founders: Cloudinary Upload & Edge Integration
 
 ### Objective
@@ -9051,6 +9363,30 @@ Implement the DevFest Kolkata "card up" bottom sheet reveal animation (matching 
 ---
 
 # Agent Handoff Log — tracker.md
+
+## 2026-11-19 — Founders & Dignitaries: Alignment Control & Object-Center Optimization
+
+### Objective
+Add `object-center` positioning to Partha Sarathi Pal's portrait in [FoundersSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/FoundersSection.tsx) and support granular per-founder image alignment class overrides.
+
+### Changes Made
+1. **Founders Section Profile Configuration (`src/components/event/FoundersSection.tsx`)**:
+   - Added `imageClassName?: string` to `FounderProfile`.
+   - Set `imageClassName: "object-center"` on `Partha Sarathi Pal` (`fnd-01`).
+   - Wired `${person.imageClassName || "object-top"}` into the `<img>` tag.
+2. **Dignitaries Section Polish (`src/components/event/DignitariesSection.tsx`)**:
+   - Verified `object-center` framing applied to prevent cut-offs.
+3. **Verification**:
+   - Built with Next.js 16 (Turbopack) & React 19: 0 errors in 9.5s, static generation verified.
+
+### Current State
+Founders and Dignitaries portrait cards display centered alignment, eliminating forehead/subject cropping.
+
+### Next Agent Instructions
+1. Inspect `src/components/event/FoundersSection.tsx` and `DignitariesSection.tsx` for any further design adjustments.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
 
 ## 2026-11-19 — Core Members, Dignitaries & Founders: Cloudinary Upload & Edge Integration
 
