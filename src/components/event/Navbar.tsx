@@ -1,10 +1,30 @@
 "use client";
 
 import React, { useEffect, useState, useRef } from "react";
+import { createPortal } from "react-dom";
 import gsap from "gsap";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ChevronRight, Instagram, Youtube, Mail } from "lucide-react";
+import { Menu, X, ChevronRight, Mail } from "lucide-react";
 import { lenisScrollTo, getLenis } from "@/components/providers/SmoothScrollProvider";
+
+/* ==========================================================================
+   SELF-CONTAINED CRISP SOCIAL ICONS
+   ========================================================================== */
+const SocialIcon = {
+  Instagram: ({ className = "w-4 h-4" }: { className?: string }) => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+      <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+    </svg>
+  ),
+  Youtube: ({ className = "w-4 h-4" }: { className?: string }) => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17" />
+      <polygon points="10 15 15 12 10 9 10 15" fill="currentColor" stroke="none" />
+    </svg>
+  ),
+};
 
 /* ==========================================================================
    SMOOTH SCROLL CONFIGURATION
@@ -39,6 +59,11 @@ export default function Navbar() {
   const percentTextRef = useRef<HTMLSpanElement>(null);
   const [hasScrolled, setHasScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
@@ -128,7 +153,8 @@ export default function Navbar() {
   };
 
   return (
-    <header
+    <>
+      <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         hasScrolled
           ? "opacity-100 translate-y-0 bg-[#0d0d0e]/95 backdrop-blur-xl border-b border-white/10 shadow-[0_4px_24px_rgba(0,0,0,0.6)] pointer-events-auto"
@@ -203,136 +229,144 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* ====================================================================
-          MOBILE SIDEBAR / CARD NAVIGATION (Reference-faithful to EDH layout)
-          ==================================================================== */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <div className="fixed inset-0 z-[100] md:hidden flex flex-col items-center justify-center p-4 sm:p-6 overflow-y-auto">
-            {/* Dark Frosted Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.22 }}
-              onClick={() => setMobileMenuOpen(false)}
-              className="fixed inset-0 bg-black/80 backdrop-blur-xl"
-            />
-
-            {/* Mobile Nav Frame & Floating Card */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.93, y: 16 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.93, y: 16 }}
-              transition={{ type: "spring", damping: 25, stiffness: 280 }}
-              className="relative z-10 w-full max-w-[360px] flex flex-col my-auto"
-            >
-              {/* Top Bar: Brand Badge & Close Button */}
-              <div className="w-full flex items-center justify-between mb-3 px-1">
-                {/* Brand Badge */}
-                <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#141724] border border-white/20 text-white shadow-lg">
-                  <span className="font-display text-lg tracking-wider font-bold text-[#EDE8FF]">
-                    SANSKARAN
-                  </span>
-                  <span className="font-mono text-[10px] font-bold px-1.5 py-0.5 rounded-md bg-[#714cb6] text-white">
-                    2026
-                  </span>
-                </div>
-
-                {/* Close Button */}
-                <button
-                  type="button"
-                  onClick={() => setMobileMenuOpen(false)}
-                  aria-label="Close navigation menu"
-                  className="w-10 h-10 rounded-xl bg-[#141724] hover:bg-[#714cb6] border border-white/20 text-white flex items-center justify-center transition-all cursor-pointer shadow-lg active:scale-95"
-                >
-                  <X className="w-5 h-5 text-white" />
-                </button>
-              </div>
-
-              {/* The White Floating Card */}
-              <div className="w-full bg-[#ffffff] rounded-[28px] sm:rounded-[32px] p-5 sm:p-6 shadow-[0_24px_60px_rgba(0,0,0,0.7)] border border-white/30 flex flex-col">
-                {/* Numbered Navigation Items */}
-                <div className="flex flex-col space-y-1">
-                  {navLinks.map((link, idx) => {
-                    const num = String(idx + 1).padStart(2, "0");
-                    return (
-                      <a
-                        key={link.target}
-                        href={link.target}
-                        onClick={(e) => {
-                          handleNavClick(e, link.target);
-                          setMobileMenuOpen(false);
-                        }}
-                        className="flex items-center justify-between py-2.5 px-3 rounded-2xl hover:bg-slate-100 active:bg-slate-200 transition-all duration-200 group cursor-pointer"
-                      >
-                        <div className="flex items-center gap-3.5">
-                          <span className="font-mono text-xs font-bold text-[#64748b] group-hover:text-[#714cb6] transition-colors">
-                            {num}
-                          </span>
-                          <span className="font-display text-2xl tracking-wide text-[#0f172a] group-hover:text-[#714cb6] transition-colors">
-                            {link.label}
-                          </span>
-                        </div>
-
-                        {/* Right Pill Arrow Button */}
-                        <div className="w-8 h-8 rounded-full bg-[#141724] group-hover:bg-[#714cb6] text-white flex items-center justify-center transition-all duration-200 group-hover:translate-x-0.5 shadow-sm shrink-0">
-                          <ChevronRight className="w-4 h-4 text-white" />
-                        </div>
-                      </a>
-                    );
-                  })}
-                </div>
-
-                {/* Divider Line */}
-                <div className="w-full h-px bg-slate-200 my-4" />
-
-                {/* Social Icon Buttons */}
-                <div className="flex items-center gap-3 mb-4">
-                  <a
-                    href="https://instagram.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-10 h-10 rounded-xl bg-[#141724] hover:bg-[#714cb6] text-white flex items-center justify-center transition-all shadow-sm active:scale-95"
-                    aria-label="Instagram"
-                  >
-                    <Instagram className="w-4 h-4 text-white" />
-                  </a>
-                  <a
-                    href="https://youtube.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-10 h-10 rounded-xl bg-[#141724] hover:bg-[#714cb6] text-white flex items-center justify-center transition-all shadow-sm active:scale-95"
-                    aria-label="YouTube"
-                  >
-                    <Youtube className="w-4 h-4 text-white" />
-                  </a>
-                  <a
-                    href="mailto:sanskaranfestival@gmail.com"
-                    className="w-10 h-10 rounded-xl bg-[#141724] hover:bg-[#714cb6] text-white flex items-center justify-center transition-all shadow-sm active:scale-95"
-                    aria-label="Email Us"
-                  >
-                    <Mail className="w-4 h-4 text-white" />
-                  </a>
-                </div>
-
-                {/* Contact Email & Copyright */}
-                <div className="flex flex-col text-left">
-                  <a
-                    href="mailto:sanskaranfestival@gmail.com"
-                    className="font-tech text-xs font-bold text-[#0f172a] hover:text-[#714cb6] transition-colors"
-                  >
-                    sanskaranfestival@gmail.com
-                  </a>
-                  <p className="font-tech text-[10px] text-slate-500 mt-0.5">
-                    © 2026 Sanskaran &amp; Sahotsava. All rights reserved.
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
     </header>
+
+    {/* ====================================================================
+        MOBILE SIDEBAR / CARD NAVIGATION (Reference-faithful to EDH layout)
+        Mounted via React Portal directly into document.body to avoid header
+        CSS transform / clipping issues
+        ==================================================================== */}
+    {mounted &&
+      createPortal(
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <div className="fixed inset-0 z-[99999] md:hidden flex flex-col items-center justify-center p-4 sm:p-6 overflow-y-auto">
+              {/* Dark Frosted Backdrop */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.22 }}
+                onClick={() => setMobileMenuOpen(false)}
+                className="fixed inset-0 bg-black/80 backdrop-blur-xl"
+              />
+
+              {/* Mobile Nav Frame & Floating Card */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.93, y: 16 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.93, y: 16 }}
+                transition={{ type: "spring", damping: 25, stiffness: 280 }}
+                className="relative z-10 w-full max-w-[360px] flex flex-col my-auto max-h-[92vh]"
+              >
+                {/* Top Bar: Brand Badge & Close Button */}
+                <div className="w-full flex items-center justify-between mb-3 px-1">
+                  {/* Brand Badge */}
+                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#141724] border border-white/20 text-white shadow-lg">
+                    <span className="font-display text-lg tracking-wider font-bold text-[#EDE8FF]">
+                      SANSKARAN
+                    </span>
+                    <span className="font-mono text-[10px] font-bold px-1.5 py-0.5 rounded-md bg-[#714cb6] text-white">
+                      2026
+                    </span>
+                  </div>
+
+                  {/* Close Button */}
+                  <button
+                    type="button"
+                    onClick={() => setMobileMenuOpen(false)}
+                    aria-label="Close navigation menu"
+                    className="w-10 h-10 rounded-xl bg-[#141724] hover:bg-[#714cb6] border border-white/20 text-white flex items-center justify-center transition-all cursor-pointer shadow-lg active:scale-95"
+                  >
+                    <X className="w-5 h-5 text-white" />
+                  </button>
+                </div>
+
+                {/* The White Floating Card */}
+                <div className="w-full bg-[#ffffff] rounded-[28px] sm:rounded-[32px] p-5 sm:p-6 shadow-[0_24px_60px_rgba(0,0,0,0.7)] border border-white/30 flex flex-col overflow-y-auto">
+                  {/* Numbered Navigation Items */}
+                  <div className="flex flex-col space-y-1">
+                    {navLinks.map((link, idx) => {
+                      const num = String(idx + 1).padStart(2, "0");
+                      return (
+                        <a
+                          key={link.target}
+                          href={link.target}
+                          onClick={(e) => {
+                            handleNavClick(e, link.target);
+                            setMobileMenuOpen(false);
+                          }}
+                          className="flex items-center justify-between py-2.5 px-3 rounded-2xl hover:bg-slate-100 active:bg-slate-200 transition-all duration-200 group cursor-pointer"
+                        >
+                          <div className="flex items-center gap-3.5">
+                            <span className="font-mono text-xs font-bold text-[#64748b] group-hover:text-[#714cb6] transition-colors">
+                              {num}
+                            </span>
+                            <span className="font-display text-2xl tracking-wide text-[#0f172a] group-hover:text-[#714cb6] transition-colors">
+                              {link.label}
+                            </span>
+                          </div>
+
+                          {/* Right Pill Arrow Button */}
+                          <div className="w-8 h-8 rounded-full bg-[#141724] group-hover:bg-[#714cb6] text-white flex items-center justify-center transition-all duration-200 group-hover:translate-x-0.5 shadow-sm shrink-0">
+                            <ChevronRight className="w-4 h-4 text-white" />
+                          </div>
+                        </a>
+                      );
+                    })}
+                  </div>
+
+                  {/* Divider Line */}
+                  <div className="w-full h-px bg-slate-200 my-4" />
+
+                  {/* Social Icon Buttons */}
+                  <div className="flex items-center gap-3 mb-4">
+                    <a
+                      href="https://instagram.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-10 h-10 rounded-xl bg-[#141724] hover:bg-[#714cb6] text-white flex items-center justify-center transition-all shadow-sm active:scale-95"
+                      aria-label="Instagram"
+                    >
+                      <SocialIcon.Instagram className="w-4 h-4 text-white" />
+                    </a>
+                    <a
+                      href="https://youtube.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-10 h-10 rounded-xl bg-[#141724] hover:bg-[#714cb6] text-white flex items-center justify-center transition-all shadow-sm active:scale-95"
+                      aria-label="YouTube"
+                    >
+                      <SocialIcon.Youtube className="w-4 h-4 text-white" />
+                    </a>
+                    <a
+                      href="mailto:sanskaranfestival@gmail.com"
+                      className="w-10 h-10 rounded-xl bg-[#141724] hover:bg-[#714cb6] text-white flex items-center justify-center transition-all shadow-sm active:scale-95"
+                      aria-label="Email Us"
+                    >
+                      <Mail className="w-4 h-4 text-white" />
+                    </a>
+                  </div>
+
+                  {/* Contact Email & Copyright */}
+                  <div className="flex flex-col text-left">
+                    <a
+                      href="mailto:sanskaranfestival@gmail.com"
+                      className="font-tech text-xs font-bold text-[#0f172a] hover:text-[#714cb6] transition-colors"
+                    >
+                      sanskaranfestival@gmail.com
+                    </a>
+                    <p className="font-tech text-[10px] text-slate-500 mt-0.5">
+                      © 2026 Sanskaran &amp; Sahotsava. All rights reserved.
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
+    </>
   );
 }
