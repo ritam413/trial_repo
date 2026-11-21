@@ -197,6 +197,17 @@ export const CORE_MEMBERS: CoreMember[] = [
     year: "FINAL YEAR",
     imageUrl: "https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_800,c_limit/sanskaran_2026/core_members/sukanta",
   },
+  {
+    id: "cm-13",
+    name: "SHOUNAK",
+    role: "OPERATIONS & LOGISTICS LEAD",
+    vertical: "EXECUTIVE COUNCIL",
+    designVariant: "crimson-vanguard",
+    archetype: "THE VANGUARD STEWARD",
+    quote: "Uniting passionate minds to orchestrate a cultural conclave that resonates far beyond the stage.",
+    year: "FINAL YEAR",
+    imageUrl: "https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_800,c_limit/sanskaran_2026/core_members/shounak",
+  },
 ];
 
 /* ==========================================================================
@@ -469,7 +480,7 @@ function CoreMemberCard({ member, index }: CardProps) {
             aria-hidden="true"
             className="absolute -right-4 -bottom-6 font-display text-[9rem] font-black leading-none text-[#ffffff]/[0.05] select-none pointer-events-none"
           >
-            0{index + 1}
+            {index + 1 < 10 ? `0${index + 1}` : index + 1}
           </span>
 
           <div className="relative z-10">

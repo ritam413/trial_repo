@@ -13,13 +13,13 @@ import { lenisScrollTo, getLenis } from "@/components/providers/SmoothScrollProv
    - offset: Pixel clearance offset from the top
    ========================================================================== */
 export const SMOOTH_SCROLL_CONFIG = {
-  duration: 0.85, // <-- EXACT SPEED CONTROLLER (IN SECONDS)
+  duration: 1.1, // Smooth, cinematic camera glide when clicking navbar links
   ease: "power2.out", // Snappy, responsive deceleration curve
-  offset: -40, // Top navigation bar clearance
+  offset: -70, // Top navigation bar clearance
 };
 
 /**
- * Smoothly scrolls the window to a given anchor or element using GSAP
+ * Smoothly scrolls the window to a given anchor or element using GSAP & Lenis
  * Speed is governed by SMOOTH_SCROLL_CONFIG.duration
  */
 export function gsapScrollTo(
@@ -29,40 +29,7 @@ export function gsapScrollTo(
 ) {
   if (typeof window === "undefined") return;
 
-  // Use Lenis 60fps smooth scroll if provider is active
-  if (getLenis()) {
-    lenisScrollTo(target, { duration, offset });
-    return;
-  }
-
-  let targetY = 0;
-  if (typeof target === "number") {
-    targetY = target;
-  } else {
-    const el = typeof target === "string" ? document.querySelector(target) : target;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    targetY = window.scrollY + rect.top + offset;
-  }
-
-  const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-  targetY = Math.max(0, Math.min(targetY, maxScroll));
-
-  // If scrolling back to top (#hero), notify HeroSection to replay opening cycle
-  if (target === "#hero" || targetY <= 20) {
-    window.dispatchEvent(new CustomEvent("hero:restart-loop", { detail: { resetIntro: true } }));
-  }
-
-  const scrollObj = { y: window.scrollY };
-  gsap.killTweensOf(scrollObj);
-  gsap.to(scrollObj, {
-    y: targetY,
-    duration,
-    ease: SMOOTH_SCROLL_CONFIG.ease,
-    onUpdate: () => {
-      window.scrollTo(0, scrollObj.y);
-    },
-  });
+  lenisScrollTo(target, { duration, offset });
 }
 
 export default function Navbar() {
@@ -132,7 +99,8 @@ export default function Navbar() {
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, target: string) => {
     e.preventDefault();
-    gsapScrollTo(target, SMOOTH_SCROLL_CONFIG.duration, SMOOTH_SCROLL_CONFIG.offset);
+    const offset = target === "#hero" || target === "#about" ? 0 : SMOOTH_SCROLL_CONFIG.offset;
+    gsapScrollTo(target, SMOOTH_SCROLL_CONFIG.duration, offset);
   };
 
   return (
@@ -195,7 +163,7 @@ export default function Navbar() {
 
           <button
             type="button"
-            onClick={() => gsapScrollTo("#about", SMOOTH_SCROLL_CONFIG.duration, SMOOTH_SCROLL_CONFIG.offset)}
+            onClick={() => gsapScrollTo("#about", SMOOTH_SCROLL_CONFIG.duration, 0)}
             className="group/btn inline-flex items-center justify-center gap-1.5 sm:gap-2 h-9 sm:h-11 px-3 sm:px-5 rounded-lg sm:rounded-xl bg-[#421d24] hover:bg-[#421d24]/90 text-[#ffffff] font-tech text-[11px] sm:text-xs font-bold tracking-wider uppercase border border-[#714cb6]/40 shadow-[0_4px_16px_rgba(66,29,36,0.5)] active:scale-[0.97] transition-all duration-150 cursor-pointer whitespace-nowrap"
           >
             <span className="sm:hidden">Explore</span>

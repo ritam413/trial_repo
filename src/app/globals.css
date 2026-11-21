@@ -109,10 +109,16 @@ input[type='range']::-webkit-slider-thumb {
 }
 
 html {
-  /* Let GSAP handle smooth scroll without browser native interpolation collision */
+  /* Let GSAP and Lenis handle smooth scroll without browser native interpolation collision */
   scroll-behavior: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   background-color: #000000;
   color: #FFF4E0;
+}
+
+html::-webkit-scrollbar {
+  display: none;
 }
 
 @font-face {

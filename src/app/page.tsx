@@ -13,7 +13,7 @@ import Footer from "@/components/event/Footer";
 
 export default function Home() {
   const handleExploreFestival = () => {
-    gsapScrollTo("#about", SMOOTH_SCROLL_CONFIG.duration, SMOOTH_SCROLL_CONFIG.offset);
+    gsapScrollTo("#about", SMOOTH_SCROLL_CONFIG.duration, 0);
   };
 
   return (

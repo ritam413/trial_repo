@@ -183,13 +183,21 @@ All foundational libraries, responsive layout engines, and the streamlined **Dev
 ### 2. New Core Members Section ("The Court Architects") (`/gsap-animation`)
 - **Status**: Implemented
 - **Description**: Recreated from the festival data and card design references:
-  - **Six Student Stewards**:
-    1. Kabir Verma (Festival Secretary, Executive Council, `crimson-vanguard`, 10♦)
-    2. Meera Sharma (Head of Curation, Sanskaran Conclave, `checkered-sovereign`, Q♦)
-    3. Rohan Kapoor (Technical & 3D Lead, Digital Architecture, `cyber-horizon`, A♠)
-    4. Tara Menon (Creative Director, Scenography & Print, `crimson-vanguard`, 10♦)
-    5. Devansh Nair (Events & Production, Sahotsava Arena, `checkered-sovereign`, Q♦)
-    6. Zoya Siddiqui (Alliances & Outreach, External Relations, `cyber-horizon`, A♠)
+  - **Official Student Stewards & Architects (13 Core Members)**:
+    - High-resolution real portrait imagery served via Cloudinary edge CDN (`f_auto,q_auto:good,w_800,c_limit`) with native `loading="lazy"` and `decoding="async"`:
+      1. Archisha (Curation & Heritage, Executive Council, `crimson-vanguard`)
+      2. Arnab (Technical & Systems Lead, Digital Architecture, `cyber-horizon`)
+      3. Ayan (Festival Secretary, Student Governance, `checkered-sovereign`)
+      4. Bhumi (Creative & Scenography Lead, Visual Identity, `crimson-vanguard`)
+      5. Chadni (Cultural Conclave Lead, Performing Arts, `checkered-sovereign`)
+      6. Debarun (Logistics & Operations, Central Command, `cyber-horizon`)
+      7. Jagrit (Media & Broadcast Head, Public Engagement, `crimson-vanguard`)
+      8. Nayan (Events & Production Director, Sahotsava Arena, `checkered-sovereign`)
+      9. Preetisha (Public Relations & Alliances, External Relations, `cyber-horizon`)
+      10. Sagnik (Finance & Sponsorships, Treasury & Corporate, `crimson-vanguard`)
+      11. Shoaib (Hospitality & Delegations, Campus Welfare, `checkered-sovereign`)
+      12. Sukanta (Strategic Advisor, Alumni & Advisory, `cyber-horizon`)
+      13. Shounak (Operations & Logistics Lead, Executive Council, `crimson-vanguard`)
   - **Reference SVG Vector Artworks**:
     - `crimson-vanguard`: Dynamic crimson/ignited amber polygonal shields and spears.
     - `checkered-sovereign`: Isometric checkered playing court with royal chess sovereign silhouette.
@@ -360,16 +368,24 @@ All foundational libraries, responsive layout engines, and the streamlined **Dev
 ### 12. 60 FPS Buttery-Smooth Inertia Scroll Engine & GSAP ScrollTrigger Integration (`/gsap-animation`, `/context7-mcp`)
 - **Status**: Implemented
 - **Description**:
-  - Integrated official GSAP & Lenis smooth scrolling engine based on live Context7 documentation:
-    - **60 FPS Inertia Momentum**: Configured with `duration: 1.2`, exponential easing curve `(t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))`, `smoothWheel: true`, `wheelMultiplier: 1.0`, and `touchMultiplier: 1.8`.
-    - **GSAP Ticker Master Lock**: Added `lenis.raf(time * 1000)` into `gsap.ticker.add(...)`, locking all scroll movement to GSAP's internal 60 FPS clock cycle.
+  - Integrated official GSAP & Lenis smooth scrolling engine calibrated to match `https://www.technosahotsava.in/`:
+    - **Ultra-Damped Inertia Momentum (`lerp: 0.03`, `duration: 2.5`)**: Direct mathematical replication of Technosahotsava's production physics. Each frame interpolates 3% of the remaining distance with a 2.5-second cinematic deceleration tail, creating a continuous, buttery glide on wheel and trackpad.
+    - **Dedicated RAF Engine**: Tied `lenis.raf(time)` directly into a continuous `requestAnimationFrame` loop, driving 60/120 FPS high-refresh monitors seamlessly.
     - **Zero-Latency ScrollTrigger Sync**: Connected `lenis.on('scroll', ScrollTrigger.update)` and disabled lag smoothing via `gsap.ticker.lagSmoothing(0)`, completely eliminating trigger desync and position drift.
+    - **Scrollbar Jitter Suppression**: Injected `-ms-overflow-style: none; scrollbar-width: none; html::-webkit-scrollbar { display: none; }` and `overflow-x: hidden` to eliminate chunky OS scrollbars and horizontal jitter.
+    - **Hybrid GSAP-Driven Programmatic Camera Glide (`lenisScrollTo`)**:
+      - Programmatic smooth scrolling (Navbar links, Explore CTA, Back-to-Top) is driven by GSAP tweens (`power2.out`, 1.1s duration) that update Lenis immediately on each frame (`globalLenis.scrollTo(scrollObj.y, { immediate: true })`).
+      - Computes exact absolute target coordinates: `targetY = currentScroll + rect.top + offset`, clamped between `0` and `maxScroll`.
+      - Bypasses `#hero` sticky element bounding box traps: `#hero`, `#top`, and `0` explicitly resolve to `targetY = 0` and emit `hero:restart-loop`.
+    - **Navbar Clearance Offsets**:
+      - Calibrated 70px top clearance (`offset: -70`) for `#sahotsava`, `#gallery`, `#core-members`, `#dignitaries`, and `#founders` so headings are never cut off by the fixed navigation bar.
+      - Aligned `#about` and `#hero` to `offset: 0` for seamless 100vh hero roll-up.
     - **Global Root Provider**: Packaged in `<SmoothScrollProvider>` in `src/app/layout.tsx` with `lenis/dist/lenis.css`.
-    - **Unified Navigation & Back-to-Top**: Programmatic `lenisScrollTo` wired into `Navbar.tsx`'s `gsapScrollTo` and `Footer.tsx`'s "Back to Top" button with automatic `#hero` restart event dispatching.
 - **Key Files**:
   - `src/components/providers/SmoothScrollProvider.tsx`
   - `src/app/layout.tsx`
   - `src/components/event/Navbar.tsx`
+  - `src/components/event/ShowcaseHeroSection.tsx`
   - `src/components/event/Footer.tsx`
 - **Verification**: Verified via `npm run build` compilation (0 errors, code 0) and static page generation.
 

@@ -58,7 +58,7 @@ export default function RootLayout({
       lang="en"
       className={`${bebasNeue.variable} ${syne.variable} ${anton.variable} ${cormorant.variable} ${spaceGrotesk.variable} h-full antialiased dark`}
     >
-      <body className="min-h-full flex flex-col bg-[#000000] text-[#EDE8FF] selection:bg-[#B9ACF0] selection:text-[#07060D]">
+      <body className="min-h-full flex flex-col bg-[#000000] text-[#EDE8FF] selection:bg-[#B9ACF0] selection:text-[#07060D] overflow-x-hidden">
         <SmoothScrollProvider>{children}</SmoothScrollProvider>
       </body>
     </html>

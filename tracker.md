@@ -1,5 +1,187 @@
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Core Member: Added SHOUNAK with Cloudinary Edge Delivery
+
+### Objective
+Upload user-provided portrait for core team member SHOUNAK to Cloudinary and integrate him into the Core Members section (`CoreMembersSection.tsx`).
+
+### Implementation Details
+1. **Cloudinary Asset Upload**:
+   - Uploaded user's source image (`media_1795198881832_e18bfc8b.jpg`) to Cloudinary using `scripts/upload-shounak.mjs`.
+   - Stored in Cloudinary folder `sanskaran_2026/core_members` with public ID `sanskaran_2026/core_members/shounak`.
+   - Dimensions: 768 × 1024 px.
+   - Edge delivery URL: `https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_800,c_limit/sanskaran_2026/core_members/shounak`
+   - Added asset record to `src/lib/cloudinaryAssets.json`.
+2. **Core Member Profile Integration (`src/components/event/CoreMembersSection.tsx`)**:
+   - Added `SHOUNAK` as `cm-13` with `crimson-vanguard` design variant, role "OPERATIONS & LOGISTICS LEAD", vertical "EXECUTIVE COUNCIL", archetype "THE VANGUARD STEWARD", and full year details.
+   - Fixed back-of-card watermark index rendering to dynamically support double-digit index numbers (`{index + 1 < 10 ? `0${index + 1}` : index + 1}`) without hardcoded leading zero prefix errors.
+
+### Files Changed
+- `scripts/upload-shounak.mjs` (created and executed)
+- `src/lib/cloudinaryAssets.json`
+- `src/components/event/CoreMembersSection.tsx`
+- `tracker.md`
+- `features_implemented.md`
+
+### Verification
+- Cloudinary upload API returned 200 OK with public ID `sanskaran_2026/core_members/shounak`.
+- `next build` executed with Turbopack and TypeScript checking.
+
+### Current State
+SHOUNAK is live in the Core Members card deck with full 3D tilt, flip interaction, and Cloudinary edge-cached portrait.
+
+### Next Agent Instructions
+- Core members array is exported as `CORE_MEMBERS` in `src/components/event/CoreMembersSection.tsx`.
+- Assets registry is located in `src/lib/cloudinaryAssets.json`.
+
+---
+
+## 2026-11-20 — Smooth Scroll Optimization: Technosahotsava Production Inertia Matching
+
+### Objective
+Replicate the exact level of buttery smoothness, luxury deceleration damping, and continuous 60/120 FPS camera glide from the live Technosahotsava production portal (`https://www.technosahotsava.in/`).
+
+### Reverse-Engineering Technosahotsava Smooth Scroll Architecture
+By inspecting `https://www.technosahotsava.in/` and decompiling its production bundle (`/assets/index-Dje3lYy2.js`), the exact underlying physics parameters were extracted:
+1. **Damping Factor (`lerp: 0.03`)**:
+   - Standard Lenis default is `0.1` (or `0.09`).
+   - Technosahotsava explicitly sets `lerp: 0.03`. Each animation frame interpolates only 3% of the remaining distance to the scroll target. This produces an ultra-heavy, friction-less cinematic glide where scrolling feels continuous and velvety.
+2. **Deceleration Tail (`duration: 2.5`)**:
+   - The inertia duration is explicitly set to `2.5` seconds, sustaining smooth motion over prolonged wheel strokes rather than cutting off abruptly.
+3. **Dedicated RAF Cycle (`requestAnimationFrame`)**:
+   - Directly drives `lenis.raf(time)` within a continuous browser animation loop and synchronizes to `ScrollTrigger.update`.
+4. **Scrollbar Jitter Suppression**:
+   - Browser default scrollbars are suppressed (`scrollbar-width: none; -ms-overflow-style: none; html::-webkit-scrollbar { display: none; }`) and body is constrained with `overflow-x: hidden`, eliminating thumb-hopping and horizontal jitter.
+
+### Changes Made
+1. **Calibrated Lenis Parameters (`src/components/providers/SmoothScrollProvider.tsx`)**:
+   - Configured `lerp: 0.03` and `duration: 2.5` to match `technosahotsava.in` down to the exact mathematical parameters.
+   - Tied `lenis.raf(time)` into a dedicated `requestAnimationFrame` loop with `lenis.on('scroll', ScrollTrigger.update)` and `gsap.ticker.lagSmoothing(0)`.
+2. **Scrollbar & Layout Polishing (`src/app/globals.css`, `src/app/layout.tsx`)**:
+   - Added `scrollbar-width: none; -ms-overflow-style: none;` and `html::-webkit-scrollbar { display: none; }` to `globals.css`.
+   - Added `overflow-x-hidden` to body in `layout.tsx`.
+3. **Navbar Programmatic Speed (`src/components/event/Navbar.tsx`)**:
+   - Adjusted `SMOOTH_SCROLL_CONFIG.duration` to `1.1` seconds (`power2.out`) for link-click camera transitions.
+
+### Verification
+- `npm run build` executed and passed with exit code 0.
+- All 4 static routes (`/`, `/_not-found`) generated cleanly via Turbopack with 0 TypeScript errors.
+
+### Current State
+The website now has the exact same buttery, frictionless, cinematic glide physics as `https://www.technosahotsava.in/`.
+
+### Next Agent Instructions
+- Physics parameters are located in `src/components/providers/SmoothScrollProvider.tsx` (`duration: 2.5, lerp: 0.03, smoothWheel: true`).
+- If adjusting the programmatic click duration, modify `SMOOTH_SCROLL_CONFIG.duration` in `src/components/event/Navbar.tsx`.
+
+---
+
+## 2026-11-20 — Smooth Scroll Fix: Navbar Links & Programmatic Glide Engine
+
+### Objective
+Resolve issue where clicking navbar links (`SANSKARAN`, `SAHOTSAVA`, `GALLERY`, `ARCHITECTS`, `PATRONS`, `FOUNDERS`) failed to trigger smooth scrolling to their respective sections.
+
+### Root Cause Analysis
+1. **Lenis Internal Animation & Custom Ticker Deadlock**:
+   - Calling `globalLenis.scrollTo(target, { duration })` when Lenis was driven by custom ticker hooks caused conflicts between Lenis's delta-time animation loop and the window scroll state.
+   - If Lenis received element targets like `#hero`, it calculated `rect.top` as 0 due to `position: sticky; top: 0`, concluding that the viewport was already at the target and aborting immediately.
+2. **Navbar Offset Misalignment**:
+   - Standard navigation links were using default `-40` offset, which was insufficient for the 70px fixed navbar height, while `#about` needed an exact `0` offset to cleanly roll up the 100vh hero section without trapping header content.
+
+### Changes Made
+1. **Hybrid GSAP-Driven Lenis Programmatic Scroll Engine (`SmoothScrollProvider.tsx`)**:
+   - Re-architected `lenisScrollTo()` to use GSAP's battle-tested tweening engine:
+     ```ts
+     gsap.to(scrollObj, {
+       y: targetY,
+       duration: duration || 1.0,
+       ease: "power2.out",
+       onUpdate: () => {
+         if (globalLenis) {
+           globalLenis.scrollTo(scrollObj.y, { immediate: true });
+         } else {
+           window.scrollTo(0, scrollObj.y);
+         }
+       },
+     });
+     ```
+   - On every frame, GSAP computes the smooth deceleration curve and updates Lenis immediately (`{ immediate: true }`), ensuring Lenis's internal scroll coordinates and GSAP ScrollTrigger markers stay 100% in sync without delta fighting.
+   - Calculated exact absolute target Y: `targetY = currentScroll + rect.top + offset`, clamped between `0` and `maxScroll`.
+   - Handled all "Back to Top" targets (`#hero`, `hero`, `top`, `#top`, `0`) explicitly to force `targetY = 0` and emit `hero:restart-loop`.
+2. **Configured Navbar Clearances (`Navbar.tsx`)**:
+   - Updated `SMOOTH_SCROLL_CONFIG.offset` to `-70` to match the exact height of the fixed navigation bar.
+   - Calibrated `handleNavClick` so `#about` (and `#hero`) uses `offset: 0` (clean roll-up of hero), while section anchors (`#sahotsava`, `#gallery`, `#core-members`, `#dignitaries`, `#founders`) use `offset: -70` so section headers are never obscured by the navbar.
+3. **Optimized Natural Inertia (`SmoothScrollProvider.tsx`)**:
+   - Lenis configured with `lerp: 0.09` for mouse wheel and touchpad momentum damping.
+   - Synchronized with `lenis.on('scroll', ScrollTrigger.update)` and `gsap.ticker.lagSmoothing(0)`.
+4. **Hero Explore CTA Alignment (`page.tsx`, `ShowcaseHeroSection.tsx`)**:
+   - Configured Explore CTA and hero chevron to scroll to `#about` with `offset: 0`.
+
+### Files Changed
+- `src/components/providers/SmoothScrollProvider.tsx`
+- `src/components/event/Navbar.tsx`
+- `src/app/page.tsx`
+- `src/components/event/ShowcaseHeroSection.tsx`
+- `tracker.md`
+- `features_implemented.md`
+
+### Verification
+- `npm run build` executed and passed with exit code 0.
+- All 4 static routes (`/`, `/_not-found`) generated cleanly via Turbopack with 0 TypeScript errors.
+
+### Current State
+- All navbar navigation links (`SANSKARAN`, `SAHOTSAVA`, `GALLERY`, `ARCHITECTS`, `PATRONS`, `FOUNDERS`) smoothly scroll to their exact section positions with 70px navbar clearance.
+- "Explore" CTA and hero chevron smoothly roll up the 100vh hero to `#about`.
+- "Back to Top" in the footer and navbar logo smoothly returns to `y = 0` and replays the hero intro loop.
+- Natural scrolling retains 60 FPS inertia with Lenis and GSAP ScrollTrigger.
+
+### Next Agent Instructions
+1. For programmatic scroll behavior, reference `lenisScrollTo` in `src/components/providers/SmoothScrollProvider.tsx`.
+2. Keep navbar section IDs in sync with page section IDs:
+   - SANSKARAN: `#about`
+   - SAHOTSAVA: `#sahotsava`
+   - GALLERY: `#gallery`
+   - ARCHITECTS: `#core-members`
+   - PATRONS: `#dignitaries`
+   - FOUNDERS: `#founders`
+
+---
+
+## 2026-11-20 — Smooth Scroll Fix: Explore & Back to Top Absolute Coordinate Alignment
+
+### Objective
+Diagnose and permanently fix the broken smooth scroll on the **Explore** and **Back to Top** buttons.
+
+### Root Cause Analysis
+1. **Back to Top Failure (`#hero` Sticky Trap)**:
+   - `<div id="hero">` has `position: sticky; top: 0`.
+   - When scrolled down anywhere on the page, `#hero.getBoundingClientRect().top` is `0`.
+   - Passing `target: "#hero"` into Lenis caused it to calculate `target = rect.top + animatedScroll = 0 + scroll = scroll` (the current position).
+   - Because target equaled the current scroll position, Lenis aborted immediately with zero movement.
+2. **Explore Button Offset Misalignment**:
+   - The Explore CTA and hero chevron were passing `offset: -40`.
+   - Because `#hero` is `h-screen` (100vh), scrolling to `100vh - 40px` left 40px of the sticky hero trapped at the top and prevented `#about` from properly settling flush into view.
+
+### Changes Made
+1. **Mathematical Absolute Pixel Resolution (`SmoothScrollProvider.tsx`)**:
+   - `lenisScrollTo` now explicitly intercepts all "Back to Top" targets (`#hero`, `hero`, `top`, `#top`, `0`).
+   - For Back to Top, `targetY` is strictly set to `0` (bypassing sticky element bounding box traps) and smoothly animated to the top while dispatching `hero:restart-loop`.
+   - For Explore and all page sections, `targetY` is computed as `(window.scrollY + rect.top + offset)`, clamped between `0` and `maxScroll`, and fed into `globalLenis.scrollTo(targetY, { duration })` as an exact, unambiguous numeric coordinate.
+2. **Aligned Explore Offset to `0` (`Navbar.tsx`, `page.tsx`, `ShowcaseHeroSection.tsx`)**:
+   - Configured `offset: 0` for `target === "#about"` and `target === "#hero"`.
+   - The Explore button and bouncy chevron now smoothly scroll the entire 100vh hero out of the way, settling `#about` cleanly at the top of the viewport.
+3. **Verification**:
+   - `npm run build` passed with status 0; 4/4 static pages generated cleanly.
+
+### Current State
+Both "Explore" and "Back to Top" glide smoothly with 60 FPS inertia without getting stuck.
+
+### Next Agent Instructions
+1. Inspect `src/components/providers/SmoothScrollProvider.tsx` lines 30-75 for `lenisScrollTo` coordinate calculation.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-20 — Hero Slideshow: Zero-Rerender GSAP Engine (Fix Blackout & Out-of-Sync Zoom)
 
 ### Objective
@@ -1568,6 +1750,188 @@ Integrate the video from `https://www.instagram.com/p/DaqR3Niyy2L/?hl=en` (the o
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Core Member: Added SHOUNAK with Cloudinary Edge Delivery
+
+### Objective
+Upload user-provided portrait for core team member SHOUNAK to Cloudinary and integrate him into the Core Members section (`CoreMembersSection.tsx`).
+
+### Implementation Details
+1. **Cloudinary Asset Upload**:
+   - Uploaded user's source image (`media_1795198881832_e18bfc8b.jpg`) to Cloudinary using `scripts/upload-shounak.mjs`.
+   - Stored in Cloudinary folder `sanskaran_2026/core_members` with public ID `sanskaran_2026/core_members/shounak`.
+   - Dimensions: 768 × 1024 px.
+   - Edge delivery URL: `https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_800,c_limit/sanskaran_2026/core_members/shounak`
+   - Added asset record to `src/lib/cloudinaryAssets.json`.
+2. **Core Member Profile Integration (`src/components/event/CoreMembersSection.tsx`)**:
+   - Added `SHOUNAK` as `cm-13` with `crimson-vanguard` design variant, role "OPERATIONS & LOGISTICS LEAD", vertical "EXECUTIVE COUNCIL", archetype "THE VANGUARD STEWARD", and full year details.
+   - Fixed back-of-card watermark index rendering to dynamically support double-digit index numbers (`{index + 1 < 10 ? `0${index + 1}` : index + 1}`) without hardcoded leading zero prefix errors.
+
+### Files Changed
+- `scripts/upload-shounak.mjs` (created and executed)
+- `src/lib/cloudinaryAssets.json`
+- `src/components/event/CoreMembersSection.tsx`
+- `tracker.md`
+- `features_implemented.md`
+
+### Verification
+- Cloudinary upload API returned 200 OK with public ID `sanskaran_2026/core_members/shounak`.
+- `next build` executed with Turbopack and TypeScript checking.
+
+### Current State
+SHOUNAK is live in the Core Members card deck with full 3D tilt, flip interaction, and Cloudinary edge-cached portrait.
+
+### Next Agent Instructions
+- Core members array is exported as `CORE_MEMBERS` in `src/components/event/CoreMembersSection.tsx`.
+- Assets registry is located in `src/lib/cloudinaryAssets.json`.
+
+---
+
+## 2026-11-20 — Smooth Scroll Optimization: Technosahotsava Production Inertia Matching
+
+### Objective
+Replicate the exact level of buttery smoothness, luxury deceleration damping, and continuous 60/120 FPS camera glide from the live Technosahotsava production portal (`https://www.technosahotsava.in/`).
+
+### Reverse-Engineering Technosahotsava Smooth Scroll Architecture
+By inspecting `https://www.technosahotsava.in/` and decompiling its production bundle (`/assets/index-Dje3lYy2.js`), the exact underlying physics parameters were extracted:
+1. **Damping Factor (`lerp: 0.03`)**:
+   - Standard Lenis default is `0.1` (or `0.09`).
+   - Technosahotsava explicitly sets `lerp: 0.03`. Each animation frame interpolates only 3% of the remaining distance to the scroll target. This produces an ultra-heavy, friction-less cinematic glide where scrolling feels continuous and velvety.
+2. **Deceleration Tail (`duration: 2.5`)**:
+   - The inertia duration is explicitly set to `2.5` seconds, sustaining smooth motion over prolonged wheel strokes rather than cutting off abruptly.
+3. **Dedicated RAF Cycle (`requestAnimationFrame`)**:
+   - Directly drives `lenis.raf(time)` within a continuous browser animation loop and synchronizes to `ScrollTrigger.update`.
+4. **Scrollbar Jitter Suppression**:
+   - Browser default scrollbars are suppressed (`scrollbar-width: none; -ms-overflow-style: none; html::-webkit-scrollbar { display: none; }`) and body is constrained with `overflow-x: hidden`, eliminating thumb-hopping and horizontal jitter.
+
+### Changes Made
+1. **Calibrated Lenis Parameters (`src/components/providers/SmoothScrollProvider.tsx`)**:
+   - Configured `lerp: 0.03` and `duration: 2.5` to match `technosahotsava.in` down to the exact mathematical parameters.
+   - Tied `lenis.raf(time)` into a dedicated `requestAnimationFrame` loop with `lenis.on('scroll', ScrollTrigger.update)` and `gsap.ticker.lagSmoothing(0)`.
+2. **Scrollbar & Layout Polishing (`src/app/globals.css`, `src/app/layout.tsx`)**:
+   - Added `scrollbar-width: none; -ms-overflow-style: none;` and `html::-webkit-scrollbar { display: none; }` to `globals.css`.
+   - Added `overflow-x-hidden` to body in `layout.tsx`.
+3. **Navbar Programmatic Speed (`src/components/event/Navbar.tsx`)**:
+   - Adjusted `SMOOTH_SCROLL_CONFIG.duration` to `1.1` seconds (`power2.out`) for link-click camera transitions.
+
+### Verification
+- `npm run build` executed and passed with exit code 0.
+- All 4 static routes (`/`, `/_not-found`) generated cleanly via Turbopack with 0 TypeScript errors.
+
+### Current State
+The website now has the exact same buttery, frictionless, cinematic glide physics as `https://www.technosahotsava.in/`.
+
+### Next Agent Instructions
+- Physics parameters are located in `src/components/providers/SmoothScrollProvider.tsx` (`duration: 2.5, lerp: 0.03, smoothWheel: true`).
+- If adjusting the programmatic click duration, modify `SMOOTH_SCROLL_CONFIG.duration` in `src/components/event/Navbar.tsx`.
+
+---
+
+## 2026-11-20 — Smooth Scroll Fix: Navbar Links & Programmatic Glide Engine
+
+### Objective
+Resolve issue where clicking navbar links (`SANSKARAN`, `SAHOTSAVA`, `GALLERY`, `ARCHITECTS`, `PATRONS`, `FOUNDERS`) failed to trigger smooth scrolling to their respective sections.
+
+### Root Cause Analysis
+1. **Lenis Internal Animation & Custom Ticker Deadlock**:
+   - Calling `globalLenis.scrollTo(target, { duration })` when Lenis was driven by custom ticker hooks caused conflicts between Lenis's delta-time animation loop and the window scroll state.
+   - If Lenis received element targets like `#hero`, it calculated `rect.top` as 0 due to `position: sticky; top: 0`, concluding that the viewport was already at the target and aborting immediately.
+2. **Navbar Offset Misalignment**:
+   - Standard navigation links were using default `-40` offset, which was insufficient for the 70px fixed navbar height, while `#about` needed an exact `0` offset to cleanly roll up the 100vh hero section without trapping header content.
+
+### Changes Made
+1. **Hybrid GSAP-Driven Lenis Programmatic Scroll Engine (`SmoothScrollProvider.tsx`)**:
+   - Re-architected `lenisScrollTo()` to use GSAP's battle-tested tweening engine:
+     ```ts
+     gsap.to(scrollObj, {
+       y: targetY,
+       duration: duration || 1.0,
+       ease: "power2.out",
+       onUpdate: () => {
+         if (globalLenis) {
+           globalLenis.scrollTo(scrollObj.y, { immediate: true });
+         } else {
+           window.scrollTo(0, scrollObj.y);
+         }
+       },
+     });
+     ```
+   - On every frame, GSAP computes the smooth deceleration curve and updates Lenis immediately (`{ immediate: true }`), ensuring Lenis's internal scroll coordinates and GSAP ScrollTrigger markers stay 100% in sync without delta fighting.
+   - Calculated exact absolute target Y: `targetY = currentScroll + rect.top + offset`, clamped between `0` and `maxScroll`.
+   - Handled all "Back to Top" targets (`#hero`, `hero`, `top`, `#top`, `0`) explicitly to force `targetY = 0` and emit `hero:restart-loop`.
+2. **Configured Navbar Clearances (`Navbar.tsx`)**:
+   - Updated `SMOOTH_SCROLL_CONFIG.offset` to `-70` to match the exact height of the fixed navigation bar.
+   - Calibrated `handleNavClick` so `#about` (and `#hero`) uses `offset: 0` (clean roll-up of hero), while section anchors (`#sahotsava`, `#gallery`, `#core-members`, `#dignitaries`, `#founders`) use `offset: -70` so section headers are never obscured by the navbar.
+3. **Optimized Natural Inertia (`SmoothScrollProvider.tsx`)**:
+   - Lenis configured with `lerp: 0.09` for mouse wheel and touchpad momentum damping.
+   - Synchronized with `lenis.on('scroll', ScrollTrigger.update)` and `gsap.ticker.lagSmoothing(0)`.
+4. **Hero Explore CTA Alignment (`page.tsx`, `ShowcaseHeroSection.tsx`)**:
+   - Configured Explore CTA and hero chevron to scroll to `#about` with `offset: 0`.
+
+### Files Changed
+- `src/components/providers/SmoothScrollProvider.tsx`
+- `src/components/event/Navbar.tsx`
+- `src/app/page.tsx`
+- `src/components/event/ShowcaseHeroSection.tsx`
+- `tracker.md`
+- `features_implemented.md`
+
+### Verification
+- `npm run build` executed and passed with exit code 0.
+- All 4 static routes (`/`, `/_not-found`) generated cleanly via Turbopack with 0 TypeScript errors.
+
+### Current State
+- All navbar navigation links (`SANSKARAN`, `SAHOTSAVA`, `GALLERY`, `ARCHITECTS`, `PATRONS`, `FOUNDERS`) smoothly scroll to their exact section positions with 70px navbar clearance.
+- "Explore" CTA and hero chevron smoothly roll up the 100vh hero to `#about`.
+- "Back to Top" in the footer and navbar logo smoothly returns to `y = 0` and replays the hero intro loop.
+- Natural scrolling retains 60 FPS inertia with Lenis and GSAP ScrollTrigger.
+
+### Next Agent Instructions
+1. For programmatic scroll behavior, reference `lenisScrollTo` in `src/components/providers/SmoothScrollProvider.tsx`.
+2. Keep navbar section IDs in sync with page section IDs:
+   - SANSKARAN: `#about`
+   - SAHOTSAVA: `#sahotsava`
+   - GALLERY: `#gallery`
+   - ARCHITECTS: `#core-members`
+   - PATRONS: `#dignitaries`
+   - FOUNDERS: `#founders`
+
+---
+
+## 2026-11-20 — Smooth Scroll Fix: Explore & Back to Top Absolute Coordinate Alignment
+
+### Objective
+Diagnose and permanently fix the broken smooth scroll on the **Explore** and **Back to Top** buttons.
+
+### Root Cause Analysis
+1. **Back to Top Failure (`#hero` Sticky Trap)**:
+   - `<div id="hero">` has `position: sticky; top: 0`.
+   - When scrolled down anywhere on the page, `#hero.getBoundingClientRect().top` is `0`.
+   - Passing `target: "#hero"` into Lenis caused it to calculate `target = rect.top + animatedScroll = 0 + scroll = scroll` (the current position).
+   - Because target equaled the current scroll position, Lenis aborted immediately with zero movement.
+2. **Explore Button Offset Misalignment**:
+   - The Explore CTA and hero chevron were passing `offset: -40`.
+   - Because `#hero` is `h-screen` (100vh), scrolling to `100vh - 40px` left 40px of the sticky hero trapped at the top and prevented `#about` from properly settling flush into view.
+
+### Changes Made
+1. **Mathematical Absolute Pixel Resolution (`SmoothScrollProvider.tsx`)**:
+   - `lenisScrollTo` now explicitly intercepts all "Back to Top" targets (`#hero`, `hero`, `top`, `#top`, `0`).
+   - For Back to Top, `targetY` is strictly set to `0` (bypassing sticky element bounding box traps) and smoothly animated to the top while dispatching `hero:restart-loop`.
+   - For Explore and all page sections, `targetY` is computed as `(window.scrollY + rect.top + offset)`, clamped between `0` and `maxScroll`, and fed into `globalLenis.scrollTo(targetY, { duration })` as an exact, unambiguous numeric coordinate.
+2. **Aligned Explore Offset to `0` (`Navbar.tsx`, `page.tsx`, `ShowcaseHeroSection.tsx`)**:
+   - Configured `offset: 0` for `target === "#about"` and `target === "#hero"`.
+   - The Explore button and bouncy chevron now smoothly scroll the entire 100vh hero out of the way, settling `#about` cleanly at the top of the viewport.
+3. **Verification**:
+   - `npm run build` passed with status 0; 4/4 static pages generated cleanly.
+
+### Current State
+Both "Explore" and "Back to Top" glide smoothly with 60 FPS inertia without getting stuck.
+
+### Next Agent Instructions
+1. Inspect `src/components/providers/SmoothScrollProvider.tsx` lines 30-75 for `lenisScrollTo` coordinate calculation.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-20 — 60 FPS Buttery-Smooth Inertia Scroll Engine & GSAP ScrollTrigger Integration
 
 ### Objective
@@ -2434,6 +2798,188 @@ Integrate the video from `https://www.instagram.com/p/DaqR3Niyy2L/?hl=en` (the o
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Core Member: Added SHOUNAK with Cloudinary Edge Delivery
+
+### Objective
+Upload user-provided portrait for core team member SHOUNAK to Cloudinary and integrate him into the Core Members section (`CoreMembersSection.tsx`).
+
+### Implementation Details
+1. **Cloudinary Asset Upload**:
+   - Uploaded user's source image (`media_1795198881832_e18bfc8b.jpg`) to Cloudinary using `scripts/upload-shounak.mjs`.
+   - Stored in Cloudinary folder `sanskaran_2026/core_members` with public ID `sanskaran_2026/core_members/shounak`.
+   - Dimensions: 768 × 1024 px.
+   - Edge delivery URL: `https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_800,c_limit/sanskaran_2026/core_members/shounak`
+   - Added asset record to `src/lib/cloudinaryAssets.json`.
+2. **Core Member Profile Integration (`src/components/event/CoreMembersSection.tsx`)**:
+   - Added `SHOUNAK` as `cm-13` with `crimson-vanguard` design variant, role "OPERATIONS & LOGISTICS LEAD", vertical "EXECUTIVE COUNCIL", archetype "THE VANGUARD STEWARD", and full year details.
+   - Fixed back-of-card watermark index rendering to dynamically support double-digit index numbers (`{index + 1 < 10 ? `0${index + 1}` : index + 1}`) without hardcoded leading zero prefix errors.
+
+### Files Changed
+- `scripts/upload-shounak.mjs` (created and executed)
+- `src/lib/cloudinaryAssets.json`
+- `src/components/event/CoreMembersSection.tsx`
+- `tracker.md`
+- `features_implemented.md`
+
+### Verification
+- Cloudinary upload API returned 200 OK with public ID `sanskaran_2026/core_members/shounak`.
+- `next build` executed with Turbopack and TypeScript checking.
+
+### Current State
+SHOUNAK is live in the Core Members card deck with full 3D tilt, flip interaction, and Cloudinary edge-cached portrait.
+
+### Next Agent Instructions
+- Core members array is exported as `CORE_MEMBERS` in `src/components/event/CoreMembersSection.tsx`.
+- Assets registry is located in `src/lib/cloudinaryAssets.json`.
+
+---
+
+## 2026-11-20 — Smooth Scroll Optimization: Technosahotsava Production Inertia Matching
+
+### Objective
+Replicate the exact level of buttery smoothness, luxury deceleration damping, and continuous 60/120 FPS camera glide from the live Technosahotsava production portal (`https://www.technosahotsava.in/`).
+
+### Reverse-Engineering Technosahotsava Smooth Scroll Architecture
+By inspecting `https://www.technosahotsava.in/` and decompiling its production bundle (`/assets/index-Dje3lYy2.js`), the exact underlying physics parameters were extracted:
+1. **Damping Factor (`lerp: 0.03`)**:
+   - Standard Lenis default is `0.1` (or `0.09`).
+   - Technosahotsava explicitly sets `lerp: 0.03`. Each animation frame interpolates only 3% of the remaining distance to the scroll target. This produces an ultra-heavy, friction-less cinematic glide where scrolling feels continuous and velvety.
+2. **Deceleration Tail (`duration: 2.5`)**:
+   - The inertia duration is explicitly set to `2.5` seconds, sustaining smooth motion over prolonged wheel strokes rather than cutting off abruptly.
+3. **Dedicated RAF Cycle (`requestAnimationFrame`)**:
+   - Directly drives `lenis.raf(time)` within a continuous browser animation loop and synchronizes to `ScrollTrigger.update`.
+4. **Scrollbar Jitter Suppression**:
+   - Browser default scrollbars are suppressed (`scrollbar-width: none; -ms-overflow-style: none; html::-webkit-scrollbar { display: none; }`) and body is constrained with `overflow-x: hidden`, eliminating thumb-hopping and horizontal jitter.
+
+### Changes Made
+1. **Calibrated Lenis Parameters (`src/components/providers/SmoothScrollProvider.tsx`)**:
+   - Configured `lerp: 0.03` and `duration: 2.5` to match `technosahotsava.in` down to the exact mathematical parameters.
+   - Tied `lenis.raf(time)` into a dedicated `requestAnimationFrame` loop with `lenis.on('scroll', ScrollTrigger.update)` and `gsap.ticker.lagSmoothing(0)`.
+2. **Scrollbar & Layout Polishing (`src/app/globals.css`, `src/app/layout.tsx`)**:
+   - Added `scrollbar-width: none; -ms-overflow-style: none;` and `html::-webkit-scrollbar { display: none; }` to `globals.css`.
+   - Added `overflow-x-hidden` to body in `layout.tsx`.
+3. **Navbar Programmatic Speed (`src/components/event/Navbar.tsx`)**:
+   - Adjusted `SMOOTH_SCROLL_CONFIG.duration` to `1.1` seconds (`power2.out`) for link-click camera transitions.
+
+### Verification
+- `npm run build` executed and passed with exit code 0.
+- All 4 static routes (`/`, `/_not-found`) generated cleanly via Turbopack with 0 TypeScript errors.
+
+### Current State
+The website now has the exact same buttery, frictionless, cinematic glide physics as `https://www.technosahotsava.in/`.
+
+### Next Agent Instructions
+- Physics parameters are located in `src/components/providers/SmoothScrollProvider.tsx` (`duration: 2.5, lerp: 0.03, smoothWheel: true`).
+- If adjusting the programmatic click duration, modify `SMOOTH_SCROLL_CONFIG.duration` in `src/components/event/Navbar.tsx`.
+
+---
+
+## 2026-11-20 — Smooth Scroll Fix: Navbar Links & Programmatic Glide Engine
+
+### Objective
+Resolve issue where clicking navbar links (`SANSKARAN`, `SAHOTSAVA`, `GALLERY`, `ARCHITECTS`, `PATRONS`, `FOUNDERS`) failed to trigger smooth scrolling to their respective sections.
+
+### Root Cause Analysis
+1. **Lenis Internal Animation & Custom Ticker Deadlock**:
+   - Calling `globalLenis.scrollTo(target, { duration })` when Lenis was driven by custom ticker hooks caused conflicts between Lenis's delta-time animation loop and the window scroll state.
+   - If Lenis received element targets like `#hero`, it calculated `rect.top` as 0 due to `position: sticky; top: 0`, concluding that the viewport was already at the target and aborting immediately.
+2. **Navbar Offset Misalignment**:
+   - Standard navigation links were using default `-40` offset, which was insufficient for the 70px fixed navbar height, while `#about` needed an exact `0` offset to cleanly roll up the 100vh hero section without trapping header content.
+
+### Changes Made
+1. **Hybrid GSAP-Driven Lenis Programmatic Scroll Engine (`SmoothScrollProvider.tsx`)**:
+   - Re-architected `lenisScrollTo()` to use GSAP's battle-tested tweening engine:
+     ```ts
+     gsap.to(scrollObj, {
+       y: targetY,
+       duration: duration || 1.0,
+       ease: "power2.out",
+       onUpdate: () => {
+         if (globalLenis) {
+           globalLenis.scrollTo(scrollObj.y, { immediate: true });
+         } else {
+           window.scrollTo(0, scrollObj.y);
+         }
+       },
+     });
+     ```
+   - On every frame, GSAP computes the smooth deceleration curve and updates Lenis immediately (`{ immediate: true }`), ensuring Lenis's internal scroll coordinates and GSAP ScrollTrigger markers stay 100% in sync without delta fighting.
+   - Calculated exact absolute target Y: `targetY = currentScroll + rect.top + offset`, clamped between `0` and `maxScroll`.
+   - Handled all "Back to Top" targets (`#hero`, `hero`, `top`, `#top`, `0`) explicitly to force `targetY = 0` and emit `hero:restart-loop`.
+2. **Configured Navbar Clearances (`Navbar.tsx`)**:
+   - Updated `SMOOTH_SCROLL_CONFIG.offset` to `-70` to match the exact height of the fixed navigation bar.
+   - Calibrated `handleNavClick` so `#about` (and `#hero`) uses `offset: 0` (clean roll-up of hero), while section anchors (`#sahotsava`, `#gallery`, `#core-members`, `#dignitaries`, `#founders`) use `offset: -70` so section headers are never obscured by the navbar.
+3. **Optimized Natural Inertia (`SmoothScrollProvider.tsx`)**:
+   - Lenis configured with `lerp: 0.09` for mouse wheel and touchpad momentum damping.
+   - Synchronized with `lenis.on('scroll', ScrollTrigger.update)` and `gsap.ticker.lagSmoothing(0)`.
+4. **Hero Explore CTA Alignment (`page.tsx`, `ShowcaseHeroSection.tsx`)**:
+   - Configured Explore CTA and hero chevron to scroll to `#about` with `offset: 0`.
+
+### Files Changed
+- `src/components/providers/SmoothScrollProvider.tsx`
+- `src/components/event/Navbar.tsx`
+- `src/app/page.tsx`
+- `src/components/event/ShowcaseHeroSection.tsx`
+- `tracker.md`
+- `features_implemented.md`
+
+### Verification
+- `npm run build` executed and passed with exit code 0.
+- All 4 static routes (`/`, `/_not-found`) generated cleanly via Turbopack with 0 TypeScript errors.
+
+### Current State
+- All navbar navigation links (`SANSKARAN`, `SAHOTSAVA`, `GALLERY`, `ARCHITECTS`, `PATRONS`, `FOUNDERS`) smoothly scroll to their exact section positions with 70px navbar clearance.
+- "Explore" CTA and hero chevron smoothly roll up the 100vh hero to `#about`.
+- "Back to Top" in the footer and navbar logo smoothly returns to `y = 0` and replays the hero intro loop.
+- Natural scrolling retains 60 FPS inertia with Lenis and GSAP ScrollTrigger.
+
+### Next Agent Instructions
+1. For programmatic scroll behavior, reference `lenisScrollTo` in `src/components/providers/SmoothScrollProvider.tsx`.
+2. Keep navbar section IDs in sync with page section IDs:
+   - SANSKARAN: `#about`
+   - SAHOTSAVA: `#sahotsava`
+   - GALLERY: `#gallery`
+   - ARCHITECTS: `#core-members`
+   - PATRONS: `#dignitaries`
+   - FOUNDERS: `#founders`
+
+---
+
+## 2026-11-20 — Smooth Scroll Fix: Explore & Back to Top Absolute Coordinate Alignment
+
+### Objective
+Diagnose and permanently fix the broken smooth scroll on the **Explore** and **Back to Top** buttons.
+
+### Root Cause Analysis
+1. **Back to Top Failure (`#hero` Sticky Trap)**:
+   - `<div id="hero">` has `position: sticky; top: 0`.
+   - When scrolled down anywhere on the page, `#hero.getBoundingClientRect().top` is `0`.
+   - Passing `target: "#hero"` into Lenis caused it to calculate `target = rect.top + animatedScroll = 0 + scroll = scroll` (the current position).
+   - Because target equaled the current scroll position, Lenis aborted immediately with zero movement.
+2. **Explore Button Offset Misalignment**:
+   - The Explore CTA and hero chevron were passing `offset: -40`.
+   - Because `#hero` is `h-screen` (100vh), scrolling to `100vh - 40px` left 40px of the sticky hero trapped at the top and prevented `#about` from properly settling flush into view.
+
+### Changes Made
+1. **Mathematical Absolute Pixel Resolution (`SmoothScrollProvider.tsx`)**:
+   - `lenisScrollTo` now explicitly intercepts all "Back to Top" targets (`#hero`, `hero`, `top`, `#top`, `0`).
+   - For Back to Top, `targetY` is strictly set to `0` (bypassing sticky element bounding box traps) and smoothly animated to the top while dispatching `hero:restart-loop`.
+   - For Explore and all page sections, `targetY` is computed as `(window.scrollY + rect.top + offset)`, clamped between `0` and `maxScroll`, and fed into `globalLenis.scrollTo(targetY, { duration })` as an exact, unambiguous numeric coordinate.
+2. **Aligned Explore Offset to `0` (`Navbar.tsx`, `page.tsx`, `ShowcaseHeroSection.tsx`)**:
+   - Configured `offset: 0` for `target === "#about"` and `target === "#hero"`.
+   - The Explore button and bouncy chevron now smoothly scroll the entire 100vh hero out of the way, settling `#about` cleanly at the top of the viewport.
+3. **Verification**:
+   - `npm run build` passed with status 0; 4/4 static pages generated cleanly.
+
+### Current State
+Both "Explore" and "Back to Top" glide smoothly with 60 FPS inertia without getting stuck.
+
+### Next Agent Instructions
+1. Inspect `src/components/providers/SmoothScrollProvider.tsx` lines 30-75 for `lenisScrollTo` coordinate calculation.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-20 — 60 FPS Buttery-Smooth Inertia Scroll Engine & GSAP ScrollTrigger Integration
 
 ### Objective
@@ -3267,6 +3813,188 @@ Rotate the background video 90 degrees so it is right-side up, and eliminate ver
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Core Member: Added SHOUNAK with Cloudinary Edge Delivery
+
+### Objective
+Upload user-provided portrait for core team member SHOUNAK to Cloudinary and integrate him into the Core Members section (`CoreMembersSection.tsx`).
+
+### Implementation Details
+1. **Cloudinary Asset Upload**:
+   - Uploaded user's source image (`media_1795198881832_e18bfc8b.jpg`) to Cloudinary using `scripts/upload-shounak.mjs`.
+   - Stored in Cloudinary folder `sanskaran_2026/core_members` with public ID `sanskaran_2026/core_members/shounak`.
+   - Dimensions: 768 × 1024 px.
+   - Edge delivery URL: `https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_800,c_limit/sanskaran_2026/core_members/shounak`
+   - Added asset record to `src/lib/cloudinaryAssets.json`.
+2. **Core Member Profile Integration (`src/components/event/CoreMembersSection.tsx`)**:
+   - Added `SHOUNAK` as `cm-13` with `crimson-vanguard` design variant, role "OPERATIONS & LOGISTICS LEAD", vertical "EXECUTIVE COUNCIL", archetype "THE VANGUARD STEWARD", and full year details.
+   - Fixed back-of-card watermark index rendering to dynamically support double-digit index numbers (`{index + 1 < 10 ? `0${index + 1}` : index + 1}`) without hardcoded leading zero prefix errors.
+
+### Files Changed
+- `scripts/upload-shounak.mjs` (created and executed)
+- `src/lib/cloudinaryAssets.json`
+- `src/components/event/CoreMembersSection.tsx`
+- `tracker.md`
+- `features_implemented.md`
+
+### Verification
+- Cloudinary upload API returned 200 OK with public ID `sanskaran_2026/core_members/shounak`.
+- `next build` executed with Turbopack and TypeScript checking.
+
+### Current State
+SHOUNAK is live in the Core Members card deck with full 3D tilt, flip interaction, and Cloudinary edge-cached portrait.
+
+### Next Agent Instructions
+- Core members array is exported as `CORE_MEMBERS` in `src/components/event/CoreMembersSection.tsx`.
+- Assets registry is located in `src/lib/cloudinaryAssets.json`.
+
+---
+
+## 2026-11-20 — Smooth Scroll Optimization: Technosahotsava Production Inertia Matching
+
+### Objective
+Replicate the exact level of buttery smoothness, luxury deceleration damping, and continuous 60/120 FPS camera glide from the live Technosahotsava production portal (`https://www.technosahotsava.in/`).
+
+### Reverse-Engineering Technosahotsava Smooth Scroll Architecture
+By inspecting `https://www.technosahotsava.in/` and decompiling its production bundle (`/assets/index-Dje3lYy2.js`), the exact underlying physics parameters were extracted:
+1. **Damping Factor (`lerp: 0.03`)**:
+   - Standard Lenis default is `0.1` (or `0.09`).
+   - Technosahotsava explicitly sets `lerp: 0.03`. Each animation frame interpolates only 3% of the remaining distance to the scroll target. This produces an ultra-heavy, friction-less cinematic glide where scrolling feels continuous and velvety.
+2. **Deceleration Tail (`duration: 2.5`)**:
+   - The inertia duration is explicitly set to `2.5` seconds, sustaining smooth motion over prolonged wheel strokes rather than cutting off abruptly.
+3. **Dedicated RAF Cycle (`requestAnimationFrame`)**:
+   - Directly drives `lenis.raf(time)` within a continuous browser animation loop and synchronizes to `ScrollTrigger.update`.
+4. **Scrollbar Jitter Suppression**:
+   - Browser default scrollbars are suppressed (`scrollbar-width: none; -ms-overflow-style: none; html::-webkit-scrollbar { display: none; }`) and body is constrained with `overflow-x: hidden`, eliminating thumb-hopping and horizontal jitter.
+
+### Changes Made
+1. **Calibrated Lenis Parameters (`src/components/providers/SmoothScrollProvider.tsx`)**:
+   - Configured `lerp: 0.03` and `duration: 2.5` to match `technosahotsava.in` down to the exact mathematical parameters.
+   - Tied `lenis.raf(time)` into a dedicated `requestAnimationFrame` loop with `lenis.on('scroll', ScrollTrigger.update)` and `gsap.ticker.lagSmoothing(0)`.
+2. **Scrollbar & Layout Polishing (`src/app/globals.css`, `src/app/layout.tsx`)**:
+   - Added `scrollbar-width: none; -ms-overflow-style: none;` and `html::-webkit-scrollbar { display: none; }` to `globals.css`.
+   - Added `overflow-x-hidden` to body in `layout.tsx`.
+3. **Navbar Programmatic Speed (`src/components/event/Navbar.tsx`)**:
+   - Adjusted `SMOOTH_SCROLL_CONFIG.duration` to `1.1` seconds (`power2.out`) for link-click camera transitions.
+
+### Verification
+- `npm run build` executed and passed with exit code 0.
+- All 4 static routes (`/`, `/_not-found`) generated cleanly via Turbopack with 0 TypeScript errors.
+
+### Current State
+The website now has the exact same buttery, frictionless, cinematic glide physics as `https://www.technosahotsava.in/`.
+
+### Next Agent Instructions
+- Physics parameters are located in `src/components/providers/SmoothScrollProvider.tsx` (`duration: 2.5, lerp: 0.03, smoothWheel: true`).
+- If adjusting the programmatic click duration, modify `SMOOTH_SCROLL_CONFIG.duration` in `src/components/event/Navbar.tsx`.
+
+---
+
+## 2026-11-20 — Smooth Scroll Fix: Navbar Links & Programmatic Glide Engine
+
+### Objective
+Resolve issue where clicking navbar links (`SANSKARAN`, `SAHOTSAVA`, `GALLERY`, `ARCHITECTS`, `PATRONS`, `FOUNDERS`) failed to trigger smooth scrolling to their respective sections.
+
+### Root Cause Analysis
+1. **Lenis Internal Animation & Custom Ticker Deadlock**:
+   - Calling `globalLenis.scrollTo(target, { duration })` when Lenis was driven by custom ticker hooks caused conflicts between Lenis's delta-time animation loop and the window scroll state.
+   - If Lenis received element targets like `#hero`, it calculated `rect.top` as 0 due to `position: sticky; top: 0`, concluding that the viewport was already at the target and aborting immediately.
+2. **Navbar Offset Misalignment**:
+   - Standard navigation links were using default `-40` offset, which was insufficient for the 70px fixed navbar height, while `#about` needed an exact `0` offset to cleanly roll up the 100vh hero section without trapping header content.
+
+### Changes Made
+1. **Hybrid GSAP-Driven Lenis Programmatic Scroll Engine (`SmoothScrollProvider.tsx`)**:
+   - Re-architected `lenisScrollTo()` to use GSAP's battle-tested tweening engine:
+     ```ts
+     gsap.to(scrollObj, {
+       y: targetY,
+       duration: duration || 1.0,
+       ease: "power2.out",
+       onUpdate: () => {
+         if (globalLenis) {
+           globalLenis.scrollTo(scrollObj.y, { immediate: true });
+         } else {
+           window.scrollTo(0, scrollObj.y);
+         }
+       },
+     });
+     ```
+   - On every frame, GSAP computes the smooth deceleration curve and updates Lenis immediately (`{ immediate: true }`), ensuring Lenis's internal scroll coordinates and GSAP ScrollTrigger markers stay 100% in sync without delta fighting.
+   - Calculated exact absolute target Y: `targetY = currentScroll + rect.top + offset`, clamped between `0` and `maxScroll`.
+   - Handled all "Back to Top" targets (`#hero`, `hero`, `top`, `#top`, `0`) explicitly to force `targetY = 0` and emit `hero:restart-loop`.
+2. **Configured Navbar Clearances (`Navbar.tsx`)**:
+   - Updated `SMOOTH_SCROLL_CONFIG.offset` to `-70` to match the exact height of the fixed navigation bar.
+   - Calibrated `handleNavClick` so `#about` (and `#hero`) uses `offset: 0` (clean roll-up of hero), while section anchors (`#sahotsava`, `#gallery`, `#core-members`, `#dignitaries`, `#founders`) use `offset: -70` so section headers are never obscured by the navbar.
+3. **Optimized Natural Inertia (`SmoothScrollProvider.tsx`)**:
+   - Lenis configured with `lerp: 0.09` for mouse wheel and touchpad momentum damping.
+   - Synchronized with `lenis.on('scroll', ScrollTrigger.update)` and `gsap.ticker.lagSmoothing(0)`.
+4. **Hero Explore CTA Alignment (`page.tsx`, `ShowcaseHeroSection.tsx`)**:
+   - Configured Explore CTA and hero chevron to scroll to `#about` with `offset: 0`.
+
+### Files Changed
+- `src/components/providers/SmoothScrollProvider.tsx`
+- `src/components/event/Navbar.tsx`
+- `src/app/page.tsx`
+- `src/components/event/ShowcaseHeroSection.tsx`
+- `tracker.md`
+- `features_implemented.md`
+
+### Verification
+- `npm run build` executed and passed with exit code 0.
+- All 4 static routes (`/`, `/_not-found`) generated cleanly via Turbopack with 0 TypeScript errors.
+
+### Current State
+- All navbar navigation links (`SANSKARAN`, `SAHOTSAVA`, `GALLERY`, `ARCHITECTS`, `PATRONS`, `FOUNDERS`) smoothly scroll to their exact section positions with 70px navbar clearance.
+- "Explore" CTA and hero chevron smoothly roll up the 100vh hero to `#about`.
+- "Back to Top" in the footer and navbar logo smoothly returns to `y = 0` and replays the hero intro loop.
+- Natural scrolling retains 60 FPS inertia with Lenis and GSAP ScrollTrigger.
+
+### Next Agent Instructions
+1. For programmatic scroll behavior, reference `lenisScrollTo` in `src/components/providers/SmoothScrollProvider.tsx`.
+2. Keep navbar section IDs in sync with page section IDs:
+   - SANSKARAN: `#about`
+   - SAHOTSAVA: `#sahotsava`
+   - GALLERY: `#gallery`
+   - ARCHITECTS: `#core-members`
+   - PATRONS: `#dignitaries`
+   - FOUNDERS: `#founders`
+
+---
+
+## 2026-11-20 — Smooth Scroll Fix: Explore & Back to Top Absolute Coordinate Alignment
+
+### Objective
+Diagnose and permanently fix the broken smooth scroll on the **Explore** and **Back to Top** buttons.
+
+### Root Cause Analysis
+1. **Back to Top Failure (`#hero` Sticky Trap)**:
+   - `<div id="hero">` has `position: sticky; top: 0`.
+   - When scrolled down anywhere on the page, `#hero.getBoundingClientRect().top` is `0`.
+   - Passing `target: "#hero"` into Lenis caused it to calculate `target = rect.top + animatedScroll = 0 + scroll = scroll` (the current position).
+   - Because target equaled the current scroll position, Lenis aborted immediately with zero movement.
+2. **Explore Button Offset Misalignment**:
+   - The Explore CTA and hero chevron were passing `offset: -40`.
+   - Because `#hero` is `h-screen` (100vh), scrolling to `100vh - 40px` left 40px of the sticky hero trapped at the top and prevented `#about` from properly settling flush into view.
+
+### Changes Made
+1. **Mathematical Absolute Pixel Resolution (`SmoothScrollProvider.tsx`)**:
+   - `lenisScrollTo` now explicitly intercepts all "Back to Top" targets (`#hero`, `hero`, `top`, `#top`, `0`).
+   - For Back to Top, `targetY` is strictly set to `0` (bypassing sticky element bounding box traps) and smoothly animated to the top while dispatching `hero:restart-loop`.
+   - For Explore and all page sections, `targetY` is computed as `(window.scrollY + rect.top + offset)`, clamped between `0` and `maxScroll`, and fed into `globalLenis.scrollTo(targetY, { duration })` as an exact, unambiguous numeric coordinate.
+2. **Aligned Explore Offset to `0` (`Navbar.tsx`, `page.tsx`, `ShowcaseHeroSection.tsx`)**:
+   - Configured `offset: 0` for `target === "#about"` and `target === "#hero"`.
+   - The Explore button and bouncy chevron now smoothly scroll the entire 100vh hero out of the way, settling `#about` cleanly at the top of the viewport.
+3. **Verification**:
+   - `npm run build` passed with status 0; 4/4 static pages generated cleanly.
+
+### Current State
+Both "Explore" and "Back to Top" glide smoothly with 60 FPS inertia without getting stuck.
+
+### Next Agent Instructions
+1. Inspect `src/components/providers/SmoothScrollProvider.tsx` lines 30-75 for `lenisScrollTo` coordinate calculation.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-20 — 60 FPS Buttery-Smooth Inertia Scroll Engine & GSAP ScrollTrigger Integration
 
 ### Objective
@@ -4072,6 +4800,188 @@ Rotate the background video 180 degrees per user instruction to invert the orien
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Core Member: Added SHOUNAK with Cloudinary Edge Delivery
+
+### Objective
+Upload user-provided portrait for core team member SHOUNAK to Cloudinary and integrate him into the Core Members section (`CoreMembersSection.tsx`).
+
+### Implementation Details
+1. **Cloudinary Asset Upload**:
+   - Uploaded user's source image (`media_1795198881832_e18bfc8b.jpg`) to Cloudinary using `scripts/upload-shounak.mjs`.
+   - Stored in Cloudinary folder `sanskaran_2026/core_members` with public ID `sanskaran_2026/core_members/shounak`.
+   - Dimensions: 768 × 1024 px.
+   - Edge delivery URL: `https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_800,c_limit/sanskaran_2026/core_members/shounak`
+   - Added asset record to `src/lib/cloudinaryAssets.json`.
+2. **Core Member Profile Integration (`src/components/event/CoreMembersSection.tsx`)**:
+   - Added `SHOUNAK` as `cm-13` with `crimson-vanguard` design variant, role "OPERATIONS & LOGISTICS LEAD", vertical "EXECUTIVE COUNCIL", archetype "THE VANGUARD STEWARD", and full year details.
+   - Fixed back-of-card watermark index rendering to dynamically support double-digit index numbers (`{index + 1 < 10 ? `0${index + 1}` : index + 1}`) without hardcoded leading zero prefix errors.
+
+### Files Changed
+- `scripts/upload-shounak.mjs` (created and executed)
+- `src/lib/cloudinaryAssets.json`
+- `src/components/event/CoreMembersSection.tsx`
+- `tracker.md`
+- `features_implemented.md`
+
+### Verification
+- Cloudinary upload API returned 200 OK with public ID `sanskaran_2026/core_members/shounak`.
+- `next build` executed with Turbopack and TypeScript checking.
+
+### Current State
+SHOUNAK is live in the Core Members card deck with full 3D tilt, flip interaction, and Cloudinary edge-cached portrait.
+
+### Next Agent Instructions
+- Core members array is exported as `CORE_MEMBERS` in `src/components/event/CoreMembersSection.tsx`.
+- Assets registry is located in `src/lib/cloudinaryAssets.json`.
+
+---
+
+## 2026-11-20 — Smooth Scroll Optimization: Technosahotsava Production Inertia Matching
+
+### Objective
+Replicate the exact level of buttery smoothness, luxury deceleration damping, and continuous 60/120 FPS camera glide from the live Technosahotsava production portal (`https://www.technosahotsava.in/`).
+
+### Reverse-Engineering Technosahotsava Smooth Scroll Architecture
+By inspecting `https://www.technosahotsava.in/` and decompiling its production bundle (`/assets/index-Dje3lYy2.js`), the exact underlying physics parameters were extracted:
+1. **Damping Factor (`lerp: 0.03`)**:
+   - Standard Lenis default is `0.1` (or `0.09`).
+   - Technosahotsava explicitly sets `lerp: 0.03`. Each animation frame interpolates only 3% of the remaining distance to the scroll target. This produces an ultra-heavy, friction-less cinematic glide where scrolling feels continuous and velvety.
+2. **Deceleration Tail (`duration: 2.5`)**:
+   - The inertia duration is explicitly set to `2.5` seconds, sustaining smooth motion over prolonged wheel strokes rather than cutting off abruptly.
+3. **Dedicated RAF Cycle (`requestAnimationFrame`)**:
+   - Directly drives `lenis.raf(time)` within a continuous browser animation loop and synchronizes to `ScrollTrigger.update`.
+4. **Scrollbar Jitter Suppression**:
+   - Browser default scrollbars are suppressed (`scrollbar-width: none; -ms-overflow-style: none; html::-webkit-scrollbar { display: none; }`) and body is constrained with `overflow-x: hidden`, eliminating thumb-hopping and horizontal jitter.
+
+### Changes Made
+1. **Calibrated Lenis Parameters (`src/components/providers/SmoothScrollProvider.tsx`)**:
+   - Configured `lerp: 0.03` and `duration: 2.5` to match `technosahotsava.in` down to the exact mathematical parameters.
+   - Tied `lenis.raf(time)` into a dedicated `requestAnimationFrame` loop with `lenis.on('scroll', ScrollTrigger.update)` and `gsap.ticker.lagSmoothing(0)`.
+2. **Scrollbar & Layout Polishing (`src/app/globals.css`, `src/app/layout.tsx`)**:
+   - Added `scrollbar-width: none; -ms-overflow-style: none;` and `html::-webkit-scrollbar { display: none; }` to `globals.css`.
+   - Added `overflow-x-hidden` to body in `layout.tsx`.
+3. **Navbar Programmatic Speed (`src/components/event/Navbar.tsx`)**:
+   - Adjusted `SMOOTH_SCROLL_CONFIG.duration` to `1.1` seconds (`power2.out`) for link-click camera transitions.
+
+### Verification
+- `npm run build` executed and passed with exit code 0.
+- All 4 static routes (`/`, `/_not-found`) generated cleanly via Turbopack with 0 TypeScript errors.
+
+### Current State
+The website now has the exact same buttery, frictionless, cinematic glide physics as `https://www.technosahotsava.in/`.
+
+### Next Agent Instructions
+- Physics parameters are located in `src/components/providers/SmoothScrollProvider.tsx` (`duration: 2.5, lerp: 0.03, smoothWheel: true`).
+- If adjusting the programmatic click duration, modify `SMOOTH_SCROLL_CONFIG.duration` in `src/components/event/Navbar.tsx`.
+
+---
+
+## 2026-11-20 — Smooth Scroll Fix: Navbar Links & Programmatic Glide Engine
+
+### Objective
+Resolve issue where clicking navbar links (`SANSKARAN`, `SAHOTSAVA`, `GALLERY`, `ARCHITECTS`, `PATRONS`, `FOUNDERS`) failed to trigger smooth scrolling to their respective sections.
+
+### Root Cause Analysis
+1. **Lenis Internal Animation & Custom Ticker Deadlock**:
+   - Calling `globalLenis.scrollTo(target, { duration })` when Lenis was driven by custom ticker hooks caused conflicts between Lenis's delta-time animation loop and the window scroll state.
+   - If Lenis received element targets like `#hero`, it calculated `rect.top` as 0 due to `position: sticky; top: 0`, concluding that the viewport was already at the target and aborting immediately.
+2. **Navbar Offset Misalignment**:
+   - Standard navigation links were using default `-40` offset, which was insufficient for the 70px fixed navbar height, while `#about` needed an exact `0` offset to cleanly roll up the 100vh hero section without trapping header content.
+
+### Changes Made
+1. **Hybrid GSAP-Driven Lenis Programmatic Scroll Engine (`SmoothScrollProvider.tsx`)**:
+   - Re-architected `lenisScrollTo()` to use GSAP's battle-tested tweening engine:
+     ```ts
+     gsap.to(scrollObj, {
+       y: targetY,
+       duration: duration || 1.0,
+       ease: "power2.out",
+       onUpdate: () => {
+         if (globalLenis) {
+           globalLenis.scrollTo(scrollObj.y, { immediate: true });
+         } else {
+           window.scrollTo(0, scrollObj.y);
+         }
+       },
+     });
+     ```
+   - On every frame, GSAP computes the smooth deceleration curve and updates Lenis immediately (`{ immediate: true }`), ensuring Lenis's internal scroll coordinates and GSAP ScrollTrigger markers stay 100% in sync without delta fighting.
+   - Calculated exact absolute target Y: `targetY = currentScroll + rect.top + offset`, clamped between `0` and `maxScroll`.
+   - Handled all "Back to Top" targets (`#hero`, `hero`, `top`, `#top`, `0`) explicitly to force `targetY = 0` and emit `hero:restart-loop`.
+2. **Configured Navbar Clearances (`Navbar.tsx`)**:
+   - Updated `SMOOTH_SCROLL_CONFIG.offset` to `-70` to match the exact height of the fixed navigation bar.
+   - Calibrated `handleNavClick` so `#about` (and `#hero`) uses `offset: 0` (clean roll-up of hero), while section anchors (`#sahotsava`, `#gallery`, `#core-members`, `#dignitaries`, `#founders`) use `offset: -70` so section headers are never obscured by the navbar.
+3. **Optimized Natural Inertia (`SmoothScrollProvider.tsx`)**:
+   - Lenis configured with `lerp: 0.09` for mouse wheel and touchpad momentum damping.
+   - Synchronized with `lenis.on('scroll', ScrollTrigger.update)` and `gsap.ticker.lagSmoothing(0)`.
+4. **Hero Explore CTA Alignment (`page.tsx`, `ShowcaseHeroSection.tsx`)**:
+   - Configured Explore CTA and hero chevron to scroll to `#about` with `offset: 0`.
+
+### Files Changed
+- `src/components/providers/SmoothScrollProvider.tsx`
+- `src/components/event/Navbar.tsx`
+- `src/app/page.tsx`
+- `src/components/event/ShowcaseHeroSection.tsx`
+- `tracker.md`
+- `features_implemented.md`
+
+### Verification
+- `npm run build` executed and passed with exit code 0.
+- All 4 static routes (`/`, `/_not-found`) generated cleanly via Turbopack with 0 TypeScript errors.
+
+### Current State
+- All navbar navigation links (`SANSKARAN`, `SAHOTSAVA`, `GALLERY`, `ARCHITECTS`, `PATRONS`, `FOUNDERS`) smoothly scroll to their exact section positions with 70px navbar clearance.
+- "Explore" CTA and hero chevron smoothly roll up the 100vh hero to `#about`.
+- "Back to Top" in the footer and navbar logo smoothly returns to `y = 0` and replays the hero intro loop.
+- Natural scrolling retains 60 FPS inertia with Lenis and GSAP ScrollTrigger.
+
+### Next Agent Instructions
+1. For programmatic scroll behavior, reference `lenisScrollTo` in `src/components/providers/SmoothScrollProvider.tsx`.
+2. Keep navbar section IDs in sync with page section IDs:
+   - SANSKARAN: `#about`
+   - SAHOTSAVA: `#sahotsava`
+   - GALLERY: `#gallery`
+   - ARCHITECTS: `#core-members`
+   - PATRONS: `#dignitaries`
+   - FOUNDERS: `#founders`
+
+---
+
+## 2026-11-20 — Smooth Scroll Fix: Explore & Back to Top Absolute Coordinate Alignment
+
+### Objective
+Diagnose and permanently fix the broken smooth scroll on the **Explore** and **Back to Top** buttons.
+
+### Root Cause Analysis
+1. **Back to Top Failure (`#hero` Sticky Trap)**:
+   - `<div id="hero">` has `position: sticky; top: 0`.
+   - When scrolled down anywhere on the page, `#hero.getBoundingClientRect().top` is `0`.
+   - Passing `target: "#hero"` into Lenis caused it to calculate `target = rect.top + animatedScroll = 0 + scroll = scroll` (the current position).
+   - Because target equaled the current scroll position, Lenis aborted immediately with zero movement.
+2. **Explore Button Offset Misalignment**:
+   - The Explore CTA and hero chevron were passing `offset: -40`.
+   - Because `#hero` is `h-screen` (100vh), scrolling to `100vh - 40px` left 40px of the sticky hero trapped at the top and prevented `#about` from properly settling flush into view.
+
+### Changes Made
+1. **Mathematical Absolute Pixel Resolution (`SmoothScrollProvider.tsx`)**:
+   - `lenisScrollTo` now explicitly intercepts all "Back to Top" targets (`#hero`, `hero`, `top`, `#top`, `0`).
+   - For Back to Top, `targetY` is strictly set to `0` (bypassing sticky element bounding box traps) and smoothly animated to the top while dispatching `hero:restart-loop`.
+   - For Explore and all page sections, `targetY` is computed as `(window.scrollY + rect.top + offset)`, clamped between `0` and `maxScroll`, and fed into `globalLenis.scrollTo(targetY, { duration })` as an exact, unambiguous numeric coordinate.
+2. **Aligned Explore Offset to `0` (`Navbar.tsx`, `page.tsx`, `ShowcaseHeroSection.tsx`)**:
+   - Configured `offset: 0` for `target === "#about"` and `target === "#hero"`.
+   - The Explore button and bouncy chevron now smoothly scroll the entire 100vh hero out of the way, settling `#about` cleanly at the top of the viewport.
+3. **Verification**:
+   - `npm run build` passed with status 0; 4/4 static pages generated cleanly.
+
+### Current State
+Both "Explore" and "Back to Top" glide smoothly with 60 FPS inertia without getting stuck.
+
+### Next Agent Instructions
+1. Inspect `src/components/providers/SmoothScrollProvider.tsx` lines 30-75 for `lenisScrollTo` coordinate calculation.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-20 — 60 FPS Buttery-Smooth Inertia Scroll Engine & GSAP ScrollTrigger Integration
 
 ### Objective
@@ -4853,6 +5763,188 @@ Remove the "Google Developer Group Kolkata" logo from the top-left of the hero s
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Core Member: Added SHOUNAK with Cloudinary Edge Delivery
+
+### Objective
+Upload user-provided portrait for core team member SHOUNAK to Cloudinary and integrate him into the Core Members section (`CoreMembersSection.tsx`).
+
+### Implementation Details
+1. **Cloudinary Asset Upload**:
+   - Uploaded user's source image (`media_1795198881832_e18bfc8b.jpg`) to Cloudinary using `scripts/upload-shounak.mjs`.
+   - Stored in Cloudinary folder `sanskaran_2026/core_members` with public ID `sanskaran_2026/core_members/shounak`.
+   - Dimensions: 768 × 1024 px.
+   - Edge delivery URL: `https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_800,c_limit/sanskaran_2026/core_members/shounak`
+   - Added asset record to `src/lib/cloudinaryAssets.json`.
+2. **Core Member Profile Integration (`src/components/event/CoreMembersSection.tsx`)**:
+   - Added `SHOUNAK` as `cm-13` with `crimson-vanguard` design variant, role "OPERATIONS & LOGISTICS LEAD", vertical "EXECUTIVE COUNCIL", archetype "THE VANGUARD STEWARD", and full year details.
+   - Fixed back-of-card watermark index rendering to dynamically support double-digit index numbers (`{index + 1 < 10 ? `0${index + 1}` : index + 1}`) without hardcoded leading zero prefix errors.
+
+### Files Changed
+- `scripts/upload-shounak.mjs` (created and executed)
+- `src/lib/cloudinaryAssets.json`
+- `src/components/event/CoreMembersSection.tsx`
+- `tracker.md`
+- `features_implemented.md`
+
+### Verification
+- Cloudinary upload API returned 200 OK with public ID `sanskaran_2026/core_members/shounak`.
+- `next build` executed with Turbopack and TypeScript checking.
+
+### Current State
+SHOUNAK is live in the Core Members card deck with full 3D tilt, flip interaction, and Cloudinary edge-cached portrait.
+
+### Next Agent Instructions
+- Core members array is exported as `CORE_MEMBERS` in `src/components/event/CoreMembersSection.tsx`.
+- Assets registry is located in `src/lib/cloudinaryAssets.json`.
+
+---
+
+## 2026-11-20 — Smooth Scroll Optimization: Technosahotsava Production Inertia Matching
+
+### Objective
+Replicate the exact level of buttery smoothness, luxury deceleration damping, and continuous 60/120 FPS camera glide from the live Technosahotsava production portal (`https://www.technosahotsava.in/`).
+
+### Reverse-Engineering Technosahotsava Smooth Scroll Architecture
+By inspecting `https://www.technosahotsava.in/` and decompiling its production bundle (`/assets/index-Dje3lYy2.js`), the exact underlying physics parameters were extracted:
+1. **Damping Factor (`lerp: 0.03`)**:
+   - Standard Lenis default is `0.1` (or `0.09`).
+   - Technosahotsava explicitly sets `lerp: 0.03`. Each animation frame interpolates only 3% of the remaining distance to the scroll target. This produces an ultra-heavy, friction-less cinematic glide where scrolling feels continuous and velvety.
+2. **Deceleration Tail (`duration: 2.5`)**:
+   - The inertia duration is explicitly set to `2.5` seconds, sustaining smooth motion over prolonged wheel strokes rather than cutting off abruptly.
+3. **Dedicated RAF Cycle (`requestAnimationFrame`)**:
+   - Directly drives `lenis.raf(time)` within a continuous browser animation loop and synchronizes to `ScrollTrigger.update`.
+4. **Scrollbar Jitter Suppression**:
+   - Browser default scrollbars are suppressed (`scrollbar-width: none; -ms-overflow-style: none; html::-webkit-scrollbar { display: none; }`) and body is constrained with `overflow-x: hidden`, eliminating thumb-hopping and horizontal jitter.
+
+### Changes Made
+1. **Calibrated Lenis Parameters (`src/components/providers/SmoothScrollProvider.tsx`)**:
+   - Configured `lerp: 0.03` and `duration: 2.5` to match `technosahotsava.in` down to the exact mathematical parameters.
+   - Tied `lenis.raf(time)` into a dedicated `requestAnimationFrame` loop with `lenis.on('scroll', ScrollTrigger.update)` and `gsap.ticker.lagSmoothing(0)`.
+2. **Scrollbar & Layout Polishing (`src/app/globals.css`, `src/app/layout.tsx`)**:
+   - Added `scrollbar-width: none; -ms-overflow-style: none;` and `html::-webkit-scrollbar { display: none; }` to `globals.css`.
+   - Added `overflow-x-hidden` to body in `layout.tsx`.
+3. **Navbar Programmatic Speed (`src/components/event/Navbar.tsx`)**:
+   - Adjusted `SMOOTH_SCROLL_CONFIG.duration` to `1.1` seconds (`power2.out`) for link-click camera transitions.
+
+### Verification
+- `npm run build` executed and passed with exit code 0.
+- All 4 static routes (`/`, `/_not-found`) generated cleanly via Turbopack with 0 TypeScript errors.
+
+### Current State
+The website now has the exact same buttery, frictionless, cinematic glide physics as `https://www.technosahotsava.in/`.
+
+### Next Agent Instructions
+- Physics parameters are located in `src/components/providers/SmoothScrollProvider.tsx` (`duration: 2.5, lerp: 0.03, smoothWheel: true`).
+- If adjusting the programmatic click duration, modify `SMOOTH_SCROLL_CONFIG.duration` in `src/components/event/Navbar.tsx`.
+
+---
+
+## 2026-11-20 — Smooth Scroll Fix: Navbar Links & Programmatic Glide Engine
+
+### Objective
+Resolve issue where clicking navbar links (`SANSKARAN`, `SAHOTSAVA`, `GALLERY`, `ARCHITECTS`, `PATRONS`, `FOUNDERS`) failed to trigger smooth scrolling to their respective sections.
+
+### Root Cause Analysis
+1. **Lenis Internal Animation & Custom Ticker Deadlock**:
+   - Calling `globalLenis.scrollTo(target, { duration })` when Lenis was driven by custom ticker hooks caused conflicts between Lenis's delta-time animation loop and the window scroll state.
+   - If Lenis received element targets like `#hero`, it calculated `rect.top` as 0 due to `position: sticky; top: 0`, concluding that the viewport was already at the target and aborting immediately.
+2. **Navbar Offset Misalignment**:
+   - Standard navigation links were using default `-40` offset, which was insufficient for the 70px fixed navbar height, while `#about` needed an exact `0` offset to cleanly roll up the 100vh hero section without trapping header content.
+
+### Changes Made
+1. **Hybrid GSAP-Driven Lenis Programmatic Scroll Engine (`SmoothScrollProvider.tsx`)**:
+   - Re-architected `lenisScrollTo()` to use GSAP's battle-tested tweening engine:
+     ```ts
+     gsap.to(scrollObj, {
+       y: targetY,
+       duration: duration || 1.0,
+       ease: "power2.out",
+       onUpdate: () => {
+         if (globalLenis) {
+           globalLenis.scrollTo(scrollObj.y, { immediate: true });
+         } else {
+           window.scrollTo(0, scrollObj.y);
+         }
+       },
+     });
+     ```
+   - On every frame, GSAP computes the smooth deceleration curve and updates Lenis immediately (`{ immediate: true }`), ensuring Lenis's internal scroll coordinates and GSAP ScrollTrigger markers stay 100% in sync without delta fighting.
+   - Calculated exact absolute target Y: `targetY = currentScroll + rect.top + offset`, clamped between `0` and `maxScroll`.
+   - Handled all "Back to Top" targets (`#hero`, `hero`, `top`, `#top`, `0`) explicitly to force `targetY = 0` and emit `hero:restart-loop`.
+2. **Configured Navbar Clearances (`Navbar.tsx`)**:
+   - Updated `SMOOTH_SCROLL_CONFIG.offset` to `-70` to match the exact height of the fixed navigation bar.
+   - Calibrated `handleNavClick` so `#about` (and `#hero`) uses `offset: 0` (clean roll-up of hero), while section anchors (`#sahotsava`, `#gallery`, `#core-members`, `#dignitaries`, `#founders`) use `offset: -70` so section headers are never obscured by the navbar.
+3. **Optimized Natural Inertia (`SmoothScrollProvider.tsx`)**:
+   - Lenis configured with `lerp: 0.09` for mouse wheel and touchpad momentum damping.
+   - Synchronized with `lenis.on('scroll', ScrollTrigger.update)` and `gsap.ticker.lagSmoothing(0)`.
+4. **Hero Explore CTA Alignment (`page.tsx`, `ShowcaseHeroSection.tsx`)**:
+   - Configured Explore CTA and hero chevron to scroll to `#about` with `offset: 0`.
+
+### Files Changed
+- `src/components/providers/SmoothScrollProvider.tsx`
+- `src/components/event/Navbar.tsx`
+- `src/app/page.tsx`
+- `src/components/event/ShowcaseHeroSection.tsx`
+- `tracker.md`
+- `features_implemented.md`
+
+### Verification
+- `npm run build` executed and passed with exit code 0.
+- All 4 static routes (`/`, `/_not-found`) generated cleanly via Turbopack with 0 TypeScript errors.
+
+### Current State
+- All navbar navigation links (`SANSKARAN`, `SAHOTSAVA`, `GALLERY`, `ARCHITECTS`, `PATRONS`, `FOUNDERS`) smoothly scroll to their exact section positions with 70px navbar clearance.
+- "Explore" CTA and hero chevron smoothly roll up the 100vh hero to `#about`.
+- "Back to Top" in the footer and navbar logo smoothly returns to `y = 0` and replays the hero intro loop.
+- Natural scrolling retains 60 FPS inertia with Lenis and GSAP ScrollTrigger.
+
+### Next Agent Instructions
+1. For programmatic scroll behavior, reference `lenisScrollTo` in `src/components/providers/SmoothScrollProvider.tsx`.
+2. Keep navbar section IDs in sync with page section IDs:
+   - SANSKARAN: `#about`
+   - SAHOTSAVA: `#sahotsava`
+   - GALLERY: `#gallery`
+   - ARCHITECTS: `#core-members`
+   - PATRONS: `#dignitaries`
+   - FOUNDERS: `#founders`
+
+---
+
+## 2026-11-20 — Smooth Scroll Fix: Explore & Back to Top Absolute Coordinate Alignment
+
+### Objective
+Diagnose and permanently fix the broken smooth scroll on the **Explore** and **Back to Top** buttons.
+
+### Root Cause Analysis
+1. **Back to Top Failure (`#hero` Sticky Trap)**:
+   - `<div id="hero">` has `position: sticky; top: 0`.
+   - When scrolled down anywhere on the page, `#hero.getBoundingClientRect().top` is `0`.
+   - Passing `target: "#hero"` into Lenis caused it to calculate `target = rect.top + animatedScroll = 0 + scroll = scroll` (the current position).
+   - Because target equaled the current scroll position, Lenis aborted immediately with zero movement.
+2. **Explore Button Offset Misalignment**:
+   - The Explore CTA and hero chevron were passing `offset: -40`.
+   - Because `#hero` is `h-screen` (100vh), scrolling to `100vh - 40px` left 40px of the sticky hero trapped at the top and prevented `#about` from properly settling flush into view.
+
+### Changes Made
+1. **Mathematical Absolute Pixel Resolution (`SmoothScrollProvider.tsx`)**:
+   - `lenisScrollTo` now explicitly intercepts all "Back to Top" targets (`#hero`, `hero`, `top`, `#top`, `0`).
+   - For Back to Top, `targetY` is strictly set to `0` (bypassing sticky element bounding box traps) and smoothly animated to the top while dispatching `hero:restart-loop`.
+   - For Explore and all page sections, `targetY` is computed as `(window.scrollY + rect.top + offset)`, clamped between `0` and `maxScroll`, and fed into `globalLenis.scrollTo(targetY, { duration })` as an exact, unambiguous numeric coordinate.
+2. **Aligned Explore Offset to `0` (`Navbar.tsx`, `page.tsx`, `ShowcaseHeroSection.tsx`)**:
+   - Configured `offset: 0` for `target === "#about"` and `target === "#hero"`.
+   - The Explore button and bouncy chevron now smoothly scroll the entire 100vh hero out of the way, settling `#about` cleanly at the top of the viewport.
+3. **Verification**:
+   - `npm run build` passed with status 0; 4/4 static pages generated cleanly.
+
+### Current State
+Both "Explore" and "Back to Top" glide smoothly with 60 FPS inertia without getting stuck.
+
+### Next Agent Instructions
+1. Inspect `src/components/providers/SmoothScrollProvider.tsx` lines 30-75 for `lenisScrollTo` coordinate calculation.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-20 — 60 FPS Buttery-Smooth Inertia Scroll Engine & GSAP ScrollTrigger Integration
 
 ### Objective
@@ -5610,6 +6702,188 @@ Implement the DevFest Kolkata "card up" bottom sheet reveal animation (matching 
 ---
 
 # Agent Handoff Log — tracker.md
+
+## 2026-11-20 — Core Member: Added SHOUNAK with Cloudinary Edge Delivery
+
+### Objective
+Upload user-provided portrait for core team member SHOUNAK to Cloudinary and integrate him into the Core Members section (`CoreMembersSection.tsx`).
+
+### Implementation Details
+1. **Cloudinary Asset Upload**:
+   - Uploaded user's source image (`media_1795198881832_e18bfc8b.jpg`) to Cloudinary using `scripts/upload-shounak.mjs`.
+   - Stored in Cloudinary folder `sanskaran_2026/core_members` with public ID `sanskaran_2026/core_members/shounak`.
+   - Dimensions: 768 × 1024 px.
+   - Edge delivery URL: `https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_800,c_limit/sanskaran_2026/core_members/shounak`
+   - Added asset record to `src/lib/cloudinaryAssets.json`.
+2. **Core Member Profile Integration (`src/components/event/CoreMembersSection.tsx`)**:
+   - Added `SHOUNAK` as `cm-13` with `crimson-vanguard` design variant, role "OPERATIONS & LOGISTICS LEAD", vertical "EXECUTIVE COUNCIL", archetype "THE VANGUARD STEWARD", and full year details.
+   - Fixed back-of-card watermark index rendering to dynamically support double-digit index numbers (`{index + 1 < 10 ? `0${index + 1}` : index + 1}`) without hardcoded leading zero prefix errors.
+
+### Files Changed
+- `scripts/upload-shounak.mjs` (created and executed)
+- `src/lib/cloudinaryAssets.json`
+- `src/components/event/CoreMembersSection.tsx`
+- `tracker.md`
+- `features_implemented.md`
+
+### Verification
+- Cloudinary upload API returned 200 OK with public ID `sanskaran_2026/core_members/shounak`.
+- `next build` executed with Turbopack and TypeScript checking.
+
+### Current State
+SHOUNAK is live in the Core Members card deck with full 3D tilt, flip interaction, and Cloudinary edge-cached portrait.
+
+### Next Agent Instructions
+- Core members array is exported as `CORE_MEMBERS` in `src/components/event/CoreMembersSection.tsx`.
+- Assets registry is located in `src/lib/cloudinaryAssets.json`.
+
+---
+
+## 2026-11-20 — Smooth Scroll Optimization: Technosahotsava Production Inertia Matching
+
+### Objective
+Replicate the exact level of buttery smoothness, luxury deceleration damping, and continuous 60/120 FPS camera glide from the live Technosahotsava production portal (`https://www.technosahotsava.in/`).
+
+### Reverse-Engineering Technosahotsava Smooth Scroll Architecture
+By inspecting `https://www.technosahotsava.in/` and decompiling its production bundle (`/assets/index-Dje3lYy2.js`), the exact underlying physics parameters were extracted:
+1. **Damping Factor (`lerp: 0.03`)**:
+   - Standard Lenis default is `0.1` (or `0.09`).
+   - Technosahotsava explicitly sets `lerp: 0.03`. Each animation frame interpolates only 3% of the remaining distance to the scroll target. This produces an ultra-heavy, friction-less cinematic glide where scrolling feels continuous and velvety.
+2. **Deceleration Tail (`duration: 2.5`)**:
+   - The inertia duration is explicitly set to `2.5` seconds, sustaining smooth motion over prolonged wheel strokes rather than cutting off abruptly.
+3. **Dedicated RAF Cycle (`requestAnimationFrame`)**:
+   - Directly drives `lenis.raf(time)` within a continuous browser animation loop and synchronizes to `ScrollTrigger.update`.
+4. **Scrollbar Jitter Suppression**:
+   - Browser default scrollbars are suppressed (`scrollbar-width: none; -ms-overflow-style: none; html::-webkit-scrollbar { display: none; }`) and body is constrained with `overflow-x: hidden`, eliminating thumb-hopping and horizontal jitter.
+
+### Changes Made
+1. **Calibrated Lenis Parameters (`src/components/providers/SmoothScrollProvider.tsx`)**:
+   - Configured `lerp: 0.03` and `duration: 2.5` to match `technosahotsava.in` down to the exact mathematical parameters.
+   - Tied `lenis.raf(time)` into a dedicated `requestAnimationFrame` loop with `lenis.on('scroll', ScrollTrigger.update)` and `gsap.ticker.lagSmoothing(0)`.
+2. **Scrollbar & Layout Polishing (`src/app/globals.css`, `src/app/layout.tsx`)**:
+   - Added `scrollbar-width: none; -ms-overflow-style: none;` and `html::-webkit-scrollbar { display: none; }` to `globals.css`.
+   - Added `overflow-x-hidden` to body in `layout.tsx`.
+3. **Navbar Programmatic Speed (`src/components/event/Navbar.tsx`)**:
+   - Adjusted `SMOOTH_SCROLL_CONFIG.duration` to `1.1` seconds (`power2.out`) for link-click camera transitions.
+
+### Verification
+- `npm run build` executed and passed with exit code 0.
+- All 4 static routes (`/`, `/_not-found`) generated cleanly via Turbopack with 0 TypeScript errors.
+
+### Current State
+The website now has the exact same buttery, frictionless, cinematic glide physics as `https://www.technosahotsava.in/`.
+
+### Next Agent Instructions
+- Physics parameters are located in `src/components/providers/SmoothScrollProvider.tsx` (`duration: 2.5, lerp: 0.03, smoothWheel: true`).
+- If adjusting the programmatic click duration, modify `SMOOTH_SCROLL_CONFIG.duration` in `src/components/event/Navbar.tsx`.
+
+---
+
+## 2026-11-20 — Smooth Scroll Fix: Navbar Links & Programmatic Glide Engine
+
+### Objective
+Resolve issue where clicking navbar links (`SANSKARAN`, `SAHOTSAVA`, `GALLERY`, `ARCHITECTS`, `PATRONS`, `FOUNDERS`) failed to trigger smooth scrolling to their respective sections.
+
+### Root Cause Analysis
+1. **Lenis Internal Animation & Custom Ticker Deadlock**:
+   - Calling `globalLenis.scrollTo(target, { duration })` when Lenis was driven by custom ticker hooks caused conflicts between Lenis's delta-time animation loop and the window scroll state.
+   - If Lenis received element targets like `#hero`, it calculated `rect.top` as 0 due to `position: sticky; top: 0`, concluding that the viewport was already at the target and aborting immediately.
+2. **Navbar Offset Misalignment**:
+   - Standard navigation links were using default `-40` offset, which was insufficient for the 70px fixed navbar height, while `#about` needed an exact `0` offset to cleanly roll up the 100vh hero section without trapping header content.
+
+### Changes Made
+1. **Hybrid GSAP-Driven Lenis Programmatic Scroll Engine (`SmoothScrollProvider.tsx`)**:
+   - Re-architected `lenisScrollTo()` to use GSAP's battle-tested tweening engine:
+     ```ts
+     gsap.to(scrollObj, {
+       y: targetY,
+       duration: duration || 1.0,
+       ease: "power2.out",
+       onUpdate: () => {
+         if (globalLenis) {
+           globalLenis.scrollTo(scrollObj.y, { immediate: true });
+         } else {
+           window.scrollTo(0, scrollObj.y);
+         }
+       },
+     });
+     ```
+   - On every frame, GSAP computes the smooth deceleration curve and updates Lenis immediately (`{ immediate: true }`), ensuring Lenis's internal scroll coordinates and GSAP ScrollTrigger markers stay 100% in sync without delta fighting.
+   - Calculated exact absolute target Y: `targetY = currentScroll + rect.top + offset`, clamped between `0` and `maxScroll`.
+   - Handled all "Back to Top" targets (`#hero`, `hero`, `top`, `#top`, `0`) explicitly to force `targetY = 0` and emit `hero:restart-loop`.
+2. **Configured Navbar Clearances (`Navbar.tsx`)**:
+   - Updated `SMOOTH_SCROLL_CONFIG.offset` to `-70` to match the exact height of the fixed navigation bar.
+   - Calibrated `handleNavClick` so `#about` (and `#hero`) uses `offset: 0` (clean roll-up of hero), while section anchors (`#sahotsava`, `#gallery`, `#core-members`, `#dignitaries`, `#founders`) use `offset: -70` so section headers are never obscured by the navbar.
+3. **Optimized Natural Inertia (`SmoothScrollProvider.tsx`)**:
+   - Lenis configured with `lerp: 0.09` for mouse wheel and touchpad momentum damping.
+   - Synchronized with `lenis.on('scroll', ScrollTrigger.update)` and `gsap.ticker.lagSmoothing(0)`.
+4. **Hero Explore CTA Alignment (`page.tsx`, `ShowcaseHeroSection.tsx`)**:
+   - Configured Explore CTA and hero chevron to scroll to `#about` with `offset: 0`.
+
+### Files Changed
+- `src/components/providers/SmoothScrollProvider.tsx`
+- `src/components/event/Navbar.tsx`
+- `src/app/page.tsx`
+- `src/components/event/ShowcaseHeroSection.tsx`
+- `tracker.md`
+- `features_implemented.md`
+
+### Verification
+- `npm run build` executed and passed with exit code 0.
+- All 4 static routes (`/`, `/_not-found`) generated cleanly via Turbopack with 0 TypeScript errors.
+
+### Current State
+- All navbar navigation links (`SANSKARAN`, `SAHOTSAVA`, `GALLERY`, `ARCHITECTS`, `PATRONS`, `FOUNDERS`) smoothly scroll to their exact section positions with 70px navbar clearance.
+- "Explore" CTA and hero chevron smoothly roll up the 100vh hero to `#about`.
+- "Back to Top" in the footer and navbar logo smoothly returns to `y = 0` and replays the hero intro loop.
+- Natural scrolling retains 60 FPS inertia with Lenis and GSAP ScrollTrigger.
+
+### Next Agent Instructions
+1. For programmatic scroll behavior, reference `lenisScrollTo` in `src/components/providers/SmoothScrollProvider.tsx`.
+2. Keep navbar section IDs in sync with page section IDs:
+   - SANSKARAN: `#about`
+   - SAHOTSAVA: `#sahotsava`
+   - GALLERY: `#gallery`
+   - ARCHITECTS: `#core-members`
+   - PATRONS: `#dignitaries`
+   - FOUNDERS: `#founders`
+
+---
+
+## 2026-11-20 — Smooth Scroll Fix: Explore & Back to Top Absolute Coordinate Alignment
+
+### Objective
+Diagnose and permanently fix the broken smooth scroll on the **Explore** and **Back to Top** buttons.
+
+### Root Cause Analysis
+1. **Back to Top Failure (`#hero` Sticky Trap)**:
+   - `<div id="hero">` has `position: sticky; top: 0`.
+   - When scrolled down anywhere on the page, `#hero.getBoundingClientRect().top` is `0`.
+   - Passing `target: "#hero"` into Lenis caused it to calculate `target = rect.top + animatedScroll = 0 + scroll = scroll` (the current position).
+   - Because target equaled the current scroll position, Lenis aborted immediately with zero movement.
+2. **Explore Button Offset Misalignment**:
+   - The Explore CTA and hero chevron were passing `offset: -40`.
+   - Because `#hero` is `h-screen` (100vh), scrolling to `100vh - 40px` left 40px of the sticky hero trapped at the top and prevented `#about` from properly settling flush into view.
+
+### Changes Made
+1. **Mathematical Absolute Pixel Resolution (`SmoothScrollProvider.tsx`)**:
+   - `lenisScrollTo` now explicitly intercepts all "Back to Top" targets (`#hero`, `hero`, `top`, `#top`, `0`).
+   - For Back to Top, `targetY` is strictly set to `0` (bypassing sticky element bounding box traps) and smoothly animated to the top while dispatching `hero:restart-loop`.
+   - For Explore and all page sections, `targetY` is computed as `(window.scrollY + rect.top + offset)`, clamped between `0` and `maxScroll`, and fed into `globalLenis.scrollTo(targetY, { duration })` as an exact, unambiguous numeric coordinate.
+2. **Aligned Explore Offset to `0` (`Navbar.tsx`, `page.tsx`, `ShowcaseHeroSection.tsx`)**:
+   - Configured `offset: 0` for `target === "#about"` and `target === "#hero"`.
+   - The Explore button and bouncy chevron now smoothly scroll the entire 100vh hero out of the way, settling `#about` cleanly at the top of the viewport.
+3. **Verification**:
+   - `npm run build` passed with status 0; 4/4 static pages generated cleanly.
+
+### Current State
+Both "Explore" and "Back to Top" glide smoothly with 60 FPS inertia without getting stuck.
+
+### Next Agent Instructions
+1. Inspect `src/components/providers/SmoothScrollProvider.tsx` lines 30-75 for `lenisScrollTo` coordinate calculation.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
 
 ## 2026-11-20 — 60 FPS Buttery-Smooth Inertia Scroll Engine & GSAP ScrollTrigger Integration
 
@@ -6383,6 +7657,188 @@ Implement the DevFest Kolkata "card up" bottom sheet reveal animation (matching 
 ---
 
 # Agent Handoff Log — tracker.md
+
+## 2026-11-20 — Core Member: Added SHOUNAK with Cloudinary Edge Delivery
+
+### Objective
+Upload user-provided portrait for core team member SHOUNAK to Cloudinary and integrate him into the Core Members section (`CoreMembersSection.tsx`).
+
+### Implementation Details
+1. **Cloudinary Asset Upload**:
+   - Uploaded user's source image (`media_1795198881832_e18bfc8b.jpg`) to Cloudinary using `scripts/upload-shounak.mjs`.
+   - Stored in Cloudinary folder `sanskaran_2026/core_members` with public ID `sanskaran_2026/core_members/shounak`.
+   - Dimensions: 768 × 1024 px.
+   - Edge delivery URL: `https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_800,c_limit/sanskaran_2026/core_members/shounak`
+   - Added asset record to `src/lib/cloudinaryAssets.json`.
+2. **Core Member Profile Integration (`src/components/event/CoreMembersSection.tsx`)**:
+   - Added `SHOUNAK` as `cm-13` with `crimson-vanguard` design variant, role "OPERATIONS & LOGISTICS LEAD", vertical "EXECUTIVE COUNCIL", archetype "THE VANGUARD STEWARD", and full year details.
+   - Fixed back-of-card watermark index rendering to dynamically support double-digit index numbers (`{index + 1 < 10 ? `0${index + 1}` : index + 1}`) without hardcoded leading zero prefix errors.
+
+### Files Changed
+- `scripts/upload-shounak.mjs` (created and executed)
+- `src/lib/cloudinaryAssets.json`
+- `src/components/event/CoreMembersSection.tsx`
+- `tracker.md`
+- `features_implemented.md`
+
+### Verification
+- Cloudinary upload API returned 200 OK with public ID `sanskaran_2026/core_members/shounak`.
+- `next build` executed with Turbopack and TypeScript checking.
+
+### Current State
+SHOUNAK is live in the Core Members card deck with full 3D tilt, flip interaction, and Cloudinary edge-cached portrait.
+
+### Next Agent Instructions
+- Core members array is exported as `CORE_MEMBERS` in `src/components/event/CoreMembersSection.tsx`.
+- Assets registry is located in `src/lib/cloudinaryAssets.json`.
+
+---
+
+## 2026-11-20 — Smooth Scroll Optimization: Technosahotsava Production Inertia Matching
+
+### Objective
+Replicate the exact level of buttery smoothness, luxury deceleration damping, and continuous 60/120 FPS camera glide from the live Technosahotsava production portal (`https://www.technosahotsava.in/`).
+
+### Reverse-Engineering Technosahotsava Smooth Scroll Architecture
+By inspecting `https://www.technosahotsava.in/` and decompiling its production bundle (`/assets/index-Dje3lYy2.js`), the exact underlying physics parameters were extracted:
+1. **Damping Factor (`lerp: 0.03`)**:
+   - Standard Lenis default is `0.1` (or `0.09`).
+   - Technosahotsava explicitly sets `lerp: 0.03`. Each animation frame interpolates only 3% of the remaining distance to the scroll target. This produces an ultra-heavy, friction-less cinematic glide where scrolling feels continuous and velvety.
+2. **Deceleration Tail (`duration: 2.5`)**:
+   - The inertia duration is explicitly set to `2.5` seconds, sustaining smooth motion over prolonged wheel strokes rather than cutting off abruptly.
+3. **Dedicated RAF Cycle (`requestAnimationFrame`)**:
+   - Directly drives `lenis.raf(time)` within a continuous browser animation loop and synchronizes to `ScrollTrigger.update`.
+4. **Scrollbar Jitter Suppression**:
+   - Browser default scrollbars are suppressed (`scrollbar-width: none; -ms-overflow-style: none; html::-webkit-scrollbar { display: none; }`) and body is constrained with `overflow-x: hidden`, eliminating thumb-hopping and horizontal jitter.
+
+### Changes Made
+1. **Calibrated Lenis Parameters (`src/components/providers/SmoothScrollProvider.tsx`)**:
+   - Configured `lerp: 0.03` and `duration: 2.5` to match `technosahotsava.in` down to the exact mathematical parameters.
+   - Tied `lenis.raf(time)` into a dedicated `requestAnimationFrame` loop with `lenis.on('scroll', ScrollTrigger.update)` and `gsap.ticker.lagSmoothing(0)`.
+2. **Scrollbar & Layout Polishing (`src/app/globals.css`, `src/app/layout.tsx`)**:
+   - Added `scrollbar-width: none; -ms-overflow-style: none;` and `html::-webkit-scrollbar { display: none; }` to `globals.css`.
+   - Added `overflow-x-hidden` to body in `layout.tsx`.
+3. **Navbar Programmatic Speed (`src/components/event/Navbar.tsx`)**:
+   - Adjusted `SMOOTH_SCROLL_CONFIG.duration` to `1.1` seconds (`power2.out`) for link-click camera transitions.
+
+### Verification
+- `npm run build` executed and passed with exit code 0.
+- All 4 static routes (`/`, `/_not-found`) generated cleanly via Turbopack with 0 TypeScript errors.
+
+### Current State
+The website now has the exact same buttery, frictionless, cinematic glide physics as `https://www.technosahotsava.in/`.
+
+### Next Agent Instructions
+- Physics parameters are located in `src/components/providers/SmoothScrollProvider.tsx` (`duration: 2.5, lerp: 0.03, smoothWheel: true`).
+- If adjusting the programmatic click duration, modify `SMOOTH_SCROLL_CONFIG.duration` in `src/components/event/Navbar.tsx`.
+
+---
+
+## 2026-11-20 — Smooth Scroll Fix: Navbar Links & Programmatic Glide Engine
+
+### Objective
+Resolve issue where clicking navbar links (`SANSKARAN`, `SAHOTSAVA`, `GALLERY`, `ARCHITECTS`, `PATRONS`, `FOUNDERS`) failed to trigger smooth scrolling to their respective sections.
+
+### Root Cause Analysis
+1. **Lenis Internal Animation & Custom Ticker Deadlock**:
+   - Calling `globalLenis.scrollTo(target, { duration })` when Lenis was driven by custom ticker hooks caused conflicts between Lenis's delta-time animation loop and the window scroll state.
+   - If Lenis received element targets like `#hero`, it calculated `rect.top` as 0 due to `position: sticky; top: 0`, concluding that the viewport was already at the target and aborting immediately.
+2. **Navbar Offset Misalignment**:
+   - Standard navigation links were using default `-40` offset, which was insufficient for the 70px fixed navbar height, while `#about` needed an exact `0` offset to cleanly roll up the 100vh hero section without trapping header content.
+
+### Changes Made
+1. **Hybrid GSAP-Driven Lenis Programmatic Scroll Engine (`SmoothScrollProvider.tsx`)**:
+   - Re-architected `lenisScrollTo()` to use GSAP's battle-tested tweening engine:
+     ```ts
+     gsap.to(scrollObj, {
+       y: targetY,
+       duration: duration || 1.0,
+       ease: "power2.out",
+       onUpdate: () => {
+         if (globalLenis) {
+           globalLenis.scrollTo(scrollObj.y, { immediate: true });
+         } else {
+           window.scrollTo(0, scrollObj.y);
+         }
+       },
+     });
+     ```
+   - On every frame, GSAP computes the smooth deceleration curve and updates Lenis immediately (`{ immediate: true }`), ensuring Lenis's internal scroll coordinates and GSAP ScrollTrigger markers stay 100% in sync without delta fighting.
+   - Calculated exact absolute target Y: `targetY = currentScroll + rect.top + offset`, clamped between `0` and `maxScroll`.
+   - Handled all "Back to Top" targets (`#hero`, `hero`, `top`, `#top`, `0`) explicitly to force `targetY = 0` and emit `hero:restart-loop`.
+2. **Configured Navbar Clearances (`Navbar.tsx`)**:
+   - Updated `SMOOTH_SCROLL_CONFIG.offset` to `-70` to match the exact height of the fixed navigation bar.
+   - Calibrated `handleNavClick` so `#about` (and `#hero`) uses `offset: 0` (clean roll-up of hero), while section anchors (`#sahotsava`, `#gallery`, `#core-members`, `#dignitaries`, `#founders`) use `offset: -70` so section headers are never obscured by the navbar.
+3. **Optimized Natural Inertia (`SmoothScrollProvider.tsx`)**:
+   - Lenis configured with `lerp: 0.09` for mouse wheel and touchpad momentum damping.
+   - Synchronized with `lenis.on('scroll', ScrollTrigger.update)` and `gsap.ticker.lagSmoothing(0)`.
+4. **Hero Explore CTA Alignment (`page.tsx`, `ShowcaseHeroSection.tsx`)**:
+   - Configured Explore CTA and hero chevron to scroll to `#about` with `offset: 0`.
+
+### Files Changed
+- `src/components/providers/SmoothScrollProvider.tsx`
+- `src/components/event/Navbar.tsx`
+- `src/app/page.tsx`
+- `src/components/event/ShowcaseHeroSection.tsx`
+- `tracker.md`
+- `features_implemented.md`
+
+### Verification
+- `npm run build` executed and passed with exit code 0.
+- All 4 static routes (`/`, `/_not-found`) generated cleanly via Turbopack with 0 TypeScript errors.
+
+### Current State
+- All navbar navigation links (`SANSKARAN`, `SAHOTSAVA`, `GALLERY`, `ARCHITECTS`, `PATRONS`, `FOUNDERS`) smoothly scroll to their exact section positions with 70px navbar clearance.
+- "Explore" CTA and hero chevron smoothly roll up the 100vh hero to `#about`.
+- "Back to Top" in the footer and navbar logo smoothly returns to `y = 0` and replays the hero intro loop.
+- Natural scrolling retains 60 FPS inertia with Lenis and GSAP ScrollTrigger.
+
+### Next Agent Instructions
+1. For programmatic scroll behavior, reference `lenisScrollTo` in `src/components/providers/SmoothScrollProvider.tsx`.
+2. Keep navbar section IDs in sync with page section IDs:
+   - SANSKARAN: `#about`
+   - SAHOTSAVA: `#sahotsava`
+   - GALLERY: `#gallery`
+   - ARCHITECTS: `#core-members`
+   - PATRONS: `#dignitaries`
+   - FOUNDERS: `#founders`
+
+---
+
+## 2026-11-20 — Smooth Scroll Fix: Explore & Back to Top Absolute Coordinate Alignment
+
+### Objective
+Diagnose and permanently fix the broken smooth scroll on the **Explore** and **Back to Top** buttons.
+
+### Root Cause Analysis
+1. **Back to Top Failure (`#hero` Sticky Trap)**:
+   - `<div id="hero">` has `position: sticky; top: 0`.
+   - When scrolled down anywhere on the page, `#hero.getBoundingClientRect().top` is `0`.
+   - Passing `target: "#hero"` into Lenis caused it to calculate `target = rect.top + animatedScroll = 0 + scroll = scroll` (the current position).
+   - Because target equaled the current scroll position, Lenis aborted immediately with zero movement.
+2. **Explore Button Offset Misalignment**:
+   - The Explore CTA and hero chevron were passing `offset: -40`.
+   - Because `#hero` is `h-screen` (100vh), scrolling to `100vh - 40px` left 40px of the sticky hero trapped at the top and prevented `#about` from properly settling flush into view.
+
+### Changes Made
+1. **Mathematical Absolute Pixel Resolution (`SmoothScrollProvider.tsx`)**:
+   - `lenisScrollTo` now explicitly intercepts all "Back to Top" targets (`#hero`, `hero`, `top`, `#top`, `0`).
+   - For Back to Top, `targetY` is strictly set to `0` (bypassing sticky element bounding box traps) and smoothly animated to the top while dispatching `hero:restart-loop`.
+   - For Explore and all page sections, `targetY` is computed as `(window.scrollY + rect.top + offset)`, clamped between `0` and `maxScroll`, and fed into `globalLenis.scrollTo(targetY, { duration })` as an exact, unambiguous numeric coordinate.
+2. **Aligned Explore Offset to `0` (`Navbar.tsx`, `page.tsx`, `ShowcaseHeroSection.tsx`)**:
+   - Configured `offset: 0` for `target === "#about"` and `target === "#hero"`.
+   - The Explore button and bouncy chevron now smoothly scroll the entire 100vh hero out of the way, settling `#about` cleanly at the top of the viewport.
+3. **Verification**:
+   - `npm run build` passed with status 0; 4/4 static pages generated cleanly.
+
+### Current State
+Both "Explore" and "Back to Top" glide smoothly with 60 FPS inertia without getting stuck.
+
+### Next Agent Instructions
+1. Inspect `src/components/providers/SmoothScrollProvider.tsx` lines 30-75 for `lenisScrollTo` coordinate calculation.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
 
 ## 2026-11-20 — 60 FPS Buttery-Smooth Inertia Scroll Engine & GSAP ScrollTrigger Integration
 
@@ -7297,6 +8753,188 @@ Integrate the video from `https://www.instagram.com/p/DaqR3Niyy2L/?hl=en` (the o
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Core Member: Added SHOUNAK with Cloudinary Edge Delivery
+
+### Objective
+Upload user-provided portrait for core team member SHOUNAK to Cloudinary and integrate him into the Core Members section (`CoreMembersSection.tsx`).
+
+### Implementation Details
+1. **Cloudinary Asset Upload**:
+   - Uploaded user's source image (`media_1795198881832_e18bfc8b.jpg`) to Cloudinary using `scripts/upload-shounak.mjs`.
+   - Stored in Cloudinary folder `sanskaran_2026/core_members` with public ID `sanskaran_2026/core_members/shounak`.
+   - Dimensions: 768 × 1024 px.
+   - Edge delivery URL: `https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_800,c_limit/sanskaran_2026/core_members/shounak`
+   - Added asset record to `src/lib/cloudinaryAssets.json`.
+2. **Core Member Profile Integration (`src/components/event/CoreMembersSection.tsx`)**:
+   - Added `SHOUNAK` as `cm-13` with `crimson-vanguard` design variant, role "OPERATIONS & LOGISTICS LEAD", vertical "EXECUTIVE COUNCIL", archetype "THE VANGUARD STEWARD", and full year details.
+   - Fixed back-of-card watermark index rendering to dynamically support double-digit index numbers (`{index + 1 < 10 ? `0${index + 1}` : index + 1}`) without hardcoded leading zero prefix errors.
+
+### Files Changed
+- `scripts/upload-shounak.mjs` (created and executed)
+- `src/lib/cloudinaryAssets.json`
+- `src/components/event/CoreMembersSection.tsx`
+- `tracker.md`
+- `features_implemented.md`
+
+### Verification
+- Cloudinary upload API returned 200 OK with public ID `sanskaran_2026/core_members/shounak`.
+- `next build` executed with Turbopack and TypeScript checking.
+
+### Current State
+SHOUNAK is live in the Core Members card deck with full 3D tilt, flip interaction, and Cloudinary edge-cached portrait.
+
+### Next Agent Instructions
+- Core members array is exported as `CORE_MEMBERS` in `src/components/event/CoreMembersSection.tsx`.
+- Assets registry is located in `src/lib/cloudinaryAssets.json`.
+
+---
+
+## 2026-11-20 — Smooth Scroll Optimization: Technosahotsava Production Inertia Matching
+
+### Objective
+Replicate the exact level of buttery smoothness, luxury deceleration damping, and continuous 60/120 FPS camera glide from the live Technosahotsava production portal (`https://www.technosahotsava.in/`).
+
+### Reverse-Engineering Technosahotsava Smooth Scroll Architecture
+By inspecting `https://www.technosahotsava.in/` and decompiling its production bundle (`/assets/index-Dje3lYy2.js`), the exact underlying physics parameters were extracted:
+1. **Damping Factor (`lerp: 0.03`)**:
+   - Standard Lenis default is `0.1` (or `0.09`).
+   - Technosahotsava explicitly sets `lerp: 0.03`. Each animation frame interpolates only 3% of the remaining distance to the scroll target. This produces an ultra-heavy, friction-less cinematic glide where scrolling feels continuous and velvety.
+2. **Deceleration Tail (`duration: 2.5`)**:
+   - The inertia duration is explicitly set to `2.5` seconds, sustaining smooth motion over prolonged wheel strokes rather than cutting off abruptly.
+3. **Dedicated RAF Cycle (`requestAnimationFrame`)**:
+   - Directly drives `lenis.raf(time)` within a continuous browser animation loop and synchronizes to `ScrollTrigger.update`.
+4. **Scrollbar Jitter Suppression**:
+   - Browser default scrollbars are suppressed (`scrollbar-width: none; -ms-overflow-style: none; html::-webkit-scrollbar { display: none; }`) and body is constrained with `overflow-x: hidden`, eliminating thumb-hopping and horizontal jitter.
+
+### Changes Made
+1. **Calibrated Lenis Parameters (`src/components/providers/SmoothScrollProvider.tsx`)**:
+   - Configured `lerp: 0.03` and `duration: 2.5` to match `technosahotsava.in` down to the exact mathematical parameters.
+   - Tied `lenis.raf(time)` into a dedicated `requestAnimationFrame` loop with `lenis.on('scroll', ScrollTrigger.update)` and `gsap.ticker.lagSmoothing(0)`.
+2. **Scrollbar & Layout Polishing (`src/app/globals.css`, `src/app/layout.tsx`)**:
+   - Added `scrollbar-width: none; -ms-overflow-style: none;` and `html::-webkit-scrollbar { display: none; }` to `globals.css`.
+   - Added `overflow-x-hidden` to body in `layout.tsx`.
+3. **Navbar Programmatic Speed (`src/components/event/Navbar.tsx`)**:
+   - Adjusted `SMOOTH_SCROLL_CONFIG.duration` to `1.1` seconds (`power2.out`) for link-click camera transitions.
+
+### Verification
+- `npm run build` executed and passed with exit code 0.
+- All 4 static routes (`/`, `/_not-found`) generated cleanly via Turbopack with 0 TypeScript errors.
+
+### Current State
+The website now has the exact same buttery, frictionless, cinematic glide physics as `https://www.technosahotsava.in/`.
+
+### Next Agent Instructions
+- Physics parameters are located in `src/components/providers/SmoothScrollProvider.tsx` (`duration: 2.5, lerp: 0.03, smoothWheel: true`).
+- If adjusting the programmatic click duration, modify `SMOOTH_SCROLL_CONFIG.duration` in `src/components/event/Navbar.tsx`.
+
+---
+
+## 2026-11-20 — Smooth Scroll Fix: Navbar Links & Programmatic Glide Engine
+
+### Objective
+Resolve issue where clicking navbar links (`SANSKARAN`, `SAHOTSAVA`, `GALLERY`, `ARCHITECTS`, `PATRONS`, `FOUNDERS`) failed to trigger smooth scrolling to their respective sections.
+
+### Root Cause Analysis
+1. **Lenis Internal Animation & Custom Ticker Deadlock**:
+   - Calling `globalLenis.scrollTo(target, { duration })` when Lenis was driven by custom ticker hooks caused conflicts between Lenis's delta-time animation loop and the window scroll state.
+   - If Lenis received element targets like `#hero`, it calculated `rect.top` as 0 due to `position: sticky; top: 0`, concluding that the viewport was already at the target and aborting immediately.
+2. **Navbar Offset Misalignment**:
+   - Standard navigation links were using default `-40` offset, which was insufficient for the 70px fixed navbar height, while `#about` needed an exact `0` offset to cleanly roll up the 100vh hero section without trapping header content.
+
+### Changes Made
+1. **Hybrid GSAP-Driven Lenis Programmatic Scroll Engine (`SmoothScrollProvider.tsx`)**:
+   - Re-architected `lenisScrollTo()` to use GSAP's battle-tested tweening engine:
+     ```ts
+     gsap.to(scrollObj, {
+       y: targetY,
+       duration: duration || 1.0,
+       ease: "power2.out",
+       onUpdate: () => {
+         if (globalLenis) {
+           globalLenis.scrollTo(scrollObj.y, { immediate: true });
+         } else {
+           window.scrollTo(0, scrollObj.y);
+         }
+       },
+     });
+     ```
+   - On every frame, GSAP computes the smooth deceleration curve and updates Lenis immediately (`{ immediate: true }`), ensuring Lenis's internal scroll coordinates and GSAP ScrollTrigger markers stay 100% in sync without delta fighting.
+   - Calculated exact absolute target Y: `targetY = currentScroll + rect.top + offset`, clamped between `0` and `maxScroll`.
+   - Handled all "Back to Top" targets (`#hero`, `hero`, `top`, `#top`, `0`) explicitly to force `targetY = 0` and emit `hero:restart-loop`.
+2. **Configured Navbar Clearances (`Navbar.tsx`)**:
+   - Updated `SMOOTH_SCROLL_CONFIG.offset` to `-70` to match the exact height of the fixed navigation bar.
+   - Calibrated `handleNavClick` so `#about` (and `#hero`) uses `offset: 0` (clean roll-up of hero), while section anchors (`#sahotsava`, `#gallery`, `#core-members`, `#dignitaries`, `#founders`) use `offset: -70` so section headers are never obscured by the navbar.
+3. **Optimized Natural Inertia (`SmoothScrollProvider.tsx`)**:
+   - Lenis configured with `lerp: 0.09` for mouse wheel and touchpad momentum damping.
+   - Synchronized with `lenis.on('scroll', ScrollTrigger.update)` and `gsap.ticker.lagSmoothing(0)`.
+4. **Hero Explore CTA Alignment (`page.tsx`, `ShowcaseHeroSection.tsx`)**:
+   - Configured Explore CTA and hero chevron to scroll to `#about` with `offset: 0`.
+
+### Files Changed
+- `src/components/providers/SmoothScrollProvider.tsx`
+- `src/components/event/Navbar.tsx`
+- `src/app/page.tsx`
+- `src/components/event/ShowcaseHeroSection.tsx`
+- `tracker.md`
+- `features_implemented.md`
+
+### Verification
+- `npm run build` executed and passed with exit code 0.
+- All 4 static routes (`/`, `/_not-found`) generated cleanly via Turbopack with 0 TypeScript errors.
+
+### Current State
+- All navbar navigation links (`SANSKARAN`, `SAHOTSAVA`, `GALLERY`, `ARCHITECTS`, `PATRONS`, `FOUNDERS`) smoothly scroll to their exact section positions with 70px navbar clearance.
+- "Explore" CTA and hero chevron smoothly roll up the 100vh hero to `#about`.
+- "Back to Top" in the footer and navbar logo smoothly returns to `y = 0` and replays the hero intro loop.
+- Natural scrolling retains 60 FPS inertia with Lenis and GSAP ScrollTrigger.
+
+### Next Agent Instructions
+1. For programmatic scroll behavior, reference `lenisScrollTo` in `src/components/providers/SmoothScrollProvider.tsx`.
+2. Keep navbar section IDs in sync with page section IDs:
+   - SANSKARAN: `#about`
+   - SAHOTSAVA: `#sahotsava`
+   - GALLERY: `#gallery`
+   - ARCHITECTS: `#core-members`
+   - PATRONS: `#dignitaries`
+   - FOUNDERS: `#founders`
+
+---
+
+## 2026-11-20 — Smooth Scroll Fix: Explore & Back to Top Absolute Coordinate Alignment
+
+### Objective
+Diagnose and permanently fix the broken smooth scroll on the **Explore** and **Back to Top** buttons.
+
+### Root Cause Analysis
+1. **Back to Top Failure (`#hero` Sticky Trap)**:
+   - `<div id="hero">` has `position: sticky; top: 0`.
+   - When scrolled down anywhere on the page, `#hero.getBoundingClientRect().top` is `0`.
+   - Passing `target: "#hero"` into Lenis caused it to calculate `target = rect.top + animatedScroll = 0 + scroll = scroll` (the current position).
+   - Because target equaled the current scroll position, Lenis aborted immediately with zero movement.
+2. **Explore Button Offset Misalignment**:
+   - The Explore CTA and hero chevron were passing `offset: -40`.
+   - Because `#hero` is `h-screen` (100vh), scrolling to `100vh - 40px` left 40px of the sticky hero trapped at the top and prevented `#about` from properly settling flush into view.
+
+### Changes Made
+1. **Mathematical Absolute Pixel Resolution (`SmoothScrollProvider.tsx`)**:
+   - `lenisScrollTo` now explicitly intercepts all "Back to Top" targets (`#hero`, `hero`, `top`, `#top`, `0`).
+   - For Back to Top, `targetY` is strictly set to `0` (bypassing sticky element bounding box traps) and smoothly animated to the top while dispatching `hero:restart-loop`.
+   - For Explore and all page sections, `targetY` is computed as `(window.scrollY + rect.top + offset)`, clamped between `0` and `maxScroll`, and fed into `globalLenis.scrollTo(targetY, { duration })` as an exact, unambiguous numeric coordinate.
+2. **Aligned Explore Offset to `0` (`Navbar.tsx`, `page.tsx`, `ShowcaseHeroSection.tsx`)**:
+   - Configured `offset: 0` for `target === "#about"` and `target === "#hero"`.
+   - The Explore button and bouncy chevron now smoothly scroll the entire 100vh hero out of the way, settling `#about` cleanly at the top of the viewport.
+3. **Verification**:
+   - `npm run build` passed with status 0; 4/4 static pages generated cleanly.
+
+### Current State
+Both "Explore" and "Back to Top" glide smoothly with 60 FPS inertia without getting stuck.
+
+### Next Agent Instructions
+1. Inspect `src/components/providers/SmoothScrollProvider.tsx` lines 30-75 for `lenisScrollTo` coordinate calculation.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-20 — 60 FPS Buttery-Smooth Inertia Scroll Engine & GSAP ScrollTrigger Integration
 
 ### Objective
@@ -8163,6 +9801,188 @@ Integrate the video from `https://www.instagram.com/p/DaqR3Niyy2L/?hl=en` (the o
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Core Member: Added SHOUNAK with Cloudinary Edge Delivery
+
+### Objective
+Upload user-provided portrait for core team member SHOUNAK to Cloudinary and integrate him into the Core Members section (`CoreMembersSection.tsx`).
+
+### Implementation Details
+1. **Cloudinary Asset Upload**:
+   - Uploaded user's source image (`media_1795198881832_e18bfc8b.jpg`) to Cloudinary using `scripts/upload-shounak.mjs`.
+   - Stored in Cloudinary folder `sanskaran_2026/core_members` with public ID `sanskaran_2026/core_members/shounak`.
+   - Dimensions: 768 × 1024 px.
+   - Edge delivery URL: `https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_800,c_limit/sanskaran_2026/core_members/shounak`
+   - Added asset record to `src/lib/cloudinaryAssets.json`.
+2. **Core Member Profile Integration (`src/components/event/CoreMembersSection.tsx`)**:
+   - Added `SHOUNAK` as `cm-13` with `crimson-vanguard` design variant, role "OPERATIONS & LOGISTICS LEAD", vertical "EXECUTIVE COUNCIL", archetype "THE VANGUARD STEWARD", and full year details.
+   - Fixed back-of-card watermark index rendering to dynamically support double-digit index numbers (`{index + 1 < 10 ? `0${index + 1}` : index + 1}`) without hardcoded leading zero prefix errors.
+
+### Files Changed
+- `scripts/upload-shounak.mjs` (created and executed)
+- `src/lib/cloudinaryAssets.json`
+- `src/components/event/CoreMembersSection.tsx`
+- `tracker.md`
+- `features_implemented.md`
+
+### Verification
+- Cloudinary upload API returned 200 OK with public ID `sanskaran_2026/core_members/shounak`.
+- `next build` executed with Turbopack and TypeScript checking.
+
+### Current State
+SHOUNAK is live in the Core Members card deck with full 3D tilt, flip interaction, and Cloudinary edge-cached portrait.
+
+### Next Agent Instructions
+- Core members array is exported as `CORE_MEMBERS` in `src/components/event/CoreMembersSection.tsx`.
+- Assets registry is located in `src/lib/cloudinaryAssets.json`.
+
+---
+
+## 2026-11-20 — Smooth Scroll Optimization: Technosahotsava Production Inertia Matching
+
+### Objective
+Replicate the exact level of buttery smoothness, luxury deceleration damping, and continuous 60/120 FPS camera glide from the live Technosahotsava production portal (`https://www.technosahotsava.in/`).
+
+### Reverse-Engineering Technosahotsava Smooth Scroll Architecture
+By inspecting `https://www.technosahotsava.in/` and decompiling its production bundle (`/assets/index-Dje3lYy2.js`), the exact underlying physics parameters were extracted:
+1. **Damping Factor (`lerp: 0.03`)**:
+   - Standard Lenis default is `0.1` (or `0.09`).
+   - Technosahotsava explicitly sets `lerp: 0.03`. Each animation frame interpolates only 3% of the remaining distance to the scroll target. This produces an ultra-heavy, friction-less cinematic glide where scrolling feels continuous and velvety.
+2. **Deceleration Tail (`duration: 2.5`)**:
+   - The inertia duration is explicitly set to `2.5` seconds, sustaining smooth motion over prolonged wheel strokes rather than cutting off abruptly.
+3. **Dedicated RAF Cycle (`requestAnimationFrame`)**:
+   - Directly drives `lenis.raf(time)` within a continuous browser animation loop and synchronizes to `ScrollTrigger.update`.
+4. **Scrollbar Jitter Suppression**:
+   - Browser default scrollbars are suppressed (`scrollbar-width: none; -ms-overflow-style: none; html::-webkit-scrollbar { display: none; }`) and body is constrained with `overflow-x: hidden`, eliminating thumb-hopping and horizontal jitter.
+
+### Changes Made
+1. **Calibrated Lenis Parameters (`src/components/providers/SmoothScrollProvider.tsx`)**:
+   - Configured `lerp: 0.03` and `duration: 2.5` to match `technosahotsava.in` down to the exact mathematical parameters.
+   - Tied `lenis.raf(time)` into a dedicated `requestAnimationFrame` loop with `lenis.on('scroll', ScrollTrigger.update)` and `gsap.ticker.lagSmoothing(0)`.
+2. **Scrollbar & Layout Polishing (`src/app/globals.css`, `src/app/layout.tsx`)**:
+   - Added `scrollbar-width: none; -ms-overflow-style: none;` and `html::-webkit-scrollbar { display: none; }` to `globals.css`.
+   - Added `overflow-x-hidden` to body in `layout.tsx`.
+3. **Navbar Programmatic Speed (`src/components/event/Navbar.tsx`)**:
+   - Adjusted `SMOOTH_SCROLL_CONFIG.duration` to `1.1` seconds (`power2.out`) for link-click camera transitions.
+
+### Verification
+- `npm run build` executed and passed with exit code 0.
+- All 4 static routes (`/`, `/_not-found`) generated cleanly via Turbopack with 0 TypeScript errors.
+
+### Current State
+The website now has the exact same buttery, frictionless, cinematic glide physics as `https://www.technosahotsava.in/`.
+
+### Next Agent Instructions
+- Physics parameters are located in `src/components/providers/SmoothScrollProvider.tsx` (`duration: 2.5, lerp: 0.03, smoothWheel: true`).
+- If adjusting the programmatic click duration, modify `SMOOTH_SCROLL_CONFIG.duration` in `src/components/event/Navbar.tsx`.
+
+---
+
+## 2026-11-20 — Smooth Scroll Fix: Navbar Links & Programmatic Glide Engine
+
+### Objective
+Resolve issue where clicking navbar links (`SANSKARAN`, `SAHOTSAVA`, `GALLERY`, `ARCHITECTS`, `PATRONS`, `FOUNDERS`) failed to trigger smooth scrolling to their respective sections.
+
+### Root Cause Analysis
+1. **Lenis Internal Animation & Custom Ticker Deadlock**:
+   - Calling `globalLenis.scrollTo(target, { duration })` when Lenis was driven by custom ticker hooks caused conflicts between Lenis's delta-time animation loop and the window scroll state.
+   - If Lenis received element targets like `#hero`, it calculated `rect.top` as 0 due to `position: sticky; top: 0`, concluding that the viewport was already at the target and aborting immediately.
+2. **Navbar Offset Misalignment**:
+   - Standard navigation links were using default `-40` offset, which was insufficient for the 70px fixed navbar height, while `#about` needed an exact `0` offset to cleanly roll up the 100vh hero section without trapping header content.
+
+### Changes Made
+1. **Hybrid GSAP-Driven Lenis Programmatic Scroll Engine (`SmoothScrollProvider.tsx`)**:
+   - Re-architected `lenisScrollTo()` to use GSAP's battle-tested tweening engine:
+     ```ts
+     gsap.to(scrollObj, {
+       y: targetY,
+       duration: duration || 1.0,
+       ease: "power2.out",
+       onUpdate: () => {
+         if (globalLenis) {
+           globalLenis.scrollTo(scrollObj.y, { immediate: true });
+         } else {
+           window.scrollTo(0, scrollObj.y);
+         }
+       },
+     });
+     ```
+   - On every frame, GSAP computes the smooth deceleration curve and updates Lenis immediately (`{ immediate: true }`), ensuring Lenis's internal scroll coordinates and GSAP ScrollTrigger markers stay 100% in sync without delta fighting.
+   - Calculated exact absolute target Y: `targetY = currentScroll + rect.top + offset`, clamped between `0` and `maxScroll`.
+   - Handled all "Back to Top" targets (`#hero`, `hero`, `top`, `#top`, `0`) explicitly to force `targetY = 0` and emit `hero:restart-loop`.
+2. **Configured Navbar Clearances (`Navbar.tsx`)**:
+   - Updated `SMOOTH_SCROLL_CONFIG.offset` to `-70` to match the exact height of the fixed navigation bar.
+   - Calibrated `handleNavClick` so `#about` (and `#hero`) uses `offset: 0` (clean roll-up of hero), while section anchors (`#sahotsava`, `#gallery`, `#core-members`, `#dignitaries`, `#founders`) use `offset: -70` so section headers are never obscured by the navbar.
+3. **Optimized Natural Inertia (`SmoothScrollProvider.tsx`)**:
+   - Lenis configured with `lerp: 0.09` for mouse wheel and touchpad momentum damping.
+   - Synchronized with `lenis.on('scroll', ScrollTrigger.update)` and `gsap.ticker.lagSmoothing(0)`.
+4. **Hero Explore CTA Alignment (`page.tsx`, `ShowcaseHeroSection.tsx`)**:
+   - Configured Explore CTA and hero chevron to scroll to `#about` with `offset: 0`.
+
+### Files Changed
+- `src/components/providers/SmoothScrollProvider.tsx`
+- `src/components/event/Navbar.tsx`
+- `src/app/page.tsx`
+- `src/components/event/ShowcaseHeroSection.tsx`
+- `tracker.md`
+- `features_implemented.md`
+
+### Verification
+- `npm run build` executed and passed with exit code 0.
+- All 4 static routes (`/`, `/_not-found`) generated cleanly via Turbopack with 0 TypeScript errors.
+
+### Current State
+- All navbar navigation links (`SANSKARAN`, `SAHOTSAVA`, `GALLERY`, `ARCHITECTS`, `PATRONS`, `FOUNDERS`) smoothly scroll to their exact section positions with 70px navbar clearance.
+- "Explore" CTA and hero chevron smoothly roll up the 100vh hero to `#about`.
+- "Back to Top" in the footer and navbar logo smoothly returns to `y = 0` and replays the hero intro loop.
+- Natural scrolling retains 60 FPS inertia with Lenis and GSAP ScrollTrigger.
+
+### Next Agent Instructions
+1. For programmatic scroll behavior, reference `lenisScrollTo` in `src/components/providers/SmoothScrollProvider.tsx`.
+2. Keep navbar section IDs in sync with page section IDs:
+   - SANSKARAN: `#about`
+   - SAHOTSAVA: `#sahotsava`
+   - GALLERY: `#gallery`
+   - ARCHITECTS: `#core-members`
+   - PATRONS: `#dignitaries`
+   - FOUNDERS: `#founders`
+
+---
+
+## 2026-11-20 — Smooth Scroll Fix: Explore & Back to Top Absolute Coordinate Alignment
+
+### Objective
+Diagnose and permanently fix the broken smooth scroll on the **Explore** and **Back to Top** buttons.
+
+### Root Cause Analysis
+1. **Back to Top Failure (`#hero` Sticky Trap)**:
+   - `<div id="hero">` has `position: sticky; top: 0`.
+   - When scrolled down anywhere on the page, `#hero.getBoundingClientRect().top` is `0`.
+   - Passing `target: "#hero"` into Lenis caused it to calculate `target = rect.top + animatedScroll = 0 + scroll = scroll` (the current position).
+   - Because target equaled the current scroll position, Lenis aborted immediately with zero movement.
+2. **Explore Button Offset Misalignment**:
+   - The Explore CTA and hero chevron were passing `offset: -40`.
+   - Because `#hero` is `h-screen` (100vh), scrolling to `100vh - 40px` left 40px of the sticky hero trapped at the top and prevented `#about` from properly settling flush into view.
+
+### Changes Made
+1. **Mathematical Absolute Pixel Resolution (`SmoothScrollProvider.tsx`)**:
+   - `lenisScrollTo` now explicitly intercepts all "Back to Top" targets (`#hero`, `hero`, `top`, `#top`, `0`).
+   - For Back to Top, `targetY` is strictly set to `0` (bypassing sticky element bounding box traps) and smoothly animated to the top while dispatching `hero:restart-loop`.
+   - For Explore and all page sections, `targetY` is computed as `(window.scrollY + rect.top + offset)`, clamped between `0` and `maxScroll`, and fed into `globalLenis.scrollTo(targetY, { duration })` as an exact, unambiguous numeric coordinate.
+2. **Aligned Explore Offset to `0` (`Navbar.tsx`, `page.tsx`, `ShowcaseHeroSection.tsx`)**:
+   - Configured `offset: 0` for `target === "#about"` and `target === "#hero"`.
+   - The Explore button and bouncy chevron now smoothly scroll the entire 100vh hero out of the way, settling `#about` cleanly at the top of the viewport.
+3. **Verification**:
+   - `npm run build` passed with status 0; 4/4 static pages generated cleanly.
+
+### Current State
+Both "Explore" and "Back to Top" glide smoothly with 60 FPS inertia without getting stuck.
+
+### Next Agent Instructions
+1. Inspect `src/components/providers/SmoothScrollProvider.tsx` lines 30-75 for `lenisScrollTo` coordinate calculation.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-20 — 60 FPS Buttery-Smooth Inertia Scroll Engine & GSAP ScrollTrigger Integration
 
 ### Objective
@@ -8996,6 +10816,188 @@ Rotate the background video 90 degrees so it is right-side up, and eliminate ver
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Core Member: Added SHOUNAK with Cloudinary Edge Delivery
+
+### Objective
+Upload user-provided portrait for core team member SHOUNAK to Cloudinary and integrate him into the Core Members section (`CoreMembersSection.tsx`).
+
+### Implementation Details
+1. **Cloudinary Asset Upload**:
+   - Uploaded user's source image (`media_1795198881832_e18bfc8b.jpg`) to Cloudinary using `scripts/upload-shounak.mjs`.
+   - Stored in Cloudinary folder `sanskaran_2026/core_members` with public ID `sanskaran_2026/core_members/shounak`.
+   - Dimensions: 768 × 1024 px.
+   - Edge delivery URL: `https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_800,c_limit/sanskaran_2026/core_members/shounak`
+   - Added asset record to `src/lib/cloudinaryAssets.json`.
+2. **Core Member Profile Integration (`src/components/event/CoreMembersSection.tsx`)**:
+   - Added `SHOUNAK` as `cm-13` with `crimson-vanguard` design variant, role "OPERATIONS & LOGISTICS LEAD", vertical "EXECUTIVE COUNCIL", archetype "THE VANGUARD STEWARD", and full year details.
+   - Fixed back-of-card watermark index rendering to dynamically support double-digit index numbers (`{index + 1 < 10 ? `0${index + 1}` : index + 1}`) without hardcoded leading zero prefix errors.
+
+### Files Changed
+- `scripts/upload-shounak.mjs` (created and executed)
+- `src/lib/cloudinaryAssets.json`
+- `src/components/event/CoreMembersSection.tsx`
+- `tracker.md`
+- `features_implemented.md`
+
+### Verification
+- Cloudinary upload API returned 200 OK with public ID `sanskaran_2026/core_members/shounak`.
+- `next build` executed with Turbopack and TypeScript checking.
+
+### Current State
+SHOUNAK is live in the Core Members card deck with full 3D tilt, flip interaction, and Cloudinary edge-cached portrait.
+
+### Next Agent Instructions
+- Core members array is exported as `CORE_MEMBERS` in `src/components/event/CoreMembersSection.tsx`.
+- Assets registry is located in `src/lib/cloudinaryAssets.json`.
+
+---
+
+## 2026-11-20 — Smooth Scroll Optimization: Technosahotsava Production Inertia Matching
+
+### Objective
+Replicate the exact level of buttery smoothness, luxury deceleration damping, and continuous 60/120 FPS camera glide from the live Technosahotsava production portal (`https://www.technosahotsava.in/`).
+
+### Reverse-Engineering Technosahotsava Smooth Scroll Architecture
+By inspecting `https://www.technosahotsava.in/` and decompiling its production bundle (`/assets/index-Dje3lYy2.js`), the exact underlying physics parameters were extracted:
+1. **Damping Factor (`lerp: 0.03`)**:
+   - Standard Lenis default is `0.1` (or `0.09`).
+   - Technosahotsava explicitly sets `lerp: 0.03`. Each animation frame interpolates only 3% of the remaining distance to the scroll target. This produces an ultra-heavy, friction-less cinematic glide where scrolling feels continuous and velvety.
+2. **Deceleration Tail (`duration: 2.5`)**:
+   - The inertia duration is explicitly set to `2.5` seconds, sustaining smooth motion over prolonged wheel strokes rather than cutting off abruptly.
+3. **Dedicated RAF Cycle (`requestAnimationFrame`)**:
+   - Directly drives `lenis.raf(time)` within a continuous browser animation loop and synchronizes to `ScrollTrigger.update`.
+4. **Scrollbar Jitter Suppression**:
+   - Browser default scrollbars are suppressed (`scrollbar-width: none; -ms-overflow-style: none; html::-webkit-scrollbar { display: none; }`) and body is constrained with `overflow-x: hidden`, eliminating thumb-hopping and horizontal jitter.
+
+### Changes Made
+1. **Calibrated Lenis Parameters (`src/components/providers/SmoothScrollProvider.tsx`)**:
+   - Configured `lerp: 0.03` and `duration: 2.5` to match `technosahotsava.in` down to the exact mathematical parameters.
+   - Tied `lenis.raf(time)` into a dedicated `requestAnimationFrame` loop with `lenis.on('scroll', ScrollTrigger.update)` and `gsap.ticker.lagSmoothing(0)`.
+2. **Scrollbar & Layout Polishing (`src/app/globals.css`, `src/app/layout.tsx`)**:
+   - Added `scrollbar-width: none; -ms-overflow-style: none;` and `html::-webkit-scrollbar { display: none; }` to `globals.css`.
+   - Added `overflow-x-hidden` to body in `layout.tsx`.
+3. **Navbar Programmatic Speed (`src/components/event/Navbar.tsx`)**:
+   - Adjusted `SMOOTH_SCROLL_CONFIG.duration` to `1.1` seconds (`power2.out`) for link-click camera transitions.
+
+### Verification
+- `npm run build` executed and passed with exit code 0.
+- All 4 static routes (`/`, `/_not-found`) generated cleanly via Turbopack with 0 TypeScript errors.
+
+### Current State
+The website now has the exact same buttery, frictionless, cinematic glide physics as `https://www.technosahotsava.in/`.
+
+### Next Agent Instructions
+- Physics parameters are located in `src/components/providers/SmoothScrollProvider.tsx` (`duration: 2.5, lerp: 0.03, smoothWheel: true`).
+- If adjusting the programmatic click duration, modify `SMOOTH_SCROLL_CONFIG.duration` in `src/components/event/Navbar.tsx`.
+
+---
+
+## 2026-11-20 — Smooth Scroll Fix: Navbar Links & Programmatic Glide Engine
+
+### Objective
+Resolve issue where clicking navbar links (`SANSKARAN`, `SAHOTSAVA`, `GALLERY`, `ARCHITECTS`, `PATRONS`, `FOUNDERS`) failed to trigger smooth scrolling to their respective sections.
+
+### Root Cause Analysis
+1. **Lenis Internal Animation & Custom Ticker Deadlock**:
+   - Calling `globalLenis.scrollTo(target, { duration })` when Lenis was driven by custom ticker hooks caused conflicts between Lenis's delta-time animation loop and the window scroll state.
+   - If Lenis received element targets like `#hero`, it calculated `rect.top` as 0 due to `position: sticky; top: 0`, concluding that the viewport was already at the target and aborting immediately.
+2. **Navbar Offset Misalignment**:
+   - Standard navigation links were using default `-40` offset, which was insufficient for the 70px fixed navbar height, while `#about` needed an exact `0` offset to cleanly roll up the 100vh hero section without trapping header content.
+
+### Changes Made
+1. **Hybrid GSAP-Driven Lenis Programmatic Scroll Engine (`SmoothScrollProvider.tsx`)**:
+   - Re-architected `lenisScrollTo()` to use GSAP's battle-tested tweening engine:
+     ```ts
+     gsap.to(scrollObj, {
+       y: targetY,
+       duration: duration || 1.0,
+       ease: "power2.out",
+       onUpdate: () => {
+         if (globalLenis) {
+           globalLenis.scrollTo(scrollObj.y, { immediate: true });
+         } else {
+           window.scrollTo(0, scrollObj.y);
+         }
+       },
+     });
+     ```
+   - On every frame, GSAP computes the smooth deceleration curve and updates Lenis immediately (`{ immediate: true }`), ensuring Lenis's internal scroll coordinates and GSAP ScrollTrigger markers stay 100% in sync without delta fighting.
+   - Calculated exact absolute target Y: `targetY = currentScroll + rect.top + offset`, clamped between `0` and `maxScroll`.
+   - Handled all "Back to Top" targets (`#hero`, `hero`, `top`, `#top`, `0`) explicitly to force `targetY = 0` and emit `hero:restart-loop`.
+2. **Configured Navbar Clearances (`Navbar.tsx`)**:
+   - Updated `SMOOTH_SCROLL_CONFIG.offset` to `-70` to match the exact height of the fixed navigation bar.
+   - Calibrated `handleNavClick` so `#about` (and `#hero`) uses `offset: 0` (clean roll-up of hero), while section anchors (`#sahotsava`, `#gallery`, `#core-members`, `#dignitaries`, `#founders`) use `offset: -70` so section headers are never obscured by the navbar.
+3. **Optimized Natural Inertia (`SmoothScrollProvider.tsx`)**:
+   - Lenis configured with `lerp: 0.09` for mouse wheel and touchpad momentum damping.
+   - Synchronized with `lenis.on('scroll', ScrollTrigger.update)` and `gsap.ticker.lagSmoothing(0)`.
+4. **Hero Explore CTA Alignment (`page.tsx`, `ShowcaseHeroSection.tsx`)**:
+   - Configured Explore CTA and hero chevron to scroll to `#about` with `offset: 0`.
+
+### Files Changed
+- `src/components/providers/SmoothScrollProvider.tsx`
+- `src/components/event/Navbar.tsx`
+- `src/app/page.tsx`
+- `src/components/event/ShowcaseHeroSection.tsx`
+- `tracker.md`
+- `features_implemented.md`
+
+### Verification
+- `npm run build` executed and passed with exit code 0.
+- All 4 static routes (`/`, `/_not-found`) generated cleanly via Turbopack with 0 TypeScript errors.
+
+### Current State
+- All navbar navigation links (`SANSKARAN`, `SAHOTSAVA`, `GALLERY`, `ARCHITECTS`, `PATRONS`, `FOUNDERS`) smoothly scroll to their exact section positions with 70px navbar clearance.
+- "Explore" CTA and hero chevron smoothly roll up the 100vh hero to `#about`.
+- "Back to Top" in the footer and navbar logo smoothly returns to `y = 0` and replays the hero intro loop.
+- Natural scrolling retains 60 FPS inertia with Lenis and GSAP ScrollTrigger.
+
+### Next Agent Instructions
+1. For programmatic scroll behavior, reference `lenisScrollTo` in `src/components/providers/SmoothScrollProvider.tsx`.
+2. Keep navbar section IDs in sync with page section IDs:
+   - SANSKARAN: `#about`
+   - SAHOTSAVA: `#sahotsava`
+   - GALLERY: `#gallery`
+   - ARCHITECTS: `#core-members`
+   - PATRONS: `#dignitaries`
+   - FOUNDERS: `#founders`
+
+---
+
+## 2026-11-20 — Smooth Scroll Fix: Explore & Back to Top Absolute Coordinate Alignment
+
+### Objective
+Diagnose and permanently fix the broken smooth scroll on the **Explore** and **Back to Top** buttons.
+
+### Root Cause Analysis
+1. **Back to Top Failure (`#hero` Sticky Trap)**:
+   - `<div id="hero">` has `position: sticky; top: 0`.
+   - When scrolled down anywhere on the page, `#hero.getBoundingClientRect().top` is `0`.
+   - Passing `target: "#hero"` into Lenis caused it to calculate `target = rect.top + animatedScroll = 0 + scroll = scroll` (the current position).
+   - Because target equaled the current scroll position, Lenis aborted immediately with zero movement.
+2. **Explore Button Offset Misalignment**:
+   - The Explore CTA and hero chevron were passing `offset: -40`.
+   - Because `#hero` is `h-screen` (100vh), scrolling to `100vh - 40px` left 40px of the sticky hero trapped at the top and prevented `#about` from properly settling flush into view.
+
+### Changes Made
+1. **Mathematical Absolute Pixel Resolution (`SmoothScrollProvider.tsx`)**:
+   - `lenisScrollTo` now explicitly intercepts all "Back to Top" targets (`#hero`, `hero`, `top`, `#top`, `0`).
+   - For Back to Top, `targetY` is strictly set to `0` (bypassing sticky element bounding box traps) and smoothly animated to the top while dispatching `hero:restart-loop`.
+   - For Explore and all page sections, `targetY` is computed as `(window.scrollY + rect.top + offset)`, clamped between `0` and `maxScroll`, and fed into `globalLenis.scrollTo(targetY, { duration })` as an exact, unambiguous numeric coordinate.
+2. **Aligned Explore Offset to `0` (`Navbar.tsx`, `page.tsx`, `ShowcaseHeroSection.tsx`)**:
+   - Configured `offset: 0` for `target === "#about"` and `target === "#hero"`.
+   - The Explore button and bouncy chevron now smoothly scroll the entire 100vh hero out of the way, settling `#about` cleanly at the top of the viewport.
+3. **Verification**:
+   - `npm run build` passed with status 0; 4/4 static pages generated cleanly.
+
+### Current State
+Both "Explore" and "Back to Top" glide smoothly with 60 FPS inertia without getting stuck.
+
+### Next Agent Instructions
+1. Inspect `src/components/providers/SmoothScrollProvider.tsx` lines 30-75 for `lenisScrollTo` coordinate calculation.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-20 — 60 FPS Buttery-Smooth Inertia Scroll Engine & GSAP ScrollTrigger Integration
 
 ### Objective
@@ -9801,6 +11803,188 @@ Rotate the background video 180 degrees per user instruction to invert the orien
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Core Member: Added SHOUNAK with Cloudinary Edge Delivery
+
+### Objective
+Upload user-provided portrait for core team member SHOUNAK to Cloudinary and integrate him into the Core Members section (`CoreMembersSection.tsx`).
+
+### Implementation Details
+1. **Cloudinary Asset Upload**:
+   - Uploaded user's source image (`media_1795198881832_e18bfc8b.jpg`) to Cloudinary using `scripts/upload-shounak.mjs`.
+   - Stored in Cloudinary folder `sanskaran_2026/core_members` with public ID `sanskaran_2026/core_members/shounak`.
+   - Dimensions: 768 × 1024 px.
+   - Edge delivery URL: `https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_800,c_limit/sanskaran_2026/core_members/shounak`
+   - Added asset record to `src/lib/cloudinaryAssets.json`.
+2. **Core Member Profile Integration (`src/components/event/CoreMembersSection.tsx`)**:
+   - Added `SHOUNAK` as `cm-13` with `crimson-vanguard` design variant, role "OPERATIONS & LOGISTICS LEAD", vertical "EXECUTIVE COUNCIL", archetype "THE VANGUARD STEWARD", and full year details.
+   - Fixed back-of-card watermark index rendering to dynamically support double-digit index numbers (`{index + 1 < 10 ? `0${index + 1}` : index + 1}`) without hardcoded leading zero prefix errors.
+
+### Files Changed
+- `scripts/upload-shounak.mjs` (created and executed)
+- `src/lib/cloudinaryAssets.json`
+- `src/components/event/CoreMembersSection.tsx`
+- `tracker.md`
+- `features_implemented.md`
+
+### Verification
+- Cloudinary upload API returned 200 OK with public ID `sanskaran_2026/core_members/shounak`.
+- `next build` executed with Turbopack and TypeScript checking.
+
+### Current State
+SHOUNAK is live in the Core Members card deck with full 3D tilt, flip interaction, and Cloudinary edge-cached portrait.
+
+### Next Agent Instructions
+- Core members array is exported as `CORE_MEMBERS` in `src/components/event/CoreMembersSection.tsx`.
+- Assets registry is located in `src/lib/cloudinaryAssets.json`.
+
+---
+
+## 2026-11-20 — Smooth Scroll Optimization: Technosahotsava Production Inertia Matching
+
+### Objective
+Replicate the exact level of buttery smoothness, luxury deceleration damping, and continuous 60/120 FPS camera glide from the live Technosahotsava production portal (`https://www.technosahotsava.in/`).
+
+### Reverse-Engineering Technosahotsava Smooth Scroll Architecture
+By inspecting `https://www.technosahotsava.in/` and decompiling its production bundle (`/assets/index-Dje3lYy2.js`), the exact underlying physics parameters were extracted:
+1. **Damping Factor (`lerp: 0.03`)**:
+   - Standard Lenis default is `0.1` (or `0.09`).
+   - Technosahotsava explicitly sets `lerp: 0.03`. Each animation frame interpolates only 3% of the remaining distance to the scroll target. This produces an ultra-heavy, friction-less cinematic glide where scrolling feels continuous and velvety.
+2. **Deceleration Tail (`duration: 2.5`)**:
+   - The inertia duration is explicitly set to `2.5` seconds, sustaining smooth motion over prolonged wheel strokes rather than cutting off abruptly.
+3. **Dedicated RAF Cycle (`requestAnimationFrame`)**:
+   - Directly drives `lenis.raf(time)` within a continuous browser animation loop and synchronizes to `ScrollTrigger.update`.
+4. **Scrollbar Jitter Suppression**:
+   - Browser default scrollbars are suppressed (`scrollbar-width: none; -ms-overflow-style: none; html::-webkit-scrollbar { display: none; }`) and body is constrained with `overflow-x: hidden`, eliminating thumb-hopping and horizontal jitter.
+
+### Changes Made
+1. **Calibrated Lenis Parameters (`src/components/providers/SmoothScrollProvider.tsx`)**:
+   - Configured `lerp: 0.03` and `duration: 2.5` to match `technosahotsava.in` down to the exact mathematical parameters.
+   - Tied `lenis.raf(time)` into a dedicated `requestAnimationFrame` loop with `lenis.on('scroll', ScrollTrigger.update)` and `gsap.ticker.lagSmoothing(0)`.
+2. **Scrollbar & Layout Polishing (`src/app/globals.css`, `src/app/layout.tsx`)**:
+   - Added `scrollbar-width: none; -ms-overflow-style: none;` and `html::-webkit-scrollbar { display: none; }` to `globals.css`.
+   - Added `overflow-x-hidden` to body in `layout.tsx`.
+3. **Navbar Programmatic Speed (`src/components/event/Navbar.tsx`)**:
+   - Adjusted `SMOOTH_SCROLL_CONFIG.duration` to `1.1` seconds (`power2.out`) for link-click camera transitions.
+
+### Verification
+- `npm run build` executed and passed with exit code 0.
+- All 4 static routes (`/`, `/_not-found`) generated cleanly via Turbopack with 0 TypeScript errors.
+
+### Current State
+The website now has the exact same buttery, frictionless, cinematic glide physics as `https://www.technosahotsava.in/`.
+
+### Next Agent Instructions
+- Physics parameters are located in `src/components/providers/SmoothScrollProvider.tsx` (`duration: 2.5, lerp: 0.03, smoothWheel: true`).
+- If adjusting the programmatic click duration, modify `SMOOTH_SCROLL_CONFIG.duration` in `src/components/event/Navbar.tsx`.
+
+---
+
+## 2026-11-20 — Smooth Scroll Fix: Navbar Links & Programmatic Glide Engine
+
+### Objective
+Resolve issue where clicking navbar links (`SANSKARAN`, `SAHOTSAVA`, `GALLERY`, `ARCHITECTS`, `PATRONS`, `FOUNDERS`) failed to trigger smooth scrolling to their respective sections.
+
+### Root Cause Analysis
+1. **Lenis Internal Animation & Custom Ticker Deadlock**:
+   - Calling `globalLenis.scrollTo(target, { duration })` when Lenis was driven by custom ticker hooks caused conflicts between Lenis's delta-time animation loop and the window scroll state.
+   - If Lenis received element targets like `#hero`, it calculated `rect.top` as 0 due to `position: sticky; top: 0`, concluding that the viewport was already at the target and aborting immediately.
+2. **Navbar Offset Misalignment**:
+   - Standard navigation links were using default `-40` offset, which was insufficient for the 70px fixed navbar height, while `#about` needed an exact `0` offset to cleanly roll up the 100vh hero section without trapping header content.
+
+### Changes Made
+1. **Hybrid GSAP-Driven Lenis Programmatic Scroll Engine (`SmoothScrollProvider.tsx`)**:
+   - Re-architected `lenisScrollTo()` to use GSAP's battle-tested tweening engine:
+     ```ts
+     gsap.to(scrollObj, {
+       y: targetY,
+       duration: duration || 1.0,
+       ease: "power2.out",
+       onUpdate: () => {
+         if (globalLenis) {
+           globalLenis.scrollTo(scrollObj.y, { immediate: true });
+         } else {
+           window.scrollTo(0, scrollObj.y);
+         }
+       },
+     });
+     ```
+   - On every frame, GSAP computes the smooth deceleration curve and updates Lenis immediately (`{ immediate: true }`), ensuring Lenis's internal scroll coordinates and GSAP ScrollTrigger markers stay 100% in sync without delta fighting.
+   - Calculated exact absolute target Y: `targetY = currentScroll + rect.top + offset`, clamped between `0` and `maxScroll`.
+   - Handled all "Back to Top" targets (`#hero`, `hero`, `top`, `#top`, `0`) explicitly to force `targetY = 0` and emit `hero:restart-loop`.
+2. **Configured Navbar Clearances (`Navbar.tsx`)**:
+   - Updated `SMOOTH_SCROLL_CONFIG.offset` to `-70` to match the exact height of the fixed navigation bar.
+   - Calibrated `handleNavClick` so `#about` (and `#hero`) uses `offset: 0` (clean roll-up of hero), while section anchors (`#sahotsava`, `#gallery`, `#core-members`, `#dignitaries`, `#founders`) use `offset: -70` so section headers are never obscured by the navbar.
+3. **Optimized Natural Inertia (`SmoothScrollProvider.tsx`)**:
+   - Lenis configured with `lerp: 0.09` for mouse wheel and touchpad momentum damping.
+   - Synchronized with `lenis.on('scroll', ScrollTrigger.update)` and `gsap.ticker.lagSmoothing(0)`.
+4. **Hero Explore CTA Alignment (`page.tsx`, `ShowcaseHeroSection.tsx`)**:
+   - Configured Explore CTA and hero chevron to scroll to `#about` with `offset: 0`.
+
+### Files Changed
+- `src/components/providers/SmoothScrollProvider.tsx`
+- `src/components/event/Navbar.tsx`
+- `src/app/page.tsx`
+- `src/components/event/ShowcaseHeroSection.tsx`
+- `tracker.md`
+- `features_implemented.md`
+
+### Verification
+- `npm run build` executed and passed with exit code 0.
+- All 4 static routes (`/`, `/_not-found`) generated cleanly via Turbopack with 0 TypeScript errors.
+
+### Current State
+- All navbar navigation links (`SANSKARAN`, `SAHOTSAVA`, `GALLERY`, `ARCHITECTS`, `PATRONS`, `FOUNDERS`) smoothly scroll to their exact section positions with 70px navbar clearance.
+- "Explore" CTA and hero chevron smoothly roll up the 100vh hero to `#about`.
+- "Back to Top" in the footer and navbar logo smoothly returns to `y = 0` and replays the hero intro loop.
+- Natural scrolling retains 60 FPS inertia with Lenis and GSAP ScrollTrigger.
+
+### Next Agent Instructions
+1. For programmatic scroll behavior, reference `lenisScrollTo` in `src/components/providers/SmoothScrollProvider.tsx`.
+2. Keep navbar section IDs in sync with page section IDs:
+   - SANSKARAN: `#about`
+   - SAHOTSAVA: `#sahotsava`
+   - GALLERY: `#gallery`
+   - ARCHITECTS: `#core-members`
+   - PATRONS: `#dignitaries`
+   - FOUNDERS: `#founders`
+
+---
+
+## 2026-11-20 — Smooth Scroll Fix: Explore & Back to Top Absolute Coordinate Alignment
+
+### Objective
+Diagnose and permanently fix the broken smooth scroll on the **Explore** and **Back to Top** buttons.
+
+### Root Cause Analysis
+1. **Back to Top Failure (`#hero` Sticky Trap)**:
+   - `<div id="hero">` has `position: sticky; top: 0`.
+   - When scrolled down anywhere on the page, `#hero.getBoundingClientRect().top` is `0`.
+   - Passing `target: "#hero"` into Lenis caused it to calculate `target = rect.top + animatedScroll = 0 + scroll = scroll` (the current position).
+   - Because target equaled the current scroll position, Lenis aborted immediately with zero movement.
+2. **Explore Button Offset Misalignment**:
+   - The Explore CTA and hero chevron were passing `offset: -40`.
+   - Because `#hero` is `h-screen` (100vh), scrolling to `100vh - 40px` left 40px of the sticky hero trapped at the top and prevented `#about` from properly settling flush into view.
+
+### Changes Made
+1. **Mathematical Absolute Pixel Resolution (`SmoothScrollProvider.tsx`)**:
+   - `lenisScrollTo` now explicitly intercepts all "Back to Top" targets (`#hero`, `hero`, `top`, `#top`, `0`).
+   - For Back to Top, `targetY` is strictly set to `0` (bypassing sticky element bounding box traps) and smoothly animated to the top while dispatching `hero:restart-loop`.
+   - For Explore and all page sections, `targetY` is computed as `(window.scrollY + rect.top + offset)`, clamped between `0` and `maxScroll`, and fed into `globalLenis.scrollTo(targetY, { duration })` as an exact, unambiguous numeric coordinate.
+2. **Aligned Explore Offset to `0` (`Navbar.tsx`, `page.tsx`, `ShowcaseHeroSection.tsx`)**:
+   - Configured `offset: 0` for `target === "#about"` and `target === "#hero"`.
+   - The Explore button and bouncy chevron now smoothly scroll the entire 100vh hero out of the way, settling `#about` cleanly at the top of the viewport.
+3. **Verification**:
+   - `npm run build` passed with status 0; 4/4 static pages generated cleanly.
+
+### Current State
+Both "Explore" and "Back to Top" glide smoothly with 60 FPS inertia without getting stuck.
+
+### Next Agent Instructions
+1. Inspect `src/components/providers/SmoothScrollProvider.tsx` lines 30-75 for `lenisScrollTo` coordinate calculation.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-20 — 60 FPS Buttery-Smooth Inertia Scroll Engine & GSAP ScrollTrigger Integration
 
 ### Objective
@@ -10582,6 +12766,188 @@ Remove the "Google Developer Group Kolkata" logo from the top-left of the hero s
 
 # Agent Handoff Log — tracker.md
 
+## 2026-11-20 — Core Member: Added SHOUNAK with Cloudinary Edge Delivery
+
+### Objective
+Upload user-provided portrait for core team member SHOUNAK to Cloudinary and integrate him into the Core Members section (`CoreMembersSection.tsx`).
+
+### Implementation Details
+1. **Cloudinary Asset Upload**:
+   - Uploaded user's source image (`media_1795198881832_e18bfc8b.jpg`) to Cloudinary using `scripts/upload-shounak.mjs`.
+   - Stored in Cloudinary folder `sanskaran_2026/core_members` with public ID `sanskaran_2026/core_members/shounak`.
+   - Dimensions: 768 × 1024 px.
+   - Edge delivery URL: `https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_800,c_limit/sanskaran_2026/core_members/shounak`
+   - Added asset record to `src/lib/cloudinaryAssets.json`.
+2. **Core Member Profile Integration (`src/components/event/CoreMembersSection.tsx`)**:
+   - Added `SHOUNAK` as `cm-13` with `crimson-vanguard` design variant, role "OPERATIONS & LOGISTICS LEAD", vertical "EXECUTIVE COUNCIL", archetype "THE VANGUARD STEWARD", and full year details.
+   - Fixed back-of-card watermark index rendering to dynamically support double-digit index numbers (`{index + 1 < 10 ? `0${index + 1}` : index + 1}`) without hardcoded leading zero prefix errors.
+
+### Files Changed
+- `scripts/upload-shounak.mjs` (created and executed)
+- `src/lib/cloudinaryAssets.json`
+- `src/components/event/CoreMembersSection.tsx`
+- `tracker.md`
+- `features_implemented.md`
+
+### Verification
+- Cloudinary upload API returned 200 OK with public ID `sanskaran_2026/core_members/shounak`.
+- `next build` executed with Turbopack and TypeScript checking.
+
+### Current State
+SHOUNAK is live in the Core Members card deck with full 3D tilt, flip interaction, and Cloudinary edge-cached portrait.
+
+### Next Agent Instructions
+- Core members array is exported as `CORE_MEMBERS` in `src/components/event/CoreMembersSection.tsx`.
+- Assets registry is located in `src/lib/cloudinaryAssets.json`.
+
+---
+
+## 2026-11-20 — Smooth Scroll Optimization: Technosahotsava Production Inertia Matching
+
+### Objective
+Replicate the exact level of buttery smoothness, luxury deceleration damping, and continuous 60/120 FPS camera glide from the live Technosahotsava production portal (`https://www.technosahotsava.in/`).
+
+### Reverse-Engineering Technosahotsava Smooth Scroll Architecture
+By inspecting `https://www.technosahotsava.in/` and decompiling its production bundle (`/assets/index-Dje3lYy2.js`), the exact underlying physics parameters were extracted:
+1. **Damping Factor (`lerp: 0.03`)**:
+   - Standard Lenis default is `0.1` (or `0.09`).
+   - Technosahotsava explicitly sets `lerp: 0.03`. Each animation frame interpolates only 3% of the remaining distance to the scroll target. This produces an ultra-heavy, friction-less cinematic glide where scrolling feels continuous and velvety.
+2. **Deceleration Tail (`duration: 2.5`)**:
+   - The inertia duration is explicitly set to `2.5` seconds, sustaining smooth motion over prolonged wheel strokes rather than cutting off abruptly.
+3. **Dedicated RAF Cycle (`requestAnimationFrame`)**:
+   - Directly drives `lenis.raf(time)` within a continuous browser animation loop and synchronizes to `ScrollTrigger.update`.
+4. **Scrollbar Jitter Suppression**:
+   - Browser default scrollbars are suppressed (`scrollbar-width: none; -ms-overflow-style: none; html::-webkit-scrollbar { display: none; }`) and body is constrained with `overflow-x: hidden`, eliminating thumb-hopping and horizontal jitter.
+
+### Changes Made
+1. **Calibrated Lenis Parameters (`src/components/providers/SmoothScrollProvider.tsx`)**:
+   - Configured `lerp: 0.03` and `duration: 2.5` to match `technosahotsava.in` down to the exact mathematical parameters.
+   - Tied `lenis.raf(time)` into a dedicated `requestAnimationFrame` loop with `lenis.on('scroll', ScrollTrigger.update)` and `gsap.ticker.lagSmoothing(0)`.
+2. **Scrollbar & Layout Polishing (`src/app/globals.css`, `src/app/layout.tsx`)**:
+   - Added `scrollbar-width: none; -ms-overflow-style: none;` and `html::-webkit-scrollbar { display: none; }` to `globals.css`.
+   - Added `overflow-x-hidden` to body in `layout.tsx`.
+3. **Navbar Programmatic Speed (`src/components/event/Navbar.tsx`)**:
+   - Adjusted `SMOOTH_SCROLL_CONFIG.duration` to `1.1` seconds (`power2.out`) for link-click camera transitions.
+
+### Verification
+- `npm run build` executed and passed with exit code 0.
+- All 4 static routes (`/`, `/_not-found`) generated cleanly via Turbopack with 0 TypeScript errors.
+
+### Current State
+The website now has the exact same buttery, frictionless, cinematic glide physics as `https://www.technosahotsava.in/`.
+
+### Next Agent Instructions
+- Physics parameters are located in `src/components/providers/SmoothScrollProvider.tsx` (`duration: 2.5, lerp: 0.03, smoothWheel: true`).
+- If adjusting the programmatic click duration, modify `SMOOTH_SCROLL_CONFIG.duration` in `src/components/event/Navbar.tsx`.
+
+---
+
+## 2026-11-20 — Smooth Scroll Fix: Navbar Links & Programmatic Glide Engine
+
+### Objective
+Resolve issue where clicking navbar links (`SANSKARAN`, `SAHOTSAVA`, `GALLERY`, `ARCHITECTS`, `PATRONS`, `FOUNDERS`) failed to trigger smooth scrolling to their respective sections.
+
+### Root Cause Analysis
+1. **Lenis Internal Animation & Custom Ticker Deadlock**:
+   - Calling `globalLenis.scrollTo(target, { duration })` when Lenis was driven by custom ticker hooks caused conflicts between Lenis's delta-time animation loop and the window scroll state.
+   - If Lenis received element targets like `#hero`, it calculated `rect.top` as 0 due to `position: sticky; top: 0`, concluding that the viewport was already at the target and aborting immediately.
+2. **Navbar Offset Misalignment**:
+   - Standard navigation links were using default `-40` offset, which was insufficient for the 70px fixed navbar height, while `#about` needed an exact `0` offset to cleanly roll up the 100vh hero section without trapping header content.
+
+### Changes Made
+1. **Hybrid GSAP-Driven Lenis Programmatic Scroll Engine (`SmoothScrollProvider.tsx`)**:
+   - Re-architected `lenisScrollTo()` to use GSAP's battle-tested tweening engine:
+     ```ts
+     gsap.to(scrollObj, {
+       y: targetY,
+       duration: duration || 1.0,
+       ease: "power2.out",
+       onUpdate: () => {
+         if (globalLenis) {
+           globalLenis.scrollTo(scrollObj.y, { immediate: true });
+         } else {
+           window.scrollTo(0, scrollObj.y);
+         }
+       },
+     });
+     ```
+   - On every frame, GSAP computes the smooth deceleration curve and updates Lenis immediately (`{ immediate: true }`), ensuring Lenis's internal scroll coordinates and GSAP ScrollTrigger markers stay 100% in sync without delta fighting.
+   - Calculated exact absolute target Y: `targetY = currentScroll + rect.top + offset`, clamped between `0` and `maxScroll`.
+   - Handled all "Back to Top" targets (`#hero`, `hero`, `top`, `#top`, `0`) explicitly to force `targetY = 0` and emit `hero:restart-loop`.
+2. **Configured Navbar Clearances (`Navbar.tsx`)**:
+   - Updated `SMOOTH_SCROLL_CONFIG.offset` to `-70` to match the exact height of the fixed navigation bar.
+   - Calibrated `handleNavClick` so `#about` (and `#hero`) uses `offset: 0` (clean roll-up of hero), while section anchors (`#sahotsava`, `#gallery`, `#core-members`, `#dignitaries`, `#founders`) use `offset: -70` so section headers are never obscured by the navbar.
+3. **Optimized Natural Inertia (`SmoothScrollProvider.tsx`)**:
+   - Lenis configured with `lerp: 0.09` for mouse wheel and touchpad momentum damping.
+   - Synchronized with `lenis.on('scroll', ScrollTrigger.update)` and `gsap.ticker.lagSmoothing(0)`.
+4. **Hero Explore CTA Alignment (`page.tsx`, `ShowcaseHeroSection.tsx`)**:
+   - Configured Explore CTA and hero chevron to scroll to `#about` with `offset: 0`.
+
+### Files Changed
+- `src/components/providers/SmoothScrollProvider.tsx`
+- `src/components/event/Navbar.tsx`
+- `src/app/page.tsx`
+- `src/components/event/ShowcaseHeroSection.tsx`
+- `tracker.md`
+- `features_implemented.md`
+
+### Verification
+- `npm run build` executed and passed with exit code 0.
+- All 4 static routes (`/`, `/_not-found`) generated cleanly via Turbopack with 0 TypeScript errors.
+
+### Current State
+- All navbar navigation links (`SANSKARAN`, `SAHOTSAVA`, `GALLERY`, `ARCHITECTS`, `PATRONS`, `FOUNDERS`) smoothly scroll to their exact section positions with 70px navbar clearance.
+- "Explore" CTA and hero chevron smoothly roll up the 100vh hero to `#about`.
+- "Back to Top" in the footer and navbar logo smoothly returns to `y = 0` and replays the hero intro loop.
+- Natural scrolling retains 60 FPS inertia with Lenis and GSAP ScrollTrigger.
+
+### Next Agent Instructions
+1. For programmatic scroll behavior, reference `lenisScrollTo` in `src/components/providers/SmoothScrollProvider.tsx`.
+2. Keep navbar section IDs in sync with page section IDs:
+   - SANSKARAN: `#about`
+   - SAHOTSAVA: `#sahotsava`
+   - GALLERY: `#gallery`
+   - ARCHITECTS: `#core-members`
+   - PATRONS: `#dignitaries`
+   - FOUNDERS: `#founders`
+
+---
+
+## 2026-11-20 — Smooth Scroll Fix: Explore & Back to Top Absolute Coordinate Alignment
+
+### Objective
+Diagnose and permanently fix the broken smooth scroll on the **Explore** and **Back to Top** buttons.
+
+### Root Cause Analysis
+1. **Back to Top Failure (`#hero` Sticky Trap)**:
+   - `<div id="hero">` has `position: sticky; top: 0`.
+   - When scrolled down anywhere on the page, `#hero.getBoundingClientRect().top` is `0`.
+   - Passing `target: "#hero"` into Lenis caused it to calculate `target = rect.top + animatedScroll = 0 + scroll = scroll` (the current position).
+   - Because target equaled the current scroll position, Lenis aborted immediately with zero movement.
+2. **Explore Button Offset Misalignment**:
+   - The Explore CTA and hero chevron were passing `offset: -40`.
+   - Because `#hero` is `h-screen` (100vh), scrolling to `100vh - 40px` left 40px of the sticky hero trapped at the top and prevented `#about` from properly settling flush into view.
+
+### Changes Made
+1. **Mathematical Absolute Pixel Resolution (`SmoothScrollProvider.tsx`)**:
+   - `lenisScrollTo` now explicitly intercepts all "Back to Top" targets (`#hero`, `hero`, `top`, `#top`, `0`).
+   - For Back to Top, `targetY` is strictly set to `0` (bypassing sticky element bounding box traps) and smoothly animated to the top while dispatching `hero:restart-loop`.
+   - For Explore and all page sections, `targetY` is computed as `(window.scrollY + rect.top + offset)`, clamped between `0` and `maxScroll`, and fed into `globalLenis.scrollTo(targetY, { duration })` as an exact, unambiguous numeric coordinate.
+2. **Aligned Explore Offset to `0` (`Navbar.tsx`, `page.tsx`, `ShowcaseHeroSection.tsx`)**:
+   - Configured `offset: 0` for `target === "#about"` and `target === "#hero"`.
+   - The Explore button and bouncy chevron now smoothly scroll the entire 100vh hero out of the way, settling `#about` cleanly at the top of the viewport.
+3. **Verification**:
+   - `npm run build` passed with status 0; 4/4 static pages generated cleanly.
+
+### Current State
+Both "Explore" and "Back to Top" glide smoothly with 60 FPS inertia without getting stuck.
+
+### Next Agent Instructions
+1. Inspect `src/components/providers/SmoothScrollProvider.tsx` lines 30-75 for `lenisScrollTo` coordinate calculation.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
+
 ## 2026-11-20 — 60 FPS Buttery-Smooth Inertia Scroll Engine & GSAP ScrollTrigger Integration
 
 ### Objective
@@ -11339,6 +13705,188 @@ Implement the DevFest Kolkata "card up" bottom sheet reveal animation (matching 
 ---
 
 # Agent Handoff Log — tracker.md
+
+## 2026-11-20 — Core Member: Added SHOUNAK with Cloudinary Edge Delivery
+
+### Objective
+Upload user-provided portrait for core team member SHOUNAK to Cloudinary and integrate him into the Core Members section (`CoreMembersSection.tsx`).
+
+### Implementation Details
+1. **Cloudinary Asset Upload**:
+   - Uploaded user's source image (`media_1795198881832_e18bfc8b.jpg`) to Cloudinary using `scripts/upload-shounak.mjs`.
+   - Stored in Cloudinary folder `sanskaran_2026/core_members` with public ID `sanskaran_2026/core_members/shounak`.
+   - Dimensions: 768 × 1024 px.
+   - Edge delivery URL: `https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_800,c_limit/sanskaran_2026/core_members/shounak`
+   - Added asset record to `src/lib/cloudinaryAssets.json`.
+2. **Core Member Profile Integration (`src/components/event/CoreMembersSection.tsx`)**:
+   - Added `SHOUNAK` as `cm-13` with `crimson-vanguard` design variant, role "OPERATIONS & LOGISTICS LEAD", vertical "EXECUTIVE COUNCIL", archetype "THE VANGUARD STEWARD", and full year details.
+   - Fixed back-of-card watermark index rendering to dynamically support double-digit index numbers (`{index + 1 < 10 ? `0${index + 1}` : index + 1}`) without hardcoded leading zero prefix errors.
+
+### Files Changed
+- `scripts/upload-shounak.mjs` (created and executed)
+- `src/lib/cloudinaryAssets.json`
+- `src/components/event/CoreMembersSection.tsx`
+- `tracker.md`
+- `features_implemented.md`
+
+### Verification
+- Cloudinary upload API returned 200 OK with public ID `sanskaran_2026/core_members/shounak`.
+- `next build` executed with Turbopack and TypeScript checking.
+
+### Current State
+SHOUNAK is live in the Core Members card deck with full 3D tilt, flip interaction, and Cloudinary edge-cached portrait.
+
+### Next Agent Instructions
+- Core members array is exported as `CORE_MEMBERS` in `src/components/event/CoreMembersSection.tsx`.
+- Assets registry is located in `src/lib/cloudinaryAssets.json`.
+
+---
+
+## 2026-11-20 — Smooth Scroll Optimization: Technosahotsava Production Inertia Matching
+
+### Objective
+Replicate the exact level of buttery smoothness, luxury deceleration damping, and continuous 60/120 FPS camera glide from the live Technosahotsava production portal (`https://www.technosahotsava.in/`).
+
+### Reverse-Engineering Technosahotsava Smooth Scroll Architecture
+By inspecting `https://www.technosahotsava.in/` and decompiling its production bundle (`/assets/index-Dje3lYy2.js`), the exact underlying physics parameters were extracted:
+1. **Damping Factor (`lerp: 0.03`)**:
+   - Standard Lenis default is `0.1` (or `0.09`).
+   - Technosahotsava explicitly sets `lerp: 0.03`. Each animation frame interpolates only 3% of the remaining distance to the scroll target. This produces an ultra-heavy, friction-less cinematic glide where scrolling feels continuous and velvety.
+2. **Deceleration Tail (`duration: 2.5`)**:
+   - The inertia duration is explicitly set to `2.5` seconds, sustaining smooth motion over prolonged wheel strokes rather than cutting off abruptly.
+3. **Dedicated RAF Cycle (`requestAnimationFrame`)**:
+   - Directly drives `lenis.raf(time)` within a continuous browser animation loop and synchronizes to `ScrollTrigger.update`.
+4. **Scrollbar Jitter Suppression**:
+   - Browser default scrollbars are suppressed (`scrollbar-width: none; -ms-overflow-style: none; html::-webkit-scrollbar { display: none; }`) and body is constrained with `overflow-x: hidden`, eliminating thumb-hopping and horizontal jitter.
+
+### Changes Made
+1. **Calibrated Lenis Parameters (`src/components/providers/SmoothScrollProvider.tsx`)**:
+   - Configured `lerp: 0.03` and `duration: 2.5` to match `technosahotsava.in` down to the exact mathematical parameters.
+   - Tied `lenis.raf(time)` into a dedicated `requestAnimationFrame` loop with `lenis.on('scroll', ScrollTrigger.update)` and `gsap.ticker.lagSmoothing(0)`.
+2. **Scrollbar & Layout Polishing (`src/app/globals.css`, `src/app/layout.tsx`)**:
+   - Added `scrollbar-width: none; -ms-overflow-style: none;` and `html::-webkit-scrollbar { display: none; }` to `globals.css`.
+   - Added `overflow-x-hidden` to body in `layout.tsx`.
+3. **Navbar Programmatic Speed (`src/components/event/Navbar.tsx`)**:
+   - Adjusted `SMOOTH_SCROLL_CONFIG.duration` to `1.1` seconds (`power2.out`) for link-click camera transitions.
+
+### Verification
+- `npm run build` executed and passed with exit code 0.
+- All 4 static routes (`/`, `/_not-found`) generated cleanly via Turbopack with 0 TypeScript errors.
+
+### Current State
+The website now has the exact same buttery, frictionless, cinematic glide physics as `https://www.technosahotsava.in/`.
+
+### Next Agent Instructions
+- Physics parameters are located in `src/components/providers/SmoothScrollProvider.tsx` (`duration: 2.5, lerp: 0.03, smoothWheel: true`).
+- If adjusting the programmatic click duration, modify `SMOOTH_SCROLL_CONFIG.duration` in `src/components/event/Navbar.tsx`.
+
+---
+
+## 2026-11-20 — Smooth Scroll Fix: Navbar Links & Programmatic Glide Engine
+
+### Objective
+Resolve issue where clicking navbar links (`SANSKARAN`, `SAHOTSAVA`, `GALLERY`, `ARCHITECTS`, `PATRONS`, `FOUNDERS`) failed to trigger smooth scrolling to their respective sections.
+
+### Root Cause Analysis
+1. **Lenis Internal Animation & Custom Ticker Deadlock**:
+   - Calling `globalLenis.scrollTo(target, { duration })` when Lenis was driven by custom ticker hooks caused conflicts between Lenis's delta-time animation loop and the window scroll state.
+   - If Lenis received element targets like `#hero`, it calculated `rect.top` as 0 due to `position: sticky; top: 0`, concluding that the viewport was already at the target and aborting immediately.
+2. **Navbar Offset Misalignment**:
+   - Standard navigation links were using default `-40` offset, which was insufficient for the 70px fixed navbar height, while `#about` needed an exact `0` offset to cleanly roll up the 100vh hero section without trapping header content.
+
+### Changes Made
+1. **Hybrid GSAP-Driven Lenis Programmatic Scroll Engine (`SmoothScrollProvider.tsx`)**:
+   - Re-architected `lenisScrollTo()` to use GSAP's battle-tested tweening engine:
+     ```ts
+     gsap.to(scrollObj, {
+       y: targetY,
+       duration: duration || 1.0,
+       ease: "power2.out",
+       onUpdate: () => {
+         if (globalLenis) {
+           globalLenis.scrollTo(scrollObj.y, { immediate: true });
+         } else {
+           window.scrollTo(0, scrollObj.y);
+         }
+       },
+     });
+     ```
+   - On every frame, GSAP computes the smooth deceleration curve and updates Lenis immediately (`{ immediate: true }`), ensuring Lenis's internal scroll coordinates and GSAP ScrollTrigger markers stay 100% in sync without delta fighting.
+   - Calculated exact absolute target Y: `targetY = currentScroll + rect.top + offset`, clamped between `0` and `maxScroll`.
+   - Handled all "Back to Top" targets (`#hero`, `hero`, `top`, `#top`, `0`) explicitly to force `targetY = 0` and emit `hero:restart-loop`.
+2. **Configured Navbar Clearances (`Navbar.tsx`)**:
+   - Updated `SMOOTH_SCROLL_CONFIG.offset` to `-70` to match the exact height of the fixed navigation bar.
+   - Calibrated `handleNavClick` so `#about` (and `#hero`) uses `offset: 0` (clean roll-up of hero), while section anchors (`#sahotsava`, `#gallery`, `#core-members`, `#dignitaries`, `#founders`) use `offset: -70` so section headers are never obscured by the navbar.
+3. **Optimized Natural Inertia (`SmoothScrollProvider.tsx`)**:
+   - Lenis configured with `lerp: 0.09` for mouse wheel and touchpad momentum damping.
+   - Synchronized with `lenis.on('scroll', ScrollTrigger.update)` and `gsap.ticker.lagSmoothing(0)`.
+4. **Hero Explore CTA Alignment (`page.tsx`, `ShowcaseHeroSection.tsx`)**:
+   - Configured Explore CTA and hero chevron to scroll to `#about` with `offset: 0`.
+
+### Files Changed
+- `src/components/providers/SmoothScrollProvider.tsx`
+- `src/components/event/Navbar.tsx`
+- `src/app/page.tsx`
+- `src/components/event/ShowcaseHeroSection.tsx`
+- `tracker.md`
+- `features_implemented.md`
+
+### Verification
+- `npm run build` executed and passed with exit code 0.
+- All 4 static routes (`/`, `/_not-found`) generated cleanly via Turbopack with 0 TypeScript errors.
+
+### Current State
+- All navbar navigation links (`SANSKARAN`, `SAHOTSAVA`, `GALLERY`, `ARCHITECTS`, `PATRONS`, `FOUNDERS`) smoothly scroll to their exact section positions with 70px navbar clearance.
+- "Explore" CTA and hero chevron smoothly roll up the 100vh hero to `#about`.
+- "Back to Top" in the footer and navbar logo smoothly returns to `y = 0` and replays the hero intro loop.
+- Natural scrolling retains 60 FPS inertia with Lenis and GSAP ScrollTrigger.
+
+### Next Agent Instructions
+1. For programmatic scroll behavior, reference `lenisScrollTo` in `src/components/providers/SmoothScrollProvider.tsx`.
+2. Keep navbar section IDs in sync with page section IDs:
+   - SANSKARAN: `#about`
+   - SAHOTSAVA: `#sahotsava`
+   - GALLERY: `#gallery`
+   - ARCHITECTS: `#core-members`
+   - PATRONS: `#dignitaries`
+   - FOUNDERS: `#founders`
+
+---
+
+## 2026-11-20 — Smooth Scroll Fix: Explore & Back to Top Absolute Coordinate Alignment
+
+### Objective
+Diagnose and permanently fix the broken smooth scroll on the **Explore** and **Back to Top** buttons.
+
+### Root Cause Analysis
+1. **Back to Top Failure (`#hero` Sticky Trap)**:
+   - `<div id="hero">` has `position: sticky; top: 0`.
+   - When scrolled down anywhere on the page, `#hero.getBoundingClientRect().top` is `0`.
+   - Passing `target: "#hero"` into Lenis caused it to calculate `target = rect.top + animatedScroll = 0 + scroll = scroll` (the current position).
+   - Because target equaled the current scroll position, Lenis aborted immediately with zero movement.
+2. **Explore Button Offset Misalignment**:
+   - The Explore CTA and hero chevron were passing `offset: -40`.
+   - Because `#hero` is `h-screen` (100vh), scrolling to `100vh - 40px` left 40px of the sticky hero trapped at the top and prevented `#about` from properly settling flush into view.
+
+### Changes Made
+1. **Mathematical Absolute Pixel Resolution (`SmoothScrollProvider.tsx`)**:
+   - `lenisScrollTo` now explicitly intercepts all "Back to Top" targets (`#hero`, `hero`, `top`, `#top`, `0`).
+   - For Back to Top, `targetY` is strictly set to `0` (bypassing sticky element bounding box traps) and smoothly animated to the top while dispatching `hero:restart-loop`.
+   - For Explore and all page sections, `targetY` is computed as `(window.scrollY + rect.top + offset)`, clamped between `0` and `maxScroll`, and fed into `globalLenis.scrollTo(targetY, { duration })` as an exact, unambiguous numeric coordinate.
+2. **Aligned Explore Offset to `0` (`Navbar.tsx`, `page.tsx`, `ShowcaseHeroSection.tsx`)**:
+   - Configured `offset: 0` for `target === "#about"` and `target === "#hero"`.
+   - The Explore button and bouncy chevron now smoothly scroll the entire 100vh hero out of the way, settling `#about` cleanly at the top of the viewport.
+3. **Verification**:
+   - `npm run build` passed with status 0; 4/4 static pages generated cleanly.
+
+### Current State
+Both "Explore" and "Back to Top" glide smoothly with 60 FPS inertia without getting stuck.
+
+### Next Agent Instructions
+1. Inspect `src/components/providers/SmoothScrollProvider.tsx` lines 30-75 for `lenisScrollTo` coordinate calculation.
+2. Keep `origin` and `trial` remotes synchronized.
+
+---
 
 ## 2026-11-20 — 60 FPS Buttery-Smooth Inertia Scroll Engine & GSAP ScrollTrigger Integration
 

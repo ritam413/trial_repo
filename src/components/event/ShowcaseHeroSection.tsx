@@ -367,7 +367,7 @@ export default function ShowcaseHeroSection({
     if (onExplore) {
       onExplore();
     } else {
-      gsapScrollTo("#about", SMOOTH_SCROLL_CONFIG.duration, SMOOTH_SCROLL_CONFIG.offset);
+      gsapScrollTo("#about", SMOOTH_SCROLL_CONFIG.duration, 0);
     }
   };
 

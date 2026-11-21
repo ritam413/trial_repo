@@ -5,7 +5,7 @@ High-impact, immersive showcase and festival portal for **Sanskaran & Sahotsava 
 
 ## Architecture
 - **Framework**: Next.js 16 (React 19) App Router with Turbopack
-- **Animation & Motion Suite**: GSAP ScrollTrigger, Lenis 60 FPS Inertia Smooth Scroll Engine, Framer Motion layout animations (`/gsap-animation`, `/animate`, `/context7-mcp`)
+- **Animation & Motion Suite**: GSAP ScrollTrigger, Hybrid GSAP + Lenis 60 FPS Inertia Smooth Scroll Engine (Lenis wheel/touchpad inertia with GSAP tween-driven programmatic glide), Framer Motion layout animations (`/gsap-animation`, `/animate`, `/context7-mcp`)
 - **UI & Design System**: Tailwind CSS v4, Superhuman-inspired editorial palette (Warm Parchment, Midnight Wine, Royal Violet, Lilac Mist, Deep Lagoon, Soft Mist, Ink Charcoal, Paper White), custom SVG vector art, and atmospheric dark theme storytelling bands
 - **Type Safety**: TypeScript strict mode
 - **Deployment & Hosting Strategy**: Static export ready or edge deployment for high-concurrency festival traffic
