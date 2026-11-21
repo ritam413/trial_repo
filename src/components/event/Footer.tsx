@@ -10,9 +10,9 @@ export default function Footer() {
   };
 
   return (
-    <footer className="border-t border-white/10 bg-[#0d0d0e] text-[#ffffff] py-12 px-4 sm:px-8 text-center z-10 relative">
-      <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-        <div className="text-left">
+    <footer className="border-t border-white/10 bg-[#0d0d0e] text-[#ffffff] py-12 px-4 sm:px-8 z-10 relative">
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center md:items-center justify-between gap-6 text-center md:text-left">
+        <div className="text-center md:text-left">
           <p className="font-display text-2xl sm:text-3xl text-[#ffffff] tracking-wide uppercase">
             SANSKARAN &amp; SAHOTSAVA 2026
           </p>

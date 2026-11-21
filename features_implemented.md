@@ -52,7 +52,7 @@ All foundational libraries, responsive layout engines, and the streamlined **Dev
     - **Downward Curtain Unfolding Motion**: Outer container expands height (`0` to `"auto"`, `0.5s`, `cubic-bezier(0.16, 1, 0.3, 1)`) while inner content translates downward (`y: -30px` to `0`, `0.48s`), creating a seamless physical downward curtain reveal.
     - **Smooth Retracting Motion**: On close / `(X)` click, outer container shrinks height (`"auto"` to `0`, `0.4s`, `cubic-bezier(0.32, 0.72, 0, 1)`) while inner content glides upward (`y: 0` to `-24px`, `0.25s`) with clean fade-out.
     - Consistent dark theme background across collapsed and expanded states eliminating white flash artifacts.
-    - Centered editorial header lockup, thin separator rule, and 6-photo grid with lightbox inspection modal (using clean regular weight `font-sans font-normal` for photo titles).
+    - Centered editorial header lockup, thin separator rule, and pure photo exhibition grid (clean borderless photo tiles displaying purely the images with zero text clutter, tags, titles, or heavy darkening gradients; hover reveals subtle expand icon to open high-definition full-canvas lightbox).
     - **100% Mathematically & Visually Centered Slit Typography**: Pinned society titles using absolute inset positioning (`absolute inset-0 flex items-center justify-center`) with bold condensed display typography (**Bebas Neue** / `font-display font-slit-editorial tracking-wider uppercase`) ensuring all 14 society titles align down a single true vertical center axis.
     - **Responsive Mobile Typography**: Adjusted slit titles to `text-[13px] sm:text-xl md:text-2xl lg:text-3xl` and hid the left category on `< 640px` (`hidden sm:flex`) to eliminate overlapping text collisions on mobile viewports. Expanded poster titles scale smoothly from `text-2xl` on mobile to `text-7xl` on desktop.
   - **Complete Elimination of Playing Card Metaphor Across All Sections**:
@@ -211,10 +211,11 @@ All foundational libraries, responsive layout engines, and the streamlined **Dev
     - In `HeroSection.tsx`, updated the 3D scene so that each of the 18 cards has its own staggered deal progress (`cardDealStagger = (i / 18) * 0.45`), dealing in all 18 cards from the sides one by one rather than as a single static block.
   - **Archetype Showcase Side Entrance**:
     - In `CardShowcase.tsx`, added alternating side entrance animations (`x: -120` / `+120`, rotate `±8°`) so all 4 archetype cards also fly in from the sides on scroll.
-  - **Interactive 3D Card Flip**:
-    - Tap or click (and keyboard Enter/Space) smoothly flips each card 180° (`preserve-3d`, `backface-visibility: hidden`), revealing back face with member vertical, archetype, year, and detailed vision quote.
-  - **Mouse Cursor 3D Tilt & Specular Sheen**:
-    - Real-time tracking applies subtle 3D rotational tilt on hover along with an interactive glare sheen that follows pointer movement.
+  - **Interactive 3D Card Hover Physics & Lift**:
+    - Smooth hardware-accelerated cardlift on hover (`hover:-translate-y-3`, `transform-gpu`, `duration-500 ease-out`).
+    - Elevated deep drop shadow with Royal Violet ambient glow (`hover:shadow-[0_32px_64px_-12px_rgba(0,0,0,0.95),0_0_36px_rgba(113,76,182,0.35)]`).
+    - Border luminance transitioning to Lilac Mist (`hover:border-[#d4c7ff]`) and subtle top glint specular overlay.
+    - Decoupled inner interactive card from outer GSAP ScrollTrigger wrapper, preventing transform conflicts.
   - **House Category Filtering**:
     - Filter tabs ("ALL ARCHITECTS", "CRIMSON VANGUARD", "CHECKERED SOVEREIGN", "CYBER HORIZON") that seamlessly re-deal and filter visible cards.
   - **Synthesized Audio Tactile Feedback**:

@@ -2,6 +2,8 @@
 
 import React, { useEffect, useState, useRef } from "react";
 import gsap from "gsap";
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X, ChevronRight, Instagram, Youtube, Mail } from "lucide-react";
 import { lenisScrollTo, getLenis } from "@/components/providers/SmoothScrollProvider";
 
 /* ==========================================================================
@@ -36,6 +38,28 @@ export default function Navbar() {
   const progressBarRef = useRef<HTMLDivElement>(null);
   const percentTextRef = useRef<HTMLSpanElement>(null);
   const [hasScrolled, setHasScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileMenuOpen]);
+
+  // Close mobile menu on Escape key
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMobileMenuOpen(false);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   useEffect(() => {
     let currentProgress = 0;
@@ -119,20 +143,14 @@ export default function Navbar() {
           className="flex items-center gap-2.5 sm:gap-3 group cursor-pointer shrink min-w-0"
         >
           <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-[#18181b] border border-white/15 flex items-center justify-center text-base sm:text-lg text-[#d4c7ff] shadow-[0_2px_8px_rgba(113,76,182,0.25)] shrink-0 group-hover:border-[#714cb6] group-hover:scale-105 transition-transform duration-200">
-            ✦
+            
           </div>
-          <div className="flex flex-col min-w-0">
-            <div className="flex items-center gap-2">
-              <span className="font-display text-xl sm:text-2xl md:text-3xl tracking-wider text-[#ffffff] group-hover:text-[#d4c7ff] transition-colors uppercase leading-none truncate">
-                SANSKARAN
-              </span>
-              <span className="hidden sm:inline-flex font-tech text-[10px] font-bold tracking-widest text-[#d4c7ff] px-1.5 py-0.5 rounded bg-[#714cb6]/30 border border-[#714cb6]/40 shrink-0">
-                2026
-              </span>
-            </div>
-            <span className="font-tech text-[8.5px] sm:text-[10px] text-white/60 tracking-[0.16em] sm:tracking-[0.22em] uppercase truncate">
-              <span className="sm:hidden text-[#d4c7ff] font-bold mr-1">’26 •</span>
-              CULTURAL CONCLAVE
+          <div className="flex flex-col items-start min-w-0">
+            <span className="font-display text-xl sm:text-2xl md:text-3xl tracking-wider text-[#ffffff] group-hover:text-[#d4c7ff] transition-colors uppercase leading-none truncate">
+              SANSKARAN
+            </span>
+            <span className="font-tech text-[10px] sm:text-[11px] font-bold tracking-[0.2em] text-[#ffffff] uppercase leading-none mt-1">
+              2026
             </span>
           </div>
         </a>
@@ -152,7 +170,7 @@ export default function Navbar() {
           ))}
         </nav>
 
-        {/* Right CTA Button & Live Scroll Progress Metric */}
+        {/* Right CTA Button, Live Scroll Progress Metric & Mobile Menu Trigger */}
         <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           <span
             ref={percentTextRef}
@@ -161,14 +179,14 @@ export default function Navbar() {
             0%
           </span>
 
+          {/* Mobile Hamburger Menu Toggle Button */}
           <button
             type="button"
-            onClick={() => gsapScrollTo("#about", SMOOTH_SCROLL_CONFIG.duration, 0)}
-            className="group/btn inline-flex items-center justify-center gap-1.5 sm:gap-2 h-9 sm:h-11 px-3 sm:px-5 rounded-lg sm:rounded-xl bg-[#421d24] hover:bg-[#421d24]/90 text-[#ffffff] font-tech text-[11px] sm:text-xs font-bold tracking-wider uppercase border border-[#714cb6]/40 shadow-[0_4px_16px_rgba(66,29,36,0.5)] active:scale-[0.97] transition-all duration-150 cursor-pointer whitespace-nowrap"
+            onClick={() => setMobileMenuOpen(true)}
+            aria-label="Open mobile navigation menu"
+            className="md:hidden flex items-center justify-center w-9 h-9 rounded-xl bg-[#18181b] hover:bg-[#714cb6] border border-white/15 text-white transition-all cursor-pointer shadow-md active:scale-95"
           >
-            <span className="sm:hidden">Explore</span>
-            <span className="hidden sm:inline">Explore Festival</span>
-            <span className="text-[#d4c7ff] text-xs sm:text-sm leading-none transition-transform duration-200 group-hover/btn:translate-y-0.5">↓</span>
+            <Menu className="w-4 h-4 text-white" />
           </button>
         </div>
       </div>
@@ -184,6 +202,137 @@ export default function Navbar() {
           <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-[#ffffff] shadow-[0_0_8px_#714cb6]" />
         </div>
       </div>
+
+      {/* ====================================================================
+          MOBILE SIDEBAR / CARD NAVIGATION (Reference-faithful to EDH layout)
+          ==================================================================== */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <div className="fixed inset-0 z-[100] md:hidden flex flex-col items-center justify-center p-4 sm:p-6 overflow-y-auto">
+            {/* Dark Frosted Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.22 }}
+              onClick={() => setMobileMenuOpen(false)}
+              className="fixed inset-0 bg-black/80 backdrop-blur-xl"
+            />
+
+            {/* Mobile Nav Frame & Floating Card */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.93, y: 16 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.93, y: 16 }}
+              transition={{ type: "spring", damping: 25, stiffness: 280 }}
+              className="relative z-10 w-full max-w-[360px] flex flex-col my-auto"
+            >
+              {/* Top Bar: Brand Badge & Close Button */}
+              <div className="w-full flex items-center justify-between mb-3 px-1">
+                {/* Brand Badge */}
+                <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#141724] border border-white/20 text-white shadow-lg">
+                  <span className="font-display text-lg tracking-wider font-bold text-[#EDE8FF]">
+                    SANSKARAN
+                  </span>
+                  <span className="font-mono text-[10px] font-bold px-1.5 py-0.5 rounded-md bg-[#714cb6] text-white">
+                    2026
+                  </span>
+                </div>
+
+                {/* Close Button */}
+                <button
+                  type="button"
+                  onClick={() => setMobileMenuOpen(false)}
+                  aria-label="Close navigation menu"
+                  className="w-10 h-10 rounded-xl bg-[#141724] hover:bg-[#714cb6] border border-white/20 text-white flex items-center justify-center transition-all cursor-pointer shadow-lg active:scale-95"
+                >
+                  <X className="w-5 h-5 text-white" />
+                </button>
+              </div>
+
+              {/* The White Floating Card */}
+              <div className="w-full bg-[#ffffff] rounded-[28px] sm:rounded-[32px] p-5 sm:p-6 shadow-[0_24px_60px_rgba(0,0,0,0.7)] border border-white/30 flex flex-col">
+                {/* Numbered Navigation Items */}
+                <div className="flex flex-col space-y-1">
+                  {navLinks.map((link, idx) => {
+                    const num = String(idx + 1).padStart(2, "0");
+                    return (
+                      <a
+                        key={link.target}
+                        href={link.target}
+                        onClick={(e) => {
+                          handleNavClick(e, link.target);
+                          setMobileMenuOpen(false);
+                        }}
+                        className="flex items-center justify-between py-2.5 px-3 rounded-2xl hover:bg-slate-100 active:bg-slate-200 transition-all duration-200 group cursor-pointer"
+                      >
+                        <div className="flex items-center gap-3.5">
+                          <span className="font-mono text-xs font-bold text-[#64748b] group-hover:text-[#714cb6] transition-colors">
+                            {num}
+                          </span>
+                          <span className="font-display text-2xl tracking-wide text-[#0f172a] group-hover:text-[#714cb6] transition-colors">
+                            {link.label}
+                          </span>
+                        </div>
+
+                        {/* Right Pill Arrow Button */}
+                        <div className="w-8 h-8 rounded-full bg-[#141724] group-hover:bg-[#714cb6] text-white flex items-center justify-center transition-all duration-200 group-hover:translate-x-0.5 shadow-sm shrink-0">
+                          <ChevronRight className="w-4 h-4 text-white" />
+                        </div>
+                      </a>
+                    );
+                  })}
+                </div>
+
+                {/* Divider Line */}
+                <div className="w-full h-px bg-slate-200 my-4" />
+
+                {/* Social Icon Buttons */}
+                <div className="flex items-center gap-3 mb-4">
+                  <a
+                    href="https://instagram.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 rounded-xl bg-[#141724] hover:bg-[#714cb6] text-white flex items-center justify-center transition-all shadow-sm active:scale-95"
+                    aria-label="Instagram"
+                  >
+                    <Instagram className="w-4 h-4 text-white" />
+                  </a>
+                  <a
+                    href="https://youtube.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 rounded-xl bg-[#141724] hover:bg-[#714cb6] text-white flex items-center justify-center transition-all shadow-sm active:scale-95"
+                    aria-label="YouTube"
+                  >
+                    <Youtube className="w-4 h-4 text-white" />
+                  </a>
+                  <a
+                    href="mailto:sanskaranfestival@gmail.com"
+                    className="w-10 h-10 rounded-xl bg-[#141724] hover:bg-[#714cb6] text-white flex items-center justify-center transition-all shadow-sm active:scale-95"
+                    aria-label="Email Us"
+                  >
+                    <Mail className="w-4 h-4 text-white" />
+                  </a>
+                </div>
+
+                {/* Contact Email & Copyright */}
+                <div className="flex flex-col text-left">
+                  <a
+                    href="mailto:sanskaranfestival@gmail.com"
+                    className="font-tech text-xs font-bold text-[#0f172a] hover:text-[#714cb6] transition-colors"
+                  >
+                    sanskaranfestival@gmail.com
+                  </a>
+                  <p className="font-tech text-[10px] text-slate-500 mt-0.5">
+                    © 2026 Sanskaran &amp; Sahotsava. All rights reserved.
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

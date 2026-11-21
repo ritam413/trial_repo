@@ -149,74 +149,7 @@ const SAHOTSAVA_DISCIPLINES: DisciplineDetail[] = [
 ];
 
 /* ==========================================================================
-   3. SAHOTSAVA EMBLEM LOGO WATERMARK (VECTOR BACKDROP)
-   ========================================================================== */
-function SahotsavaLogoWatermark() {
-  return (
-    <div
-      aria-hidden="true"
-      className="pointer-events-none absolute inset-0 overflow-hidden flex items-center justify-center select-none"
-    >
-      <svg
-        viewBox="0 0 1000 1000"
-        className="w-[125vw] max-w-[1350px] h-auto opacity-[0.075] text-[#ffffff] transform -rotate-6 transition-transform duration-1000 will-change-transform"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        {/* Outer Concentric Soundwave Rings */}
-        <circle cx="500" cy="500" r="470" stroke="currentColor" strokeWidth="1.5" strokeDasharray="8 8" />
-        <circle cx="500" cy="500" r="420" stroke="currentColor" strokeWidth="2" />
-        <circle cx="500" cy="500" r="360" stroke="currentColor" strokeWidth="1.5" strokeDasharray="16 12" />
-        <circle cx="500" cy="500" r="300" stroke="currentColor" strokeWidth="2.5" />
-        <circle cx="500" cy="500" r="230" stroke="currentColor" strokeWidth="1" strokeDasharray="4 6" />
-
-        {/* 8-Point Radial Starburst & Rays */}
-        <path d="M500 40 L500 960 M40 500 L960 500" stroke="currentColor" strokeWidth="1.5" />
-        <path d="M175 175 L825 825 M175 825 L825 175" stroke="currentColor" strokeWidth="1" strokeDasharray="6 6" />
-
-        {/* Dynamic Diamond Arena Crest */}
-        <polygon points="500,120 880,500 500,880 120,500" stroke="currentColor" strokeWidth="3" />
-        <polygon points="500,180 820,500 500,820 180,500" stroke="currentColor" strokeWidth="1.5" strokeDasharray="12 8" />
-
-        {/* Central Luminous Sunburst / Festival Star */}
-        <circle cx="500" cy="500" r="140" stroke="currentColor" strokeWidth="3" />
-        <circle cx="500" cy="500" r="90" fill="currentColor" fillOpacity="0.25" />
-
-        {/* Typography Arc Guide */}
-        <text
-          x="500"
-          y="520"
-          textAnchor="middle"
-          dominantBaseline="central"
-          fill="currentColor"
-          fontFamily="system-ui, sans-serif"
-          fontWeight="900"
-          fontSize="110"
-          letterSpacing="0.22em"
-        >
-          SAHOTSAVA
-        </text>
-
-        <text
-          x="500"
-          y="620"
-          textAnchor="middle"
-          dominantBaseline="central"
-          fill="currentColor"
-          fontFamily="monospace"
-          fontWeight="700"
-          fontSize="36"
-          letterSpacing="0.5em"
-        >
-          ARENA • 2026
-        </text>
-      </svg>
-    </div>
-  );
-}
-
-/* ==========================================================================
-   4. SECTION 1: SANSKARAN (INTELLECTUAL HERITAGE CONCLAVE)
+   3. SECTION 1: SANSKARAN (INTELLECTUAL HERITAGE CONCLAVE)
    ========================================================================== */
 interface SanskaranSectionProps {
   onInspect: () => void;
@@ -308,7 +241,7 @@ function SanskaranSection({ onInspect }: SanskaranSectionProps) {
           {/* =================================================================
               LEFT COLUMN: DEFINITION & PHILOSOPHY OF SANSKARAN
               ================================================================= */}
-          <div className="lg:col-span-5 flex flex-col items-start text-left">
+          <div className="lg:col-span-5 flex flex-col items-center text-center lg:items-start lg:text-left">
             {/* Monumental Headline */}
             <h2 className="sanskaran-text-anim product_sans text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-bold tracking-tight text-[#ffffff] leading-[1.12]">
                Sanskaran 
@@ -389,36 +322,25 @@ function SahotsavaSection({ onInspect }: SahotsavaSectionProps) {
             // GSAP Entrance Timeline
             const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-            // 1. Background logo watermark entry
-            const logo = el.querySelector(".sahotsava-logo-bg");
-            if (logo) {
-              tl.fromTo(
-                logo,
-                { autoAlpha: 0, scale: 0.9, rotate: -10 },
-                { autoAlpha: 1, scale: 1, rotate: -6, duration: 1.1, ease: "power2.out" },
-                0
-              );
-            }
-
-            // 2. Left column text stagger
+            // 1. Left column text stagger
             const textElements = el.querySelectorAll(".sahotsava-text-anim");
             if (textElements.length > 0) {
               tl.fromTo(
                 textElements,
                 { autoAlpha: 0, y: 32 },
                 { autoAlpha: 1, y: 0, duration: 0.75, stagger: 0.1 },
-                0.1
+                0
               );
             }
 
-            // 3. Right column concert images stagger & fade-in
+            // 2. Right column concert images stagger & fade-in
             const images = el.querySelectorAll(".sahotsava-img-fade");
             if (images.length > 0) {
               tl.fromTo(
                 images,
                 { autoAlpha: 0, x: 35, y: 25, scale: 0.96 },
                 { autoAlpha: 1, x: 0, y: 0, scale: 1, duration: 0.85, stagger: 0.15 },
-                0.25
+                0.15
               );
             }
 
@@ -437,10 +359,8 @@ function SahotsavaSection({ onInspect }: SahotsavaSectionProps) {
     // Safety fallback: if not triggered within 1.5s (e.g. fast anchor jump), reveal gracefully
     const safetyTimer = setTimeout(() => {
       setInView(true);
-      const logo = el.querySelector(".sahotsava-logo-bg");
       const textElements = el.querySelectorAll(".sahotsava-text-anim");
       const images = el.querySelectorAll(".sahotsava-img-fade");
-      if (logo) gsap.to(logo, { autoAlpha: 1, scale: 1, rotate: -6, duration: 0.6 });
       gsap.to(textElements, { autoAlpha: 1, y: 0, duration: 0.4 });
       gsap.to(images, { autoAlpha: 1, x: 0, y: 0, scale: 1, duration: 0.4 });
     }, 1500);
@@ -457,13 +377,6 @@ function SahotsavaSection({ onInspect }: SahotsavaSectionProps) {
       ref={sectionRef}
       className="relative z-20 w-full overflow-hidden select-none bg-[#0c4243] text-[#ffffff] py-20 sm:py-28 lg:py-32 border-b border-[#e3e3e2]/15"
     >
-      {/* =====================================================================
-          SAHOTSAVA EMBLEM LOGO WATERMARK AS BACKGROUND
-          ===================================================================== */}
-      <div className="sahotsava-logo-bg absolute inset-0 pointer-events-none z-0">
-        <SahotsavaLogoWatermark />
-      </div>
-
       {/* Atmospheric Luminous Arena Glow Halos */}
       <div
         aria-hidden="true"
@@ -479,7 +392,7 @@ function SahotsavaSection({ onInspect }: SahotsavaSectionProps) {
           {/* =================================================================
               LEFT COLUMN: DEFINITION & SPECTACLE OF SAHOTSAVA
               ================================================================= */}
-          <div className="lg:col-span-5 flex flex-col items-start text-left">
+          <div className="lg:col-span-5 flex flex-col items-center text-center lg:items-start lg:text-left">
             {/* Monumental Headline */}
             <h2 className="sahotsava-text-anim product_sans text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-bold tracking-tight text-[#ffffff] leading-[1.12]">
               Sahotsava

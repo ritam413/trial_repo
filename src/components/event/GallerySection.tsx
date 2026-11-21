@@ -450,17 +450,13 @@ export default function GallerySection() {
         {/* ====================================================================
             HEADER LOCKUP
             ==================================================================== */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 sm:mb-10 px-1 sm:px-2">
-          <div>
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 sm:mb-10 px-1 sm:px-2 text-center md:text-left">
+          <div className="w-full md:w-auto">
             <h2 className="font-display text-4xl sm:text-5xl md:text-6xl text-[#EDE8FF] leading-none uppercase tracking-tight">
               GALLERY{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#EDE8FF] via-[#d4c7ff] to-[#714cb6]">
-                SECTION
-              </span>
+              
             </h2>
-            <p className="font-tech text-xs text-white/50 tracking-widest uppercase mt-2">
-              14 CULTURAL SOCIETIES &amp; ART ATELIERS
-            </p>
+           
           </div>
         </div>
 
@@ -664,10 +660,6 @@ export default function GallerySection() {
                           >
                             {club.name}
                           </h3>
-
-                          <p className="mt-2 sm:mt-2.5 font-serif italic text-xs sm:text-base md:text-lg text-[#FFF4E0]/90 max-w-2xl mx-auto">
-                            &ldquo;{club.motto}&rdquo;
-                          </p>
                         </div>
 
                         {/* Thin Divider Line Across Full Width */}
@@ -685,32 +677,16 @@ export default function GallerySection() {
                                   photoIndex: photoIdx,
                                 })
                               }
-                              className="group/img relative aspect-[16/10] rounded-2xl overflow-hidden border-0 border-none bg-[#111019] text-center cursor-pointer shadow-[0_8px_24px_rgba(0,0,0,0.7)] focus:outline-none transition-transform duration-300 hover:scale-[1.02] active:scale-[0.98] will-change-transform"
+                              className="group/img relative aspect-[16/10] rounded-2xl overflow-hidden border border-white/10 bg-[#111019] text-center cursor-pointer shadow-[0_8px_24px_rgba(0,0,0,0.7)] focus:outline-none transition-transform duration-300 hover:scale-[1.02] active:scale-[0.98] will-change-transform"
                             >
                               <img
                                 src={photo.src}
-                                alt={photo.title}
+                                alt={photo.title || "Gallery photo"}
                                 loading="lazy"
-                                className="size-full object-cover transition-transform duration-500 group-hover/img:scale-106 will-change-transform"
+                                className="size-full object-cover transition-transform duration-500 group-hover/img:scale-105 will-change-transform"
                               />
 
-                              <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/35 to-transparent opacity-90 group-hover/img:opacity-95 transition-opacity" />
-
-                              <div className="absolute top-3.5 right-3.5 z-10">
-                                <span className="font-mono text-[11px] sm:text-xs font-bold text-white bg-black/80 px-2.5 py-1 rounded-md shadow-md border border-white/10">
-                                  {photo.code}
-                                </span>
-                              </div>
-
-                              <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5 z-10 flex flex-col items-center justify-center text-center">
-                                <p className="font-tech text-[10px] sm:text-[11px] font-normal tracking-wider text-[#B9ACF0] uppercase truncate drop-shadow-sm max-w-full">
-                                  {photo.tag}
-                                </p>
-                                <h4 className="font-sans text-xs sm:text-sm md:text-base text-[#FFF4E0] font-normal leading-tight mt-1 tracking-normal truncate drop-shadow-md max-w-full">
-                                  {photo.title}
-                                </h4>
-                              </div>
-
+                              {/* Hover Overlay with Maximize Icon */}
                               <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity bg-black/40">
                                 <Icon.Maximize2 className="w-6 h-6 text-[#FFAA24] drop-shadow-md" />
                               </div>
@@ -723,27 +699,17 @@ export default function GallerySection() {
                 </AnimatePresence>
               </div>
 
-              {/* Bottom Eyelet Rings */}
-              <div className="absolute left-6 sm:left-12 md:left-20 -translate-x-1/2 -bottom-1 z-30 pointer-events-none w-2.5 h-1.5 rounded-b-full bg-gradient-to-t from-[#9bbab0] to-[#1a382e] border border-[#9bbab0]/80 shadow-xs" />
-              <div className="absolute right-6 sm:right-12 md:right-20 translate-x-1/2 -bottom-1 z-30 pointer-events-none w-2.5 h-1.5 rounded-b-full bg-gradient-to-t from-[#9bbab0] to-[#1a382e] border border-[#9bbab0]/80 shadow-xs" />
+              {/* Bottom Eyelet Rings (only between cards, not on the last card) */}
+              {index < CLUBS_DATA.length - 1 && (
+                <>
+                  <div className="absolute left-6 sm:left-12 md:left-20 -translate-x-1/2 -bottom-1 z-30 pointer-events-none w-2.5 h-1.5 rounded-b-full bg-gradient-to-t from-[#9bbab0] to-[#1a382e] border border-[#9bbab0]/80 shadow-xs" />
+                  <div className="absolute right-6 sm:right-12 md:right-20 translate-x-1/2 -bottom-1 z-30 pointer-events-none w-2.5 h-1.5 rounded-b-full bg-gradient-to-t from-[#9bbab0] to-[#1a382e] border border-[#9bbab0]/80 shadow-xs" />
+                </>
+              )}
             </div>
           </React.Fragment>
         );
       })}
-    </div>
-
-    {/* ====================================================================
-        BOTTOM TERMINAL RIG (Dark Silvering Green Plumb Cord Ends)
-        ==================================================================== */}
-    <div className="relative w-full h-8 mt-2 pointer-events-none select-none flex items-center justify-between">
-      <div className="absolute left-6 sm:left-12 md:left-20 -translate-x-1/2 top-0 flex flex-col items-center">
-        <div className="w-[2.5px] h-3.5 bg-gradient-to-b from-[#2a5245] via-[#9bbab0] to-transparent shadow-[0_0_4px_rgba(155,186,176,0.3)]" />
-        <div className="w-2.5 h-3 rounded-b-full bg-gradient-to-b from-[#9bbab0] to-[#16382e] border border-[#cbdcd4]/60 shadow-[0_2px_6px_rgba(0,0,0,0.8)]" />
-      </div>
-      <div className="absolute right-6 sm:right-12 md:right-20 translate-x-1/2 top-0 flex flex-col items-center">
-        <div className="w-[2.5px] h-3.5 bg-gradient-to-b from-[#2a5245] via-[#9bbab0] to-transparent shadow-[0_0_4px_rgba(155,186,176,0.3)]" />
-        <div className="w-2.5 h-3 rounded-b-full bg-gradient-to-b from-[#9bbab0] to-[#16382e] border border-[#cbdcd4]/60 shadow-[0_2px_6px_rgba(0,0,0,0.8)]" />
-      </div>
     </div>
   </div>
 
@@ -769,42 +735,26 @@ export default function GallerySection() {
             >
               {/* Modal Header */}
               <div className="flex items-center justify-between px-4 sm:px-6 py-3.5 bg-[#05040A]">
-                <div className="flex items-center gap-2 sm:gap-3">
-                  <span className="text-[#FFAA24]">
-                    <Icon.Sparkles className="w-5 h-5" />
-                  </span>
-                  <div>
-                    <span className="font-tech text-[10px] font-medium tracking-widest text-[#B9ACF0] uppercase">
-                      {selectedPhoto.club.category} // {selectedPhoto.photo.code}
-                    </span>
-                    <h3 className="font-sans text-base sm:text-xl text-[#FFF4E0] font-normal leading-snug mt-0.5">
-                      {selectedPhoto.photo.title}
-                    </h3>
-                  </div>
-                </div>
+                <span className="font-mono text-xs text-white/70 bg-black/60 px-2.5 py-1 rounded-md">
+                  IMAGE {selectedPhoto.photoIndex + 1} OF{" "}
+                  {selectedPhoto.club.images.length}
+                </span>
 
-                <div className="flex items-center gap-2">
-                  <span className="font-mono text-xs text-white/60 bg-black/60 px-2.5 py-1 rounded-md hidden sm:inline-block">
-                    IMAGE {selectedPhoto.photoIndex + 1} OF{" "}
-                    {selectedPhoto.club.images.length}
-                  </span>
-
-                  <button
-                    type="button"
-                    onClick={() => setSelectedPhoto(null)}
-                    aria-label="Close modal"
-                    className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/10 hover:bg-white/20 text-[#EDE8FF] flex items-center justify-center transition-colors cursor-pointer"
-                  >
-                    <Icon.X className="w-4 h-4" />
-                  </button>
-                </div>
+                <button
+                  type="button"
+                  onClick={() => setSelectedPhoto(null)}
+                  aria-label="Close modal"
+                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/10 hover:bg-white/20 text-[#EDE8FF] flex items-center justify-center transition-colors cursor-pointer"
+                >
+                  <Icon.X className="w-4 h-4" />
+                </button>
               </div>
 
               {/* Main Photo Canvas */}
               <div className="relative aspect-[16/10] sm:aspect-video w-full bg-[#050508] flex items-center justify-center overflow-hidden">
                 <img
                   src={selectedPhoto.photo.src}
-                  alt={selectedPhoto.photo.title}
+                  alt={selectedPhoto.photo.title || "Gallery photograph"}
                   className="w-full h-full object-contain select-none"
                 />
 
@@ -848,52 +798,41 @@ export default function GallerySection() {
                 </button>
               </div>
 
-              {/* Modal Footer Narrative */}
-              <div className="p-4 sm:p-5 bg-[#06050C] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                <div className="max-w-xl">
-                  <p className="font-tech text-xs text-[#B9ACF0] uppercase font-bold tracking-wider">
-                    {selectedPhoto.photo.tag}
-                  </p>
-                  <p className="mt-0.5 text-xs sm:text-sm text-[#EDE8FF]/80 leading-relaxed font-tech">
-                    {selectedPhoto.photo.description}
-                  </p>
-                </div>
-
-                <div className="flex items-center gap-2 shrink-0">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      const currentClub = selectedPhoto.club;
-                      const prevIdx =
-                        (selectedPhoto.photoIndex - 1 + currentClub.images.length) %
-                        currentClub.images.length;
-                      setSelectedPhoto({
-                        photo: currentClub.images[prevIdx],
-                        club: currentClub,
-                        photoIndex: prevIdx,
-                      });
-                    }}
-                    className="px-3 py-1.5 rounded-lg bg-[#141220] hover:bg-[#FFAA24] hover:text-black text-white font-mono text-xs transition-colors cursor-pointer"
-                  >
-                    ← PREV
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      const currentClub = selectedPhoto.club;
-                      const nextIdx =
-                        (selectedPhoto.photoIndex + 1) % currentClub.images.length;
-                      setSelectedPhoto({
-                        photo: currentClub.images[nextIdx],
-                        club: currentClub,
-                        photoIndex: nextIdx,
-                      });
-                    }}
-                    className="px-3 py-1.5 rounded-lg bg-[#141220] hover:bg-[#FFAA24] hover:text-black text-white font-mono text-xs transition-colors cursor-pointer"
-                  >
-                    NEXT →
-                  </button>
-                </div>
+              {/* Modal Footer Controls */}
+              <div className="p-3 sm:p-4 bg-[#06050C] flex items-center justify-end gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    const currentClub = selectedPhoto.club;
+                    const prevIdx =
+                      (selectedPhoto.photoIndex - 1 + currentClub.images.length) %
+                      currentClub.images.length;
+                    setSelectedPhoto({
+                      photo: currentClub.images[prevIdx],
+                      club: currentClub,
+                      photoIndex: prevIdx,
+                    });
+                  }}
+                  className="px-3 py-1.5 rounded-lg bg-[#141220] hover:bg-[#FFAA24] hover:text-black text-white font-mono text-xs transition-colors cursor-pointer"
+                >
+                  ← PREV
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const currentClub = selectedPhoto.club;
+                    const nextIdx =
+                      (selectedPhoto.photoIndex + 1) % currentClub.images.length;
+                    setSelectedPhoto({
+                      photo: currentClub.images[nextIdx],
+                      club: currentClub,
+                      photoIndex: nextIdx,
+                    });
+                  }}
+                  className="px-3 py-1.5 rounded-lg bg-[#141220] hover:bg-[#FFAA24] hover:text-black text-white font-mono text-xs transition-colors cursor-pointer"
+                >
+                  NEXT →
+                </button>
               </div>
             </motion.div>
           </motion.div>

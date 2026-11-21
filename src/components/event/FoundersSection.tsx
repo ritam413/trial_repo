@@ -111,13 +111,11 @@ export default function FoundersSection() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-8 relative z-10">
         {/* Section Header */}
-        <div className="founders-header-reveal mb-12 sm:mb-16 max-w-3xl">
+        <div className="founders-header-reveal mb-12 sm:mb-16 max-w-3xl text-center md:text-left mx-auto md:mx-0">
           <h2 className="font-display text-4xl sm:text-6xl lg:text-7xl text-[#ffffff] leading-none uppercase tracking-tight">
             FOUNDERS OF SANSKARAN
           </h2>
-          <p className="mt-2.5 font-tech text-xs sm:text-base text-[#d4c7ff]/85 max-w-2xl leading-relaxed">
-            The visionary student founders and alumni stewards who established the initial charter of Sanskaran and expanded its creative momentum into Sahotsava.
-          </p>
+        
         </div>
 
         {/* Highlighted Founders Portrait Cards */}
@@ -129,13 +127,7 @@ export default function FoundersSection() {
                 color="rgba(113, 76, 182, 0.2)"
                 className="relative overflow-hidden rounded-2xl sm:rounded-3xl border-2 border-white/15 hover:border-[#d4c7ff] bg-[#ffffff]/10 backdrop-blur-md shadow-[0_20px_50px_rgba(0,0,0,0.35)] p-6 sm:p-7 transition-all duration-300 hover:-translate-y-1.5 group flex flex-col justify-between w-full"
               >
-                {/* Background Watermark Monogram */}
-                <span
-                  aria-hidden="true"
-                  className="absolute -right-4 -bottom-6 font-display text-[9rem] sm:text-[11rem] font-black leading-none text-[#ffffff]/5 select-none pointer-events-none transition-transform duration-500 group-hover:scale-105"
-                >
-                  {person.monogram}
-                </span>
+               
 
                 {/* Textured Cardstock Ambient Dot Grid */}
                 <div
@@ -148,14 +140,6 @@ export default function FoundersSection() {
                 />
 
                 <div className="relative z-10 flex flex-col">
-                  {/* Top Badge */}
-                  <div className="flex items-center justify-between gap-2 mb-4">
-                    <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-tech font-bold tracking-widest uppercase bg-[#ffffff]/15 border border-[#d4c7ff]/40 text-[#d4c7ff]">
-                      {person.badge}
-                    </span>
-                 
-                  </div>
-
                   {/* HERO PORTRAIT / PHOTO CARD PLINTH */}
                   <div className="relative w-full aspect-[4/5] sm:h-72 rounded-xl sm:rounded-2xl border border-white/15 bg-gradient-to-b from-[#082b2c] to-[#041c1d] overflow-hidden flex flex-col justify-center items-center shadow-inner transition-transform duration-300 group-hover:scale-[1.02]">
                     <img
@@ -169,7 +153,7 @@ export default function FoundersSection() {
                   </div>
 
                   {/* HIGHLIGHTED NAME & CLEAN ROLE */}
-                  <div className="mt-5 text-center sm:text-left">
+                  <div className="mt-5 text-center md:text-left">
                     <h3 className="font-display text-2xl sm:text-3xl text-[#ffffff] leading-none tracking-wide uppercase transition-colors duration-200 group-hover:text-[#d4c7ff]">
                       {person.name}
                     </h3>

@@ -54,7 +54,7 @@ export const DIGNITARIES: DignitaryProfile[] = [
     /* 👈 EXACT CODE CONTROLLING ALIGNMENT FOR PROF. ISHAN GHOSH:
        Use 'object-bottom' to bring his face fully into view,
        or custom percentage like 'object-[50%_80%]' / 'object-[50%_90%]' */
-    imageClassName: "object-bottom",
+    imageClassName: "object-center",
   },
 ];
 
@@ -126,13 +126,11 @@ export default function DignitariesSection() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-8 relative z-10">
         {/* Section Header */}
-        <div className="dignitaries-header-reveal mb-12 sm:mb-16 max-w-3xl">
+        <div className="dignitaries-header-reveal mb-12 sm:mb-16 max-w-3xl text-center md:text-left mx-auto md:mx-0">
           <h2 className="font-display text-4xl sm:text-6xl lg:text-7xl text-[#ffffff] leading-none uppercase tracking-tight">
             DIGNITARIES &amp; COUNCIL
           </h2>
-          <p className="mt-2.5 font-tech text-xs sm:text-base text-white/70 max-w-2xl leading-relaxed">
-            The institutional leadership, academic heads, and faculty deans providing official stewardship, governance, and enduring patronage for Sanskaran &amp; Sahotsava 2026.
-          </p>
+          
         </div>
 
         {/* Highlighted Dignitaries Portrait Cards */}
@@ -144,14 +142,7 @@ export default function DignitariesSection() {
                 color="rgba(113, 76, 182, 0.25)"
                 className="relative overflow-hidden rounded-2xl sm:rounded-3xl border border-white/10 hover:border-[#714cb6] bg-[#141416] shadow-[0_20px_50px_rgba(0,0,0,0.6)] p-6 sm:p-7 transition-all duration-300 hover:-translate-y-1.5 group flex flex-col justify-between w-full"
               >
-                {/* Background Watermark Monogram */}
-                <span
-                  aria-hidden="true"
-                  className="absolute -right-4 -bottom-6 font-display text-[9rem] sm:text-[11rem] font-black leading-none text-white/5 select-none pointer-events-none transition-transform duration-500 group-hover:scale-105"
-                >
-                  {person.monogram}
-                </span>
-
+            
                 {/* Textured Cardstock Ambient Dot Grid */}
                 <div
                   aria-hidden="true"
@@ -179,7 +170,7 @@ export default function DignitariesSection() {
                   </div>
 
                   {/* HIGHLIGHTED NAME & CLEAN ROLE */}
-                  <div className="mt-5 text-center sm:text-left">
+                  <div className="mt-5 text-center md:text-left">
                     <h3 className="font-display text-2xl sm:text-3xl text-[#ffffff] leading-none tracking-wide uppercase transition-colors duration-200 group-hover:text-[#d4c7ff]">
                       {person.name}
                     </h3>
