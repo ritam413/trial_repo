@@ -217,7 +217,7 @@ function CoreMemberCard({ member, index }: CardProps) {
 
         {/* Bottom Information Plinth with Member Name */}
         <div className="absolute inset-x-0 bottom-0 z-10 p-5 text-[#ffffff]">
-          <h3 className="font-display text-2xl sm:text-3xl tracking-wide text-[#ffffff] leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)] group-hover:text-[#d4c7ff] transition-colors duration-300">
+          <h3 className="font-display text-2xl sm:text-5xl tracking-wide text-[#ffffff] leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)] group-hover:text-[#d4c7ff] transition-colors duration-300">
             {member.name}
           </h3>
         </div>

@@ -248,7 +248,7 @@ export default function Navbar() {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.22 }}
                 onClick={() => setMobileMenuOpen(false)}
-                className="fixed inset-0 bg-black/80 backdrop-blur-xl"
+                className="fixed inset-0 bg-black/10 backdrop-blur-xl"
               />
 
               {/* Mobile Nav Frame & Floating Card */}
