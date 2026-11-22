@@ -29,6 +29,10 @@ All foundational libraries, responsive layout engines, and the streamlined **Dev
     - Interactive inspection modal dossier for exploring guild disciplines and arena lineup pillars.
     - Opening showcase pre-scatter canvas updated to pure black (`#000000`) for seamless contrast with the 9 diamond mosaic imagery.
     - Direct integration of `ShowcaseHeroSection` with zero floating switcher overlays or unneeded mode toggles.
+    - **Hero Section Cloudinary Imagery (`hero section/`)**:
+      - Extracted 17 high-resolution festival photographs from Google Drive (`RM060037`, `RM060041`, `RM060045`, `RM060055`, `RM060061`, `RM0600128`, `RM0600141`, `RM0600144`, `RM0600148`, `RM0600149`, `RM0600184`, `RM0600350`, `RM0600494`, `RM0600692`, `RM0600738`, `RM0600739`, `RM0600834`).
+      - Uploaded all 17 images to Cloudinary in folder `hero section`.
+      - Full asset mapping saved in `scratch/hero_section_all_17.json`.
     - **Solid Condensed Bebas Neue Display Typography Lockup**: Solid, high-contrast, non-hollow condensed display typography in **Bebas Neue** (`font-display`, `var(--font-bebas-neue)`) matching the Gallery Section headline, with a width-locked `2026` yearmark that spans the exact same width as `SANSKARAN`:
       - `SANSKARAN`: Solid crisp white (`text-white`) condensed Bebas Neue title with fluid scale ramp (`text-[44px]` mobile up to `188px` desktop) and cinematic atmospheric drop shadow (`drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)]`).
       - `2026`: Solid crisp white (`text-white`), width-locked via `flex justify-between w-full` directly under `SANSKARAN`, guaranteeing identical width down to the pixel across all viewports.
@@ -40,7 +44,12 @@ All foundational libraries, responsive layout engines, and the streamlined **Dev
     - Removed `cardLayout` state and deleted the `View: [ ⊞ DevFest Grid | 🂠 Card Stack ]` switcher.
     - Locked layout to the side-by-side DevFest Grid realm cards with Google 4-color accent tokens, vector doodle backdrop, and interactive discipline inspection modal dossiers.
   - **Pure Vertical Slit Gallery with 14 Student Societies & Creative Wings (`GallerySection.tsx` & `clubsData.ts`)**:
-    - **Authentic Cloudinary-Hosted Club Event Photos**:
+    - **Authentic Cloudinary-Hosted Club Event Photos & Bento Grid Layout (/impeccable)**:
+      - Implemented a tailored bento-style box grid inside each club's expanded gallery drawer matching reference specifications:
+        - 3 cards across Row 1 (`aspect-[4/3]`, `rounded-2xl`, smooth border luminance, micro-index badge `# 01`–`# 03`, bottom hover caption scrim).
+        - Row 2 features Photo 4 (`aspect-[4/3]`) in column 1 matching the reference arrangement.
+        - Spans columns 2 & 3 with an asymmetric Bento Society Vision / Manifesto Card featuring frosted glass blur (`backdrop-blur-xl`), accent radial glow, society motto quote in Cormorant Garamond, description, live pulse indicator, and full-screen gallery inspection trigger.
+        - For Checkmate (5 photos), Photo 5 occupies columns 2 & 3 as a wide panoramic concert hero card (`aspect-[16/9]` / `aspect-[21/9]`).
       - Extracted 57 authentic event photographs directly from the official orientation presentation (`F:\2\FINAL PPT.pptx`).
       - Uploaded all images to Cloudinary in `sanskaran_2026/gallery/<club_id>/` and populated `src/lib/clubsData.ts` replacing placeholder Unsplash images.
       - Each club features 4–5 genuine event photos with tailored titles, tags, and descriptions reflecting actual performances and activities.
