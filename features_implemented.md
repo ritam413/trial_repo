@@ -40,6 +40,11 @@ All foundational libraries, responsive layout engines, and the streamlined **Dev
     - Removed `cardLayout` state and deleted the `View: [ ⊞ DevFest Grid | 🂠 Card Stack ]` switcher.
     - Locked layout to the side-by-side DevFest Grid realm cards with Google 4-color accent tokens, vector doodle backdrop, and interactive discipline inspection modal dossiers.
   - **Pure Vertical Slit Gallery with 14 Student Societies & Creative Wings (`GallerySection.tsx` & `clubsData.ts`)**:
+    - **Authentic Cloudinary-Hosted Club Event Photos**:
+      - Extracted 57 authentic event photographs directly from the official orientation presentation (`F:\2\FINAL PPT.pptx`).
+      - Uploaded all images to Cloudinary in `sanskaran_2026/gallery/<club_id>/` and populated `src/lib/clubsData.ts` replacing placeholder Unsplash images.
+      - Each club features 4–5 genuine event photos with tailored titles, tags, and descriptions reflecting actual performances and activities.
+      - Club cover images dynamically showcase the flagship Cloudinary photograph for each respective club slit card.
     - **Dark Silvering Green Silk Cord & Suspension Rod Rig (/impeccable)**:
       - Validated and permanently implemented the **Silk Cord & Suspension Rod** system across all 14 society slit blocks, retiring the temporary `/emil-prototype` variant switcher (`Floating Zero-G`, `Tension Wire`, `35mm Filmstrip`):
         - **Suspension Cords & Rods**: 2.5px braided cords and interconnecting rods rendered in dark silvering green (`#16382e` deep pine, `#2a5245` forest green, `#9bbab0` / `#a3c2b5` silver luster sheen) with specular light highlights (`rgba(255,255,255,0.4)`).

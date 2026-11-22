@@ -1,4 +1,4 @@
-﻿# Agent Handoff Log — Sanskaran & Sahotsava 2026
+# Agent Handoff Log — Sanskaran & Sahotsava 2026
 
 ## 2026-11-21 â€” Navbar Brand 2026 Alignment Under SANSKARAN
 
@@ -16573,3 +16573,53 @@ None.
 ### Next Agent Instructions
 1. Continue building or styling any additional components requested by the user.
 2. Refer to [context.md](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/context.md) and [features_implemented.md](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/features_implemented.md) for persistent conventions.
+
+
+## 2026-11-23 — Club Gallery Image Extraction from Presentation
+
+### Objective
+Open `F:\2\FINAL PPT.pptx`, extract all images featured in the gallery slides ("CHECK US OUT") for each and every club, exclude all video files (`.mp4`) and common presentation branding/background templates, and organize them into `<club name>/pictures` directories in `F:\2\`.
+
+### Changes Made
+- Identified 14 club gallery slides across the 67 slides in `F:\2\FINAL PPT.pptx`.
+- Filtered out global slide templates: `image4.png` (branding logo), `image5.png` (footer watermark), `image50.jpeg` (common full-slide 1080p background card), and `image55.svg` (decorative graphic).
+- Extracted 57 total club gallery event photographs across 14 clubs into `F:\2\<Club Name>\pictures\`:
+  - **Aritram**: 4 photos (`image51.jpeg`, `image52.jpeg`, `image53.jpeg`, `image54.jpeg`)
+  - **The Paperback Society**: 4 photos (`image62.jpeg`, `image63.jpeg`, `image64.jpeg`, `image65.jpeg`)
+  - **Dhrubotara**: 4 photos (`image71.jpeg`, `image72.jpeg`, `image73.jpeg`, `image74.jpeg`)
+  - **Nrityaksha**: 4 photos (`image80.jpeg`, `image81.jpeg`, `image82.jpeg`, `image83.jpeg`)
+  - **Swarakriti**: 4 photos (`image89.jpeg`, `image90.jpeg`, `image91.jpeg`, `image92.jpeg`)
+  - **Step Alpha**: 4 photos (`image97.png`, `image98.png`, `image99.png`, `image100.png`)
+  - **Beat Busters**: 4 photos (`image106.jpeg`, `image107.jpeg`, `image108.jpeg`, `image109.jpeg`)
+  - **Desi Groovers**: 4 photos (`image114.jpeg`, `image115.jpeg`, `image116.jpeg`, `image117.jpeg`)
+  - **Checkmate**: 5 photos (`image127.jpeg`, `image128.jpeg`, `image129.jpeg`, `image130.jpeg`, `image131.jpeg`)
+  - **Phoenix**: 4 photos (`image136.jpeg`, `image137.jpeg`, `image138.jpeg`, `image139.jpeg`)
+  - **Chitraka Photography**: 4 photos (`image145.jpeg`, `image146.jpeg`, `image147.jpeg`, `image148.jpeg`)
+  - **Chitraka Designing**: 4 photos (`image151.jpeg`, `image152.jpeg`, `image153.jpeg`, `image154.jpeg`)
+  - **Chitraka Art & Craft**: 4 photos (`image158.jpeg`, `image159.jpeg`, `image160.jpeg`, `image161.jpeg`)
+  - **Chitrakatha**: 4 photos (`image165.jpeg`, `image166.jpeg`, `image167.jpeg`, `image168.jpeg`)
+
+### Files Created
+- `F:\2\<Club Name>\pictures\*` (57 high-resolution images in 14 club folders)
+- `tracker.md`
+
+### Implementation Details
+- Used Python `zipfile` and OpenXML relationships (`ppt/slides/_rels/slide{N}.xml.rels`) to directly extract media blobs without re-encoding or loss of quality.
+- Excluded all slide video files (`media2.mp4` through `media15.mp4`).
+
+### Verification
+- Inspected the extracted folders with PowerShell `Get-ChildItem -Path "F:\2\*\pictures"`.
+- All 14 clubs have their `pictures` subfolders populated with verified high-resolution images.
+- Scratch scripts removed after execution.
+
+### Current State
+All club gallery photos from the presentation are extracted into `F:\2\<club name>\pictures`.
+
+### Remaining Work
+None for this task.
+
+### Known Issues
+None.
+
+### Next Agent Instructions
+1. When asked to use these images on the website or gallery, import them from `F:\2\<Club Name>\pictures` into `public/images/clubs/...`.

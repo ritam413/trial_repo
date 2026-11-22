@@ -28,57 +28,41 @@ export const CLUBS_DATA: ClubItem[] = [
     "category": "Anchoring",
     "accentColor": "#E8502A",
     "gradient": "from-[#E8502A] to-[#8B1E24]",
-    "coverImage": "https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?auto=format&fit=crop&w=1200&q=80",
-    "motto": "The Stage is a Crucible of Human Truth",
-    "description": "Proscenium one-act plays, street theatre (Nukkad Natak), raw mono-acts, and dark psychological scenography exploring human emotion.",
+    "coverImage": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375274/sanskaran_2026/gallery/aritram/aritram_01.jpg",
+    "motto": "The Stage is Yours \u2014 Where Voices Rise and Stories Shine",
+    "description": "The official Anchoring Club of Techno India University. Where confidence takes center stage, voices rise, and unforgettable moments are guided with charisma.",
     "images": [
       {
-        "id": "ar-01",
+        "id": "ari-01",
         "code": "# 01",
-        "title": "The Solitary Soliloquy",
-        "tag": "PROSCENIUM MAIN STAGE",
-        "description": "A dramatic monologue performed under warm tungsten spotlights during the Annual One-Act Play finals.",
-        "src": "https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?auto=format&fit=crop&w=900&q=80"
+        "title": "The Voice of Sanskaran",
+        "tag": "STAGE ANCHORING",
+        "description": "Commanding the central amphitheatre stage with elegance and poise during opening ceremonies.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375274/sanskaran_2026/gallery/aritram/aritram_01.jpg"
       },
       {
-        "id": "ar-02",
+        "id": "ari-02",
         "code": "# 02",
-        "title": "Aawaz \u2014 Nukkad Natak",
-        "tag": "AMPHITHEATRE CYPHER",
-        "description": "Electrifying street play circle engaging over 1,200 spectators with raw dholak rhythms and social satire.",
-        "src": "https://images.unsplash.com/photo-1503095396549-807759245b35?auto=format&fit=crop&w=900&q=80"
+        "title": "Electrifying the Crowd",
+        "tag": "LIVE HOSTING",
+        "description": "Engaging thousands of attendees with charismatic interactions and spontaneous stage moments.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375371/sanskaran_2026/gallery/aritram/aritram_02.jpg"
       },
       {
-        "id": "ar-03",
+        "id": "ari-03",
         "code": "# 03",
-        "title": "Wings of Anticipation",
-        "tag": "BACKSTAGE SHADOWS",
-        "description": "Lead actors in period costumes rehearsing lines in the shadows seconds before the curtain rises.",
-        "src": "https://images.unsplash.com/photo-1469488865564-c2de10f69f96?auto=format&fit=crop&w=900&q=80"
+        "title": "Behind the Cue Cards",
+        "tag": "BACKSTAGE READINESS",
+        "description": "Mastering the event flow and stage cues in the wings before announcing the headliner.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375371/sanskaran_2026/gallery/aritram/aritram_03.jpg"
       },
       {
-        "id": "ar-04",
+        "id": "ari-04",
         "code": "# 04",
-        "title": "The Final Curtain Call",
-        "tag": "STANDING OVATION",
-        "description": "The cast receiving a thunderous standing ovation in the illuminated main auditorium.",
-        "src": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        "id": "ar-05",
-        "code": "# 05",
-        "title": "Atmospheric Rigging",
-        "tag": "SCENOGRAPHY & LIGHTS",
-        "description": "High-angle spotlight grids creating steep chiaroscuro contrast across the minimalist wooden stage floor.",
-        "src": "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        "id": "ar-06",
-        "code": "# 06",
-        "title": "Silent Resonance",
-        "tag": "MIME THEATRE",
-        "description": "Monochrome physical mime performance telling an evocative tale of industrial time without speaking a word.",
-        "src": "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=900&q=80"
+        "title": "Triumphant Curtain",
+        "tag": "CEREMONIAL CLOSING",
+        "description": "Closing the grand cultural evening amidst audience cheers and festival spotlight cascades.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375371/sanskaran_2026/gallery/aritram/aritram_04.jpg"
       }
     ]
   },
@@ -89,57 +73,41 @@ export const CLUBS_DATA: ClubItem[] = [
     "category": "DIGITAL DESIGN & VFX",
     "accentColor": "#38BDF8",
     "gradient": "from-[#38BDF8] to-[#0284C7]",
-    "coverImage": "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1200&q=80",
-    "motto": "Synthesizing Vectors, Crafting Virtual Realities",
-    "description": "Motion design, 3D blender animation, festival visual identity branding, UI/UX prototyping, and aftermovie post-production.",
+    "coverImage": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375387/sanskaran_2026/gallery/chitrakatha-design/chitrakatha-design_01.jpg",
+    "motto": "We Turn Ideas into Visuals and Stories into Designs",
+    "description": "The creative mind behind Team Sanskaran. Crafting bold festival visual identities, motion graphics, stage backdrops, and digital experiences.",
     "images": [
       {
-        "id": "cd-01",
+        "id": "chi-01",
         "code": "# 01",
-        "title": "Cyber Kinetic Rig",
-        "tag": "3D MOTION GRAPHICS",
-        "description": "Procedural neon geometry animation modeled for the Sahotsava mainstage LED backdrop wall.",
-        "src": "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=900&q=80"
+        "title": "Visual Identities Brought to Life",
+        "tag": "GRAPHIC DESIGN",
+        "description": "Striking typography, key visual assets, and festival identities designed from concept to print.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375387/sanskaran_2026/gallery/chitrakatha-design/chitrakatha-design_01.jpg"
       },
       {
-        "id": "cd-02",
+        "id": "chi-02",
         "code": "# 02",
-        "title": "Vector Glyph Atelier",
-        "tag": "BRAND IDENTITY",
-        "description": "Vector typographic glyph exploration for the 2026 festival identity handbook.",
-        "src": "https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=900&q=80"
+        "title": "Digital Canvas & Vectors",
+        "tag": "BRANDING & ASSETS",
+        "description": "Vector mastery creating festival badges, social collateral, and stage backdrop visuals.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375387/sanskaran_2026/gallery/chitrakatha-design/chitrakatha-design_02.jpg"
       },
       {
-        "id": "cd-03",
+        "id": "chi-03",
         "code": "# 03",
-        "title": "Post-Production Grade",
-        "tag": "DAVINCI RESOLVE SUITE",
-        "description": "High-fidelity color correction suite grading festival concert recap reels in 4K DCI.",
-        "src": "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        "id": "cd-04",
-        "code": "# 04",
-        "title": "Poster Architecture",
-        "tag": "EXPERIMENTAL LAYOUT",
-        "description": "Brutalist Swiss typography and riso-gradient festival banners printed for campus display.",
-        "src": "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        "id": "cd-05",
-        "code": "# 05",
-        "title": "Visual Synthesis",
-        "tag": "TOUCHDESIGNER LIVE",
-        "description": "Real-time audio-reactive generative visual synthesizer synchronized to live DJ sets.",
-        "src": "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        "id": "cd-06",
-        "code": "# 06",
-        "title": "Digital Blueprint",
+        "title": "Color & Form Synthesis",
         "tag": "CREATIVE DIRECTION",
-        "description": "Interface architecture and interactive motion assets designed for the Sanskaran web platform.",
-        "src": "https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&w=900&q=80"
+        "description": "Harmonious color palettes and modern editorial layouts defining festival branding.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375389/sanskaran_2026/gallery/chitrakatha-design/chitrakatha-design_03.jpg"
+      },
+      {
+        "id": "chi-04",
+        "code": "# 04",
+        "title": "The Master Artwork",
+        "tag": "POSTER SHOWCASE",
+        "description": "Flagship festival posters and merchandise designs celebrated across campus.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375389/sanskaran_2026/gallery/chitrakatha-design/chitrakatha-design_04.jpg"
       }
     ]
   },
@@ -150,57 +118,41 @@ export const CLUBS_DATA: ClubItem[] = [
     "category": "PHOTOGRAPHY & MEDIA",
     "accentColor": "#F59E0B",
     "gradient": "from-[#F59E0B] to-[#B45309]",
-    "coverImage": "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=1200&q=80",
-    "motto": "Preserving Ephemeral Light in 24fps",
-    "description": "35mm film photography, official concert photojournalism, aerial drone captures, and street documentary framing campus life.",
+    "coverImage": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375387/sanskaran_2026/gallery/chitrakatha-photography/chitrakatha-photography_01.jpg",
+    "motto": "The Eyes Behind The Eyes of Team Sanskaran",
+    "description": "We don\u2019t just capture moments, we frame memories. Documenting every smile, performance, and heartbeat across the festival in high-definition glory.",
     "images": [
       {
-        "id": "cp-01",
+        "id": "chi-01",
         "code": "# 01",
-        "title": "The 24fps Eye",
-        "tag": "CINEMA CAMERA RIG",
-        "description": "Cinematographer wielding a gimbal-mounted anamorphic cinema camera tracking performers in low light.",
-        "src": "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=900&q=80"
+        "title": "The Eyes Behind Sanskaran",
+        "tag": "PHOTOJOURNALISM",
+        "description": "Freezing fleeting smiles, raw emotion, and golden-hour memories behind the camera lens.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375387/sanskaran_2026/gallery/chitrakatha-photography/chitrakatha-photography_01.jpg"
       },
       {
-        "id": "cp-02",
+        "id": "chi-02",
         "code": "# 02",
-        "title": "Silver Halide",
-        "tag": "DARKROOM LAB",
-        "description": "Freshly developed 35mm black and white film negatives hung to dry under crimson darkroom lamps.",
-        "src": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=900&q=80"
+        "title": "Lens on the Limelight",
+        "tag": "CONCERT PHOTOGRAPHY",
+        "description": "Low-light precision framing capturing stage performers bathed in intense color gels.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375387/sanskaran_2026/gallery/chitrakatha-photography/chitrakatha-photography_02.jpg"
       },
       {
-        "id": "cp-03",
+        "id": "chi-03",
         "code": "# 03",
-        "title": "Campus from Above",
-        "tag": "DRONE PERSPECTIVE",
-        "description": "Aerial night perspective of the illuminated central lawn buzzing with 15,000 festival participants.",
-        "src": "https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&w=900&q=80"
+        "title": "Framing the Euphoria",
+        "tag": "CROWD PERSPECTIVE",
+        "description": "Documenting the pulsating human energy that defines every festival evening.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375387/sanskaran_2026/gallery/chitrakatha-photography/chitrakatha-photography_03.jpg"
       },
       {
-        "id": "cp-04",
+        "id": "chi-04",
         "code": "# 04",
-        "title": "Freeze Frame Stride",
-        "tag": "STAGE ACTION",
-        "description": "High shutter speed capturing flying dust and spotlight reflections during the dance clash.",
-        "src": "https://images.unsplash.com/photo-1518834107812-67b0b7c58434?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        "id": "cp-05",
-        "code": "# 05",
-        "title": "Portraits in Amber",
-        "tag": "GOLDEN HOUR",
-        "description": "Intimate natural light portraits of festival performers during twilight backstage preparations.",
-        "src": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        "id": "cp-06",
-        "code": "# 06",
-        "title": "The Gallery Colonnade",
-        "tag": "PHOTO EXHIBIT",
-        "description": "Framed documentary festival prints mounted along the open-air colonnade under warm downlights.",
-        "src": "https://images.unsplash.com/photo-1518998053901-5348d3961a04?auto=format&fit=crop&w=900&q=80"
+        "title": "The Stillness in Motion",
+        "tag": "DOCUMENTARY FRAMES",
+        "description": "Timeless candid visual stories immortalized for the university's permanent archive.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375387/sanskaran_2026/gallery/chitrakatha-photography/chitrakatha-photography_04.jpg"
       }
     ]
   },
@@ -211,57 +163,41 @@ export const CLUBS_DATA: ClubItem[] = [
     "category": "ART & CRAFT",
     "accentColor": "#B9ACF0",
     "gradient": "from-[#B9ACF0] to-[#6D28D9]",
-    "coverImage": "https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=1200&q=80",
-    "motto": "Pigment, Paper, and Tactile Memory",
-    "description": "Live collaborative murals, terracotta pottery, charcoal sketching, origami installations, and hand-crafted festival decor.",
+    "coverImage": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375389/sanskaran_2026/gallery/chitrakatha-art/chitrakatha-art_01.jpg",
+    "motto": "Where Imagination Takes Shape \u2014 Art is Emotion and Expression",
+    "description": "Creating tangible magic across campus through live murals, terracotta pottery, intricate origami installations, and handmade festival decor.",
     "images": [
       {
-        "id": "ca-01",
+        "id": "chi-01",
         "code": "# 01",
-        "title": "Monochrome Genesis",
-        "tag": "LIVE CHARCOAL MURAL",
-        "description": "Artists collaborating on a 24-foot canvas depicting mythological guardians with dense charcoal sticks.",
-        "src": "https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=900&q=80"
+        "title": "Where Imagination Takes Shape",
+        "tag": "FINE ART & INSTALLATION",
+        "description": "Hand-crafted festival installations, sculptures, and tactile decor breathing life into campus.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375389/sanskaran_2026/gallery/chitrakatha-art/chitrakatha-art_01.jpg"
       },
       {
-        "id": "ca-02",
+        "id": "chi-02",
         "code": "# 02",
-        "title": "Dual-Drum Impression",
-        "tag": "RISOGRAPH ATELIER",
-        "description": "Hand-printed multi-color festival posters drying on wooden racks with tactile soy-based inks.",
-        "src": "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=900&q=80"
+        "title": "Pigment & Expression",
+        "tag": "LIVE PAINTING",
+        "description": "Vibrant acrylic and watercolor canvases capturing traditional and contemporary motifs.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375389/sanskaran_2026/gallery/chitrakatha-art/chitrakatha-art_02.jpg"
       },
       {
-        "id": "ca-03",
+        "id": "chi-03",
         "code": "# 03",
-        "title": "Origami Monolith",
-        "tag": "PAPER SCULPTURE",
-        "description": "Modular tessellated paper sculpture suspended from the glass atrium dome catching daylight rays.",
-        "src": "https://images.unsplash.com/photo-1561214115-f2f134cc4912?auto=format&fit=crop&w=900&q=80"
+        "title": "Intricate Craftsmanship",
+        "tag": "HANDMADE ARTIFACTS",
+        "description": "Delicate paper origami, terracotta pottery, and textured artisan creations.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375389/sanskaran_2026/gallery/chitrakatha-art/chitrakatha-art_03.jpg"
       },
       {
-        "id": "ca-04",
+        "id": "chi-04",
         "code": "# 04",
-        "title": "Pigment Bleed",
-        "tag": "WATERCOLOR WORKSHOP",
-        "description": "Wet-on-wet watercolor study capturing autumnal blossoms on handmade cotton deckle-edge paper.",
-        "src": "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        "id": "ca-05",
-        "code": "# 05",
-        "title": "Earthen Form",
-        "tag": "POTTERY & CERAMICS",
-        "description": "Centering raw terracotta clay on a manual potter's wheel under open afternoon sun.",
-        "src": "https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        "id": "ca-06",
-        "code": "# 06",
-        "title": "Calligraphic Flourish",
-        "tag": "INK & SCRIPTO",
-        "description": "Broad-edge bamboo reed calligraphy exploring Sanskrit and Devanagari architectural letters.",
-        "src": "https://images.unsplash.com/photo-1582561424760-0321d75e81fa?auto=format&fit=crop&w=900&q=80"
+        "title": "The Collective Canvas",
+        "tag": "COMMUNITY MURAL",
+        "description": "Large-scale interactive art board inviting festival participants to leave their artistic mark.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375390/sanskaran_2026/gallery/chitrakatha-art/chitrakatha-art_04.jpg"
       }
     ]
   },
@@ -269,60 +205,44 @@ export const CLUBS_DATA: ClubItem[] = [
     "id": "chitrakatha",
     "number": "05",
     "name": "CHITRAKATHA",
-    "category": "film society",
+    "category": "FILM CLUB",
     "accentColor": "#EC4899",
     "gradient": "from-[#EC4899] to-[#9D174D]",
-    "coverImage": "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?auto=format&fit=crop&w=1200&q=80",
-    "motto": "The Epicenter of Visual Aesthetics & Imagination",
-    "description": "Parent creative club uniting painters, digital illustrators, photographers, sculptors, and designers into a unified visual guild.",
+    "coverImage": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375391/sanskaran_2026/gallery/chitrakatha/chitrakatha_01.jpg",
+    "motto": "Every Frame Holds a Story, Every Story Deserves an Audience",
+    "description": "The Official Film Club of TIU. Exploring cinematic direction, screenplay craft, camera movement, and festival aftermovie post-production.",
     "images": [
       {
-        "id": "chk-01",
+        "id": "chi-01",
         "code": "# 01",
-        "title": "Palette & Prism",
-        "tag": "FLAGSHIP EXHIBITION",
-        "description": "The centerpiece gallery hall showcasing the annual juried artwork across painting, craft, and film.",
-        "src": "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?auto=format&fit=crop&w=900&q=80"
+        "title": "Every Frame Holds a Story",
+        "tag": "OFFICIAL FILM CLUB",
+        "description": "Cinematic visual storytelling through short films, documentary shorts, and festival reels.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375391/sanskaran_2026/gallery/chitrakatha/chitrakatha_01.jpg"
       },
       {
-        "id": "chk-02",
+        "id": "chi-02",
         "code": "# 02",
-        "title": "Living Canvas",
-        "tag": "INSTALLATION ART",
-        "description": "Interactive light-and-fabric portal welcoming attendees at the festival entrance gate.",
-        "src": "https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=900&q=80"
+        "title": "Behind the Cinema Rig",
+        "tag": "CINEMATOGRAPHY",
+        "description": "Capturing motion picture aesthetics with cinematic framing and dynamic camera movement.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375391/sanskaran_2026/gallery/chitrakatha/chitrakatha_02.jpg"
       },
       {
-        "id": "chk-03",
+        "id": "chi-03",
         "code": "# 03",
-        "title": "Street Chalk Symphony",
-        "tag": "MAD-ABOUT-ART",
-        "description": "Intricate Rangoli and geometric floor art drafted with colored powder and chalk on campus avenues.",
-        "src": "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=900&q=80"
+        "title": "Director's Vision",
+        "tag": "ON-SET DIRECTING",
+        "description": "Directing actors and camera crew to translate scripted emotions into moving images.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375391/sanskaran_2026/gallery/chitrakatha/chitrakatha_03.jpg"
       },
       {
-        "id": "chk-04",
+        "id": "chi-04",
         "code": "# 04",
-        "title": "Sculpting the Ephemeral",
-        "tag": "CLAY MODELING",
-        "description": "Artists modeling character maquettes in air-dry clay during the 3-hour speed sculpture sprint.",
-        "src": "https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        "id": "chk-05",
-        "code": "# 05",
-        "title": "Graffiti Rebirth",
-        "tag": "OUTDOOR WALL ART",
-        "description": "Large-format spray paint graffiti mural celebrating the confluence of technology and cultural heritage.",
-        "src": "https://images.unsplash.com/photo-1561214115-f2f134cc4912?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        "id": "chk-06",
-        "code": "# 06",
-        "title": "Master's Showcase",
-        "tag": "CURATOR'S FORUM",
-        "description": "Guest artists reviewing student sketchbooks and providing professional industry feedback.",
-        "src": "https://images.unsplash.com/photo-1582561424760-0321d75e81fa?auto=format&fit=crop&w=900&q=80"
+        "title": "The Silver Screen Screening",
+        "tag": "FILM PREMIERE",
+        "description": "Audience gathered in the dimmed screening hall watching original student film premieres.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375391/sanskaran_2026/gallery/chitrakatha/chitrakatha_04.jpg"
       }
     ]
   },
@@ -330,60 +250,52 @@ export const CLUBS_DATA: ClubItem[] = [
     "id": "checkmate",
     "number": "06",
     "name": "CHECKMATE",
-    "category": "Music Band",
+    "category": "OFFICIAL BAND",
     "accentColor": "#94A3B8",
     "gradient": "from-[#94A3B8] to-[#334155]",
-    "coverImage": "https://images.unsplash.com/photo-1529699211952-734e80c4d42b?auto=format&fit=crop&w=1200&q=80",
-    "motto": "Every Move a Masterpiece of Mind",
-    "description": "Blitz tournaments, grandmaster analysis sessions, blindfold simuls, and tactical masterclasses on the checkered board.",
+    "coverImage": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375383/sanskaran_2026/gallery/checkmate/checkmate_01.jpg",
+    "motto": "Born From a Shared Love for Music and Live Performance",
+    "description": "The official band of Techno India University. Powering live concert stages with original rock compositions, collaborative musical sets, and electrifying guitar solos.",
     "images": [
       {
-        "id": "cm-01",
+        "id": "che-01",
         "code": "# 01",
-        "title": "The Sicilian Defense",
-        "tag": "BLITZ SHOWDOWN",
-        "description": "Players trading rapid moves with five seconds on the digital chess clock in the grand finals.",
-        "src": "https://images.unsplash.com/photo-1529699211952-734e80c4d42b?auto=format&fit=crop&w=900&q=80"
+        "title": "The Sound of Checkmate",
+        "tag": "OFFICIAL TIU BAND",
+        "description": "High-octane rock ensemble rocking the open-air colosseum with stadium-filling riffs.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375383/sanskaran_2026/gallery/checkmate/checkmate_01.jpg"
       },
       {
-        "id": "cm-02",
+        "id": "che-02",
         "code": "# 02",
-        "title": "Knight's Gambit",
-        "tag": "SIMUL ARENA",
-        "description": "Grandmaster simultaneous display taking on twenty collegiate challengers at the same time.",
-        "src": "https://images.unsplash.com/photo-1586165368502-1bad197a6461?auto=format&fit=crop&w=900&q=80"
+        "title": "Lead Solo in Lights",
+        "tag": "GUITAR HEROICS",
+        "description": "Blistering lead guitar solo piercing the night under brilliant blue stage strobes.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375383/sanskaran_2026/gallery/checkmate/checkmate_02.jpg"
       },
       {
-        "id": "cm-03",
+        "id": "che-03",
         "code": "# 03",
-        "title": "Wooden Majesty",
-        "tag": "CHAMPIONSHIP SET",
-        "description": "Hand-carved Staunton tournament pieces resting on a solid walnut board under focused warm lighting.",
-        "src": "https://images.unsplash.com/photo-1580541832626-2a7131ee809f?auto=format&fit=crop&w=900&q=80"
+        "title": "Bassline & Drum Battery",
+        "tag": "RHYTHM FOUNDATION",
+        "description": "Driving bassline and drum fills laying down the heavy groove for original compositions.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375383/sanskaran_2026/gallery/checkmate/checkmate_03.jpg"
       },
       {
-        "id": "cm-04",
+        "id": "che-04",
         "code": "# 04",
-        "title": "Pondering the End Game",
-        "tag": "DEEP CALCULATION",
-        "description": "Finalist analyzing rook-and-pawn endgame permutations with deep intellectual focus.",
-        "src": "https://images.unsplash.com/photo-1560174038-da43ac74f01b?auto=format&fit=crop&w=900&q=80"
+        "title": "Vocals at Peak Emotion",
+        "tag": "FRONTMAN ENERGY",
+        "description": "Emotional vocal delivery connecting directly with thousands of cheering festival fans.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375385/sanskaran_2026/gallery/checkmate/checkmate_04.jpg"
       },
       {
-        "id": "cm-05",
+        "id": "che-05",
         "code": "# 05",
-        "title": "Blindfold Duel",
-        "tag": "COGNITIVE MASTERY",
-        "description": "Exhibition blindfold game with moves dictated aloud via algebraic notation to an amazed crowd.",
-        "src": "https://images.unsplash.com/photo-1528819622765-d6bcf132f793?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        "id": "cm-06",
-        "code": "# 06",
-        "title": "Checkmate Decided",
-        "tag": "THE CORONATION",
-        "description": "The fateful queen sacrifice delivering checkmate amidst applause from spectators.",
-        "src": "https://images.unsplash.com/photo-1529699211952-734e80c4d42b?auto=format&fit=crop&w=900&q=80"
+        "title": "Colosseum Encore",
+        "tag": "BAND FINALE",
+        "description": "The full band bowing together after an unforgettable live concert performance.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375385/sanskaran_2026/gallery/checkmate/checkmate_05.jpg"
       }
     ]
   },
@@ -391,60 +303,44 @@ export const CLUBS_DATA: ClubItem[] = [
     "id": "dhrubotara",
     "number": "07",
     "name": "DHRUBOTARA",
-    "category": "SHORT FILM",
+    "category": "DRAMA CLUB",
     "accentColor": "#818CF8",
     "gradient": "from-[#818CF8] to-[#312E81]",
-    "coverImage": "https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?auto=format&fit=crop&w=1200&q=80",
-    "motto": "Guiding Stars Across the Intellectual Horizon",
-    "description": "Telescope stargazing soirees, astrophotography workshops, scientific symposia, quiz conclaves, and cosmic wonder.",
+    "coverImage": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375373/sanskaran_2026/gallery/dhrubotara/dhrubotara_01.jpg",
+    "motto": "A Guiding Star Breathing Soul into Storytelling",
+    "description": "The official Drama Club of TIU. From the vibrant pulse of Bollywood recreations and joyful comedy dramas to poignant proscenium stage plays.",
     "images": [
       {
-        "id": "dt-01",
+        "id": "dhr-01",
         "code": "# 01",
-        "title": "The Rings of Saturn",
-        "tag": "ROOFTOP OBSERVATORY",
-        "description": "High-powered motorized Dobsonian telescope pointed toward Saturn under clear winter skies.",
-        "src": "https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?auto=format&fit=crop&w=900&q=80"
+        "title": "Soul in Storytelling",
+        "tag": "THEATRE PRODUCTION",
+        "description": "Intense proscenium drama highlighting poignant social and emotional narratives.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375373/sanskaran_2026/gallery/dhrubotara/dhrubotara_01.jpg"
       },
       {
-        "id": "dt-02",
+        "id": "dhr-02",
         "code": "# 02",
-        "title": "Milky Way Arch",
-        "tag": "ASTROPHOTOGRAPHY",
-        "description": "Long-exposure night sky panorama capturing cosmic nebula dust above the campus belltower.",
-        "src": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=900&q=80"
+        "title": "Spotlight Soliloquy",
+        "tag": "MONO ACT",
+        "description": "A solo performer captivating the auditorium under warm chiaroscuro stage lighting.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375373/sanskaran_2026/gallery/dhrubotara/dhrubotara_02.jpg"
       },
       {
-        "id": "dt-03",
+        "id": "dhr-03",
         "code": "# 03",
-        "title": "Cosmic Symposium",
-        "tag": "SCIENCE FORUM",
-        "description": "Keynote lecture on gravitational waves and quantum astrophysics in the packed central auditorium.",
-        "src": "https://images.unsplash.com/photo-1507668077129-56e32842fceb?auto=format&fit=crop&w=900&q=80"
+        "title": "Bollywood Recreations",
+        "tag": "DRAMA ENSEMBLE",
+        "description": "High-energy comedic timing and vibrant theatrical ensemble performance.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375373/sanskaran_2026/gallery/dhrubotara/dhrubotara_03.jpg"
       },
       {
-        "id": "dt-04",
+        "id": "dhr-04",
         "code": "# 04",
-        "title": "Lunar Details",
-        "tag": "MOON CRATER STUDY",
-        "description": "High-resolution lunar surface photograph capturing Tycho and Copernicus craters in crisp detail.",
-        "src": "https://images.unsplash.com/photo-1522030299830-16b8d3d049fe?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        "id": "dt-05",
-        "code": "# 05",
-        "title": "Optics Lab",
-        "tag": "SPECTROSCOPY EXPERIMENT",
-        "description": "Students splitting light spectra with prisms to measure stellar emission fingerprints.",
-        "src": "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        "id": "dt-06",
-        "code": "# 06",
-        "title": "Night Sky Watchers",
-        "tag": "MIDNIGHT EXPEDITION",
-        "description": "Student astronomers bundled in jackets charting meteor showers until dawn.",
-        "src": "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=900&q=80"
+        "title": "The Bow of Gratitude",
+        "tag": "STANDING OVATION",
+        "description": "The entire cast acknowledging thunderous applause from the auditorium crowd.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375373/sanskaran_2026/gallery/dhrubotara/dhrubotara_04.jpg"
       }
     ]
   },
@@ -455,118 +351,86 @@ export const CLUBS_DATA: ClubItem[] = [
     "category": "CLASSICAL DANCE",
     "accentColor": "#F43F5E",
     "gradient": "from-[#F43F5E] to-[#9F1239]",
-    "coverImage": "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?auto=format&fit=crop&w=1200&q=80",
-    "motto": "Kinetic Geometry in Pure Motion",
-    "description": "Classical Kathak & Bharatnatyam pirouettes, street dance clashes, contemporary lyrical flow, and folk choreography.",
+    "coverImage": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375375/sanskaran_2026/gallery/nritaksha/nritaksha_01.jpg",
+    "motto": "Mastering Diverse Classical & Semi-Classical Expressions",
+    "description": "The official classical dance team of the university. Showcasing traditional Kathak, Bharatnatyam, and expressive folk choreographies with timeless elegance.",
     "images": [
       {
-        "id": "nr-01",
+        "id": "nri-01",
         "code": "# 01",
-        "title": "Ghunghroo Swirl",
-        "tag": "KATHAK CLASSICAL",
-        "description": "High-speed spins (chakkars) with resonant brass bells and flowing red silk costumes.",
-        "src": "https://images.unsplash.com/photo-1547153760-18fc86324498?auto=format&fit=crop&w=900&q=80"
+        "title": "Classical Grace in Motion",
+        "tag": "KATHAK & BHARATNATYAM",
+        "description": "Masterful classical pirouette highlighting rhythmic footwork and ornate ghunghroos.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375375/sanskaran_2026/gallery/nritaksha/nritaksha_01.jpg"
       },
       {
-        "id": "nr-02",
+        "id": "nri-02",
         "code": "# 02",
-        "title": "Floor Power Move",
-        "tag": "ALL-STYLES CYPHER",
-        "description": "One-handed windmill freeze captured during the inter-collegiate hip-hop throwdown.",
-        "src": "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?auto=format&fit=crop&w=900&q=80"
+        "title": "Kinetic Heritage",
+        "tag": "SEMI-CLASSICAL FUSION",
+        "description": "Graceful hand mudras and synchronized formations narrating timeless mythological tales.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375375/sanskaran_2026/gallery/nritaksha/nritaksha_02.jpg"
       },
       {
-        "id": "nr-03",
+        "id": "nri-03",
         "code": "# 03",
-        "title": "Echoes of Gravity",
-        "tag": "CONTEMPORARY DUET",
-        "description": "Weightless lift amid haze and low-lying ground fog in the experimental movement showcase.",
-        "src": "https://images.unsplash.com/photo-1518834107812-67b0b7c58434?auto=format&fit=crop&w=900&q=80"
+        "title": "Resonant Rhythms",
+        "tag": "STAGE EXPRESSION",
+        "description": "Vibrant classical costumes and evocative expressions captivating the proscenium hall.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375375/sanskaran_2026/gallery/nritaksha/nritaksha_03.jpg"
       },
       {
-        "id": "nr-04",
+        "id": "nri-04",
         "code": "# 04",
-        "title": "Lock & Pop Lockdown",
-        "tag": "CREW SYNCHRONIZATION",
-        "description": "A 16-member mega-crew executing mechanical isolation moves with laser precision.",
-        "src": "https://images.unsplash.com/photo-1535525153412-5a42439a210d?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        "id": "nr-05",
-        "code": "# 05",
-        "title": "Midnight Circle",
-        "tag": "UV FREESTYLE",
-        "description": "Freestyle cypher illuminated strictly by ultraviolet glow sticks and neon face paint.",
-        "src": "https://images.unsplash.com/photo-1545224144-b38cd309ef69?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        "id": "nr-06",
-        "code": "# 06",
-        "title": "Dhol & Daman",
-        "tag": "FOLK BHANGRA FUSION",
-        "description": "High-jumping celebratory Bhangra routine stirring the entire outdoor courtyard into celebration.",
-        "src": "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=900&q=80"
+        "title": "The Climax Mudra",
+        "tag": "ENSEMBLE FINALE",
+        "description": "Dramatic classical pose held in perfect stillness as final taals echo.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375375/sanskaran_2026/gallery/nritaksha/nritaksha_04.jpg"
       }
     ]
   },
   {
     "id": "paperback-society",
     "number": "09",
-    "name": "PAPERBACK SOCIETY",
+    "name": "THE PAPERBACK SOCIETY",
     "category": "LITERATURE & DEBATE",
     "accentColor": "#FBBF24",
     "gradient": "from-[#FBBF24] to-[#78350F]",
-    "coverImage": "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=1200&q=80",
-    "motto": "Words That Shatter and Reconstruct",
-    "description": "Parliamentary debate conclaves, slam poetry showdowns, spontaneous typewriter prose corners, and anthology launches.",
+    "coverImage": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375371/sanskaran_2026/gallery/paperback-society/paperback-society_01.jpg",
+    "motto": "Where Words Find Their Voice \u2014 Four Domains of Self-Expression",
+    "description": "The official Literary Club of Techno India University. Fostering sharp debate dungeon clashes, spoken word slams, and creative writing publications.",
     "images": [
       {
-        "id": "pb-01",
+        "id": "pap-01",
         "code": "# 01",
-        "title": "The Spoken Cadence",
-        "tag": "POETRY SLAM FINALS",
-        "description": "A poet delivering an unfiltered, passionate stanza under an incandescent bulb in the amphitheatre.",
-        "src": "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=900&q=80"
+        "title": "Where Words Find Voice",
+        "tag": "LITERARY CIRCLE",
+        "description": "Engaged deliberation during the flagship parliamentary debate series.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375371/sanskaran_2026/gallery/paperback-society/paperback-society_01.jpg"
       },
       {
-        "id": "pb-02",
+        "id": "pap-02",
         "code": "# 02",
-        "title": "Rebuttal Point",
-        "tag": "PARLIAMENTARY DEBATE",
-        "description": "The Leader of Opposition offering a sharp point of information during the motions of state debate.",
-        "src": "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=900&q=80"
+        "title": "The Debate Dungeon",
+        "tag": "INTELLECTUAL CLASH",
+        "description": "Orators presenting thought-provoking arguments with sharp poise and rhetorical eloquence.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375371/sanskaran_2026/gallery/paperback-society/paperback-society_02.jpg"
       },
       {
-        "id": "pb-03",
+        "id": "pap-03",
         "code": "# 03",
-        "title": "Ink & Ribbon",
-        "tag": "TYPEWRITER POETRY",
-        "description": "A vintage typewriter inviting attendees to tap out haikus and impromptu letters on kraft paper.",
-        "src": "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=900&q=80"
+        "title": "Verses & Solitude",
+        "tag": "POETRY SLAM",
+        "description": "Spoken word artists captivating listeners in the intimate courtyard poetry circle.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375373/sanskaran_2026/gallery/paperback-society/paperback-society_03.jpg"
       },
       {
-        "id": "pb-04",
+        "id": "pap-04",
         "code": "# 04",
-        "title": "Tension at the Buzzer",
-        "tag": "ANNUAL GENERAL QUIZ",
-        "description": "Finalist teams locked in deliberation as the 10-second buzzer counts down in the audio-visual round.",
-        "src": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        "id": "pb-05",
-        "code": "# 05",
-        "title": "Tales in the Dark",
-        "tag": "MIDNIGHT STORY CIRCLE",
-        "description": "Intimate late-night folklore and urban legend storytelling around an acoustic courtyard lantern.",
-        "src": "https://images.unsplash.com/photo-1516962215378-7fa2e137ae93?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        "id": "pb-06",
-        "code": "# 06",
-        "title": "The Anthology",
-        "tag": "LITERARY JOURNAL LAUNCH",
-        "description": "Unveiling the collector's foil-embossed edition of 'Sanskaran Literary Anthology 2026'.",
-        "src": "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=900&q=80"
+        "title": "The Pen's Legacy",
+        "tag": "CREATIVE WRITING",
+        "description": "Student authors and journalists collaborating on the festival annual literary edition.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375373/sanskaran_2026/gallery/paperback-society/paperback-society_04.jpg"
       }
     ]
   },
@@ -574,60 +438,44 @@ export const CLUBS_DATA: ClubItem[] = [
     "id": "phoenix",
     "number": "10",
     "name": "PHOENIX",
-    "category": "FASHION",
+    "category": "FASHION & DESIGN",
     "accentColor": "#FF5722",
     "gradient": "from-[#FF5722] to-[#B91C1C]",
-    "coverImage": "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1200&q=80",
-    "motto": "Rising From Pixels, Engineering The Future",
-    "description": "Competitive esports tournaments (Valorant, FIFA, BGMI), robotics battles, hackathon sprints, and indie game demos.",
+    "coverImage": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375385/sanskaran_2026/gallery/phoenix/phoenix_01.jpg",
+    "motto": "Stepping Into The Spotlight \u2014 Complete Production Ecosystem",
+    "description": "The university's official design and fashion team. Curating avant-garde runway walks, custom styling, choreography, and cutting-edge apparel aesthetics.",
     "images": [
       {
-        "id": "ph-01",
+        "id": "pho-01",
         "code": "# 01",
-        "title": "The Grand Finals",
-        "tag": "ESPORTS STADIUM",
-        "description": "Pro-tier gaming arena with RGB lighting towers and commentary casting desk during the championship.",
-        "src": "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=900&q=80"
+        "title": "Haute Couture Spotlight",
+        "tag": "FASHION & DESIGN",
+        "description": "Avant-garde runway styling designed and hand-crafted by student couturiers.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375385/sanskaran_2026/gallery/phoenix/phoenix_01.jpg"
       },
       {
-        "id": "ph-02",
+        "id": "pho-02",
         "code": "# 02",
-        "title": "Robowars Clash",
-        "tag": "COMBAT ROBOTICS",
-        "description": "Heavyweight combat robots throwing sparks in the reinforced Lexan arena pit.",
-        "src": "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=900&q=80"
+        "title": "The Runway Walk",
+        "tag": "RAMP WALKING",
+        "description": "Models exhibiting confident strides in bespoke silhouettes and dramatic silhouettes.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375385/sanskaran_2026/gallery/phoenix/phoenix_02.jpg"
       },
       {
-        "id": "ph-03",
+        "id": "pho-03",
         "code": "# 03",
-        "title": "Overclocked Sprints",
-        "tag": "24-HOUR HACKATHON",
-        "description": "Teams huddled around dual-screen laptops and breadboards building IoT prototypes overnight.",
-        "src": "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=900&q=80"
+        "title": "Textile & Concept Art",
+        "tag": "THEMATIC COSTUMES",
+        "description": "Intricate fabric craftsmanship and sustainable design concepts on full display.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375385/sanskaran_2026/gallery/phoenix/phoenix_03.jpg"
       },
       {
-        "id": "ph-04",
+        "id": "pho-04",
         "code": "# 04",
-        "title": "Mechanical Precision",
-        "tag": "DRONE OBSTACLE RACE",
-        "description": "FPV racing drones zooming through illuminated gates with telemetry streaming to pilot goggles.",
-        "src": "https://images.unsplash.com/photo-1527977966376-1c8408f9f108?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        "id": "ph-05",
-        "code": "# 05",
-        "title": "VR Immersion",
-        "tag": "XR METAVERSE LAB",
-        "description": "Attendees interacting with student-built virtual reality simulations on wireless headsets.",
-        "src": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        "id": "ph-06",
-        "code": "# 06",
-        "title": "Victory Trophy",
-        "tag": "CHAMPIONSHIP STAGE",
-        "description": "Winning collegiate esports squad hoisting the gold chalice under pulsing crimson strobes.",
-        "src": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=900&q=80"
+        "title": "Curator's Showcase",
+        "tag": "DESIGN ECOSYSTEM",
+        "description": "The creative styling and modeling team standing proudly at the end of the runway.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375385/sanskaran_2026/gallery/phoenix/phoenix_04.jpg"
       }
     ]
   },
@@ -635,60 +483,44 @@ export const CLUBS_DATA: ClubItem[] = [
     "id": "swarakriti",
     "number": "11",
     "name": "SWARAKRITI",
-    "category": "MUSIC SOCIETY",
+    "category": "MUSIC TEAM",
     "accentColor": "#EAB308",
     "gradient": "from-[#EAB308] to-[#CA8A04]",
-    "coverImage": "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=1200&q=80",
-    "motto": "Harmonics That Pierce The Midnight Void",
-    "description": "Inter-collegiate battle of the bands, classical Hindustani ragas, acoustic courtyard jamming, and symphonic vocals.",
+    "coverImage": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375376/sanskaran_2026/gallery/swarakriti/swarakriti_01.jpg",
+    "motto": "Your Ultimate Escape \u2014 College Jamming & Acoustic Harmony",
+    "description": "The official music team of Techno India University. Providing judgment-free campus acoustic jam sessions, western vocal ensembles, and concert performances.",
     "images": [
       {
-        "id": "sw-01",
+        "id": "swa-01",
         "code": "# 01",
-        "title": "Overdrive Crescendo",
-        "tag": "BATTLE OF BANDS",
-        "description": "Lead guitarist hitting a soaring harmonic solo amid blinding amber pyrotechnics and stadium bass.",
-        "src": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=900&q=80"
+        "title": "Acoustic Soul Sessions",
+        "tag": "CAMPUS JAMMING",
+        "description": "Judgment-free musical jamming and unplugged melodies bringing students together.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375376/sanskaran_2026/gallery/swarakriti/swarakriti_01.jpg"
       },
       {
-        "id": "sw-02",
+        "id": "swa-02",
         "code": "# 02",
-        "title": "Raga Bhairav Jugalbandi",
-        "tag": "CLASSICAL ACOUSTICS",
-        "description": "Sitar and tabla jugalbandi in the morning courtyard echoing intricate rhythmic cycles (Teen Taal).",
-        "src": "https://images.unsplash.com/photo-1465847899084-d164df4dedc6?auto=format&fit=crop&w=900&q=80"
+        "title": "Harmonic Resonance",
+        "tag": "VOCAL ENSEMBLE",
+        "description": "Lead vocalists harmonizing soaring melodies over intricate acoustic guitar progressions.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375376/sanskaran_2026/gallery/swarakriti/swarakriti_02.jpg"
       },
       {
-        "id": "sw-03",
+        "id": "swa-03",
         "code": "# 03",
-        "title": "Percussion Pulse",
-        "tag": "DRUM ARENA",
-        "description": "High-octane drum kit solo captured in high shutter speed as sweat catches the stage side fills.",
-        "src": "https://images.unsplash.com/photo-1519892300165-cb5542fb47c7?auto=format&fit=crop&w=900&q=80"
+        "title": "The Rhythm Section",
+        "tag": "PERCUSSION PULSE",
+        "description": "Tight drum grooves and rhythmic caj\u00f3n beats driving the energy of the live session.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375378/sanskaran_2026/gallery/swarakriti/swarakriti_03.jpg"
       },
       {
-        "id": "sw-04",
+        "id": "swa-04",
         "code": "# 04",
-        "title": "Choral Polyphony",
-        "tag": "WESTERN VOCAL ENSEMBLE",
-        "description": "Twelve-part vocal harmony blending with Steinway grand piano in the resonant acoustics of the hall.",
-        "src": "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        "id": "sw-05",
-        "code": "# 05",
-        "title": "Modular Voltage",
-        "tag": "SYNTHESIS LAB",
-        "description": "Analog synthesizer patches and sequencer manipulation during the midnight electronic showcase.",
-        "src": "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        "id": "sw-06",
-        "code": "# 06",
-        "title": "Constellation of Sound",
-        "tag": "SAHOTSAVA CONCERT NIGHT",
-        "description": "A sea of 10,000 glowing smartphones swaying in unison to the headliner's acoustic encore.",
-        "src": "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=900&q=80"
+        "title": "Midnight Reverie",
+        "tag": "CROWD SINGALONG",
+        "description": "An arena of voices singing in unison to iconic campus anthems under festival skies.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375378/sanskaran_2026/gallery/swarakriti/swarakriti_04.jpg"
       }
     ]
   },
@@ -696,182 +528,134 @@ export const CLUBS_DATA: ClubItem[] = [
     "id": "step-alpha",
     "number": "12",
     "name": "STEP ALPHA",
-    "category": "URBAN HIP-HOP & STREET",
+    "category": "WESTERN DANCE CREW",
     "accentColor": "#10B981",
     "gradient": "from-[#10B981] to-[#047857]",
-    "coverImage": "https://images.unsplash.com/photo-1535525153412-5a42439a210d?auto=format&fit=crop&w=1200&q=80",
-    "motto": "Precision Isolations, Heavy Beats",
-    "description": "Street style krump, popping, locking, breaking, and underground hip-hop choreographies dominating urban battles.",
+    "coverImage": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375378/sanskaran_2026/gallery/step-alpha/step-alpha_01.png",
+    "motto": "With 20+ Victories Under Our Name, We Step in to Conquer",
+    "description": "The Western Dance Crew of TIU! Bringing together Hip-Hop, Contemporary, Breaking, and urban battle choreography with relentless energy.",
     "images": [
       {
-        "id": "sa-01",
+        "id": "ste-01",
         "code": "# 01",
-        "title": "Synchronized Pop",
-        "tag": "STREET CYPHER",
-        "description": "Heavy 808 bass drops hitting as the crew delivers a robotic isolation wave in unison.",
-        "src": "https://images.unsplash.com/photo-1535525153412-5a42439a210d?auto=format&fit=crop&w=900&q=80"
+        "title": "Urban Cypher Dominance",
+        "tag": "WESTERN DANCE CREW",
+        "description": "Hard-hitting hip-hop choreography with laser-sharp synchronization and explosive isolations.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375378/sanskaran_2026/gallery/step-alpha/step-alpha_01.png"
       },
       {
-        "id": "sa-02",
+        "id": "ste-02",
         "code": "# 02",
-        "title": "Breaking the Concrete",
-        "tag": "POWER MOVE BATTLE",
-        "description": "B-boy spinning into an inverted headspin on the linoleum battle floor.",
-        "src": "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?auto=format&fit=crop&w=900&q=80"
+        "title": "Gravity-Defying Power Move",
+        "tag": "BREAKING & B-BOYING",
+        "description": "A dynamic floor freeze executed in the battle cypher to the roar of spectators.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375378/sanskaran_2026/gallery/step-alpha/step-alpha_02.png"
       },
       {
-        "id": "sa-03",
+        "id": "ste-03",
         "code": "# 03",
-        "title": "Krump Fury",
-        "tag": "EXPRESSIVE MOVEMENT",
-        "description": "High-intensity chest pop and raw theatrical expression during the 1v1 battle finals.",
-        "src": "https://images.unsplash.com/photo-1545224144-b38cd309ef69?auto=format&fit=crop&w=900&q=80"
+        "title": "Sync in the Shadows",
+        "tag": "STAGE FORMATION",
+        "description": "A tight crew lineup moving in robotic lockstep through smoke and strobes.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375378/sanskaran_2026/gallery/step-alpha/step-alpha_03.png"
       },
       {
-        "id": "sa-04",
+        "id": "ste-04",
         "code": "# 04",
-        "title": "Streetwear Aesthetics",
-        "tag": "CREW IDENTITY",
-        "description": "Oversized jerseys, bucket hats, and high-top sneakers commanding the proscenium stage.",
-        "src": "https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        "id": "sa-05",
-        "code": "# 05",
-        "title": "Underground Haze",
-        "tag": "NIGHT ARENA",
-        "description": "Backlit silhouettes carving sharp angles through dense theatrical smoke.",
-        "src": "https://images.unsplash.com/photo-1518834107812-67b0b7c58434?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        "id": "sa-06",
-        "code": "# 06",
-        "title": "The Championship Pose",
-        "tag": "VICTORY CYPHER",
-        "description": "The crew locked in their signature alpha freeze as the judges raise the 10-point banners.",
-        "src": "https://images.unsplash.com/photo-1547153760-18fc86324498?auto=format&fit=crop&w=900&q=80"
+        "title": "Victorious Crew Stride",
+        "tag": "CHAMPIONSHIP TROUPE",
+        "description": "Celebrating another hard-earned victory across 20+ competitive dance championships.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375379/sanskaran_2026/gallery/step-alpha/step-alpha_04.png"
       }
     ]
   },
   {
     "id": "desi-groover",
     "number": "13",
-    "name": "DESI GROOVER",
-    "category": "BOLLYWOOD DANCE",
+    "name": "DESI GROOVERS",
+    "category": "ALL-GIRLS DANCE TEAM",
     "accentColor": "#F97316",
     "gradient": "from-[#F97316] to-[#C2410C]",
-    "coverImage": "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=1200&q=80",
-    "motto": "Euphoric Rhythms, Celebration of Roots",
-    "description": "High-octane Bollywood extravaganzas, Rajasthani Ghoomar, Punjabi Bhangra, and festive Garba circles.",
+    "coverImage": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375381/sanskaran_2026/gallery/desi-groover/desi-groover_01.jpg",
+    "motto": "Energetic Performances, Expressive Choreography, Dynamic Teamwork",
+    "description": "An all-girls dance team renowned for high-tempo Bollywood beats, expressive folk movements, and crowd-electrifying stage presence.",
     "images": [
       {
-        "id": "dg-01",
+        "id": "des-01",
         "code": "# 01",
-        "title": "Dholak Thunder",
-        "tag": "PUNJABI BHANGRA",
-        "description": "Energetic jumps with colorful saap props creating thunderous claps across the open arena.",
-        "src": "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=900&q=80"
+        "title": "Girl Power on the Floor",
+        "tag": "ALL-GIRLS CREW",
+        "description": "Empowered, graceful, and fiercely synchronized all-girls dance team performance.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375381/sanskaran_2026/gallery/desi-groover/desi-groover_01.jpg"
       },
       {
-        "id": "dg-02",
+        "id": "des-02",
         "code": "# 02",
-        "title": "Ghoomar Swirls",
-        "tag": "FOLK EXTRAVAGANZA",
-        "description": "Mirrored lehengas flaring out in kaleidoscopic spirals to traditional desert folk instruments.",
-        "src": "https://images.unsplash.com/photo-1547153760-18fc86324498?auto=format&fit=crop&w=900&q=80"
+        "title": "Vibrant Folk & Bollywood",
+        "tag": "FUSION ROUTINE",
+        "description": "Colorful traditional elements blended seamlessly with modern cinematic dance styles.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375382/sanskaran_2026/gallery/desi-groover/desi-groover_02.jpg"
       },
       {
-        "id": "dg-03",
+        "id": "des-03",
         "code": "# 03",
-        "title": "Dandiya Raas Night",
-        "tag": "FESTIVAL CIRCLE",
-        "description": "Rhythmic wooden sticks clacking in intricate synchrony under glowing paper lantern canopies.",
-        "src": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=900&q=80"
+        "title": "Radiant Expressions",
+        "tag": "STAGE CHARM",
+        "description": "Infectious smiles and synchronized moves commanding the full breadth of the stage.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375383/sanskaran_2026/gallery/desi-groover/desi-groover_03.jpg"
       },
       {
-        "id": "dg-04",
+        "id": "des-04",
         "code": "# 04",
-        "title": "Bollywood Blockbuster",
-        "tag": "THEATRICAL FUSION",
-        "description": "A 25-dancer synchronized routine celebrating 90s cinema romance and electrifying modern beats.",
-        "src": "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        "id": "dg-05",
-        "code": "# 05",
-        "title": "Gulal Explosion",
-        "tag": "HOLI COLOR DANCE",
-        "description": "Vibrant plumes of saffron and magenta powder erupting during the climactic stage finale.",
-        "src": "https://images.unsplash.com/photo-1503095396549-807759245b35?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        "id": "dg-06",
-        "code": "# 06",
-        "title": "The Grand Ensemble",
-        "tag": "STANDING APPLAUSE",
-        "description": "All performers bowing in opulent ethnic attire as celebratory confetti rains across the stage.",
-        "src": "https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?auto=format&fit=crop&w=900&q=80"
+        "title": "Unstoppable Momentum",
+        "tag": "CROWD CHEER",
+        "description": "Standing ovation as the troupe completes their high-energy showcase.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375383/sanskaran_2026/gallery/desi-groover/desi-groover_04.jpg"
       }
     ]
   },
   {
     "id": "beat-buster",
     "number": "14",
-    "name": "BEAT BUSTER",
-    "category": "BEATBOX, RAP ",
+    "name": "BEAT BUSTERS",
+    "category": "BOLLYWOOD DANCE CREW",
     "accentColor": "#06B6D4",
     "gradient": "from-[#06B6D4] to-[#0E7490]",
-    "coverImage": "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=1200&q=80",
-    "motto": "Vocal Synthesis, Raw Mic Energy",
-    "description": "Vocal percussion, underground rap ciphers, throat bass drops, loop station artistry, and impromptu acoustic jams.",
+    "coverImage": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375380/sanskaran_2026/gallery/beat-buster/beat-buster_01.jpg",
+    "motto": "The Official Bollywood Dance Crew \u2014 Driven by Passion and Precision",
+    "description": "Representing TIU in inter-college Bollywood dance competitions with theatrical storytelling, explosive energy, and signature synchronized steps.",
     "images": [
       {
-        "id": "bb-01",
+        "id": "bea-01",
         "code": "# 01",
-        "title": "Throat Bass Vibration",
-        "tag": "BEATBOX BATTLE",
-        "description": "Vocalist dropping sub-bass frequencies and snare rimshots directly on the dynamic microphone.",
-        "src": "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=900&q=80"
+        "title": "Bollywood High Voltage",
+        "tag": "BOLLYWOOD DANCE CREW",
+        "description": "Electrifying commercial dance routine igniting the main festival stage.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375380/sanskaran_2026/gallery/beat-buster/beat-buster_01.jpg"
       },
       {
-        "id": "bb-02",
+        "id": "bea-02",
         "code": "# 02",
-        "title": "Loopstation Layering",
-        "tag": "LIVE ELECTRONICA",
-        "description": "Building a full polyphonic track live using only voice, RC-505 loopstation, and vocal delays.",
-        "src": "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&w=900&q=80"
+        "title": "Desi Swag Formation",
+        "tag": "SYNCHRONIZED STRIDE",
+        "description": "Flawlessly synchronized group steps celebrating high-tempo cinematic beats.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375381/sanskaran_2026/gallery/beat-buster/beat-buster_02.jpg"
       },
       {
-        "id": "bb-03",
+        "id": "bea-03",
         "code": "# 03",
-        "title": "Desi Hip-Hop Cypher",
-        "tag": "RAP ARENA",
-        "description": "Rappers trading rapid multilingual rhymes in Bengali, Hindi, and English over raw boombap beats.",
-        "src": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=900&q=80"
+        "title": "Thumka & Thunder",
+        "tag": "EXPRESSIVE ENERGY",
+        "description": "Dynamic facial expressions and contagious stage joy sweeping through the audience.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375380/sanskaran_2026/gallery/beat-buster/beat-buster_03.jpg"
       },
       {
-        "id": "bb-04",
+        "id": "bea-04",
         "code": "# 04",
-        "title": "Acoustic Harmonizer",
-        "tag": "UNPLUGGED SESSIONS",
-        "description": "Beatboxer backing an acoustic guitar soloist under the amphitheatre banyan tree.",
-        "src": "https://images.unsplash.com/photo-1465847899084-d164df4dedc6?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        "id": "bb-05",
-        "code": "# 05",
-        "title": "Crowd Hypnosis",
-        "tag": "CROWD INTERACTION",
-        "description": "Leading a 3,000-strong call-and-response vocal beatbox routine at the festival side stage.",
-        "src": "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        "id": "bb-06",
-        "code": "# 06",
-        "title": "The Golden Mic",
-        "tag": "AWARD CEREMONY",
-        "description": "Champion beatboxer raising the engraved vintage microphone trophy amid thunderous cheers.",
-        "src": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=900&q=80"
+        "title": "The Finale Stance",
+        "tag": "GRAND ARENA EXIT",
+        "description": "The crew's signature power pose as gold pyrotechnic sparks shower the stage.",
+        "src": "https://res.cloudinary.com/lsyjstbv/image/upload/v1795375380/sanskaran_2026/gallery/beat-buster/beat-buster_04.jpg"
       }
     ]
   }
