@@ -667,126 +667,56 @@ export default function GallerySection() {
 
                         {/* Bento-Style Gallery Grid */}
                         <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
-                          {/* Photo Cards */}
-                          {club.images.map((photo, photoIdx) => {
-                            // Checkmate 5th photo spans 2 columns on desktop
-                            const isCheckmateWide = club.images.length === 5 && photoIdx === 4;
-
-                            return (
-                              <div
-                                key={photo.id}
-                                onClick={() =>
-                                  setSelectedPhoto({
-                                    photo,
-                                    club,
-                                    photoIndex: photoIdx,
-                                  })
-                                }
-                                className={`group/bento relative overflow-hidden rounded-2xl border border-white/10 bg-[#0c0b14] cursor-pointer shadow-[0_8px_30px_rgba(0,0,0,0.6)] focus:outline-none transition-all duration-300 hover:border-white/30 hover:scale-[1.015] active:scale-[0.985] will-change-transform ${
-                                  isCheckmateWide
-                                    ? "col-span-1 sm:col-span-2 lg:col-span-2 aspect-[16/9] sm:aspect-[21/9]"
-                                    : "col-span-1 aspect-[4/3]"
-                                }`}
-                              >
-                                <img
-                                  src={photo.src}
-                                  alt={photo.title || "Gallery photo"}
-                                  loading="lazy"
-                                  className="size-full object-cover transition-transform duration-700 ease-out group-hover/bento:scale-105 will-change-transform"
-                                />
-
-                                {/* Top Bar: Micro Badge (# 01) and Maximize Indicator */}
-                                <div className="absolute inset-x-0 top-0 p-3.5 flex items-center justify-between pointer-events-none z-10">
-                                  <span className="font-tech text-[10px] sm:text-xs font-bold tracking-wider uppercase bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/15 text-white/90 shadow-sm">
-                                    {photo.code || `# 0${photoIdx + 1}`}
-                                  </span>
-                                  <div className="w-7 h-7 rounded-full bg-black/50 backdrop-blur-md border border-white/15 flex items-center justify-center text-white/80 opacity-80 group-hover/bento:opacity-100 group-hover/bento:text-[#FFAA24] group-hover/bento:scale-110 transition-all duration-300 shadow-sm">
-                                    <Icon.Maximize2 className="w-3.5 h-3.5" />
-                                  </div>
-                                </div>
-
-                                {/* Bottom Hover Caption Scrim */}
-                                <div className="absolute inset-x-0 bottom-0 p-4 pt-10 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex flex-col justify-end opacity-90 sm:opacity-0 group-hover/bento:opacity-100 transition-opacity duration-300 pointer-events-none z-10">
-                                  {photo.tag && (
-                                    <span className="font-tech text-[9px] sm:text-[10px] font-bold tracking-widest uppercase text-[#B9ACF0] mb-0.5">
-                                      {photo.tag}
-                                    </span>
-                                  )}
-                                  <p className="font-display text-sm sm:text-base text-white tracking-wide truncate">
-                                    {photo.title}
-                                  </p>
-                                </div>
-
-                                {/* Subtle ambient hover highlight ring */}
-                                <div
-                                  className="absolute inset-0 rounded-2xl pointer-events-none opacity-0 group-hover/bento:opacity-100 transition-opacity duration-300"
-                                  style={{
-                                    boxShadow: `inset 0 0 0 1.5px ${club.accentColor}80`,
-                                  }}
-                                />
-                              </div>
-                            );
-                          })}
-
-                          {/* Bento Callout / Society Profile Card for 4-photo clubs (fills bottom right 2 columns) */}
-                          {club.images.length === 4 && (
+                          {club.images.map((photo, photoIdx) => (
                             <div
+                              key={photo.id}
                               onClick={() =>
                                 setSelectedPhoto({
-                                  photo: club.images[0],
+                                  photo,
                                   club,
-                                  photoIndex: 0,
+                                  photoIndex: photoIdx,
                                 })
                               }
-                              className="group/bento-card col-span-1 sm:col-span-2 lg:col-span-2 relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.05] via-white/[0.02] to-transparent backdrop-blur-xl p-5 sm:p-7 md:p-8 flex flex-col justify-between cursor-pointer shadow-[0_8px_30px_rgba(0,0,0,0.6)] transition-all duration-300 hover:border-white/25 hover:scale-[1.01] active:scale-[0.99]"
+                              className="group/bento relative overflow-hidden rounded-2xl border border-white/10 bg-[#0c0b14] cursor-pointer shadow-[0_8px_30px_rgba(0,0,0,0.6)] focus:outline-none transition-all duration-300 hover:border-white/30 hover:scale-[1.015] active:scale-[0.985] will-change-transform col-span-1 aspect-[4/3]"
                             >
-                              {/* Ambient Corner Radial Glow */}
-                              <div
-                                aria-hidden="true"
-                                className="pointer-events-none absolute -right-16 -top-16 w-64 h-64 rounded-full blur-[80px] opacity-30 transition-opacity duration-500 group-hover/bento-card:opacity-50"
-                                style={{
-                                  backgroundColor: club.accentColor,
-                                }}
+                              <img
+                                src={photo.src}
+                                alt={photo.title || "Gallery photo"}
+                                loading="lazy"
+                                className="size-full object-cover transition-transform duration-700 ease-out group-hover/bento:scale-105 will-change-transform"
                               />
 
-                              {/* Card Top: Badges */}
-                              <div className="relative z-10 flex items-center justify-between gap-3">
-                                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/15 text-[10px] sm:text-xs font-tech font-bold uppercase tracking-wider text-[#EDE8FF]">
-                                  <span
-                                    className="w-2 h-2 rounded-full animate-pulse"
-                                    style={{ backgroundColor: club.accentColor }}
-                                  />
-                                  <span>Sanskaran Archive // {club.category}</span>
-                                </div>
-
-                                <span className="font-tech text-[10px] sm:text-xs font-semibold text-white/50 tracking-widest uppercase">
-                                  {club.images.length} ARCHIVAL FRAMES
+                              {/* Top Bar: Micro Badge (# 01) and Maximize Indicator */}
+                              <div className="absolute inset-x-0 top-0 p-3.5 flex items-center justify-between pointer-events-none z-10">
+                                <span className="font-tech text-[10px] sm:text-xs font-bold tracking-wider uppercase bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/15 text-white/90 shadow-sm">
+                                  {photo.code || `# 0${photoIdx + 1}`}
                                 </span>
+                                <div className="w-7 h-7 rounded-full bg-black/50 backdrop-blur-md border border-white/15 flex items-center justify-center text-white/80 opacity-80 group-hover/bento:opacity-100 group-hover/bento:text-[#FFAA24] group-hover/bento:scale-110 transition-all duration-300 shadow-sm">
+                                  <Icon.Maximize2 className="w-3.5 h-3.5" />
+                                </div>
                               </div>
 
-                              {/* Card Middle: Philosophy Quote & Description */}
-                              <div className="relative z-10 my-4 sm:my-6">
-                                <blockquote className="text-base sm:text-xl md:text-2xl font-serif italic text-white/95 leading-snug tracking-wide mb-2 sm:mb-3">
-                                  &ldquo;{club.motto}&rdquo;
-                                </blockquote>
-                                <p className="text-xs sm:text-sm text-white/60 font-sans leading-relaxed line-clamp-2">
-                                  {club.description}
+                              {/* Bottom Hover Caption Scrim */}
+                              <div className="absolute inset-x-0 bottom-0 p-4 pt-10 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex flex-col justify-end opacity-90 sm:opacity-0 group-hover/bento:opacity-100 transition-opacity duration-300 pointer-events-none z-10">
+                                {photo.tag && (
+                                  <span className="font-tech text-[9px] sm:text-[10px] font-bold tracking-widest uppercase text-[#B9ACF0] mb-0.5">
+                                    {photo.tag}
+                                  </span>
+                                )}
+                                <p className="font-display text-sm sm:text-base text-white tracking-wide truncate">
+                                  {photo.title}
                                 </p>
                               </div>
 
-                              {/* Card Bottom: Action CTA */}
-                              <div className="relative z-10 flex items-center justify-between pt-2 border-t border-white/10">
-                                <span className="text-[11px] sm:text-xs font-tech uppercase tracking-widest text-[#B9ACF0] group-hover/bento-card:text-white transition-colors">
-                                  CLICK TO INSPECT FULL-SCREEN GALLERY
-                                </span>
-
-                                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 text-white text-xs font-tech tracking-wider uppercase transition-all duration-300 group-hover/bento-card:border-white/40">
-                                  <span>VIEW ALL</span>
-                                  <Icon.ChevronRight className="w-3.5 h-3.5 group-hover/bento-card:translate-x-0.5 transition-transform" />
-                                </div>
-                              </div>
+                              {/* Subtle ambient hover highlight ring */}
+                              <div
+                                className="absolute inset-0 rounded-2xl pointer-events-none opacity-0 group-hover/bento:opacity-100 transition-opacity duration-300"
+                                style={{
+                                  boxShadow: `inset 0 0 0 1.5px ${club.accentColor}80`,
+                                }}
+                              />
                             </div>
-                          )}
+                          ))}
                         </div>
                       </motion.div>
                     </motion.div>

@@ -266,7 +266,7 @@ function SanskaranSection({ onInspect }: SanskaranSectionProps) {
               {/* Image 1: Main Heritage Feature */}
               <div className="sanskaran-img-fade sm:col-span-2 relative h-64 sm:h-80 rounded-2xl overflow-hidden shadow-lg shadow-black/10 group">
                 <img
-                  src="/showcase/kolkata-1.webp"
+                  src="https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_1200,c_limit/hero%20section/RM060037.jpg"
                   alt="Heritage of Kolkata and Sanskaran Ateliers"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
@@ -275,7 +275,7 @@ function SanskaranSection({ onInspect }: SanskaranSectionProps) {
               {/* Image 2: Atelier & Interior Craft */}
               <div className="sanskaran-img-fade relative h-48 sm:h-60 rounded-2xl overflow-hidden shadow-lg shadow-black/10 group">
                 <img
-                  src="/showcase/interior.webp"
+                  src="https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_1200,c_limit/hero%20section/RM060041.jpg"
                   alt="Artisan workshops and design pavilions"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
@@ -284,7 +284,7 @@ function SanskaranSection({ onInspect }: SanskaranSectionProps) {
               {/* Image 3: Traditional Rhythms & Folk Expression */}
               <div className="sanskaran-img-fade relative h-48 sm:h-60 rounded-2xl overflow-hidden shadow-lg shadow-black/10 group">
                 <img
-                  src="/showcase/kalighat.webp"
+                  src="https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_1200,c_limit/hero%20section/RM060045.jpg"
                   alt="Folk art and spiritual music traditions"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
@@ -417,7 +417,7 @@ function SahotsavaSection({ onInspect }: SahotsavaSectionProps) {
               {/* Image 1: Main Arena Concert Feature */}
               <div className="sahotsava-img-fade sm:col-span-2 relative h-64 sm:h-80 rounded-2xl overflow-hidden shadow-xl shadow-black/30 group">
                 <img
-                  src="/showcase/dl30.webp"
+                  src="https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_1200,c_limit/hero%20section/RM060061.jpg"
                   alt="High-voltage stage and concert pro-nites"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
@@ -426,7 +426,7 @@ function SahotsavaSection({ onInspect }: SahotsavaSectionProps) {
               {/* Image 2: Neon Rig Synthesis */}
               <div className="sahotsava-img-fade relative h-48 sm:h-60 rounded-2xl overflow-hidden shadow-xl shadow-black/30 group">
                 <img
-                  src="/showcase/dl29.webp"
+                  src="https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_1200,c_limit/hero%20section/RM060055.jpg"
                   alt="Neon light synthesis and laser displays"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
@@ -435,7 +435,7 @@ function SahotsavaSection({ onInspect }: SahotsavaSectionProps) {
               {/* Image 3: Gothic Acoustics & Live Stadium Sound */}
               <div className="sahotsava-img-fade relative h-48 sm:h-60 rounded-2xl overflow-hidden shadow-xl shadow-black/30 group">
                 <img
-                  src="/showcase/stpauls.webp"
+                  src="https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_1200,c_limit/hero%20section/RM0600184.jpg"
                   alt="Sound acoustics and live band performance"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />

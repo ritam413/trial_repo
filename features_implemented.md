@@ -32,7 +32,10 @@ All foundational libraries, responsive layout engines, and the streamlined **Dev
     - **Hero Section Cloudinary Imagery (`hero section/`)**:
       - Extracted 17 high-resolution festival photographs from Google Drive (`RM060037`, `RM060041`, `RM060045`, `RM060055`, `RM060061`, `RM0600128`, `RM0600141`, `RM0600144`, `RM0600148`, `RM0600149`, `RM0600184`, `RM0600350`, `RM0600494`, `RM0600692`, `RM0600738`, `RM0600739`, `RM0600834`).
       - Uploaded all 17 images to Cloudinary in folder `hero section`.
-      - Full asset mapping saved in `scratch/hero_section_all_17.json`.
+      - Full asset mapping saved in `scratch/hero_section_all_17.json` and `src/lib/heroSlideshowAssets.json`.
+      - **Diamond Mosaic Pre-Scatter Showcase (`ShowcaseHeroSection.tsx`)**: Replaced all 9 legacy placeholder paths with direct Cloudinary URLs (`https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_1200,c_limit/hero%20section/RM*.jpg`) and updated festival titles.
+      - **Background Slideshow (`HeroBackgroundSlideshow.tsx`)**: Wired to all 17 Cloudinary hero section images for smooth cross-fading hero loops.
+      - **Storytelling Galleries (`AboutFestivalSection.tsx`)**: Updated Sanskaran & Sahotsava narrative galleries to direct Cloudinary URLs.
     - **Solid Condensed Bebas Neue Display Typography Lockup**: Solid, high-contrast, non-hollow condensed display typography in **Bebas Neue** (`font-display`, `var(--font-bebas-neue)`) matching the Gallery Section headline, with a width-locked `2026` yearmark that spans the exact same width as `SANSKARAN`:
       - `SANSKARAN`: Solid crisp white (`text-white`) condensed Bebas Neue title with fluid scale ramp (`text-[44px]` mobile up to `188px` desktop) and cinematic atmospheric drop shadow (`drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)]`).
       - `2026`: Solid crisp white (`text-white`), width-locked via `flex justify-between w-full` directly under `SANSKARAN`, guaranteeing identical width down to the pixel across all viewports.
