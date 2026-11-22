@@ -15,6 +15,7 @@ export interface ShowcaseItem {
   dy: number; // scatter translation in vh
   rot: number; // scatter rotation in degrees
   title: string;
+  objectPosition?: string; // CSS object-position (e.g. "center top", "center center")
 }
 
 // Exact 9-image diamond mosaic layout and scatter vectors from DevFest Kolkata
@@ -30,10 +31,11 @@ export const DEVFEST_SHOWCASE_ITEMS: ShowcaseItem[] = [
     dy: -18,
     rot: -12,
     title: "Stage Illumination",
+    objectPosition: "center top",
   },
   {
     id: "showcase-2",
-    src: "https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_1200,c_limit/hero%20section/RM060041.jpg",
+    src: "https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_1200,c_limit/hero%20section/RM0600692.jpg",
     left: 27.7,
     top: 30,
     w: 15.97,
@@ -41,7 +43,8 @@ export const DEVFEST_SHOWCASE_ITEMS: ShowcaseItem[] = [
     dx: 0,
     dy: -24,
     rot: 8,
-    title: "Acoustic Harmony",
+    title: "Vocal Spotlight",
+    objectPosition: "center top",
   },
   {
     id: "showcase-3",
@@ -54,10 +57,11 @@ export const DEVFEST_SHOWCASE_ITEMS: ShowcaseItem[] = [
     dy: 4,
     rot: -8,
     title: "Vocal Duet",
+    objectPosition: "center top",
   },
   {
     id: "showcase-4",
-    src: "https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_1200,c_limit/hero%20section/RM060055.jpg",
+    src: "https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_1200,c_limit/hero%20section/RM0600144.jpg",
     left: 43.68,
     top: 17.38,
     w: 14.24,
@@ -65,7 +69,8 @@ export const DEVFEST_SHOWCASE_ITEMS: ShowcaseItem[] = [
     dx: 18,
     dy: -18,
     rot: 14,
-    title: "Rhythm & Strings",
+    title: "Stage Harmony",
+    objectPosition: "center top",
   },
   {
     id: "showcase-5",
@@ -78,10 +83,11 @@ export const DEVFEST_SHOWCASE_ITEMS: ShowcaseItem[] = [
     dy: -2,
     rot: -10,
     title: "Live Arena Euphoria",
+    objectPosition: "center top",
   },
   {
     id: "showcase-6",
-    src: "https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_1200,c_limit/hero%20section/RM060061.jpg",
+    src: "https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_1200,c_limit/hero%20section/RM0600834.jpg",
     left: 43.68,
     top: 58.79,
     w: 14.24,
@@ -89,7 +95,8 @@ export const DEVFEST_SHOWCASE_ITEMS: ShowcaseItem[] = [
     dx: -16,
     dy: 22,
     rot: 10,
-    title: "Electric Laser Solo",
+    title: "Concert Auditorium Spectacle",
+    objectPosition: "center center",
   },
   {
     id: "showcase-7",
@@ -102,6 +109,7 @@ export const DEVFEST_SHOWCASE_ITEMS: ShowcaseItem[] = [
     dy: -26,
     rot: -6,
     title: "Centerstage Voice",
+    objectPosition: "center top",
   },
   {
     id: "showcase-8",
@@ -114,6 +122,7 @@ export const DEVFEST_SHOWCASE_ITEMS: ShowcaseItem[] = [
     dy: 24,
     rot: 12,
     title: "Festival Momentum",
+    objectPosition: "center top",
   },
   {
     id: "showcase-9",
@@ -126,6 +135,7 @@ export const DEVFEST_SHOWCASE_ITEMS: ShowcaseItem[] = [
     dy: 14,
     rot: -14,
     title: "Grand Concert Spectacle",
+    objectPosition: "center center",
   },
 ];
 
@@ -418,6 +428,9 @@ export default function ShowcaseHeroSection({
                       alt={item.title}
                       draggable={false}
                       className="block w-full h-full object-cover"
+                      style={{
+                        objectPosition: item.objectPosition || "center center",
+                      }}
                     />
                   </div>
                 );

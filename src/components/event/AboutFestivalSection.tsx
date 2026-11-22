@@ -243,8 +243,8 @@ function SanskaranSection({ onInspect }: SanskaranSectionProps) {
               ================================================================= */}
           <div className="lg:col-span-5 flex flex-col items-center text-center lg:items-start lg:text-left">
             {/* Monumental Headline */}
-            <h2 className="sanskaran-text-anim product_sans text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-bold tracking-tight text-[#ffffff] leading-[1.12]">
-               Sanskaran 
+            <h2 className="sanskaran-text-anim product_sans text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-bold tracking-tight text-[#ffffff] uppercase leading-[1.12]">
+              SANSKARAN
             </h2>
 
             {/* Sub-tagline */}
@@ -268,16 +268,16 @@ function SanskaranSection({ onInspect }: SanskaranSectionProps) {
                 <img
                   src="https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_1200,c_limit/hero%20section/RM060037.jpg"
                   alt="Heritage of Kolkata and Sanskaran Ateliers"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
                 />
               </div>
 
               {/* Image 2: Atelier & Interior Craft */}
               <div className="sanskaran-img-fade relative h-48 sm:h-60 rounded-2xl overflow-hidden shadow-lg shadow-black/10 group">
                 <img
-                  src="https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_1200,c_limit/hero%20section/RM060041.jpg"
-                  alt="Artisan workshops and design pavilions"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  src="https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_1200,c_limit/hero%20section/RM0600692.jpg"
+                  alt="Live vocal spotlight and proscenium performance"
+                  className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
                 />
               </div>
 
@@ -286,7 +286,7 @@ function SanskaranSection({ onInspect }: SanskaranSectionProps) {
                 <img
                   src="https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_1200,c_limit/hero%20section/RM060045.jpg"
                   alt="Folk art and spiritual music traditions"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
                 />
               </div>
             </div>
@@ -394,8 +394,8 @@ function SahotsavaSection({ onInspect }: SahotsavaSectionProps) {
               ================================================================= */}
           <div className="lg:col-span-5 flex flex-col items-center text-center lg:items-start lg:text-left">
             {/* Monumental Headline */}
-            <h2 className="sahotsava-text-anim product_sans text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-bold tracking-tight text-[#ffffff] leading-[1.12]">
-              Sahotsava
+            <h2 className="sahotsava-text-anim product_sans text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-bold tracking-tight text-[#ffffff] uppercase leading-[1.12]">
+              SAHOTSAVA
             </h2>
 
             {/* Sub-tagline */}
@@ -417,18 +417,18 @@ function SahotsavaSection({ onInspect }: SahotsavaSectionProps) {
               {/* Image 1: Main Arena Concert Feature */}
               <div className="sahotsava-img-fade sm:col-span-2 relative h-64 sm:h-80 rounded-2xl overflow-hidden shadow-xl shadow-black/30 group">
                 <img
-                  src="https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_1200,c_limit/hero%20section/RM060061.jpg"
+                  src="https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_1200,c_limit/hero%20section/RM0600834.jpg"
                   alt="High-voltage stage and concert pro-nites"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
                 />
               </div>
 
               {/* Image 2: Neon Rig Synthesis */}
               <div className="sahotsava-img-fade relative h-48 sm:h-60 rounded-2xl overflow-hidden shadow-xl shadow-black/30 group">
                 <img
-                  src="https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_1200,c_limit/hero%20section/RM060055.jpg"
+                  src="https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_1200,c_limit/hero%20section/RM0600144.jpg"
                   alt="Neon light synthesis and laser displays"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
                 />
               </div>
 
@@ -437,7 +437,7 @@ function SahotsavaSection({ onInspect }: SahotsavaSectionProps) {
                 <img
                   src="https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_1200,c_limit/hero%20section/RM0600184.jpg"
                   alt="Sound acoustics and live band performance"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
                 />
               </div>
             </div>
@@ -521,8 +521,8 @@ export default function AboutFestivalSection() {
                   </span>
                   <h3 className="product_sans text-2xl sm:text-3xl font-bold text-white leading-tight">
                     {inspectModal === "sanskaran"
-                      ? "Sanskaran Disciplines"
-                      : "Sahotsava Lineup Pillars"}
+                      ? "SANSKARAN Disciplines"
+                      : "SAHOTSAVA Lineup Pillars"}
                   </h3>
                 </div>
               </div>

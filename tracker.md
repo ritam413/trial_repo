@@ -1,5 +1,53 @@
 # Agent Handoff Log — Sanskaran & Sahotsava 2026
 
+## 2026-11-23 — Replace RM060041 with RM0600692 & Capitalize SANSKARAN / SAHOTSAVA Headlines
+
+### Objective
+1. Per user request with screenshot (`media_1795378036973_177438d7.jpg`), replace `RM060041` (theatrical black-and-white performance with header watermarks) with clean concert stage image `RM0600692`.
+2. Capitalize the primary section headlines for Sanskaran and Sahotsava to uppercase (`SANSKARAN` and `SAHOTSAVA`).
+
+### Changes Made
+- In `src/components/event/ShowcaseHeroSection.tsx`:
+  - Replaced `showcase-2` (`RM060041`) with `RM0600692` (`https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_1200,c_limit/hero%20section/RM0600692.jpg`).
+- In `src/components/event/AboutFestivalSection.tsx`:
+  - Capitalized the primary `<h2>` section headline from `Sanskaran` to `SANSKARAN` with `uppercase`.
+  - Capitalized the primary `<h2>` section headline from `Sahotsava` to `SAHOTSAVA` with `uppercase`.
+  - Capitalized modal header titles to `SANSKARAN Disciplines` and `SAHOTSAVA Lineup Pillars`.
+  - Replaced Image 2 in Sanskaran storytelling gallery with `RM0600692.jpg`.
+- Updated local WebP mirror `public/showcase/interior.webp` from `RM0600692.jpg`.
+- `tracker.md`: Logged changes.
+
+### Verification
+- `npx tsc --noEmit` passed with 0 errors.
+
+### Current State
+- All section headlines are capitalized in pure uppercase (`SANSKARAN` & `SAHOTSAVA`).
+- The showcase diamond mosaic and storytelling sections are completely free of watermarked theatrical images, featuring high-fidelity concert spotlights.
+
+---
+
+## 2026-11-23 — Hero Section Image Cropping Adjustment (center top alignment)
+
+### Objective
+Resolve image cutoff / head cropping issues on hero section images (such as `RM0600128`, `RM0600141`, and `RM0600148`) by applying `object-position: center top` / `object-top` so performers' heads and faces are not cropped off at the top border.
+
+### Changes Made
+- In `src/components/event/ShowcaseHeroSection.tsx`:
+  - Extended `ShowcaseItem` interface with optional `objectPosition?: string`.
+  - Configured portrait stage images (`RM0600128`, `RM0600141`, `RM0600148`, `RM060037`, `RM060041`, `RM060045`, `RM060055`, `RM060061`) with `objectPosition: "center top"`.
+  - Passed `style={{ objectPosition: item.objectPosition || "center center" }}` to `<img />`.
+- In `src/components/event/AboutFestivalSection.tsx`:
+  - Added `object-top` to all portrait performance images across Sanskaran and Sahotsava narrative photo blocks.
+- `tracker.md`: Logged changes.
+
+### Verification
+- `npx tsc --noEmit` passed with 0 errors.
+
+### Current State
+- All stage performer images now align with `center top`, guaranteeing performers' heads and faces are fully visible and framed correctly.
+
+---
+
 ## 2026-11-23 — Integrate Cloudinary Hero URLs Directly Across Hero Section & Festival Storytelling
 
 ### Objective
