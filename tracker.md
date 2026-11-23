@@ -1,5 +1,24 @@
 # Agent Handoff Log — Sanskaran & Sahotsava 2026
 
+## 2026-11-23 — Remove Photo Card Title and Description Overlays
+
+### Objective
+Remove the title (e.g., `THE VOICE OF SANSKARAN`) and description / tag (e.g., `STAGE ANCHORING`) text overlay scrim from the gallery photo cards per user screenshot request (`media_1795449055565_f418db35.png`).
+
+### Changes Made
+- In `src/components/event/GallerySection.tsx`:
+  - Removed `{/* Bottom Hover Caption Scrim */}` containing `photo.tag` and `photo.title` from the Bento photo cards.
+  - Cards now present clean, unobstructed imagery while retaining the top micro-badge (`# 01`, etc.) and maximize indicator.
+- Updated `features_implemented.md` and `tracker.md`.
+
+### Verification
+- `npm run build` executed to verify TypeScript and static generation.
+
+### Current State
+- Bento gallery photo tiles show clean festival photography without text overlays at the bottom.
+
+---
+
 ## 2026-11-23 — Balanced Bento Grid Gallery & Solid White Headers
 
 ### Objective

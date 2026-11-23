@@ -50,6 +50,7 @@ All foundational libraries, responsive layout engines, and the streamlined **Dev
   - **Pure Vertical Slit Gallery with 14 Student Societies & Creative Wings (`GallerySection.tsx` & `clubsData.ts`)**:
     - **Balanced Dynamic Bento Grid Gallery**:
       - Automatically scales to club photo count with zero orphaned/dangling cards and zero void spaces.
+      - Clean, borderless photo cards without text overlays or title/tag scrims, providing an unobstructed view of the photographs with micro badge numbering and lightbox expand controls.
       - For 4-photo clubs: Balanced alternating 2-row layout with diagonal emphasis (`[2 cols, 1 col]` on row 1, `[1 col, 2 cols]` on row 2).
       - For 5-photo clubs (`checkmate`): `[2 cols, 1 col]` on row 1, `[1 col, 1 col, 1 col]` on row 2.
       - Equalized responsive height (`h-[240px] sm:h-[300px] md:h-[360px]`) across cards with `object-cover` and interactive maximize overlay.

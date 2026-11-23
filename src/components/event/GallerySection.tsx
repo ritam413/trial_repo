@@ -711,18 +711,6 @@ export default function GallerySection() {
                                   </div>
                                 </div>
 
-                                {/* Bottom Hover Caption Scrim */}
-                                <div className="absolute inset-x-0 bottom-0 p-4 pt-10 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex flex-col justify-end opacity-90 sm:opacity-0 group-hover/bento:opacity-100 transition-opacity duration-300 pointer-events-none z-10">
-                                  {photo.tag && (
-                                    <span className="font-tech text-[9px] sm:text-[10px] font-bold tracking-widest uppercase text-[#B9ACF0] mb-0.5">
-                                      {photo.tag}
-                                    </span>
-                                  )}
-                                  <p className="font-display text-sm sm:text-base text-white tracking-wide truncate">
-                                    {photo.title}
-                                  </p>
-                                </div>
-
                                 {/* Subtle ambient hover highlight ring */}
                                 <div
                                   className="absolute inset-0 rounded-2xl pointer-events-none opacity-0 group-hover/bento:opacity-100 transition-opacity duration-300"
