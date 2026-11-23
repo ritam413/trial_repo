@@ -112,7 +112,7 @@ export default function DignitariesSection() {
     <section
       id="dignitaries"
       ref={containerRef}
-      className="relative py-20 sm:py-28 px-4 sm:px-8 bg-[#0d0d0e] border-b border-white/10 overflow-hidden z-10"
+      className="relative py-20 sm:py-28 px-4 sm:px-8 bg-[#0c4243] border-b border-white/10 overflow-hidden z-10"
     >
       {/* 3D Ambient Studio Grid Background */}
       <div

@@ -142,6 +142,7 @@ export default function Navbar() {
     { label: "SAHOTSAVA", target: "#sahotsava" },
     { label: "GALLERY", target: "#gallery" },
     { label: "ARCHITECTS", target: "#core-members" },
+    { label: "SPONSORS", target: "#sponsors" },
     { label: "PATRONS", target: "#dignitaries" },
     { label: "FOUNDERS", target: "#founders" },
   ];

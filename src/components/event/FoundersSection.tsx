@@ -97,7 +97,7 @@ export default function FoundersSection() {
     <section
       id="founders"
       ref={containerRef}
-      className="relative py-20 sm:py-28 px-4 sm:px-8 bg-[#0c4243] text-[#ffffff] border-b border-white/15 overflow-hidden z-10"
+      className="relative py-20 sm:py-28 px-4 sm:px-8 bg-[#0d0d0e] text-[#ffffff] border-b border-white/15 overflow-hidden z-10"
     >
       {/* 3D Ambient Studio Grid Background */}
       <div

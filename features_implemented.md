@@ -13,9 +13,10 @@ All foundational libraries, responsive layout engines, and the streamlined **Dev
       3. Sahotsava: Green / Deep Lagoon (`#0c4243`) ground with glowing SVG soundwave watermark and white text.
       4. Cultural Gallery: Carbon Obsidian (`#0d0d0e`) ground with borderless full-width expandable club slit cards.
       5. Core Members: Green / Deep Lagoon (`#0c4243`) ground with Lilac Mist ambient grid and 3D card physics.
-      6. Dignitaries: Carbon Obsidian (`#0d0d0e`) ground with `#141416` spotlight patron cards and luminous monograms.
-      7. Founders: Green / Deep Lagoon (`#0c4243`) ground with glowing emerald monograms.
-      8. Footer: Carbon Obsidian (`#0d0d0e`) ground with Lilac Mist typography and elevated `#18181b` back-to-top control.
+      6. Previous Sponsors: Carbon Obsidian (`#0d0d0e`) ground featuring 53 sponsor cards and "Become a Sponsor" partnership CTA.
+      7. Dignitaries: Green / Deep Lagoon (`#0c4243`) ground with `#141416` spotlight patron cards and luminous monograms.
+      8. Founders: Carbon Obsidian (`#0d0d0e`) ground with glowing emerald monograms.
+      9. Footer: Carbon Obsidian (`#0d0d0e`) ground with Lilac Mist typography and elevated `#18181b` back-to-top control.
     - Surface Level 0: Carbon Obsidian (`#0d0d0e`) base canvas replacing legacy white/parchment.
     - Surface Level 1: Elevated Carbon Surface (`#141416`) elevated card surfaces.
     - Surface Level 2: Lilac Mist (`#d4c7ff`) secondary fills and badges.

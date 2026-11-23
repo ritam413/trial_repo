@@ -7,6 +7,7 @@ import ShowcaseHeroSection from "@/components/event/ShowcaseHeroSection";
 import AboutFestivalSection from "@/components/event/AboutFestivalSection";
 import GallerySection from "@/components/event/GallerySection";
 import CoreMembersSection from "@/components/event/CoreMembersSection";
+import SponsorsSection from "@/components/event/SponsorsSection";
 import DignitariesSection from "@/components/event/DignitariesSection";
 import FoundersSection from "@/components/event/FoundersSection";
 import Footer from "@/components/event/Footer";
@@ -34,6 +35,7 @@ export default function Home() {
         <AboutFestivalSection />
         <GallerySection />
         <CoreMembersSection />
+        <SponsorsSection />
         <DignitariesSection />
         <FoundersSection />
         <Footer />
