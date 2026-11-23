@@ -1,5 +1,33 @@
 # Agent Handoff Log — Sanskaran & Sahotsava 2026
 
+## 2026-11-23 — Balanced Bento Grid Gallery & Solid White Headers
+
+### Objective
+1. Fix club expanded gallery layout from leaving awkward orphan cards and empty voids (e.g. 3 cards on top and 1 dangling on bottom in a 4-photo club).
+2. Implement an adaptive Bento Grid layout that cleanly and completely fills the container according to the photo count without extra synthetic promotional cards.
+3. Remove gradient styling from the word `MEMBERS` in `CORE MEMBERS` (`CoreMembersSection.tsx`), matching the first word in solid `#ffffff`.
+4. Push all changes to both GitHub remotes: `trial` (`https://github.com/ritam413/trial_repo.git`) and `origin` (`https://github.com/techno-sahotsava/2026-static-site.git`).
+
+### Changes Made
+- In `src/components/event/GallerySection.tsx`:
+  - Updated the expanded photo grid to an adaptive Bento Grid layout based on total club images:
+    - For 4-image clubs: Row 1 = `[2 cols, 1 col]`, Row 2 = `[1 col, 2 cols]` in a 3-column desktop grid.
+    - For 5-image clubs (`checkmate`): Row 1 = `[2 cols, 1 col]`, Row 2 = `[1 col, 1 col, 1 col]`.
+    - Applied uniform height (`h-[240px] sm:h-[300px] md:h-[360px]`) and `object-cover` so tiles align with zero empty space or broken rows.
+- In `src/components/event/CoreMembersSection.tsx`:
+  - Replaced `CORE <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ffffff] via-[#d4c7ff] to-[#714cb6]">MEMBERS</span>` with solid `CORE MEMBERS` in `text-[#ffffff]`.
+- Updated `features_implemented.md` and `tracker.md`.
+
+### Verification
+- `npm run build` compiled with 0 errors and generated all 4 static pages cleanly with Next.js 16.4.6 Turbopack.
+- Verified all section headlines across the site have no gradients and use solid `#ffffff` display typography.
+
+### Current State
+- The club gallery exhibits an authentic, responsive Bento Grid without any dangling single images or empty grid slots.
+- All section titles are consistent in solid white Bebas Neue display font.
+
+---
+
 ## 2026-11-23 — Replace RM060041 with RM0600692 & Capitalize SANSKARAN / SAHOTSAVA Headlines
 
 ### Objective
@@ -16908,38 +16936,3 @@ Extract all previous sponsor cards from `https://www.technosahotsava.in/sponsors
 
 ### Current State
 The Previous Sponsors section is live immediately following Core Members with 53 authentic sponsor logos, responsive grid layout, and the alternating green/black color rhythm.
-
-
-## 2026-11-23 — Typography Unification & Navbar Core Renaming
-
-### Objective
-Remove the badge pill (`PARTNERSHIPS // PAST EDITIONS`) and description paragraph from `SponsorsSection.tsx`, unify `SANSKARAN` and `SAHOTSAVA` section titles in `AboutFestivalSection.tsx` to match the `font-display` (Bebas Neue) font used across `GALLERY` and `CORE`, and rename `ARCHITECTS` to `CORE` in the navigation bar.
-
-### Changes Made
-1. **`SponsorsSection.tsx`**:
-   - Removed the badge pill `PARTNERSHIPS // PAST EDITIONS`.
-   - Removed the description copy text under the `PREVIOUS SPONSORS` heading.
-   - Preserved the clean `PREVIOUS SPONSORS` `font-display` display heading and the "BECOME A SPONSOR" CTA button.
-2. **`AboutFestivalSection.tsx`**:
-   - Replaced `product_sans` on the `SANSKARAN` title with `font-display text-4xl sm:text-6xl lg:text-7xl tracking-tight text-[#ffffff] uppercase leading-none`.
-   - Replaced `product_sans` on the `SAHOTSAVA` title with `font-display text-4xl sm:text-6xl lg:text-7xl tracking-tight text-[#ffffff] uppercase leading-none`.
-   - All major section headers across the site now share the exact same monumental Bebas Neue typography hierarchy.
-3. **`Navbar.tsx`**:
-   - Changed navigation label from `ARCHITECTS` to `CORE` (`{ label: "CORE", target: "#core-members" }`).
-   - Propagated across both desktop navigation bar and mobile drawer menu.
-
-### Files Modified
-- `src/components/event/SponsorsSection.tsx`
-- `src/components/event/AboutFestivalSection.tsx`
-- `src/components/event/Navbar.tsx`
-- `features_implemented.md`
-- `tracker.md`
-
-### Verification
-- `npm run build` executed successfully:
-  - Turbopack compilation: `✓ Compiled successfully in 21.9s`.
-  - TypeScript checked in 7.3s with 0 errors.
-  - All 4 static pages prerendered cleanly.
-
-### Current State
-All section headers are unified with `font-display`. The Previous Sponsors header is minimal and clean. The navigation bar displays `CORE` instead of `ARCHITECTS`.

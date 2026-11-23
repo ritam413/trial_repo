@@ -48,6 +48,14 @@ All foundational libraries, responsive layout engines, and the streamlined **Dev
     - Removed `cardLayout` state and deleted the `View: [ ⊞ DevFest Grid | 🂠 Card Stack ]` switcher.
     - Locked layout to the side-by-side DevFest Grid realm cards with Google 4-color accent tokens, vector doodle backdrop, and interactive discipline inspection modal dossiers.
   - **Pure Vertical Slit Gallery with 14 Student Societies & Creative Wings (`GallerySection.tsx` & `clubsData.ts`)**:
+    - **Balanced Dynamic Bento Grid Gallery**:
+      - Automatically scales to club photo count with zero orphaned/dangling cards and zero void spaces.
+      - For 4-photo clubs: Balanced alternating 2-row layout with diagonal emphasis (`[2 cols, 1 col]` on row 1, `[1 col, 2 cols]` on row 2).
+      - For 5-photo clubs (`checkmate`): `[2 cols, 1 col]` on row 1, `[1 col, 1 col, 1 col]` on row 2.
+      - Equalized responsive height (`h-[240px] sm:h-[300px] md:h-[360px]`) across cards with `object-cover` and interactive maximize overlay.
+    - **Solid Typography Across All Section Headers**:
+      - `CORE MEMBERS`: Removed gradient span from `MEMBERS`, unified to solid `#ffffff` text matching `CORE`.
+      - All section headers (`SANSKARAN`, `SAHOTSAVA`, `CORE MEMBERS`, `PREVIOUS SPONSORS`, `DIGNITARIES & COUNCIL`, `FOUNDERS OF SANSKARAN`, `GALLERY`) now uniformly utilize Bebas Neue `font-display` with solid white text.
     - **Authentic Cloudinary-Hosted Club Event Photos & Bento Grid Layout (/impeccable)**:
       - Implemented a tailored bento-style box grid inside each club's expanded gallery drawer matching reference specifications:
         - 3 cards across Row 1 (`aspect-[4/3]`, `rounded-2xl`, smooth border luminance, micro-index badge `# 01`–`# 03`, bottom hover caption scrim).

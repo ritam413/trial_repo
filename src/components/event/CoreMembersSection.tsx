@@ -309,7 +309,7 @@ export default function CoreMembersSection() {
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12 sm:mb-16 text-center lg:text-left">
           <div className="max-w-2xl mx-auto lg:mx-0">
             <h2 className="core-anim-header font-display text-4xl sm:text-6xl lg:text-7xl text-[#ffffff] leading-none uppercase tracking-tight">
-              CORE <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ffffff] via-[#d4c7ff] to-[#714cb6]">MEMBERS</span>
+              CORE MEMBERS
             </h2>
           </div>
         </div>

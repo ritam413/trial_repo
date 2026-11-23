@@ -665,58 +665,74 @@ export default function GallerySection() {
                         {/* Thin Divider Line Across Full Width */}
                         <div className="w-full border-t border-white/10 my-6 sm:my-8" />
 
-                        {/* Bento-Style Gallery Grid */}
-                        <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
-                          {club.images.map((photo, photoIdx) => (
-                            <div
-                              key={photo.id}
-                              onClick={() =>
-                                setSelectedPhoto({
-                                  photo,
-                                  club,
-                                  photoIndex: photoIdx,
-                                })
+                        {/* Bento-Style Gallery Grid (dynamically sized to image count with no orphan gaps) */}
+                        <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
+                          {club.images.map((photo, photoIdx) => {
+                            const total = club.images.length;
+                            let bentoSpan = "col-span-1";
+                            if (total === 4) {
+                              // Balanced alternating 2+1 and 1+2 bento grid
+                              if (photoIdx === 0 || photoIdx === 3) {
+                                bentoSpan = "col-span-1 md:col-span-2";
                               }
-                              className="group/bento relative overflow-hidden rounded-2xl border border-white/10 bg-[#0c0b14] cursor-pointer shadow-[0_8px_30px_rgba(0,0,0,0.6)] focus:outline-none transition-all duration-300 hover:border-white/30 hover:scale-[1.015] active:scale-[0.985] will-change-transform col-span-1 aspect-[4/3]"
-                            >
-                              <img
-                                src={photo.src}
-                                alt={photo.title || "Gallery photo"}
-                                loading="lazy"
-                                className="size-full object-cover transition-transform duration-700 ease-out group-hover/bento:scale-105 will-change-transform"
-                              />
+                            } else if (total === 5) {
+                              // 2+1 on row 1, 1+1+1 on row 2
+                              if (photoIdx === 0) {
+                                bentoSpan = "col-span-1 md:col-span-2";
+                              }
+                            }
 
-                              {/* Top Bar: Micro Badge (# 01) and Maximize Indicator */}
-                              <div className="absolute inset-x-0 top-0 p-3.5 flex items-center justify-between pointer-events-none z-10">
-                                <span className="font-tech text-[10px] sm:text-xs font-bold tracking-wider uppercase bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/15 text-white/90 shadow-sm">
-                                  {photo.code || `# 0${photoIdx + 1}`}
-                                </span>
-                                <div className="w-7 h-7 rounded-full bg-black/50 backdrop-blur-md border border-white/15 flex items-center justify-center text-white/80 opacity-80 group-hover/bento:opacity-100 group-hover/bento:text-[#FFAA24] group-hover/bento:scale-110 transition-all duration-300 shadow-sm">
-                                  <Icon.Maximize2 className="w-3.5 h-3.5" />
-                                </div>
-                              </div>
-
-                              {/* Bottom Hover Caption Scrim */}
-                              <div className="absolute inset-x-0 bottom-0 p-4 pt-10 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex flex-col justify-end opacity-90 sm:opacity-0 group-hover/bento:opacity-100 transition-opacity duration-300 pointer-events-none z-10">
-                                {photo.tag && (
-                                  <span className="font-tech text-[9px] sm:text-[10px] font-bold tracking-widest uppercase text-[#B9ACF0] mb-0.5">
-                                    {photo.tag}
-                                  </span>
-                                )}
-                                <p className="font-display text-sm sm:text-base text-white tracking-wide truncate">
-                                  {photo.title}
-                                </p>
-                              </div>
-
-                              {/* Subtle ambient hover highlight ring */}
+                            return (
                               <div
-                                className="absolute inset-0 rounded-2xl pointer-events-none opacity-0 group-hover/bento:opacity-100 transition-opacity duration-300"
-                                style={{
-                                  boxShadow: `inset 0 0 0 1.5px ${club.accentColor}80`,
-                                }}
-                              />
-                            </div>
-                          ))}
+                                key={photo.id}
+                                onClick={() =>
+                                  setSelectedPhoto({
+                                    photo,
+                                    club,
+                                    photoIndex: photoIdx,
+                                  })
+                                }
+                                className={`group/bento relative overflow-hidden rounded-2xl border border-white/10 bg-[#0c0b14] cursor-pointer shadow-[0_8px_30px_rgba(0,0,0,0.6)] focus:outline-none transition-all duration-300 hover:border-white/30 hover:scale-[1.015] active:scale-[0.985] will-change-transform ${bentoSpan} h-[240px] sm:h-[300px] md:h-[360px]`}
+                              >
+                                <img
+                                  src={photo.src}
+                                  alt={photo.title || "Gallery photo"}
+                                  loading="lazy"
+                                  className="size-full object-cover transition-transform duration-700 ease-out group-hover/bento:scale-105 will-change-transform"
+                                />
+
+                                {/* Top Bar: Micro Badge (# 01) and Maximize Indicator */}
+                                <div className="absolute inset-x-0 top-0 p-3.5 flex items-center justify-between pointer-events-none z-10">
+                                  <span className="font-tech text-[10px] sm:text-xs font-bold tracking-wider uppercase bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/15 text-white/90 shadow-sm">
+                                    {photo.code || `# 0${photoIdx + 1}`}
+                                  </span>
+                                  <div className="w-7 h-7 rounded-full bg-black/50 backdrop-blur-md border border-white/15 flex items-center justify-center text-white/80 opacity-80 group-hover/bento:opacity-100 group-hover/bento:text-[#FFAA24] group-hover/bento:scale-110 transition-all duration-300 shadow-sm">
+                                    <Icon.Maximize2 className="w-3.5 h-3.5" />
+                                  </div>
+                                </div>
+
+                                {/* Bottom Hover Caption Scrim */}
+                                <div className="absolute inset-x-0 bottom-0 p-4 pt-10 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex flex-col justify-end opacity-90 sm:opacity-0 group-hover/bento:opacity-100 transition-opacity duration-300 pointer-events-none z-10">
+                                  {photo.tag && (
+                                    <span className="font-tech text-[9px] sm:text-[10px] font-bold tracking-widest uppercase text-[#B9ACF0] mb-0.5">
+                                      {photo.tag}
+                                    </span>
+                                  )}
+                                  <p className="font-display text-sm sm:text-base text-white tracking-wide truncate">
+                                    {photo.title}
+                                  </p>
+                                </div>
+
+                                {/* Subtle ambient hover highlight ring */}
+                                <div
+                                  className="absolute inset-0 rounded-2xl pointer-events-none opacity-0 group-hover/bento:opacity-100 transition-opacity duration-300"
+                                  style={{
+                                    boxShadow: `inset 0 0 0 1.5px ${club.accentColor}80`,
+                                  }}
+                                />
+                              </div>
+                            );
+                          })}
                         </div>
                       </motion.div>
                     </motion.div>
