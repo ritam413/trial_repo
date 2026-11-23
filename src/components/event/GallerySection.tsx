@@ -542,6 +542,8 @@ export default function GallerySection() {
                       <img
                         src={club.coverImage}
                         alt={club.name}
+                        loading="lazy"
+                        decoding="async"
                         className="size-full object-cover transition-transform duration-700 opacity-40 group-hover:opacity-60 group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/45 to-black/90" />

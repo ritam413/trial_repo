@@ -1,5 +1,34 @@
 # Agent Handoff Log — Sanskaran & Sahotsava 2026
 
+## 2026-11-23 — Drastic Cloudinary Network Call & Bandwidth Reduction
+
+### Objective
+Resolve excessive Cloudinary network requests (identified as 207 requests in 2.3 minutes with duplicate image fetches in DevTools Network tab) and optimize overall asset loading.
+
+### Changes Made
+1. **Identified Root Causes**:
+   - `HeroBackgroundSlideshow.tsx` was running an infinite 1.5s loop with `new Image(); pre.src = ...` preloads on every tick, causing continuous duplicate fetches.
+   - The slideshow never paused when users scrolled down, firing hundreds of requests in the background.
+   - `heroSlideshowAssets.json` was requesting `w_1920` while `ShowcaseHeroSection.tsx` requested `w_1200`, preventing the browser from reusing cached assets between components.
+2. **Harmonized Dimensions in `src/lib/heroSlideshowData.ts`**:
+   - Replaced `w_1920` with `w_1200` to share the exact same browser cache entries as the Hero Diamond Showcase and Festival Narrative sections.
+3. **Optimized `src/components/event/HeroBackgroundSlideshow.tsx`**:
+   - Removed `new Image()` preloads; now relies purely on the in-DOM Layer A & Layer B buffers.
+   - Added `IntersectionObserver` to pause the slideshow timer and transitions immediately when the hero section scrolls out of view.
+   - Increased `SLIDE_DURATION_MS` from 1500ms to 3500ms, cutting transition frequency by 57%.
+4. **Added Lazy Loading**:
+   - Added `loading="lazy" decoding="async"` to all images in `AboutFestivalSection.tsx` and `GallerySection.tsx` club covers.
+5. **Documentation**:
+   - Updated `features_implemented.md` and `tracker.md`.
+
+### Verification
+- `npm run build` executed to verify TypeScript and static generation.
+
+### Current State
+- Cloudinary requests are strictly minimized, cached across shared components, and completely paused when off-screen.
+
+---
+
 ## 2026-11-23 — Remove Photo Card Title and Description Overlays
 
 ### Objective

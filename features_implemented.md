@@ -48,7 +48,12 @@ All foundational libraries, responsive layout engines, and the streamlined **Dev
     - Removed `cardLayout` state and deleted the `View: [ ⊞ DevFest Grid | 🂠 Card Stack ]` switcher.
     - Locked layout to the side-by-side DevFest Grid realm cards with Google 4-color accent tokens, vector doodle backdrop, and interactive discipline inspection modal dossiers.
   - **Pure Vertical Slit Gallery with 14 Student Societies & Creative Wings (`GallerySection.tsx` & `clubsData.ts`)**:
-    - **Balanced Dynamic Bento Grid Gallery**:
+    - **Cloudinary Network Request & Bandwidth Optimization**:
+      - **Harmonized Asset URLs**: Unified `HERO_SLIDES` in `heroSlideshowData.ts` to `w_1200`, ensuring the 9 hero showcase diamond tiles, festival narrative images, and background slideshow share the exact same browser cache entries.
+      - **Eliminated Duplicate Preloads**: Removed redundant `new Image()` preloader calls in `HeroBackgroundSlideshow.tsx`. Layer A and Layer B serve as native in-DOM dual buffers, eliminating duplicate network fetches.
+      - **View-Aware Autoplay with IntersectionObserver**: Added viewport awareness to `HeroBackgroundSlideshow.tsx`. When the hero section scrolls out of view, the background slideshow timer is automatically paused, preventing hundreds of background network calls while users browse downstream sections.
+      - **Paced Slideshow Duration**: Increased slide hold time from 1.5s to 3.5s, reducing transition rate and image fetch frequency by over 57%.
+      - **Site-Wide Lazy Loading**: Added `loading="lazy" decoding="async"` across all below-the-fold images (`GallerySection.tsx` club covers, `AboutFestivalSection.tsx` narrative photos).
       - Automatically scales to club photo count with zero orphaned/dangling cards and zero void spaces.
       - Clean, borderless photo cards without text overlays or title/tag scrims, providing an unobstructed view of the photographs with micro badge numbering and lightbox expand controls.
       - For 4-photo clubs: Balanced alternating 2-row layout with diagonal emphasis (`[2 cols, 1 col]` on row 1, `[1 col, 2 cols]` on row 2).

@@ -9,8 +9,8 @@ import { HERO_SLIDES } from "@/lib/heroSlideshowData";
    ========================================================================== */
 export const SLIDESHOW_CONFIG = {
   // ⏱️ CONSTANT TIMER FOR ALL IMAGES ON SCREEN (in milliseconds)
-  SLIDE_DURATION_MS: 1500, // 👈 Exact constant duration every image remains on screen (1.5s)
-  TRANSITION_DURATION_S: 0.85, // 👈 Constant smooth cross-fade duration
+  SLIDE_DURATION_MS: 3500, // 👈 Cinematic 3.5s pacing (prevents rapid-fire network requests)
+  TRANSITION_DURATION_S: 1.0, // 👈 Luxurious cross-fade duration
 
   // 🌓 GRADUAL OPACITY (Current decreases, Next: 30% -> 100%)
   INCOMING_INITIAL_OPACITY: 0.3,
@@ -35,7 +35,26 @@ export default function HeroBackgroundSlideshow({ isVisible = true }: { isVisibl
   const activeLayerRef = useRef<0 | 1>(0); // 0 = Layer A is active, 1 = Layer B is active
   const slideIdxRef = useRef<number>(0);
   const isTransitioningRef = useRef<boolean>(false);
+  const isPausedRef = useRef<boolean>(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Pause slideshow when scrolled out of view to avoid network requests while browsing downstream sections
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isPausedRef.current = !entry.isIntersecting;
+        if (!entry.isIntersecting && timerRef.current) {
+          clearTimeout(timerRef.current);
+          timerRef.current = null;
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     if (!isVisible || !HERO_SLIDES.length) return;
@@ -47,13 +66,6 @@ export default function HeroBackgroundSlideshow({ isVisible = true }: { isVisibl
     const burnOverlay = burnOverlayRef.current;
 
     if (!layerA || !layerB || !imgA || !imgB) return;
-
-    // Preload helper
-    const preload = (idx: number) => {
-      const target = (idx + HERO_SLIDES.length) % HERO_SLIDES.length;
-      const pre = new Image();
-      pre.src = HERO_SLIDES[target].url;
-    };
 
     // Calculate total animation duration for constant forward zoom
     const totalZoomDuration =
@@ -88,12 +100,10 @@ export default function HeroBackgroundSlideshow({ isVisible = true }: { isVisibl
     if (burnOverlay) gsap.set(burnOverlay, { autoAlpha: 0 });
 
     startForwardZoom(imgA);
-    preload(1);
-    preload(2);
 
     // Step Transition: swaps between Layer A and Layer B without DOM rebuilds
     const stepTransition = () => {
-      if (isTransitioningRef.current) return;
+      if (isTransitioningRef.current || isPausedRef.current) return;
       isTransitioningRef.current = true;
 
       const isAActive = activeLayerRef.current === 0;
@@ -104,7 +114,6 @@ export default function HeroBackgroundSlideshow({ isVisible = true }: { isVisibl
 
       const nextSlideIdx = (slideIdxRef.current + 1) % HERO_SLIDES.length;
       incomingImg.src = HERO_SLIDES[nextSlideIdx].url;
-      preload((nextSlideIdx + 1) % HERO_SLIDES.length);
 
       // Layer stacking: incoming is on top so outgoing is visible underneath during fade
       incomingLayer.style.zIndex = "2";
@@ -127,8 +136,10 @@ export default function HeroBackgroundSlideshow({ isVisible = true }: { isVisibl
         gsap.set(outgoingLayer, { autoAlpha: 0, zIndex: 0 });
         gsap.killTweensOf(outgoingImg);
 
-        // Schedule next image after the constant slide duration
-        timerRef.current = setTimeout(stepTransition, SLIDESHOW_CONFIG.SLIDE_DURATION_MS);
+        // Schedule next image after the constant slide duration (if in view)
+        if (!isPausedRef.current) {
+          timerRef.current = setTimeout(stepTransition, SLIDESHOW_CONFIG.SLIDE_DURATION_MS);
+        }
       };
 
       if (prefersReducedMotion) {

@@ -268,6 +268,8 @@ function SanskaranSection({ onInspect }: SanskaranSectionProps) {
                 <img
                   src="https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_1200,c_limit/hero%20section/RM060037.jpg"
                   alt="Heritage of Kolkata and Sanskaran Ateliers"
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
                 />
               </div>
@@ -277,6 +279,8 @@ function SanskaranSection({ onInspect }: SanskaranSectionProps) {
                 <img
                   src="https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_1200,c_limit/hero%20section/RM0600692.jpg"
                   alt="Live vocal spotlight and proscenium performance"
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
                 />
               </div>
@@ -286,6 +290,8 @@ function SanskaranSection({ onInspect }: SanskaranSectionProps) {
                 <img
                   src="https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_1200,c_limit/hero%20section/RM060045.jpg"
                   alt="Folk art and spiritual music traditions"
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
                 />
               </div>
@@ -419,6 +425,8 @@ function SahotsavaSection({ onInspect }: SahotsavaSectionProps) {
                 <img
                   src="https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_1200,c_limit/hero%20section/RM0600834.jpg"
                   alt="High-voltage stage and concert pro-nites"
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
                 />
               </div>
@@ -428,6 +436,8 @@ function SahotsavaSection({ onInspect }: SahotsavaSectionProps) {
                 <img
                   src="https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_1200,c_limit/hero%20section/RM0600144.jpg"
                   alt="Neon light synthesis and laser displays"
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
                 />
               </div>
@@ -437,6 +447,8 @@ function SahotsavaSection({ onInspect }: SahotsavaSectionProps) {
                 <img
                   src="https://res.cloudinary.com/lsyjstbv/image/upload/f_auto,q_auto:good,w_1200,c_limit/hero%20section/RM0600184.jpg"
                   alt="Sound acoustics and live band performance"
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
                 />
               </div>

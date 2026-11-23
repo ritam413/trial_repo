@@ -18,7 +18,8 @@ export const HERO_SLIDES: HeroSlide[] = (heroAssets as Array<{
   height: number;
 }>).map((asset, index) => ({
   id: `hero-slide-${index + 1}`,
-  url: asset.optimizedUrl,
+  // Harmonize to w_1200 so it shares the exact same browser cache entries as ShowcaseHeroSection & AboutFestivalSection
+  url: asset.optimizedUrl.replace("w_1920", "w_1200"),
   thumbUrl: asset.thumbUrl,
   width: asset.width,
   height: asset.height,
