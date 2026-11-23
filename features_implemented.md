@@ -198,10 +198,10 @@ All foundational libraries, responsive layout engines, and the streamlined **Dev
 - **Key Files**: [HeroSection.tsx](file:///f:/C++/codes/Hackathons/Saskaran%20deck%20of%20cards%202026%20static%20site/src/components/event/HeroSection.tsx)
 - **Verification**: Verified via `npm run build` compilation (0 errors, code 0) and static page generation.
 
-### 2. New Core Members Section ("The Court Architects") (`/gsap-animation`)
+### 2. New Core Members Section ("CORE") (`/gsap-animation`)
 - **Status**: Implemented
 - **Description**: Recreated from the festival data and card design references:
-  - **Official Student Stewards & Architects (13 Core Members)**:
+  - **Official Student Stewards & Core Leads (13 Core Members)**:
     - High-resolution real portrait imagery served via Cloudinary edge CDN (`f_auto,q_auto:good,w_800,c_limit`) with native `loading="lazy"` and `decoding="async"`:
       1. Archisha (Curation & Heritage, Executive Council, `crimson-vanguard`)
       2. Arnab (Technical & Systems Lead, Digital Architecture, `cyber-horizon`)

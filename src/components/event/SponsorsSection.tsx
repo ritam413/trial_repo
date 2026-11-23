@@ -84,20 +84,11 @@ export default function SponsorsSection() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-8 relative z-10">
         {/* Section Header */}
-        <div className="sponsors-header-reveal mb-12 sm:mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div className="max-w-2xl text-center md:text-left mx-auto md:mx-0">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] sm:text-xs font-tech font-bold uppercase tracking-widest text-[#B9ACF0] mb-3">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#B9ACF0] animate-pulse" />
-              <span>PARTNERSHIPS // PAST EDITIONS</span>
-            </div>
-
+        <div className="sponsors-header-reveal mb-10 sm:mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div className="text-center md:text-left mx-auto md:mx-0">
             <h2 className="font-display text-4xl sm:text-6xl lg:text-7xl text-[#ffffff] leading-none uppercase tracking-tight">
               PREVIOUS SPONSORS
             </h2>
-
-            <p className="text-xs sm:text-sm md:text-base text-white/70 font-sans leading-relaxed mt-3">
-              Honoring the brands, cultural institutions, and industry pioneers who have empowered the stages, arenas, and creative momentum of Techno Sahotsava &amp; Sanskaran.
-            </p>
           </div>
 
           {/* Become a Sponsor CTA */}

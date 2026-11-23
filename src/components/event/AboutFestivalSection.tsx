@@ -243,7 +243,7 @@ function SanskaranSection({ onInspect }: SanskaranSectionProps) {
               ================================================================= */}
           <div className="lg:col-span-5 flex flex-col items-center text-center lg:items-start lg:text-left">
             {/* Monumental Headline */}
-            <h2 className="sanskaran-text-anim product_sans text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-bold tracking-tight text-[#ffffff] uppercase leading-[1.12]">
+            <h2 className="sanskaran-text-anim font-display text-4xl sm:text-6xl lg:text-7xl tracking-tight text-[#ffffff] uppercase leading-none">
               SANSKARAN
             </h2>
 
@@ -394,7 +394,7 @@ function SahotsavaSection({ onInspect }: SahotsavaSectionProps) {
               ================================================================= */}
           <div className="lg:col-span-5 flex flex-col items-center text-center lg:items-start lg:text-left">
             {/* Monumental Headline */}
-            <h2 className="sahotsava-text-anim product_sans text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-bold tracking-tight text-[#ffffff] uppercase leading-[1.12]">
+            <h2 className="sahotsava-text-anim font-display text-4xl sm:text-6xl lg:text-7xl tracking-tight text-[#ffffff] uppercase leading-none">
               SAHOTSAVA
             </h2>
 

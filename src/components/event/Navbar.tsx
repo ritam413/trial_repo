@@ -141,7 +141,7 @@ export default function Navbar() {
     { label: "SANSKARAN", target: "#about" },
     { label: "SAHOTSAVA", target: "#sahotsava" },
     { label: "GALLERY", target: "#gallery" },
-    { label: "ARCHITECTS", target: "#core-members" },
+    { label: "CORE", target: "#core-members" },
     { label: "SPONSORS", target: "#sponsors" },
     { label: "PATRONS", target: "#dignitaries" },
     { label: "FOUNDERS", target: "#founders" },

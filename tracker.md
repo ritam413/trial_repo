@@ -16908,3 +16908,38 @@ Extract all previous sponsor cards from `https://www.technosahotsava.in/sponsors
 
 ### Current State
 The Previous Sponsors section is live immediately following Core Members with 53 authentic sponsor logos, responsive grid layout, and the alternating green/black color rhythm.
+
+
+## 2026-11-23 — Typography Unification & Navbar Core Renaming
+
+### Objective
+Remove the badge pill (`PARTNERSHIPS // PAST EDITIONS`) and description paragraph from `SponsorsSection.tsx`, unify `SANSKARAN` and `SAHOTSAVA` section titles in `AboutFestivalSection.tsx` to match the `font-display` (Bebas Neue) font used across `GALLERY` and `CORE`, and rename `ARCHITECTS` to `CORE` in the navigation bar.
+
+### Changes Made
+1. **`SponsorsSection.tsx`**:
+   - Removed the badge pill `PARTNERSHIPS // PAST EDITIONS`.
+   - Removed the description copy text under the `PREVIOUS SPONSORS` heading.
+   - Preserved the clean `PREVIOUS SPONSORS` `font-display` display heading and the "BECOME A SPONSOR" CTA button.
+2. **`AboutFestivalSection.tsx`**:
+   - Replaced `product_sans` on the `SANSKARAN` title with `font-display text-4xl sm:text-6xl lg:text-7xl tracking-tight text-[#ffffff] uppercase leading-none`.
+   - Replaced `product_sans` on the `SAHOTSAVA` title with `font-display text-4xl sm:text-6xl lg:text-7xl tracking-tight text-[#ffffff] uppercase leading-none`.
+   - All major section headers across the site now share the exact same monumental Bebas Neue typography hierarchy.
+3. **`Navbar.tsx`**:
+   - Changed navigation label from `ARCHITECTS` to `CORE` (`{ label: "CORE", target: "#core-members" }`).
+   - Propagated across both desktop navigation bar and mobile drawer menu.
+
+### Files Modified
+- `src/components/event/SponsorsSection.tsx`
+- `src/components/event/AboutFestivalSection.tsx`
+- `src/components/event/Navbar.tsx`
+- `features_implemented.md`
+- `tracker.md`
+
+### Verification
+- `npm run build` executed successfully:
+  - Turbopack compilation: `✓ Compiled successfully in 21.9s`.
+  - TypeScript checked in 7.3s with 0 errors.
+  - All 4 static pages prerendered cleanly.
+
+### Current State
+All section headers are unified with `font-display`. The Previous Sponsors header is minimal and clean. The navigation bar displays `CORE` instead of `ARCHITECTS`.
